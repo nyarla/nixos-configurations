@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+export PATH=/run/current-system/sw/bin:$PATH
+export HOME=/home/$(id -un)
+
+exec 2>&1 >$HOME/local/docker/vmware/debug.log
+
+set -e -u -o pipefail
+
+cp /var/run/lightdm/$USER/xauthority /tmp/.Xauthority
+
+state=$HOME/local/docker/vmware
+
+docker run --rm -t --init --privileged --net host --shm-size 2g                             \
+  --mount type=bind,src=/etc/group,dst=/etc/group,readonly                                  \
+  --mount type=bind,src=/etc/shells,dst=/etc/shells,readonly                                \
+  --mount type=bind,src=/etc/passwd,dst=/etc/passwd,readonly                                \
+  --mount type=bind,src=/etc/shadow,dst=/etc/shadow,readonly                                \
+  --mount type=bind,src=/etc/asound.conf,dst=/etc/asound.conf,readonly                      \
+  \
+  --mount type=bind,src=/dev,dst=/dev                                                       \
+  --mount type=bind,src=/sys,dst=/sys                                                       \
+  --mount type=bind,src=/tmp,dst=/tmp                                                       \
+  \
+  --mount type=bind,src=/run/opengl-driver,dst=/opt/opengl-driver,readonly                  \
+  \
+  --mount type=bind,src=/nix,dst=/nix,readonly                                              \
+  --mount type=bind,src=/run/current-system/sw/bin,dst=/run/current-system/sw/bin,readonly  \
+  --mount type=bind,src=/etc/fonts,dst=/etc/fonts,readonly                                  \
+  \
+  --mount type=bind,src=/tmp/.Xauthority,dst=/tmp/.Xauthority,readonly                      \
+  --mount type=bind,src=/run/user/$(id -u)/pulse,dst=/run/user/$(id -u)/pulse               \
+  --mount type=bind,src=/run/user/$(id -u)/bus,dst=/run/user/$(id -u)/bus                   \
+  --mount type=bind,src=$HOME/.config/skk/SKK-JISYO.XL,dst=/tmp/SKK,readonly                \
+  \
+  --mount type=bind,src=$state/vmware,dst=/etc/vmware                                       \
+  --mount type=bind,src=$state/isoimages,dst=/usr/lib/vmware/isoimages                      \
+  --mount type=bind,src=$state/home,dst=/app                                                \
+  \
+  --mount type=bind,src=/data/active,dst=/data/active                                       \
+  --mount type=bind,src=/data/vm,dst=/data/vm                                               \
+  --mount type=bind,src=/data/tmp,dst=/data/tmp                                             \
+  --mount type=bind,src=$HOME/Downloads,dst=/data/downloads                                 \
+  \
+  --env=DISPLAY=$DISPLAY                                                                    \
+  --env=XAUTHORITY=/tmp/.Xauthority                                                         \
+  --env=LD_LIBRARY_PATH=/opt/opengl-driver                                                  \
+  --env=HOME=/app                                                                           \
+  --env=DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS                                  \
+  --env=SHELL=/bin/bash                                                                     \
+  \
+  --entrypoint /run/current-system/sw/bin/zsh                                               \
+  vmware-installed -c "chown $(id -un):$(id -gn) /app \
+&&  /usr/lib/vmware/bin/vmware-usbarbitrator \
+&&  (/usr/bin/vmware-networks --start &) \
+&&  sudo -u $(id -un) -g $(id -gn) ibus-daemon -dx \
+&&  (test -d /app/.config/dconf || sudo -u $(id -un) -g $(id -gn) dbus-launch ibus-setup) \
+&&  sudo -u $(id -un) -g $(id -gn) dbus-launch vmplayer 
+  "

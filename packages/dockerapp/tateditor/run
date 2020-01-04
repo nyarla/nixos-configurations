@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+cmd="$(cd "$(dirname "${0}")/../base" && pwd)"
+state=$HOME/local/dockerapp/tateditor
+
+if ! test -d $state/.local ; then
+  mkdir -p $state/.local/bin
+fi
+
+if ! test -d $state/.config/ibus ; then
+  mkdir -p $state/.config
+fi
+
+$cmd/run tateditor "chown $(id -un):$(id -gn) /app \
+                    && cp /usr/bin/tateditor /app/.local/bin/ \
+                    && sudo -u $(id -un) -g $(id -gn) ibus-daemon -dx \
+                    && (test -d /app/.config/ibus-skk || sudo -u $(id -un) -g $(id -gn) dbus-launch ibus-setup) \
+                    && sudo -u $(id -un) -g $(id -gn) dbus-launch /app/.local/bin/tateditor 2>/dev/null 1>/dev/null"

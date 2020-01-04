@@ -1,0 +1,9 @@
+configuration.nix
+hardware-configuration.nix
+nixpkgs
+overlays/musnix
+
+pkgs/msys2/*/*
+!pkgs/msys2/*/PKGBUILD
+!pkgs/msys2/*/*.patch
+

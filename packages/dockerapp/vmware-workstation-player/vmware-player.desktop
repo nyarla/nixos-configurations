@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=VMware Player
+Comment=VMware Workstation Player
+Path=/etc/nixos/packages/dockerapp/vmware-workstation-player
+Exec=/etc/nixos/packages/dockerapp/vmware-workstation-player/run %U
+Icon=virt-manager
+Terminal=false
+StartupNotify=true
+Categories=System;

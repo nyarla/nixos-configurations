@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+cd $HOME
+
+export DISPLAY=localhost:0.0
+
+export GDK_SCALE=2
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
+if ! pgrep fcitx ; then
+  fcitx -r -d
+fi
+
+exec mlterm --deffont="Myrica M" -e $HOME/.nix-profile/bin/wcwidth-cjk  -- env SHELL=$HOME/.nix-profile/bin/zsh $HOME/.nix-profile/bin/zsh --login

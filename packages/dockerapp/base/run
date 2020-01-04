@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+docker run --rm -it --init \
+  --volume=/etc/group:/etc/group:ro                                 \
+  --volume=/etc/passwd:/etc/passwd:ro                               \
+  --volume=/etc/shadow:/etc/shadow:ro                               \
+  --volume=/etc/asound.conf:/etc/asound.conf:ro                     \
+  \
+  --volume=/nix:/nix:ro                                             \
+  --volume=/run/current-system/sw/bin:/run/current-system/sw/bin:ro \
+  --volume=/run/opengl-driver:/opt/opengl-driver:ro                 \
+  --volume=/etc/fonts:/etc/fonts:ro                                 \
+  \
+  --volume=/run/user/$(id -u)/gdm/Xauthority:/tmp/.Xauthority:ro    \
+  --volume=/home/$(id -un)/.config/skk/SKK-JISYO.XL:/tmp/SKK:ro     \
+  \
+  --volume=/tmp/.X11-unix:/tmp/.X11-unix:rw                         \
+  --volume=/run/user/$(id -u)/pulse:/run/media/$(id -u)/pulse:rw    \
+  --volume=/home/$(id -un)/.config/ibus:/tmp/ibus:rw                \
+  --volume=/run/user/$(id -u)/bus:/run/user/$(id -u)/bus            \
+  \
+  --volume=/home/$(id -un)/local/dockerapp/$1:/app:rw               \
+  \
+  --env=DISPLAY=$DISPLAY                                            \
+  --env=XAUTHORITY=/tmp/.Xauthority                                 \
+  --env=LD_LIBRARY_PATH=/opt/opengl-driver                          \
+  --env=HOME=/app                                                   \
+  --env=DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS          \
+  \
+  --entrypoint=/bin/bash                                            \
+  \
+  $USER:${1} -c "${2}"

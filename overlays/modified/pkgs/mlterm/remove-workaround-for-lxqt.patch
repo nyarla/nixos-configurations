@@ -1,0 +1,11 @@
+--- mlterm-3.8.7.orig/uitoolkit/xlib/ui_window.c	2018-12-08 13:12:59.059368044 +0900
++++ mlterm-3.8.7/uitoolkit/xlib/ui_window.c	2018-12-08 13:13:10.531417366 +0900
+@@ -1386,7 +1386,7 @@
+      *
+      * XXX If class_hint is set, lxde (0.99.2) doesn't show title bar for mlterm.
+      */
+-#if 0
++#if 1
+     XmbSetWMProperties(win->disp->display, win->my_window, win->app_name, win->app_name, argv, argc,
+                        &size_hints, &wm_hints, &class_hint);
+ #else

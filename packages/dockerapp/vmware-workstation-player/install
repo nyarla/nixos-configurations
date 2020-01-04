@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+state=$HOME/local/docker/vmware
+
+docker run -it --init --name="vmware-postbuild" \
+  --volume=$HOME/Downloads/VMware-Player-15.5.0-14665864.x86_64.bundle:/tmp/vmware.bundle:ro \
+  \
+  --volume=/home/$(id -un)/local/docker/vmware:/app:rw \
+  \
+  $USER:vmware -c "\
+    bash /tmp/vmware.bundle --console --required --eulas-agreed \
+&&  sed -i 's/if \"\$BINDIR\"\/vmware-modconfig --appname=.*/if true ||/' /usr/bin/vmplayer \
+  "
+
+docker commit vmware-postbuild vmware-installed

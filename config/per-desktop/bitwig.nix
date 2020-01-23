@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   boot.kernelModules = [
-    "snd-seq" "snd-rawmidi"
+    "snd-seq" "snd-rawmidi" "snd_virmidi"
   ];
 
   boot.kernel.sysctl = {
@@ -11,6 +11,7 @@
 
   boot.kernelParams = [
     "threadirq"
+    "snd_virmidi.midi_devs=1"
   ];
 
   security.pam.loginLimits = [

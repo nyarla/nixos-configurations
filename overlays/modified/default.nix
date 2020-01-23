@@ -7,23 +7,6 @@ in {
     unfree = true;
   };
   
-  bitwig-studio3 = super.bitwig-studio3.overrideAttrs (old: rec {
-    version = "3.1.1";
-    src = super.fetchurl {
-      url = "https://downloads.bitwig.com/stable/${version}/bitwig-studio-${version}.deb";
-      sha256 = "1mgyyl1mr8hmzn3qdmg77km6sk58hyd0gsqr9jksh0a8p6hj24pk";
-    };
-
-    buildInputs = old.buildInputs ++ [ super.xorg.libXtst ];
-
-    installPhase = ''
-      ${old.installPhase}
-      # recover commercial jre
-      rm -f $out/libexec/lib/jre
-      cp -r opt/bitwig-studio/lib/jre $out/libexec/lib
-    '';
-  });
-
   calibre = super.calibre.overrideAttrs (old: rec {
     version = "4.8.0";
     src     = super.fetchurl {

@@ -5,8 +5,8 @@ stdenv.mkDerivation rec {
   src     = fetchFromGitHub {
     owner   = "cbrnix";
     repo    = "Newaita";
-    rev     = "5561b6d18625fd405bff0daaef069fb4d99f0bd3";
-    sha256  = "0mfcnpbrm7cmrhq9jrfqa074zm07q373akyc6bz7wdbsngx2z4a5";
+    rev     = "e80f4c3a3e1905ebc50009df8d57f37660f46b59";
+    sha256  = "0083n7m2m6b309vwrf1f7ahi2bf5ah1dzkzb0a5kvwd6adapz8fr";
   };
 
   nativeBuildInputs = [ gtk3 ];
@@ -24,9 +24,6 @@ stdenv.mkDerivation rec {
         ln -sf $size "''${size}@2x"
       done
     done
-
-    find $out/share/icons | grep ' (' | xargs -I{} rm {} 
-    find $out/share/icons | grep ' ' | xargs -I{} sh -c 'mv "{}" "$(echo "{}" | sed "s/ //g")"'
 
     gtk-update-icon-cache $out/share/icons/Newaita
     gtk-update-icon-cache $out/share/icons/Newaita-dark

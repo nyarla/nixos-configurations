@@ -16,6 +16,7 @@ in {
   pbzx                    = require ./pkgs/pbzx/default.nix { };
   plastik-theme           = require ./pkgs/plastik-theme/default.nix { };
   switchboard-plug-locale = require ./pkgs/switchboard-plug-locale/default.nix { };
+  tateditor               = require ./pkgs/tateditor/default.nix { };
   tmux-up                 = require ./pkgs/tmux-up/default.nix { };
   wcwidth-cjk             = require ./pkgs/wcwidth-cjk/default.nix { };
 }

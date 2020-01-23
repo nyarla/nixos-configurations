@@ -6,6 +6,7 @@ let
     gimp inkscape
     peek spice-up
     keepassxc
+    tateditor
   ];
 in {
   environment.systemPackages = apps;

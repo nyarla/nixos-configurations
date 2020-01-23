@@ -250,12 +250,11 @@ let
       exit 0
     fi
 
-    if [[ "''${class}" =~ ^Ibus-ui-* ]] ; then
-      echo "manage=off"
-      exit 0
-    fi
+    #if [[ "''${class}" =~ ^Ibus-ui-* ]] ; then
+    #  echo "manage=off"
+    #  exit 0
+    #fi
   '';
-  dropboxDisk = "/dev/disk/by-uuid/da61535f-2e6e-4d44-b73f-ace5ccf4e59d";
 
   bspwmrc = pkgs.writeScript "bspwmrc" ''
     #!${pkgs.stdenv.shell}
@@ -284,23 +283,21 @@ let
     
     bspc config external_rules_command ${bspwmRules}
 
+    if test ! -d /run/media/nyarla/DATA ; then
+      ${pkgs.glib}/bin/gio mount -d ''$(${pkgs.coreutils}/bin/readlink -e /dev/disk/by-uuid/c915d2df-c24e-4cf6-ab32-bf996ca84505)
+    fi
+    
+    if test -d /run/media/nyarla/DATA ; then
+      dropbox &
+    fi
+
     ${pkgs.hsetroot}/bin/hsetroot -full /etc/nixos/assets/wallpaper.jpg
     ${polybarLaunch} &
-
-    if test -d /run/media/nyarla/LINUX/Files ; then
-      ${pkgs.gocryptfs}/bin/gocryptfs -reverse \
-        -config /run/media/nyarla/LINUX/Vault/gocryptfs.reverse.conf \
-        -allow_other -noprealloc \
-        -passfile /etc/gocryptfs/password \
-        /run/media/nyarla/LINUX/Files \
-        /run/media/nyarla/LINUX/Encrypted
-      ${pkgs.dropbox}/bin/dropbox &
-    fi
 
     ${pkgs.networkmanagerapplet}/bin/nm-applet &
 
     ${pkgs.gnome3.dconf}/libexec/dconf-service &
-    ${config.i18n.inputMethod.package}/bin/ibus-daemon -drx --config=${config.i18n.inputMethod.package}/libexec/ibus-dconf
+    env GDK_SCALE=1 GDK_DPI_SCALE=1 ${config.i18n.inputMethod.package}/bin/ibus-daemon -drx --config=${config.i18n.inputMethod.package}/libexec/ibus-dconf
   '';
   
   Xresources = pkgs.writeText "Xresources" ''

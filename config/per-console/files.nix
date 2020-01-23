@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    dropbox
     whipper
+    dropbox
+    restic rclone
   ];
 
   services.dbus.packages = with pkgs; [

@@ -250,6 +250,11 @@ let
       exit 0
     fi
 
+    if [[ "''${class}" =~ ^Peek ]] ; then
+      echo "manage=off"
+      exit 0
+    fi
+
     #if [[ "''${class}" =~ ^Ibus-ui-* ]] ; then
     #  echo "manage=off"
     #  exit 0
@@ -287,10 +292,6 @@ let
       ${pkgs.glib}/bin/gio mount -d ''$(${pkgs.coreutils}/bin/readlink -e /dev/disk/by-uuid/c915d2df-c24e-4cf6-ab32-bf996ca84505)
     fi
     
-    if test -d /run/media/nyarla/DATA ; then
-      dropbox &
-    fi
-
     ${pkgs.hsetroot}/bin/hsetroot -full /etc/nixos/assets/wallpaper.jpg
     ${polybarLaunch} &
 
@@ -319,7 +320,7 @@ let
       ${pkgs.stdenv.shell} ~/local/dotfiles/scripts/rofi-application-launch.sh
 
     super + a ; q
-      ${pkgs.bspwm}/bin/bspc quit
+      ${pkgs.gnome3.zenity}/bin/zenity --question --text "ログアウトしますか？" --no-wrap && ${pkgs.bspwm}/bin/bspc quit
 
     super + a ; t
       ${pkgs.mlterm}/bin/mlterm
@@ -335,6 +336,9 @@ let
 
     super + a ; {1,2,3,4,5,6,7,8,9}
       ${pkgs.bspwm}/bin/bspc desktop -f {1,2,3,4,5,6,7,8,9}
+
+    super + a ; ctrl + c
+      true
 
     super + shift + Left
       ${pkgs.bspwm}/bin/bspc node -s west || ${pkgs.bspwm}/bin/bspc node -s east

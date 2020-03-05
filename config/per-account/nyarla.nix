@@ -13,7 +13,7 @@
         "audio" "video" "render" "disk" "input" "storage" "lightdm"
 
         # vm
-        "kvm" "libvirtd"
+        "kvm" "libvirtd" "vboxusers"
       ];
       home         = "/home/nyarla";
       isNormalUser = true;

@@ -11,6 +11,7 @@
     
     ../config/per-desktop/bitwig.nix
     ../config/per-desktop/hidpi.nix
+    ../config/per-desktop/virtualbox.nix
     
     ../config/per-location/jp.nix
 

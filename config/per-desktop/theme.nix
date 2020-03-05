@@ -7,9 +7,7 @@ let
     qt5.full
   ];
 in {
-  qt5.enable = true;
-  qt5.platformTheme = "gnome";
-  qt5.style = "adwaita";
+  programs.qt5ct.enable = true;
   environment.variables = { GTK_CSD = "0"; };
   environment.systemPackages = themes;
 }

@@ -14,11 +14,11 @@
   };
 
   nixpkgs.config.packageOverrides = super: rec {
-    linuxPackages_latest = super.linuxPackages_latest.extend (self: base: {
+    linuxPackages_4_19 = super.linuxPackages_4_19.extend (self: base: {
       nvidia_x11 = base.nvidia_x11_beta;
     });
 
-    bumblebee = (super.bumblebee.override { nvidia_x11 = linuxPackages_latest.nvidia_x11; }).overrideAttrs (old: rec {
+    bumblebee = (super.bumblebee.override { nvidia_x11 = linuxPackages_4_19.nvidia_x11; }).overrideAttrs (old: rec {
       postInstall = old.postInstall + ''
         cat <<EOF >>$out/etc/bumblebee/xorg.conf.nvidia
         

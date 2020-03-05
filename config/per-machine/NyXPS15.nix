@@ -98,11 +98,59 @@
       Type = "oneshot";
       ExecStart = "${pkgs.writeScript "backup" ''
         #!${pkgs.stdenv.shell}
-        ${pkgs.restic}/bin/restic -r /run/media/nyarla/DATA/Dropbox/Backup -p /etc/restic/password backup ~/local/dotfiles
-        ${pkgs.restic}/bin/restic -r /run/media/nyarla/DATA/Dropbox/Backup -p /etc/restic/password backup ~/local/dev/src/github.com/nyarla/the.kalaclista.com-v2
-        ${pkgs.restic}/bin/restic -r /run/media/nyarla/DATA/Dropbox/Backup -p /etc/restic/password backup /run/media/nyarla/LINUX/Vault
-        ${pkgs.restic}/bin/restic -r /run/media/nyarla/DATA/Dropbox/Backup -p /etc/restic/password backup /run/media/nyarla/LINUX/Files
-        ${pkgs.restic}/bin/restic -r /run/media/nyarla/DATA/Dropbox/Backup -p /etc/restic/password backup /run/media/nyarla/LINUX/Wine
+
+        export HOME=/home/nyarla
+        export tag="$(date +%Y-%m-%d)"
+
+        for repo in /run/media/nyarla/DATA/Backup rclone:teracloud:Backup ; do
+        # /etc/nixos
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/nixos backup \
+          /etc/nixos
+
+        # ~/local/dotfiles
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/dotfiles backup \
+          /home/nyarla/local/dotfiles
+
+        # ~/local/dotvim
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/dotvim backup \
+          /home/nyarla/local/dotvim
+
+        # ~/local/dev/src/github.com/nyarla/the.kalaclista.com-v2
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/kalaclista-website backup \
+          /home/nyarla/local/dev/src/github.com/nyarla/the.kalaclista.com-v2
+
+        # /run/media/nyarla/LINUX/Wine
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/Wine backup \
+          /run/media/nyarla/LINUX/Wine
+
+        # /run/media/nyarla/LINUX/Files
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/Files backup \
+          /run/media/nyarla/LINUX/Files
+        done
       ''}";
       User = "nyarla";
       Group = "users";
@@ -114,7 +162,7 @@
     description = "Timer for automatic backup by restic";
     wantedBy = [ "timer.target" "multi-user.target" ];
     timerConfig = {
-      OnCalendar = "*-*-* 02:00:00";
+      OnCalendar = "*-*-* 01:00:00";
       Persistent = "true";
     };
   };

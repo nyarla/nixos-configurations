@@ -7,6 +7,7 @@ let
     peek spice-up
     keepassxc
     tateditor
+    simple-scan
   ];
 in {
   environment.systemPackages = apps;

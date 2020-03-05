@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_4_19;
   boot.kernelParams  = [
     "acpi_rev_override=5"
     "enable_fbc=1"

@@ -4,6 +4,7 @@ let
     wineWowPackages.staging
     (winetricks.override { wine = wineWowPackages.staging
     ; }) 
+    samba
   ];
 in {
   environment.systemPackages = apps;

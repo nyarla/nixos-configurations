@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    linuxkit moby docker_compose docker
+    linuxkit docker_compose docker
   ]; 
 
   virtualisation.docker = {

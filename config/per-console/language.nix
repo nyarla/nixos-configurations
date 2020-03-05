@@ -8,6 +8,7 @@
     deno-land
     elmPackages.elm-format
     perl perlPackages.Appcpanminus
+    ruby
     openjdk
   ]; 
 

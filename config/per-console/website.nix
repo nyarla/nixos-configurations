@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    hugo sassc
+    hugo sassc mecab
   ];
 }

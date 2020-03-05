@@ -13,5 +13,6 @@
     tmux tmux-up
     file gnused gawk gnumake
     trash-cli
+    inotify-tools
   ];
 }

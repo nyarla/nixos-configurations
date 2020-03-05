@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   apps = (with pkgs.mate; [
-    caja caja-extensions caja-dropbox
+    caja caja-extensions
     engrampa eom atril pluma
   ]) ++ (with pkgs; [
     gnome3.gnome-font-viewer udisks2 glib

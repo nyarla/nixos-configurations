@@ -1,10 +1,10 @@
 { stdenv, fetchurl, patchelf, gzip }:
 stdenv.mkDerivation rec {
   name    = "deno-${version}";
-  version = "v0.28.1";
+  version = "v0.35.0";
   src     = fetchurl {
     url     = "https://github.com/denoland/deno/releases/download/${version}/deno_linux_x64.gz";
-    sha256  = "0ky9rib3sgqwpdw4hwgly2i2m18b99jfmk0rfhwk426pnyi28vpi";
+    sha256  = "0h4kkpdakvg2m9b84rqhjpp93fqr0qnzwnz3w4fqwgc8kaml2inx";
   };
 
   propargatedBuildInputs = [ patchelf gzip ];

@@ -1,5 +1,23 @@
 { config, pkgs, ... }:
-{
+let
+  jackAudio = with pkgs; [
+    qjackctl jack2Full a2jmidid
+    jackass wineasio
+  ];
+
+  DAW = with pkgs; [
+    bitwig-studio3 lmms
+  ];
+
+  bridge = with pkgs; [
+    linvst linvst-x linvst3 airwave carla cadence 
+  ];
+
+  plugins = with pkgs; [
+    adlplug ams-lv2 bristol calf dexed drumgizmo drumkv1 fluidsynth fmsynth
+    helm hydrogen linuxsampler synthv1 yoshimi surge-synthesizer
+  ];
+in {
   boot.kernelModules = [
     "snd-seq" "snd-rawmidi" "snd_virmidi"
   ];
@@ -20,12 +38,7 @@
     { domain = "@audio"; item = "nofile";   type = "soft";  value = "99999";      }
     { domain = "@audio"; item = "nofile";   type = "hard";  value = "99999";      }
   ];
-
-  environment.systemPackages = with pkgs; [
-    qjackctl jack2 a2jmidid bitwig-studio3 linvst linvst3 airwave carla
-  ];
-
-  services.dbus.packages = with pkgs; [
-    qjackctl jack2 a2jmidid bitwig-studio3 linvst linvst3 airwave carla
-  ];
+  
+  environment.systemPackages = jackAudio ++ DAW ++ bridge ++ plugins;
+  services.dbus.packages = jackAudio ++ DAW ++ bridge;
 }

@@ -6,7 +6,7 @@ in {
   aseprite = super.aseprite.override {
     unfree = true;
   };
-  
+
   calibre = super.calibre.overrideAttrs (old: rec {
     version = "4.8.0";
     src     = super.fetchurl {
@@ -15,6 +15,8 @@ in {
     };
     buildInputs = old.buildInputs ++ [ super.hyphen super.hunspell super.python2Packages.pyqtwebengine ];
   });
+
+  carla = require ./pkgs/carla/default.nix { };
 
   fbterm = super.fbterm.overrideAttrs (old: rec {
     patches = [
@@ -36,6 +38,12 @@ in {
 
   });
 
+  run-scaled = super.run-scaled.overrideAttrs (old: rec {
+    postPatch = ''
+      sed -i 's!attach "$DISPLAYNUM"!attach socket:///run/user/$(id -u)/xpra/$(hostname)-''${DISPLAYNUM#:}!' run_scaled
+    '';
+  });
+
   tmux = super.tmux.overrideAttrs (old: rec {
     patches = [
       (super.fetchurl {
@@ -44,4 +52,6 @@ in {
       })
     ];
   });
+  
+  xpra = require ./pkgs/xpra/default.nix { };
 }

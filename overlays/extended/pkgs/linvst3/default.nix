@@ -39,9 +39,7 @@ in stdenv.mkDerivation rec {
   
   patchPhase = ''
     sed -i "s!/usr!$out!" Makefile
-    sed -i "s!./vst!$out/lib/vst!" Makefile
-    sed -i "s!/usr/lib/x86_64-linux-gnu/wine-development!${wineWowPackages.staging}/include/wine!" Makefile
-    sed -i "s!/usr/include/wine-development!${wineWowPackages.staging}/include/wine!g" lin-patchwin
+    sed -i "s!./vst!$out/lib/vst-wine!" Makefile
     sed -i "s!/usr/bin/wine!${wineWowPackages.staging}/bin/wine!g" lin-patchwin
     sed -i "s!/usr/bin!$out/bin!g" remotevstclient.cpp
     sed -i 's!file(MAKE_DIRECTORY ''${SMTG_PLUGIN_TARGET_PATH})!!' ../cmake/modules/AddVST3Options.cmake

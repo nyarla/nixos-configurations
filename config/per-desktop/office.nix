@@ -6,7 +6,7 @@ let
     gimp inkscape
     peek spice-up
     keepassxc
-    tateditor
+    # tateditor
     simple-scan
   ];
 in {

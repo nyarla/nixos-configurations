@@ -8,6 +8,7 @@ in {
   fontmerger              = require ./pkgs/font-merger/default.nix { };
   forked-daapd            = require ./pkgs/forked-daapd/default.nix { };
   genjyuu-gothic          = require ./pkgs/genjyuu-gothic/default.nix { };
+  ime-mode-we             = require ./pkgs/ime-mode-we/default.nix { };
   jackass                 = require ./pkgs/jackass/default.nix { };
   linvst-x                = require ./pkgs/linvst-x/default.nix { };
   linvst                  = require ./pkgs/linvst/default.nix { };
@@ -21,6 +22,7 @@ in {
   surge-synthesizer       = require ./pkgs/surge-synthesizer/default.nix { };
   switchboard-plug-locale = require ./pkgs/switchboard-plug-locale/default.nix { };
   tateditor               = require ./pkgs/tateditor/default.nix { };
+  violin                  = require ./pkgs/violin/default.nix { };
   tmux-up                 = require ./pkgs/tmux-up/default.nix { };
   vst-bridge              = require ./pkgs/vst-bridge/default.nix { };
   wcwidth-cjk             = require ./pkgs/wcwidth-cjk/default.nix { };

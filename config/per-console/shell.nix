@@ -14,5 +14,6 @@
     file gnused gawk gnumake
     trash-cli
     inotify-tools
+    bc
   ];
 }

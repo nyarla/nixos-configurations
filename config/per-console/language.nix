@@ -4,7 +4,7 @@
     stdenv.cc
     go goimports dep
     rustup
-    nodejs yarn 
+    nodejs_latest yarn 
     deno-land
     elmPackages.elm-format
     perl perlPackages.Appcpanminus

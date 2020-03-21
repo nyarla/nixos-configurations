@@ -187,5 +187,6 @@
     # ../per-service/avahi.nix
     ../per-service/firewall.nix
     ../per-service/printer.nix
+    ../per-service/vpn.nix
   ];
 }

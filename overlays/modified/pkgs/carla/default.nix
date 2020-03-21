@@ -79,11 +79,23 @@ let
   carla-32bit = mkCarlaDerivation "32" pkgsi686Linux;
   carla-64bit = mkCarlaDerivation "64" pkgs;
 in carla-64bit.overrideAttrs (old: {
-  postInstall = ''
-    for d in carla vst/carla.vst lv2/carla.lv2 ; do
-      ln -sf ${carla-32bit}/lib/carla/carla-bridge-win32.exe $out/lib/$d/carla-bridge-win32.exe 
-      ln -sf ${carla-32bit}/lib/carla/carla-discovery-win32.exe $out/lib/$d/carla-discovery-win32.exe 
-      ln -sf ${carla-32bit}/lib/carla/jackbridge-wine32.dll $out/lib/$d/jackbridge-wine32.dll 
-    done
-  '' + old.postInstall;
+  postPatch = ''
+    sed -i 's|"carla-bridge-posix32"|"carla-bridge-native"|' source/backend/engine/CarlaEngine.cpp
+    sed -i 's!bridgeBinary(pData->options.binaryDir);!bridgeBinary( (btype == BINARY_POSIX32 || btype == BINARY_WIN32 ) ? "${carla-32bit}/lib/carla" : pData->options.binaryDir);!' \
+      source/backend/engine/CarlaEngine.cpp
+
+    sed -i 's|host.pathBinaries + CARLA_OS_SEP_STR "carla-discovery-posix32"|"${carla-32bit}/lib/carla/carla-discovery-native"|' \
+      source/frontend/carla_database.cpp
+    sed -i 's|host.pathBinaries + CARLA_OS_SEP_STR "carla-discovery-win32.exe"|"${carla-32bit}/lib/carla/carla-discovery-win32.exe"|' \
+      source/frontend/carla_database.cpp
+
+    sed -i 's|self.host.pathBinaries, "carla-discovery-posix32"|"${carla-32bit}/lib/carla", "carla-discovery-native"|' source/frontend/carla_database.py 
+    sed -i 's|self.host.pathBinaries, "carla-discovery-win32.exe"|"${carla-32bit}/lib/carla", "carla-discovery-win32.exe"|' source/frontend/carla_database.py 
+
+    sed -i 's|self.fPathBinaries, "carla-discovery-posix32"|"${carla-32bit}/lib/carla", "carla-discovery-native"|g' source/frontend/carla_database.py
+    sed -i 's|self.fPathBinaries, "carla-discovery-win32.exe"|"${carla-32bit}/lib/carla", "carla-discovery-win32.exe"|g' source/frontend/carla_database.py
+
+    sed -i 's|os.path.join(CARLA_LIBDIR, "carla-bridge-" + ARCH)|os.path.join("${carla-32bit}/lib/carla", ("carla-bridge-native" if ARCH == "posix32" else "carla-bridge-win32")) if ARCH in ("posix32" "win32") else os.path.join(CARLA_LIBDIR, "carla-bridge-" + ARCH)|' \
+      data/carla-single
+  '';
 }) 

@@ -2,7 +2,7 @@
 let
   apps = with pkgs; [
     mlterm
-    xclip xdg_utils libnotify xzoom run-scaled
+    xclip xdg_utils libnotify run-scaled xmagnify
     gnome3.zenity gnome3.gsound
     gnome3.dconf gnome3.dconf-editor 
   ];

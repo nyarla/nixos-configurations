@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 let 
   apps = with pkgs; [
-    chromium
-    uget
+    firefox-bin
+    transmission-gtk
   ];
 in {
   environment.systemPackages = apps;

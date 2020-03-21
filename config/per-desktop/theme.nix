@@ -2,7 +2,7 @@
 let
   themes = with pkgs; [
     gnome3.adwaita-icon-theme gnome3.gnome-themes-extra
-    plastik-theme newaita-icons capitaine-cursors
+    zuki-themes newaita-icons capitaine-cursors
     gtk-engine-murrine
     qt5.full
   ];

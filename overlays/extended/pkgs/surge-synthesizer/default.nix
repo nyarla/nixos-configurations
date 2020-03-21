@@ -1,4 +1,4 @@
-{ stdenv, fetchzip, fetchFromGitHub, gnused, pkgconfig, premake5, cmake,
+{ stdenv, fetchzip, fetchFromGitHub, gnused, pkgconfig, premake5, cmake, rsync,
   cairo, fontconfig, freetype, xorg, lato, xdg_utils, gnome3,
   libxkbcommon, which, ncurses, utillinux, python3 }:
 let
@@ -18,7 +18,7 @@ in stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    pkgconfig premake5 cmake which ncurses utillinux python3
+    pkgconfig premake5 cmake which ncurses utillinux python3 rsync
   ];
 
   buildInputs = [
@@ -29,24 +29,22 @@ in stdenv.mkDerivation rec {
   ]);
 
   postPatch = ''
-    sed -i 's|"/usr|"$out/|g' build-linux.sh
+    sed -i 's|"/usr|"$out|g' build-linux.sh
   '';
 
   buildPhase = ''
     cp -r ${vst2sdk}/* vst3sdk/
 
-    sh build-linux.sh -p vst2 build
-    sh build-linux.sh -p vst3 build
-    sh build-linux.sh -p lv2 build
+    sh build-linux.sh build --project=vst3
+    sh build-linux.sh build --project=lv2
   '';
 
   installPhase = ''
-    mkdir -p $out/lib/vst
     mkdir -p $out/lib/vst3
+    mkdir -p $out/lib/lv2
     mkdir -p $out/share
 
-    sh build-linux.sh -p vst2 install
-    sh build-linux.sh -p vst3 install
-    sh build-linux.sh -p lv2 install
+    sh build-linux.sh install --project=vst3
+    sh build-linux.sh install --project=lv2
   '';
 }

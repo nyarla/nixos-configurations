@@ -27,9 +27,9 @@ in {
   ibus-skk = require ./pkgs/ibus-skk/default.nix { }; 
 
   mlterm = super.mlterm.overrideAttrs (old: rec {
-    buildInputs = old.buildInputs ++ [ self.ibus super.dbus ];
+    buildInputs = old.buildInputs ++ [ self.uim super.dbus ];
     configureFlags = old.configureFlags ++ [
-      "--enable-ibus"
+      "--enable-uim"
     ];
 
     # patches = [
@@ -52,6 +52,37 @@ in {
       })
     ];
   });
+
+# uim = super.uim.overrideAttrs (old: rec {
+#   nativeBuildInputs = old.nativeBuildInputs ++ [ super.libiconv ];
+
+#   preFixup = ''
+#     export cwd=$(pwd);
+#     cd $out/share/uim
+
+#     for f in  japanese-act.scm \
+#               japanese-azik.scm \
+#               japanese-custom.scm \
+#               japanese-kana.scm \
+#               japanese-kzik.scm \
+#               japanese.scm \
+#               skk.scm \
+#               skk-custom.scm ; do
+#       new="$(echo $f | sed 's/\.scm$/-utf8.scm/')"
+#       iconv -f EUC-JP -t UTF-8 < "$f" | tee "$new" > /dev/null
+#     done
+
+#     patch -p0 -b <${super.fetchurl {
+#       url     = "https://gitlab.com/snippets/1905594/raw";
+#       sha256  = "0pxsm8ly616sy18qfn16rfsz13k2j6aamingl368cni24jizx5k7";
+#     }}
+
+#     mv skk-utf8.scm skk.scm
+#     mv skk-custom-utf8.scm skk-custom.scm
+
+#     cd $cwd
+#   ''; 
+# });
   
   xpra = require ./pkgs/xpra/default.nix { };
 }

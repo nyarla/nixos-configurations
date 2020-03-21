@@ -297,9 +297,7 @@ let
 
     ${pkgs.networkmanagerapplet}/bin/nm-applet &
 
-    ${pkgs.gnome3.dconf}/libexec/dconf-service &
-    env GDK_SCALE=1 GDK_DPI_SCALE=1 ${config.i18n.inputMethod.package}/bin/ibus-daemon -drx --config=${config.i18n.inputMethod.package}/libexec/ibus-dconf
-  '';
+ '';
   
   Xresources = pkgs.writeText "Xresources" ''
     Xcursor*theme: /run/current-system/sw/share/icons/capitaine-cursors-white
@@ -312,9 +310,9 @@ let
 
     super + a ; d
       ${pkgs.deadbeef}/bin/deadbeef
- 
-    super + a ; g
-      ${pkgs.chromium}/bin/chromium
+
+    super + a ; f
+      ${pkgs.firefox-bin}/bin/firefox
 
     super + a ; l
       ${pkgs.stdenv.shell} ~/local/dotfiles/scripts/rofi-application-launch.sh
@@ -352,9 +350,6 @@ let
     super + shift + Down
       ${pkgs.bspwm}/bin/bspc node -s south || ${pkgs.bspwm}/bin/bspc node -s north
 
-    super + ctrl + {Up,Left,Right,Down}
-      ${pkgs.bspwm}/bin/bspc node -f {north,west,east,south}
-
     super + alt + Left
       ${pkgs.bspwm}/bin/bspc node -z right -10 0 || ${pkgs.bspwm}/bin/bspc node -z left -10 0
 
@@ -367,8 +362,11 @@ let
     super + alt + Down
       ${pkgs.bspwm}/bin/bspc node -z top 0 10 || ${pkgs.bspwm}/bin/bspc node -z bottom 0 10
 
-    super + {Left,Right}
-      ${pkgs.bspwm}/bin/bspc desktop -f {prev,next}
+    super + ctrl + Left
+      ${pkgs.bspwm}/bin/bspc node focused -d prev; ${pkgs.bspwm}/bin/bspc desktop -f prev
+    i
+    super + ctrl + Right
+      ${pkgs.bspwm}/bin/bspc node focused -d next; ${pkgs.bspwm}/bin/bspc desktop -f next
 
     XF86AudioRaiseVolume
       ${config.hardware.pulseaudio.package}/bin/pactl set-sink-mute 1 false ; ${config.hardware.pulseaudio.package}/bin/pactl set-sink-volume 1 +1%
@@ -380,10 +378,10 @@ let
       ${config.hardware.pulseaudio.package}/bin/pactl set-sink-mute 1 toggle
 
     XF86MonBrightnessDown
-      ${pkgs.light}/bin/light -U 10% 
+      ${pkgs.light}/bin/light -U 5% 
 
     XF86MonBrightnessUp
-      ${pkgs.light}/bin/light -A 10%
+      ${pkgs.light}/bin/light -A 5%
   '';
 in {
   environment.systemPackages = apps;

@@ -4,10 +4,13 @@ let
     gnome3.adwaita-icon-theme gnome3.gnome-themes-extra
     zuki-themes newaita-icons capitaine-cursors
     gtk-engine-murrine
-    qt5.full
+    qt5.full libsForQt5.qtstyleplugins
   ];
 in {
-  programs.qt5ct.enable = true;
-  environment.variables = { GTK_CSD = "0"; };
+  environment.variables = {
+    GTK_CSD = "0";
+    QT_QPA_PLATFORMTHEME = "gtk3";
+  };
+
   environment.systemPackages = themes;
 }

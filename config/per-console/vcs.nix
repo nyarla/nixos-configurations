@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    git
+    gitFull
     mercurial
     bazaar
     subversion

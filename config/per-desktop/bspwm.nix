@@ -294,9 +294,6 @@ let
     
     ${pkgs.hsetroot}/bin/hsetroot -full /etc/nixos/assets/wallpaper.jpg
     ${polybarLaunch} &
-
-    ${pkgs.networkmanagerapplet}/bin/nm-applet &
-
  '';
   
   Xresources = pkgs.writeText "Xresources" ''
@@ -316,6 +313,9 @@ let
 
     super + a ; l
       ${pkgs.stdenv.shell} ~/local/dotfiles/scripts/rofi-application-launch.sh
+
+    super + a ; p
+      ${polybarLaunch}
 
     super + a ; q
       ${pkgs.gnome3.zenity}/bin/zenity --question --text "ログアウトしますか？" --no-wrap && ${pkgs.bspwm}/bin/bspc quit
@@ -416,7 +416,6 @@ in {
   services.xserver = {
     enable                = true;
     autorun               = true;
-    updateDbusEnvironment = true;
     libinput.enable       = true;
 
     displayManager        = {
@@ -478,7 +477,7 @@ in {
           ${pkgs.xorg.xrdb}/bin/xrdb -merge ${Xresources}
           ${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr
           export SXHKD_SHELL=${pkgs.zsh}/bin/zsh
-          ${pkgs.sxhkd}/bin/sxhkd -c ${sxhkdrc}  &
+          ${pkgs.sxhkd}/bin/sxhkd -c ${sxhkdrc} &
           ${pkgs.bspwm}/bin/bspwm -c ${bspwmrc} &
           waitPID=$!
         '';

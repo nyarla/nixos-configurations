@@ -14,6 +14,7 @@
     ../per-desktop/uim.nix
     ../per-desktop/utils.nix
     ../per-desktop/wine.nix
+    ../per-desktop/xnest.nix
     ../per-desktop/xorg.nix
   ];
 }

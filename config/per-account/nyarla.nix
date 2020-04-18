@@ -9,6 +9,9 @@
         # basic
         "wheel" "docker"
 
+        # android
+        "adbusers"
+
         # gui
         "audio" "video" "render" "disk" "input" "storage" "lightdm"
 

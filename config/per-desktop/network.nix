@@ -1,10 +1,17 @@
 { config, pkgs, ... }:
-let
-  apps = with pkgs; [
-    networkmanagerapplet
-  ];
-in {
-  environment.systemPackages = apps;
-  services.dbus.packages = apps;
-  networking.networkmanager.enable = true;
+{
+  environment.systemPackages = with pkgs; [ connman-gtk ];
+  services.dbus.packages = with pkgs; [ connman-gtk ];
+  networking.wireless = {
+    enable = true;
+    networks = {
+      dummy = {};
+    };
+  };
+  services.connman = {
+    enable = true;
+    enableVPN = true;
+    package = pkgs.connmanFull;
+    networkInterfaceBlacklist = [ "docker" "vboxnet" "br" ];
+  };
 }

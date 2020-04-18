@@ -27,4 +27,5 @@ in {
   vst-bridge              = require ./pkgs/vst-bridge/default.nix { };
   wcwidth-cjk             = require ./pkgs/wcwidth-cjk/default.nix { };
   wineasio                = require ./pkgs/wineasio/default.nix { };
+  yabridge                = require ./pkgs/yabridge/default.nix { };
 }

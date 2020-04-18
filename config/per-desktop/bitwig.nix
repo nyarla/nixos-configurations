@@ -10,7 +10,7 @@ let
   ];
 
   bridge = with pkgs; [
-    linvst linvst-x linvst3 airwave carla cadence 
+    linvst linvst-x linvst3 airwave carla cadence yabridge 
   ];
 
   plugins = with pkgs; [

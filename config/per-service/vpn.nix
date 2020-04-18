@@ -16,7 +16,6 @@ in {
     wants = [ "network.target" ];
     after = [
       "network-online.target"
-      "NetworkManager.service"
       "systemd-resolved.service"
     ];
     path = [

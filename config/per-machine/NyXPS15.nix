@@ -72,6 +72,28 @@
     }
   ];
 
+  systemd.services.syncthing = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "network.target" ];
+    after = [
+      "network-online.target"
+      "systemd-resolved.service"
+    ];
+    path = [
+      pkgs.syncthing
+    ];
+    serviceConfig = {
+      Type = "simple";
+      User = "nyarla";
+      Group = "users";
+      ExecStart = "${pkgs.writeScript "synthing" ''
+        #!${pkgs.stdenv.shell}
+        ${pkgs.syncthing}/bin/syncthing -no-browser
+      ''}";
+    };
+  };
+
 # systemd.services.backup = {
 #   enable = true;
 #   description = "Automatic backup by rsync";
@@ -111,6 +133,22 @@
           -r $repo/nixos backup \
           /etc/nixos
 
+        # ~/Documents
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/Documents backup \
+          /home/nyarla/Documents
+
+        # ~/local/dev/src/github.com/nyarla
+        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+          --tag=$tag \
+          --password-file=/etc/restic/password \
+          --exclude-file=/etc/restic/ignore \
+          -r $repo/dev backup \
+          /home/nyarla/local/dev/src/github.com/nyarla
+
         # ~/local/dotfiles
         ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
           --tag=$tag \
@@ -127,14 +165,6 @@
           -r $repo/dotvim backup \
           /home/nyarla/local/dotvim
 
-        # ~/local/dev/src/github.com/nyarla/the.kalaclista.com-v2
-        ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-          --tag=$tag \
-          --password-file=/etc/restic/password \
-          --exclude-file=/etc/restic/ignore \
-          -r $repo/kalaclista-website backup \
-          /home/nyarla/local/dev/src/github.com/nyarla/the.kalaclista.com-v2
-
         # /run/media/nyarla/LINUX/Wine
         ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
           --tag=$tag \
@@ -150,6 +180,19 @@
           --exclude-file=/etc/restic/ignore \
           -r $repo/Files backup \
           /run/media/nyarla/LINUX/Files
+        done
+
+        for repo in /run/media/nyarla/DATA/Backup rclone:teracloud:Backup ; do
+          for backup in nixos Documents dev dotfiles dotvim Wine Files; do
+            ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+              --password-file=/etc/restic/password \
+              -r $repo/$backup \
+              forget \
+                --prune \
+                --keep-daily 7 \
+                --keep-weekly 2 \
+                --keep-monthly 3
+          done
         done
       ''}";
       User = "nyarla";
@@ -185,6 +228,7 @@
     ../per-hardware/XPS-9560-JP.nix
     
     # ../per-service/avahi.nix
+    ../per-service/android.nix
     ../per-service/firewall.nix
     ../per-service/printer.nix
     ../per-service/vpn.nix

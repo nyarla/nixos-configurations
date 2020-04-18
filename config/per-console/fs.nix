@@ -3,7 +3,7 @@
   environment.systemPackages = with pkgs; [
     ntfs3g hfsprogs exfat exfat-utils btrfs-progs
     gptfdisk
-    gocryptfs
+    gocryptfs cryptsetup
   ];
   
   programs.fuse.userAllowOther = true;

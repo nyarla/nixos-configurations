@@ -1,4 +1,4 @@
-{ multiStdenv, fetchurl, fetchzip, cmake, makeWrapper, file, xorg, qt5, wineWowPackages }:
+{ multiStdenv, pkgsi686Linux, fetchurl, fetchzip, cmake, makeWrapper, file, xorg, qt5, wineWowPackages }:
 let
   vst2sdk = fetchzip {
     url = "https://archive.org/download/VST2SDK/vst_sdk2_4_rev2.zip";
@@ -8,8 +8,8 @@ in multiStdenv.mkDerivation rec {
   version = "git";
   name = "airwave-${version}";
   src = fetchurl {
-    url = "https://github.com/psycha0s/airwave/archive/master.tar.gz";
-    sha256 = "1br95fcjkf0jimlyl7w9lqnzqrkynpcyzymb5licmn8p5cmgmpr5";
+    url = "https://github.com/asb2m10/airwave/archive/master.tar.gz";
+    sha256 = "120a3g3cbxgwvg2g09p5cglsv7l7v06jl1gmckmq0f03nydcjdlg";
   };
 
   buildInputs = [
@@ -18,6 +18,7 @@ in multiStdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     file xorg.libX11 qt5.qtbase wineWowPackages.staging
+    pkgsi686Linux.xorg.libX11
   ];
    
   postPatch = ''
@@ -30,7 +31,10 @@ in multiStdenv.mkDerivation rec {
 
   hardeningDisable = [ "format" ];
 
-  cmakeFlags = "-DVSTSDK_PATH=${vst2sdk}";
+  postUnpack = ''
+    mkdir -p airwave-master/VST2
+    cp -r ${vst2sdk}/pluginterfaces/vst2.x/* airwave-master/VST2/
+  '';
 
   postInstall = ''
     mv $out/bin $out/libexec

@@ -13,12 +13,12 @@ let
     });
   in pkgs.stdenv.mkDerivation rec {
     name    = "carla";
-    version = "v2.1-rc1";
+    version = "v2.1";
     src     = fetchFromGitHub {
       owner   = "falkTX";
       repo    = "carla";
-      rev     = "v2.1-rc1";
-      sha256  = "19bxdhdnplzwr4kny1dahzxcgm9zph38zfrzcj0hr9zxalg5gb2l";
+      rev     = "v2.1";
+      sha256  = "0xfd5kcdj117djpa7j5b366lywzbmn4x2ayqfrnzm4jp4c7n0mcm";
       fetchSubmodules = true;
     };
 

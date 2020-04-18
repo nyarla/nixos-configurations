@@ -8,10 +8,10 @@ in {
   };
 
   calibre = super.calibre.overrideAttrs (old: rec {
-    version = "4.8.0";
+    version = "4.13.0";
     src     = super.fetchurl {
-      url = "https://github.com/kovidgoyal/calibre/releases/download/v4.8.0/calibre-4.8.0.tar.xz";
-      sha256 = "1lk44qh3hzqhpz2b00iik7cgjg4xm36qjh2pxflkjnbk691gbpqk";
+      url = "https://github.com/kovidgoyal/calibre/releases/download/v4.13.0/calibre-4.13.0.tar.xz";
+      sha256 = "1xp1fvpdizk6g74diam4nd59s6fhcvp086y1brm6r9wy9zm7sn7r";
     };
     buildInputs = old.buildInputs ++ [ super.hyphen super.hunspell super.python2Packages.pyqtwebengine ];
   });
@@ -52,37 +52,21 @@ in {
       })
     ];
   });
-
-# uim = super.uim.overrideAttrs (old: rec {
-#   nativeBuildInputs = old.nativeBuildInputs ++ [ super.libiconv ];
-
-#   preFixup = ''
-#     export cwd=$(pwd);
-#     cd $out/share/uim
-
-#     for f in  japanese-act.scm \
-#               japanese-azik.scm \
-#               japanese-custom.scm \
-#               japanese-kana.scm \
-#               japanese-kzik.scm \
-#               japanese.scm \
-#               skk.scm \
-#               skk-custom.scm ; do
-#       new="$(echo $f | sed 's/\.scm$/-utf8.scm/')"
-#       iconv -f EUC-JP -t UTF-8 < "$f" | tee "$new" > /dev/null
-#     done
-
-#     patch -p0 -b <${super.fetchurl {
-#       url     = "https://gitlab.com/snippets/1905594/raw";
-#       sha256  = "0pxsm8ly616sy18qfn16rfsz13k2j6aamingl368cni24jizx5k7";
-#     }}
-
-#     mv skk-utf8.scm skk.scm
-#     mv skk-custom-utf8.scm skk-custom.scm
-
-#     cd $cwd
-#   ''; 
-# });
   
+  virtualbox = super.virtualbox.overrideAttrs (old: rec {
+    version = "6.1.6";
+    src = super.fetchurl {
+      url = "https://download.virtualbox.org/virtualbox/${version}/VirtualBox-${version}.tar.bz2";
+      sha256 = "b031c30d770f28c5f884071ad933e8c1f83e65b93aaba03a4012077c1d90a54f";
+    };
+  });
+
+  virtualboxExtpack = let
+    version = "6.1.6";
+  in super.fetchurl rec {
+    name = "Oracle_VM_VirtualBox_Extension_Pack-${version}.vbox-extpack";
+    url = "https://download.virtualbox.org/virtualbox/${version}/${name}";
+    sha256 = "80b96b4b51a502141f6a8981f1493ade08a00762622c39e48319e5b122119bf3";
+  };
   xpra = require ./pkgs/xpra/default.nix { };
 }

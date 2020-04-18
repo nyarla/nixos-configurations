@@ -8,8 +8,8 @@ let
     src = fetchFromGitHub {
       owner = "falkTX";
       repo = "wineasio";
-      rev = "60e6b475bdbed7c0670e2ffc9ba74145eeba771c";
-      sha256 = "1hxwli0p8msilla3rvwilf0qrmnqq8dr1p4dirz2l8mjh80pywfg";
+      rev = "06901a76151dda43dd724e454940695c760c2df4";
+      sha256 = "1r7bvkll10rcb4rlqx84g19ynalkwp32xn9h0nh48pbryf9viz1x";
       fetchSubmodules = true;
     };
 

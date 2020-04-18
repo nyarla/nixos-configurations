@@ -5,7 +5,7 @@ multiStdenv.mkDerivation rec {
 
   src     = fetchurl {
     url = "https://github.com/osxmidi/LinVst-X/archive/master.tar.gz";
-    sha256 = "06wix9sn785x2jafpn9gvmfzfx6xl42d21xjj456jccql6lnkckq";
+    sha256 = "0q42n856a2slxhsdmch3q9m6828kxjsxy2an9jcd9hl2i0vf6l34";
   };
   
   nativeBuildInputs = [

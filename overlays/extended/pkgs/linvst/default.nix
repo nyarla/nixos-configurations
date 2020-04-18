@@ -1,13 +1,13 @@
-{ multiStdenv, fetchurl, wineWowPackages, xorg, gnused }:
-multiStdenv.mkDerivation rec {
+{ stdenv, fetchurl, wineWowPackages, xorg, gnused }:
+stdenv.mkDerivation rec {
   name = "linvst";
   version = "git";
 
   src     = fetchurl {
     url = "https://github.com/osxmidi/LinVst/archive/master.tar.gz";
-    sha256 = "0yxx4aqbhp95sgn1ph817yabk8wbd0s4aympgdfr5a6w7gix5s72";
+    sha256 = "1hhwrzc9s91k2ir3gag6ibcjybvxr2ai5mw7gk4fnc7n7c5ghfma";
   };
-  
+
   nativeBuildInputs = [
     wineWowPackages.staging gnused
   ];
@@ -18,7 +18,7 @@ multiStdenv.mkDerivation rec {
 
   patchPhase = ''
     rm Makefile
-    mv Makefile-embed-6432 Makefile
+    mv Makefile-Bitwig Makefile
     sed -i "s!/usr!$out!" Makefile
     sed -i "s!./vst!$out/lib/vst-wine!" Makefile
     sed -i "s!/usr/bin!$out/bin!g" remotevstclient.cpp

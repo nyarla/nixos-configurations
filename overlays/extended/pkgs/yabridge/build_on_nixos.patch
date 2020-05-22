@@ -1,0 +1,25 @@
+diff --git a/cross-wine.conf b/cross-wine.conf
+index bd5bcf3..2b4ac17 100644
+--- a/cross-wine.conf
++++ b/cross-wine.conf
+@@ -14,6 +14,7 @@ strip = 'strip'
+ # https://github.com/mesonbuild/meson/issues/5125
+ cpp_link_args = ['-mwindows']
+ needs_exe_wrapper = true
++skip_sanity_check = true
+ 
+ # For instance, this should be in the 64-bit only cross-file
+ # c_args = ['-m64']
+diff --git a/meson.build b/meson.build
+index 1a6c8c5..7cda410 100644
+--- a/meson.build
++++ b/meson.build
+@@ -101,7 +101,7 @@ if get_option('use-bitbridge')
+   # I honestly have no idea what the correct way to have `find_dependency()` use
+   # `/usr/lib32` instead of `/usr/lib` is. If anyone does know, please tell me!
+   winegcc = meson.get_compiler('cpp', native : false)
+-  xcb_dep = winegcc.find_library('xcb')
++  xcb_dep = winegcc.find_library('xcb', dirs: [ '@XCB@/lib' ])
+ 
+   executable(
+     host_name_32bit,

@@ -1,5 +1,14 @@
-{ stdenv, fetchFromGitHub, gnused, ed, libjack2, pkgconfig, wineWowPackages,
-  qt5, python3, pkgs, pkgsi686Linux
+{ stdenv
+, fetchFromGitHub
+, gnused
+, ed
+, libjack2
+, pkgconfig
+, wineWowPackages
+, qt5
+, python3
+, pkgs
+, pkgsi686Linux
 }:
 let
   mkWineASIODerivation = arch: pkgs: pkgs.stdenv.mkDerivation rec {
@@ -14,11 +23,13 @@ let
     };
 
     nativeBuildInputs = [
-      gnused pkgconfig 
+      gnused
+      pkgconfig
     ];
 
     buildInputs = [
-      wineWowPackages.staging pkgs.libjack2
+      wineWowPackages.staging
+      pkgs.libjack2
     ];
 
     postPatch = ''
@@ -26,7 +37,7 @@ let
       sed -i 's|-I$(PREFIX)/include/wine|-I${wineWowPackages.staging}/include/wine|g' Makefile.mk
       sed -i "s|= /usr|= $out|" gui/Makefile
     '';
-  
+
     buildPhase = ''
       mkdir -p $out/lib/wine
 
@@ -46,7 +57,8 @@ let
 
   WINEASIO_32bit = mkWineASIODerivation "32" pkgsi686Linux;
   WINEASIO_64bit = mkWineASIODerivation "64" pkgs;
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   name = "wineasio-${version}";
   version = "git";
   src = fetchFromGitHub {
@@ -58,12 +70,16 @@ in stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    qt5.wrapQtAppsHook python3.pkgs.wrapPython
+    qt5.wrapQtAppsHook
+    python3.pkgs.wrapPython
   ];
 
   buildInputs = [
-    WINEASIO_32bit WINEASIO_64bit
-    python3 python3.pkgs.pyqt5 qt5.full 
+    WINEASIO_32bit
+    WINEASIO_64bit
+    python3
+    python3.pkgs.pyqt5
+    qt5.full
   ];
 
   pythonPath = with python3.pkgs; [
@@ -92,7 +108,7 @@ in stdenv.mkDerivation rec {
     exec $out/share/wineasio/settings.py "\''$@"
     EOf
   '';
-  
+
   installPhase = ''
     mkdir -p $out/bin
     cd gui

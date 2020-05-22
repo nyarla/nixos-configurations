@@ -4,7 +4,8 @@ let
     url = "https://archive.org/download/VST2SDK/vst_sdk2_4_rev2.zip";
     sha256 = "1x4qfviwcssk4fswhqks745jicblpy352kd69p7cqmgfcxhckq79";
   };
-in multiStdenv.mkDerivation rec {
+in
+multiStdenv.mkDerivation rec {
   version = "git";
   name = "airwave-${version}";
   src = fetchurl {
@@ -13,14 +14,18 @@ in multiStdenv.mkDerivation rec {
   };
 
   buildInputs = [
-    cmake makeWrapper
+    cmake
+    makeWrapper
   ];
 
   nativeBuildInputs = [
-    file xorg.libX11 qt5.qtbase wineWowPackages.staging
+    file
+    xorg.libX11
+    qt5.qtbase
+    wineWowPackages.staging
     pkgsi686Linux.xorg.libX11
   ];
-   
+
   postPatch = ''
     substituteInPlace src/common/storage.cpp --replace '"/bin"' '"/libexec"'
     substituteInPlace src/host/CMakeLists.txt --replace '-m32' \

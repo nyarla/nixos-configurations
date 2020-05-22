@@ -5,7 +5,7 @@
   networking.wireless = {
     enable = true;
     networks = {
-      dummy = {};
+      dummy = { };
     };
   };
   services.connman = {

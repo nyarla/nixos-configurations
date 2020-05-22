@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 let
   apps = with pkgs; [ mullvad-vpn wireguard-tools ];
-in {
+in
+{
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 

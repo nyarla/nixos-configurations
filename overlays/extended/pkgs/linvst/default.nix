@@ -3,13 +3,14 @@ stdenv.mkDerivation rec {
   name = "linvst";
   version = "git";
 
-  src     = fetchurl {
+  src = fetchurl {
     url = "https://github.com/osxmidi/LinVst/archive/master.tar.gz";
-    sha256 = "1hhwrzc9s91k2ir3gag6ibcjybvxr2ai5mw7gk4fnc7n7c5ghfma";
+    sha256 = "1jfsxxmg5nb0y6x760phdw7b86i8jzprgwmfcdchdq2qvsz8pjc7";
   };
 
   nativeBuildInputs = [
-    wineWowPackages.staging gnused
+    wineWowPackages.staging
+    gnused
   ];
 
   buildInputs = [

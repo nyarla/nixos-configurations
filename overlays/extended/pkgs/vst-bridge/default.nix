@@ -4,7 +4,8 @@ let
     url = "https://archive.org/download/VST2SDK/vst_sdk2_4_rev2.zip";
     sha256 = "1x4qfviwcssk4fswhqks745jicblpy352kd69p7cqmgfcxhckq79";
   };
-in multiStdenv.mkDerivation rec {
+in
+multiStdenv.mkDerivation rec {
   name = "vst-bridge";
   version = "git";
   src = fetchurl {
@@ -21,8 +22,12 @@ in multiStdenv.mkDerivation rec {
   '';
 
   buildInputs = [
-    xorg.libX11 xorg.libXcomposite wineWowPackages.staging file
-    pkgsi686Linux.xorg.libX11 pkgsi686Linux.xorg.libXcomposite 
+    xorg.libX11
+    xorg.libXcomposite
+    wineWowPackages.staging
+    file
+    pkgsi686Linux.xorg.libX11
+    pkgsi686Linux.xorg.libXcomposite
   ];
 
   nativeBuildInputs = [ gnused ];

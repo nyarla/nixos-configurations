@@ -17,12 +17,17 @@ gcc8Stdenv.mkDerivation rec {
   '';
 
   nativeBuildInputs = [
-    cmake pkgconfig gettext
+    cmake
+    pkgconfig
+    gettext
 
   ];
 
   buildInputs = [
-    xorg.libxcb.dev xorg.libXau xorg.libXdmcp xorg.libpthreadstubs
+    xorg.libxcb.dev
+    xorg.libXau
+    xorg.libXdmcp
+    xorg.libpthreadstubs
     wineWowPackages.staging
   ];
 }

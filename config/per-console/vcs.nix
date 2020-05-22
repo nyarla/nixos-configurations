@@ -5,6 +5,6 @@
     mercurial
     bazaar
     subversion
-    cvs 
+    cvs
   ];
 }

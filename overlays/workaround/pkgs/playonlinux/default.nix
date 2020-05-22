@@ -22,28 +22,27 @@
 , xorg
 , libGL
 }:
-
 let
   version = "4.3.4";
 
-  binpath = stdenv.lib.makeBinPath
-    [ cabextract
-      python2Packages.python
-      gettext
-      glxinfo
-      gnupg
-      icoutils
-      imagemagick
-      netcat-gnu
-      p7zip
-      unzip
-      wget
-      xdg-user-dirs
-      xterm
-      which
-      curl
-      jq
-    ];
+  binpath = stdenv.lib.makeBinPath [
+    cabextract
+    python2Packages.python
+    gettext
+    glxinfo
+    gnupg
+    icoutils
+    imagemagick
+    netcat-gnu
+    p7zip
+    unzip
+    wget
+    xdg-user-dirs
+    xterm
+    which
+    curl
+    jq
+  ];
 
   ld32 =
     if stdenv.hostPlatform.system == "x86_64-linux" then "${pkgsi686Linux.gcc}/nix-support/dynamic-linker"
@@ -52,46 +51,149 @@ let
   ld64 = "${stdenv.cc}/nix-support/dynamic-linker";
   libs = pkgs: stdenv.lib.makeLibraryPath [ xorg.libX11 libGL ];
 
-  wine-rt-x86   = pkgs.pkgsi686Linux.buildFHSUserEnv rec {
+  wine-rt-x86 = pkgs.pkgsi686Linux.buildFHSUserEnv rec {
     name = "wine-rt-x86-env";
     targetPkgs = pkgs: (with pkgs; [
-      libcap libpng libjpeg cups lcms2 gettext dbus mpg123 openal
-      cairo libtiff unixODBC samba4 ncurses5 libva libpcap libv4l
-      sane-backends gsm libgphoto2 openldap fontconfig alsaLib
-      libpulseaudio udev vulkan-loader SDL2 gtk3 glib
-      opencl-headers ocl-icd libxml2 libxslt openssl gnutls
-      libGLU_combined mesa_noglu.osmesa libdrm perl glibcLocales
-      fontconfig freetype
-      jack1 gcc gnumake binutils glibc
+      libcap
+      libpng
+      libjpeg
+      cups
+      lcms2
+      gettext
+      dbus
+      mpg123
+      openal
+      cairo
+      libtiff
+      unixODBC
+      samba4
+      ncurses5
+      libva
+      libpcap
+      libv4l
+      sane-backends
+      gsm
+      libgphoto2
+      openldap
+      fontconfig
+      alsaLib
+      libpulseaudio
+      udev
+      vulkan-loader
+      SDL2
+      gtk3
+      glib
+      opencl-headers
+      ocl-icd
+      libxml2
+      libxslt
+      openssl
+      gnutls
+      libGLU_combined
+      mesa_noglu.osmesa
+      libdrm
+      perl
+      glibcLocales
+      fontconfig
+      freetype
+      jack1
+      gcc
+      gnumake
+      binutils
+      glibc
     ] ++ (with gst_all_1; [
-      gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav
+      gstreamer
+      gst-plugins-base
+      gst-plugins-good
+      gst-plugins-bad
+      gst-plugins-ugly
+      gst-libav
     ]) ++ (with xorg; [
-      libXi libXcursor libXrandr libXrender libXxf86vm libXcomposite libXext libX11
+      libXi
+      libXcursor
+      libXrandr
+      libXrender
+      libXxf86vm
+      libXcomposite
+      libXext
+      libX11
     ]));
     runScript = "env";
   };
 
-  wine-rt-amd64   = pkgs.buildFHSUserEnv rec {
+  wine-rt-amd64 = pkgs.buildFHSUserEnv rec {
     name = "wine-rt-amd64-env";
     targetPkgs = pkgs: (with pkgs; [
-      libcap libpng libjpeg cups lcms2 gettext dbus mpg123 openal
-      cairo libtiff unixODBC samba4 ncurses5 libva libpcap libv4l
-      sane-backends gsm libgphoto2 openldap fontconfig alsaLib
-      libpulseaudio udev vulkan-loader SDL2 gtk3 glib
-      opencl-headers ocl-icd libxml2 libxslt openssl gnutls
-      libGLU_combined mesa_noglu.osmesa libdrm perl glibcLocales
-      fontconfig freetype 
+      libcap
+      libpng
+      libjpeg
+      cups
+      lcms2
+      gettext
+      dbus
+      mpg123
+      openal
+      cairo
+      libtiff
+      unixODBC
+      samba4
+      ncurses5
+      libva
+      libpcap
+      libv4l
+      sane-backends
+      gsm
+      libgphoto2
+      openldap
+      fontconfig
+      alsaLib
+      libpulseaudio
+      udev
+      vulkan-loader
+      SDL2
+      gtk3
+      glib
+      opencl-headers
+      ocl-icd
+      libxml2
+      libxslt
+      openssl
+      gnutls
+      libGLU_combined
+      mesa_noglu.osmesa
+      libdrm
+      perl
+      glibcLocales
+      fontconfig
+      freetype
 
-      jack1 gcc gnumake binutils glibc
+      jack1
+      gcc
+      gnumake
+      binutils
+      glibc
     ] ++ (with gst_all_1; [
-      gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav
+      gstreamer
+      gst-plugins-base
+      gst-plugins-good
+      gst-plugins-bad
+      gst-plugins-ugly
+      gst-libav
     ]) ++ (with xorg; [
-      libXi libXcursor libXrandr libXrender libXxf86vm libXcomposite libXext libX11
+      libXi
+      libXcursor
+      libXrandr
+      libXrender
+      libXxf86vm
+      libXcomposite
+      libXext
+      libX11
     ]));
     runScript = "env";
   };
 
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   name = "playonlinux-${version}";
 
   src = fetchurl {
@@ -102,7 +204,8 @@ in stdenv.mkDerivation {
   nativeBuildInputs = [ makeWrapper ];
 
   buildInputs =
-    [ python2Packages.python
+    [
+      python2Packages.python
       python2Packages.wxPython
       python2Packages.setuptools
       xorg.libX11

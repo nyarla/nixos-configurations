@@ -1,17 +1,25 @@
 { config, pkgs, ... }:
 let
   apps = (with pkgs.mate; [
-    caja caja-extensions
-    engrampa eom atril pluma
+    caja
+    caja-extensions
+    engrampa
+    eom
+    atril
+    pluma
   ]) ++ (with pkgs; [
-    gnome3.gnome-font-viewer udisks2 glib
+    gnome3.gnome-font-viewer
+    udisks2
+    glib
+    gnome3.ghex
   ]);
-in {
+in
+{
   environment.systemPackages = apps;
   services.dbus.packages = apps;
-  users.groups.storage = {};
+  users.groups.storage = { };
   security.polkit = {
-    enable      = true;
+    enable = true;
     extraConfig = ''
       polkit.addRule(function(action, subject) {
         if ( action.id === "org.freedesktop.udisks2.encrypted-unlock-system" && subject.isInGroup("storage") ) {

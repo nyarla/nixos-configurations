@@ -1,8 +1,10 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    linuxkit docker_compose docker
-  ]; 
+    linuxkit
+    docker_compose
+    docker
+  ];
 
   virtualisation.docker = {
     enable = true;

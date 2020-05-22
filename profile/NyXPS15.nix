@@ -8,11 +8,11 @@
     ../config/per-bundle/bspwm.nix
     ../config/per-bundle/development.nix
     ../config/per-bundle/shell.nix
-    
+
     ../config/per-desktop/bitwig.nix
     ../config/per-desktop/hidpi.nix
     ../config/per-desktop/virtualbox.nix
-    
+
     ../config/per-location/jp.nix
 
     ../config/per-machine/NyXPS15.nix

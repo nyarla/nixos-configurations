@@ -1,4 +1,4 @@
-{ stdenv, python2, python2Packages, fetchFromGitHub, fetchurl, fontforge}:
+{ stdenv, python2, python2Packages, fetchFromGitHub, fetchurl, fontforge }:
 let
   font-linux = fetchurl {
     url = "https://raw.githubusercontent.com/lukas-w/font-logos/master/assets/font-logos.ttf";
@@ -6,17 +6,18 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  name    = "fontmerger";
+  name = "fontmerger";
   version = "git";
   src = fetchFromGitHub {
-    owner   = "iij";
-    repo    = "fontmerger";
-    rev     = "3432e19b6d99422889c4ceec4d9f4dbb25000cc8";
-    sha256  = "0cbmks0x93gn72avpayhvr0lr77gnsb81yq2iq9rg985idgsv626";
+    owner = "iij";
+    repo = "fontmerger";
+    rev = "3432e19b6d99422889c4ceec4d9f4dbb25000cc8";
+    sha256 = "0cbmks0x93gn72avpayhvr0lr77gnsb81yq2iq9rg985idgsv626";
   };
 
   buildInputs = [
-    python2 fontforge
+    python2
+    fontforge
   ];
 
   patchPhase = ''

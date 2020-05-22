@@ -1,12 +1,12 @@
 { stdenv, fetchFromGitHub, gtk3 }:
 stdenv.mkDerivation rec {
-  name    = "Newaita-${version}";
+  name = "Newaita-${version}";
   version = "git";
-  src     = fetchFromGitHub {
-    owner   = "cbrnix";
-    repo    = "Newaita";
-    rev     = "e80f4c3a3e1905ebc50009df8d57f37660f46b59";
-    sha256  = "0083n7m2m6b309vwrf1f7ahi2bf5ah1dzkzb0a5kvwd6adapz8fr";
+  src = fetchFromGitHub {
+    owner = "cbrnix";
+    repo = "Newaita";
+    rev = "f615f8e38fae858112180998d65b6fc552cfb1dc";
+    sha256 = "164k4hig4gmlpas7s4gb5zf8ikqy9y4jhqskzl00x1vg9hps72c7";
   };
 
   nativeBuildInputs = [ gtk3 ];

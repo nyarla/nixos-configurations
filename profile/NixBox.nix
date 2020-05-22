@@ -8,7 +8,7 @@
 
     ../config/per-software/shell.nix
     ../config/per-software/development.nix
- 
+
     ../config/per-account/nyarla.nix
   ];
 

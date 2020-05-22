@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 {
   hardware.pulseaudio = {
-    enable        = true;
-    support32Bit  = true;
-    package       = pkgs.pulseaudioFull;
+    enable = true;
+    support32Bit = true;
+    package = pkgs.pulseaudioFull;
     extraModules = [ pkgs.pulseaudio-modules-bt ];
     daemon.config = {
       default-sample-format = "s24le";

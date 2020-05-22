@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -10,6 +10,6 @@
 
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.0.2u"
+    "p7zip-16.02"
   ];
-
 }

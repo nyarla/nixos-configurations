@@ -2,7 +2,8 @@
 {
   environment.systemPackages = with pkgs; [
     whipper
-    restic rclone
+    restic
+    rclone
   ];
 
   services.dbus.packages = with pkgs; [

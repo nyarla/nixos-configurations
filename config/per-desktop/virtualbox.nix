@@ -5,7 +5,9 @@
   virtualisation.virtualbox.host.enableHardening = false;
 
   boot.blacklistedKernelModules = [
-    "kvm_intel" "kvm" "kvmgt"
+    "kvm_intel"
+    "kvm"
+    "kvmgt"
   ];
 
   boot.extraModprobeConfig = ''

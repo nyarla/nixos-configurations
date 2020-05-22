@@ -2,15 +2,19 @@
 {
   environment.systemPackages = with pkgs; [
     stdenv.cc
-    go goimports dep
+    gdb
+    go
+    goimports
     rustup
-    nodejs_latest yarn 
+    nodejs_latest
+    yarn
     deno-land
-    elmPackages.elm-format
-    perl perlPackages.Appcpanminus
-    ruby
+    # elmPackages.elm-format
+    perl
+    perlPackages.Appcpanminus
     openjdk
-  ]; 
+    vlang
+  ];
 
   environment.etc = with pkgs; {
     openjdk.source = openjdk;

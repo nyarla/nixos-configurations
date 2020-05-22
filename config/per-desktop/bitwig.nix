@@ -1,25 +1,47 @@
 { config, pkgs, ... }:
 let
   jackAudio = with pkgs; [
-    qjackctl jack2Full a2jmidid
-    jackass wineasio
+    qjackctl
+    jack2Full
+    a2jmidid
+    jackass
+    wineasio
   ];
-
   DAW = with pkgs; [
-    bitwig-studio3 lmms
+    bitwig-studio3
+    lmms
   ];
-
   bridge = with pkgs; [
-    linvst linvst-x linvst3 airwave carla cadence yabridge 
+    linvst
+    linvst3
+    carla
+    airwave
+    cadence
+    yabridge
   ];
-
   plugins = with pkgs; [
-    adlplug ams-lv2 bristol calf dexed drumgizmo drumkv1 fluidsynth fmsynth
-    helm hydrogen linuxsampler synthv1 yoshimi surge-synthesizer
+    adlplug
+    ams-lv2
+    bristol
+    calf
+    dexed
+    drumgizmo
+    drumkv1
+    fluidsynth
+    fmsynth
+    helm
+    hydrogen
+    linuxsampler
+    synthv1
+    yoshimi
+    surge-synthesizer
   ];
-in {
+in
+{
   boot.kernelModules = [
-    "snd-seq" "snd-rawmidi" "snd_virmidi"
+    "snd-seq"
+    "snd-rawmidi"
+    "snd_virmidi"
   ];
 
   boot.kernel.sysctl = {
@@ -33,12 +55,12 @@ in {
   ];
 
   security.pam.loginLimits = [
-    { domain = "@audio"; item = "memlock";  type = "-";     value = "unlimited";  }
-    { domain = "@audio"; item = "rtprio";   type = "-";     value = "99";         }
-    { domain = "@audio"; item = "nofile";   type = "soft";  value = "99999";      }
-    { domain = "@audio"; item = "nofile";   type = "hard";  value = "99999";      }
+    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+    { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
+    { domain = "@audio"; item = "nofile"; type = "soft"; value = "99999"; }
+    { domain = "@audio"; item = "nofile"; type = "hard"; value = "99999"; }
   ];
-  
+
   environment.systemPackages = jackAudio ++ DAW ++ bridge ++ plugins;
   services.dbus.packages = jackAudio ++ DAW ++ bridge;
 }

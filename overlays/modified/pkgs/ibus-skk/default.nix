@@ -1,5 +1,19 @@
-{ stdenv, fetchurl, pkgconfig, intltool, vala, wrapGAppsHook, gobjectIntrospection,
-  glib, dbus-glib, gnome3, ibus, libskk, gtk2, gtk3, python3 }:
+{ stdenv
+, fetchurl
+, pkgconfig
+, intltool
+, vala
+, wrapGAppsHook
+, gobjectIntrospection
+, glib
+, dbus-glib
+, gnome3
+, ibus
+, libskk
+, gtk2
+, gtk3
+, python3
+}:
 stdenv.mkDerivation rec {
   version = "1.4.3";
   name = "ibus-skk-${version}";
@@ -16,11 +30,23 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
-    intltool pkgconfig vala python3.pkgs.wrapPython wrapGAppsHook gobjectIntrospection
+    intltool
+    pkgconfig
+    vala
+    python3.pkgs.wrapPython
+    wrapGAppsHook
+    gobjectIntrospection
   ];
 
   buildInputs = [
-   glib dbus-glib gtk2 gtk3 libskk gnome3.dconf gnome3.libgee ibus
+    glib
+    dbus-glib
+    gtk2
+    gtk3
+    libskk
+    gnome3.dconf
+    gnome3.libgee
+    ibus
   ];
 
   postPatch = ''
@@ -33,7 +59,7 @@ stdenv.mkDerivation rec {
   '';
 
   postFixup = "wrapPythonPrograms";
-  
+
   meta = {
     isIbusEngine = true;
   };

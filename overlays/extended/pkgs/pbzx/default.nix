@@ -1,14 +1,16 @@
 { stdenv, fetchurl, pkgconfig, lzma, xar }:
 stdenv.mkDerivation rec {
-  name    = "pbzx";
+  name = "pbzx";
   version = "v1.0.2";
-  src     = fetchurl {
-    url     = "https://github.com/NiklasRosenstein/pbzx/archive/v1.0.2.tar.gz";
-    sha256  = "147xnhi0x488cjhryi641kyxpiplhk4m5fmz3d771bkhvkwkrnrk";
+  src = fetchurl {
+    url = "https://github.com/NiklasRosenstein/pbzx/archive/v1.0.2.tar.gz";
+    sha256 = "147xnhi0x488cjhryi641kyxpiplhk4m5fmz3d771bkhvkwkrnrk";
   };
 
   buildInputs = [
-    lzma xar pkgconfig
+    lzma
+    xar
+    pkgconfig
   ];
 
   buildPhase = ''

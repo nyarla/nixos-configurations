@@ -2,8 +2,7 @@
 stdenv.mkDerivation rec {
   name = "pulseaudio-module-xrdp-${version}";
   version = "0.2";
-  src = fetchurl {
-  };
+  src = fetchurl { };
 
   buildInputs = pulseaudioFull.buildInputs ++ [ pulseaudioFull.dev ];
   nativeBuildInputs = pulseaudioFull.nativeBuildInputs;

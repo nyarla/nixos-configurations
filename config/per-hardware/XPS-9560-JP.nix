@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   boot.kernelPackages = pkgs.linuxPackages_4_19;
-  boot.kernelParams  = [
+  boot.kernelParams = [
     "acpi_rev_override=1"
     "enable_fbc=1"
     "enable_psr=1"
@@ -14,7 +14,7 @@
   ];
 
   boot.cleanTmpDir = true;
-  boot.tmpOnTmpfs  = false;
+  boot.tmpOnTmpfs = false;
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTRS{idVendor}=="138a", ATTRS{idProduct}=="0091", ATTR{authorized}="0"

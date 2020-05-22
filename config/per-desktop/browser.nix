@@ -1,13 +1,15 @@
 { config, pkgs, ... }:
-let 
+let
   apps = with pkgs; [
     firefox-bin
     transmission-gtk
     browserpass
     qtpass
-    pinentry-gnome libsecret
+    pinentry-gnome
+    libsecret
   ];
-in {
+in
+{
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 }

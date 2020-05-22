@@ -7,9 +7,9 @@
   hardware.cpu.intel.updateMicrocode = true;
 
   hardware.bumblebee = {
-    enable   = true;
-    driver   = "nvidia";
-    group    = "video";
+    enable = true;
+    driver = "nvidia";
+    group = "video";
     pmMethod = "bbswitch";
   };
 
@@ -32,13 +32,12 @@
   };
 
   hardware.opengl = {
-    enable          = true;
-    driSupport      = true;
+    enable = true;
+    driSupport = true;
     driSupport32Bit = true;
-    s3tcSupport     = true;
-    extraPackages   = [ pkgs.libGL_driver config.boot.kernelPackages.nvidia_x11.out ]; 
+    extraPackages = [ pkgs.libGL_driver config.boot.kernelPackages.nvidia_x11.out ];
   };
 
-  services.xserver.useGlamor     = true;
-  services.xserver.videoDrivers  = [ "i915" ];
+  services.xserver.useGlamor = true;
+  services.xserver.videoDrivers = [ "i915" ];
 }

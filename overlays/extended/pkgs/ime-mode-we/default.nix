@@ -8,11 +8,14 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [
-    wrapGAppsHook python3.pkgs.wrapPython gobjectIntrospection
+    wrapGAppsHook
+    python3.pkgs.wrapPython
+    gobjectIntrospection
   ];
 
   buildInputs = [
-    python3.pkgs.pygobject3 ibus.out
+    python3.pkgs.pygobject3
+    ibus.out
   ];
 
   pythonPath = [ python3.pkgs.pygobject3 ibus.out ];
@@ -26,7 +29,7 @@ stdenv.mkDerivation rec {
 
     cp local/bin/* $out/bin
   '';
-  
+
   preFixup = ''
     chmod +x $out/bin/*
 

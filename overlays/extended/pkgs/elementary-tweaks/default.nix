@@ -1,14 +1,29 @@
-{ stdenv, fetchFromGitHub, pantheon, pkgconfig, meson, python3, ninja
-, vala, gtk3, libgee, gettext, clutter-gtk, libunity, gnome2, polkit 
-, wrapGAppsHook, gobject-introspection }:
+{ stdenv
+, fetchFromGitHub
+, pantheon
+, pkgconfig
+, meson
+, python3
+, ninja
+, vala
+, gtk3
+, libgee
+, gettext
+, clutter-gtk
+, libunity
+, gnome2
+, polkit
+, wrapGAppsHook
+, gobject-introspection
+}:
 stdenv.mkDerivation rec {
-  pname     = "elementary-tweaks";
-  version   = "git";
-  src       = fetchFromGitHub {
-    owner   = "elementary-tweaks";
-    repo    = pname;
-    rev     = "47574c8b64e1d362db5055b82334717515977a73";
-    sha256  = "1njl51bh7asx5vf806wgs5fp525fdn2kdsvp8f0qhlcws5zkvikh";
+  pname = "elementary-tweaks";
+  version = "git";
+  src = fetchFromGitHub {
+    owner = "elementary-tweaks";
+    repo = pname;
+    rev = "47574c8b64e1d362db5055b82334717515977a73";
+    sha256 = "1njl51bh7asx5vf806wgs5fp525fdn2kdsvp8f0qhlcws5zkvikh";
   };
 
   passthru = {

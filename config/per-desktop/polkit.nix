@@ -1,15 +1,16 @@
 { config, pkgs, ... }:
-let 
+let
   apps = with pkgs; [
-    mate.mate-polkit 
+    mate.mate-polkit
   ];
-in {
+in
+{
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 
-  users.groups.storage = {};
+  users.groups.storage = { };
   security.polkit = {
-    enable      = true;
+    enable = true;
     extraConfig = ''
       polkit.addRule(function(action, subject) {
         if ( action.id === "org.freedesktop.udisks2.encrypted-unlock-system" && subject.isInGroup("storage") ) {

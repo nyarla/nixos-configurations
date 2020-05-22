@@ -5,27 +5,30 @@ let
       - vmci.tar
       - vsock.tar
   '';
-  vmci-src  = requireFile {
-    name    = "vmci.tar";
-    sha256  = "1jr8j9iqwj0rmjhiqn80g3cpfaass7wfn57y2y1jxrkaadv76mbk";
+  vmci-src = requireFile {
+    name = "vmci.tar";
+    sha256 = "1jr8j9iqwj0rmjhiqn80g3cpfaass7wfn57y2y1jxrkaadv76mbk";
     message = message;
   };
   vsock-src = requireFile {
-    name    = "vsock.tar";
-    sha256  = "046vkhpzvslfi5335g01rgyr8zc824svq51zzmby583cvp4771jm";
+    name = "vsock.tar";
+    sha256 = "046vkhpzvslfi5335g01rgyr8zc824svq51zzmby583cvp4771jm";
     message = message;
   };
-  host-src  = fetchurl {
-    url     = "https://codeload.github.com/mkubecek/vmware-host-modules/tar.gz/p15.5.0-k5.3";
-    sha256  = "0rg8x9gamx9bn3fb28r1bdrvx1x3n82iw12a9bfysvwkq011c9yr";
+  host-src = fetchurl {
+    url = "https://codeload.github.com/mkubecek/vmware-host-modules/tar.gz/p15.5.0-k5.3";
+    sha256 = "0rg8x9gamx9bn3fb28r1bdrvx1x3n82iw12a9bfysvwkq011c9yr";
   };
-in stdenv.mkDerivation rec {
-  name    = "vmware-host-modules-${version}";
+in
+stdenv.mkDerivation rec {
+  name = "vmware-host-modules-${version}";
   version = "15.5.0";
-  srcs    = [ vmci-src vsock-src host-src ];
+  srcs = [ vmci-src vsock-src host-src ];
 
   hardeningDisable = [
-    "fortify" "pic" "stackprotector"
+    "fortify"
+    "pic"
+    "stackprotector"
   ];
 
   nativeBuildInputs = kernel.moduleBuildDependencies;

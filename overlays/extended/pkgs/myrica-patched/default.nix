@@ -4,12 +4,14 @@ let
     url = "https://gist.githubusercontent.com/fatum12/941a10f31ac1ad48ccbc/raw/15b0b59bd4b372740ce944474ba103f6548b73f3/ttc2ttf.pe";
     sha256 = "09zd1g5hp6dhwlql7swq85xdg6idakl844qiprkyz52j4hbbd77i";
   };
-in stdenv.mkDerivation rec {
-  name    = "myrica-patched";
+in
+stdenv.mkDerivation rec {
+  name = "myrica-patched";
   version = "0.0.1";
-  
+
   nativeBuildInputs = [
-    fontmerger fontforge
+    fontmerger
+    fontforge
   ];
 
   unpackPhase = ''

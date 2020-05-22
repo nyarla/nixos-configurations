@@ -1,12 +1,12 @@
 { stdenv, buildFHSUserEnv, fetchurl, writeScript }:
 let
   tateditor = stdenv.mkDerivation rec {
-    name    = "tateditor-bin-${version}";
+    name = "tateditor-bin-${version}";
     version = "3.3.17";
-    src     = fetchurl {
-      url     = "https://drive.google.com/uc?export=download&id=1nIb3ocWZp7y5NwQt4K_M1F8G_r1YjMdg";
-      name    = "tateditor-gtk3-x86_64.tar.gz";
-      sha256  = "1h1x0iniqv05bhnvdicic1wpipsgq1mxk4b0pqfw35a1rplr3pln";
+    src = fetchurl {
+      url = "https://drive.google.com/uc?export=download&id=1nIb3ocWZp7y5NwQt4K_M1F8G_r1YjMdg";
+      name = "tateditor-gtk3-x86_64.tar.gz";
+      sha256 = "1h1x0iniqv05bhnvdicic1wpipsgq1mxk4b0pqfw35a1rplr3pln";
     };
 
     dontFixup = true;
@@ -17,14 +17,23 @@ let
       chmod +x $out/libexec/tateditor
     '';
   };
-in buildFHSUserEnv rec {
+in
+buildFHSUserEnv rec {
   name = "tateditor";
   targetPkgs = pkgs: (with pkgs; [
-    libuuid zlib glib pango cairo gdk_pixbuf fontconfig
+    libuuid
+    zlib
+    glib
+    pango
+    cairo
+    gdk_pixbuf
+    fontconfig
   ]) ++ (with pkgs.xorg; [
-    libX11 libXxf86vm libSM
+    libX11
+    libXxf86vm
+    libSM
   ]);
-  
+
   runScript = writeScript "tateditor" ''
     #!${stdenv.shell}
 

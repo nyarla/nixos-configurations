@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    awscli nixops
+    awscli
+    nixops
     google-cloud-sdk
-  ]; 
+  ];
 }

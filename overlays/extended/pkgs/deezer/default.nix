@@ -1,24 +1,24 @@
 { stdenv, fetchurl, electron_5, nodePackages, p7zip, makeDesktopItem }:
 stdenv.mkDerivation rec {
-  name    = "deezer";
+  name = "deezer";
   version = "4.14.1";
-  src     = fetchurl {
-    url     = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
-    sha256  = "0z6z1qdqlxja4vx8248v67axncfc3rzqxx5m1w2xrcmg6rzpsyrc";
+  src = fetchurl {
+    url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
+    sha256 = "0z6z1qdqlxja4vx8248v67axncfc3rzqxx5m1w2xrcmg6rzpsyrc";
   };
 
   dontStrip = true;
 
   desktopItem = makeDesktopItem {
-    name          = "deezer";
-    desktopName   = "Deezer HiFi Desktop";
-    comment       = "Deezer HiFi Desktop Music Player";
-    genericName   = "Music Player";
-    exec          = "@out@/bin/deezer";
-    icon          = "deezer";
+    name = "deezer";
+    desktopName = "Deezer HiFi Desktop";
+    comment = "Deezer HiFi Desktop Music Player";
+    genericName = "Music Player";
+    exec = "@out@/bin/deezer";
+    icon = "deezer";
     startupNotify = "true";
-    categories    = ";Audio;";
-    extraEntries  = ''
+    categories = ";Audio;";
+    extraEntries = ''
       StartupWMClass="deezer";
     '';
   };

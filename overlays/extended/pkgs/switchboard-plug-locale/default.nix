@@ -1,13 +1,29 @@
-{ stdenv, fetchurl, pkgconfig, meson, python3, ninja
-, gettext, vala, gtk3, clutter-gtk, libgee, libunity
-, accountsservice, ibus, gnome3, pantheon, polkit
-, wrapGAppsHook, gobject-introspection }:
+{ stdenv
+, fetchurl
+, pkgconfig
+, meson
+, python3
+, ninja
+, gettext
+, vala
+, gtk3
+, clutter-gtk
+, libgee
+, libunity
+, accountsservice
+, ibus
+, gnome3
+, pantheon
+, polkit
+, wrapGAppsHook
+, gobject-introspection
+}:
 stdenv.mkDerivation rec {
   pname = "switchboard-plug-locale";
   version = "2.4.1";
   src = fetchurl {
-    url     = "https://github.com/elementary/switchboard-plug-locale/archive/2.4.1.tar.gz";
-    sha256  = "02rd92v18xp8vhhmgxj3xcmz8hda7zgayrip6m2bc7rgr2f12m9l";
+    url = "https://github.com/elementary/switchboard-plug-locale/archive/2.4.1.tar.gz";
+    sha256 = "02rd92v18xp8vhhmgxj3xcmz8hda7zgayrip6m2bc7rgr2f12m9l";
   };
 
   passthru = {

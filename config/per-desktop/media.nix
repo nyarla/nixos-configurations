@@ -2,7 +2,7 @@
 let
   apps = with pkgs; [
     pavucontrol
-    lxappearance-gtk3
+    lxappearance
     arandr
     calibre
     deadbeef

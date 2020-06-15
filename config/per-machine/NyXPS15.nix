@@ -126,75 +126,38 @@
           export HOME=/home/nyarla
           export tag="$(date +%Y-%m-%d)"
 
-          for repo in /run/media/nyarla/DATA/Backup rclone:teracloud:Backup ; do
-          # /etc/nixos
-          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-            --tag=$tag \
-            --password-file=/etc/restic/password \
-            --exclude-file=/etc/restic/ignore \
-            -r $repo/nixos backup \
-            /etc/nixos
+          backup() {
+            ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+              --tag=$tag \
+              --password-file=/etc/restic/password \
+              --exclude-file=/etc/restic/ignore \
+              -r rclone:teracloud:Backup/$1 backup $2
+          }
 
-          # ~/Documents
-          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-            --tag=$tag \
-            --password-file=/etc/restic/password \
-            --exclude-file=/etc/restic/ignore \
-            -r $repo/Documents backup \
-            /home/nyarla/Documents
-
-          # ~/local/dev/src/github.com/nyarla
-          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-            --tag=$tag \
-            --password-file=/etc/restic/password \
-            --exclude-file=/etc/restic/ignore \
-            -r $repo/dev backup \
-            /home/nyarla/local/dev/src/github.com/nyarla
-
-          # ~/local/dotfiles
-          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-            --tag=$tag \
-            --password-file=/etc/restic/password \
-            --exclude-file=/etc/restic/ignore \
-            -r $repo/dotfiles backup \
-            /home/nyarla/local/dotfiles
-
-          # ~/local/dotvim
-          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-            --tag=$tag \
-            --password-file=/etc/restic/password \
-            --exclude-file=/etc/restic/ignore \
-            -r $repo/dotvim backup \
-            /home/nyarla/local/dotvim
-
-          # /run/media/nyarla/LINUX/Wine
-          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-            --tag=$tag \
-            --password-file=/etc/restic/password \
-            --exclude-file=/etc/restic/ignore \
-            -r $repo/Wine backup \
-            /run/media/nyarla/LINUX/Wine
-
-          # /run/media/nyarla/LINUX/Files
-          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-            --tag=$tag \
-            --password-file=/etc/restic/password \
-            --exclude-file=/etc/restic/ignore \
-            -r $repo/Files backup \
-            /run/media/nyarla/LINUX/Files
-          done
-
-          for repo in /run/media/nyarla/DATA/Backup rclone:teracloud:Backup ; do
-            for backup in nixos Documents dev dotfiles dotvim Wine Files; do
-              ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-                --password-file=/etc/restic/password \
-                -r $repo/$backup \
+          prune() {
+            ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+              --password-file=/etc/restic/password \
+              -r rclone:teracloud:Backup/$1 \
                 forget \
                   --prune \
                   --keep-daily 7 \
                   --keep-weekly 2 \
                   --keep-monthly 3
-            done
+          }
+
+
+          backup Archives   /run/media/nyarla/DATA/Archives
+          backup Documents  $HOME/Documents
+          backup Files      /run/media/nyarla/LINUX/Files
+          backup Wine       /run/media/nyarla/LINUX/Wine
+
+          backup dev        $HOME/local/dev/src/github.com/nyarla
+          backup dotfiles   $HOME/local/dotfiles
+          backup dotvim     $HOME/local/dotvim
+          backup nixos      /etc/nixos
+
+          for dest in Archives Documents Files Wine dev dotfiles dotvim nixos; do
+            prune $dest 
           done
         ''}";
       User = "nyarla";

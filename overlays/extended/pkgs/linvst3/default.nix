@@ -1,5 +1,5 @@
 { stdenv
-, fetchurl
+, fetchFromGitHub
 , fetchgit
 , pkgconfig
 , gnused
@@ -35,9 +35,11 @@ in
 stdenv.mkDerivation rec {
   name = "linvst3";
   version = "1.8";
-  src = fetchurl {
-    url = "https://github.com/osxmidi/LinVst3/archive/1.8.tar.gz";
-    sha256 = "157pikv8am2b6xdpjpp4yczqgc6a4dpssmvq3f7r6181n4c53mff";
+  src = fetchFromGitHub {
+    owner = "osxmidi";
+    repo = "LinVst3";
+    rev = "59e9facbbc1670af83b3e5eb402589bba2d3f232";
+    sha256 = "1ci22d5cp0cx68hkb5248689a05dr2pqkyxg387iip91885kn6rf";
   };
 
   buildInputs = [
@@ -77,9 +79,10 @@ stdenv.mkDerivation rec {
   unpackPhase = ''
     cp -R ${vst3sdk} vst3sdk
     chmod -R +w vst3sdk
-    tar -zxvf ${src} -C .
-    mv LinVst3-1.8 vst3sdk/LinVST3
+    mkdir -p vst3/LinVST3
+    cp -R ${src} vst3sdk/LinVST3
     cd vst3sdk/LinVST3
+    chmod -R +w .
   '';
 
   nativeBuildInputs = [ gnused cmake pkgconfig ];

@@ -10,7 +10,7 @@ multiStdenv.mkDerivation rec {
   name = "airwave-${version}";
   src = fetchurl {
     url = "https://github.com/asb2m10/airwave/archive/master.tar.gz";
-    sha256 = "120a3g3cbxgwvg2g09p5cglsv7l7v06jl1gmckmq0f03nydcjdlg";
+    sha256 = "08f6rs5c4jliy502sbc5kha1h525i1mpwd8xp7da7hgglqbv0xnp";
   };
 
   buildInputs = [

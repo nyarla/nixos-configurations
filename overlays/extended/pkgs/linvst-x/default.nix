@@ -1,11 +1,13 @@
-{ multiStdenv, fetchurl, wineWowPackages, xorg, gnused }:
+{ multiStdenv, fetchFromGitHub, wineWowPackages, xorg, gnused }:
 multiStdenv.mkDerivation rec {
   name = "linvst-x";
   version = "git";
 
-  src = fetchurl {
-    url = "https://github.com/osxmidi/LinVst-X/archive/master.tar.gz";
-    sha256 = "0jxcxhnacdf72fqdycghvv0a8c33l1jxrb0dvp93407zdfxls9pk";
+  src = fetchFromGitHub {
+    owner = "osxmidi";
+    repo = "LinVst-X";
+    rev = "d462296285e3938bc227357ecbd240863968f5d2";
+    sha256 = "0b6381an8pphm937kk54jifxzjd0px3g0bnh553sv8av7hg5ifpp";
   };
 
   nativeBuildInputs = [

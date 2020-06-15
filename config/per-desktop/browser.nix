@@ -2,9 +2,8 @@
 let
   apps = with pkgs; [
     firefox-bin
+    thunderbird-bin
     transmission-gtk
-    browserpass
-    qtpass
     pinentry-gnome
     libsecret
   ];

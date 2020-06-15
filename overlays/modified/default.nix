@@ -202,21 +202,21 @@ in
   });
 
   virtualbox = super.virtualbox.overrideAttrs (old: rec {
-    version = "6.1.8";
+    version = "6.1.10";
     src = super.fetchurl {
       url = "https://download.virtualbox.org/virtualbox/${version}/VirtualBox-${version}.tar.bz2";
-      sha256 = "426888f83036b6b1f79c272d317a4e8ecf43781f6a266fd7209c03dca504eefc";
+      sha256 = "37d8b30c0be82a50c858f3fc70cde967882239b6212bb32e138d3615b423c477";
     };
   });
 
   virtualboxExtpack =
     let
-      version = "6.1.8";
+      version = "6.1.10";
     in
     super.fetchurl rec {
       name = "Oracle_VM_VirtualBox_Extension_Pack-${version}.vbox-extpack";
       url = "https://download.virtualbox.org/virtualbox/${version}/${name}";
-      sha256 = "e609c012305e4ff3c520f36b46d19dab50ecac65228a983fe85c918a1534e490";
+      sha256 = "03067f27f4da07c5d0fdafc56d27e3ea23a60682b333b2a1010fb74ef9a40c28";
     };
   vlang = super.vlang.overrideAttrs (old: rec {
     version = "0.2-dev";

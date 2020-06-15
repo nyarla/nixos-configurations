@@ -321,6 +321,9 @@ let
     super + a ; q
       ${pkgs.gnome3.zenity}/bin/zenity --question --text "ログアウトしますか？" --no-wrap && ${pkgs.bspwm}/bin/bspc quit
 
+    super + a ; s
+      ${pkgs.stdenv.shell} ~/local/dotfiles/scripts/screenshot.sh
+
     super + a ; t
       ${pkgs.mlterm}/bin/mlterm
 

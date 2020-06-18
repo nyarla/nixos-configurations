@@ -5,7 +5,7 @@
 
     ../config/per-account/nyarla.nix
 
-    ../config/per-bundle/bspwm.nix
+    ../config/per-bundle/desktop.nix
     ../config/per-bundle/development.nix
     ../config/per-bundle/shell.nix
 

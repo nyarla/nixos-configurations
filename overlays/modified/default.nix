@@ -19,6 +19,8 @@ in
 
   ibus-skk = require ./pkgs/ibus-skk/default.nix { };
 
+  jwm = require ./pkgs/jwm/default.nix { };
+
   mlterm = super.mlterm.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ self.uim super.dbus ];
     configureFlags = old.configureFlags ++ [

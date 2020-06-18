@@ -4,8 +4,8 @@ let
     light
     hsetroot
     wmctrl
+    maim
     xdotool
-    graphicsmagick
     xtitle
     xorg.xsetroot
     xorg.xwininfo

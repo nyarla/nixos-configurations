@@ -2,7 +2,7 @@
 {
   imports = [
     ../per-desktop/browser.nix
-    ../per-desktop/bspwm.nix
+    ../per-desktop/jwm.nix
     ../per-desktop/files.nix
     ../per-desktop/fonts.nix
     ../per-desktop/media.nix

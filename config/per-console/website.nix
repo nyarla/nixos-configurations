@@ -4,5 +4,6 @@
     hugo
     sassc
     mecab
+    graphicsmagick
   ];
 }

@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ../per-console/cloud.nix
-    ../per-console/container.nix
-    ../per-console/language.nix
+    ../per-console/cloud-toolchain.nix
+    ../per-console/container-toolchain.nix
+    ../per-console/development.nix
     ../per-console/vcs.nix
     ../per-console/website.nix
   ];

@@ -18,7 +18,6 @@
 
     fontconfig = {
       enable = true;
-      penultimate.enable = true;
 
       defaultFonts = {
         sansSerif = [ "Noto Sans JP" "Noto Color Emoji" ];

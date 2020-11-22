@@ -4,10 +4,6 @@
     linuxkit
     docker_compose
     docker
+    act
   ];
-
-  virtualisation.docker = {
-    enable = true;
-    storageDriver = "overlay2";
-  };
 }

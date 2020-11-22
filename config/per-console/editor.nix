@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    vimHugeX
+    neovim
     editorconfig-core-c
 
     nixpkgs-fmt
@@ -9,6 +9,6 @@
   ];
 
   services.dbus.packages = with pkgs; [
-    vimHugeX
+    neovim
   ];
 }

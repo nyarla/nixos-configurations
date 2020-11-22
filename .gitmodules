@@ -1,0 +1,3 @@
+[submodule "external/WSL2"]
+	path = external/WSL2
+	url = https://github.com/Trundle/NixOS-WSL

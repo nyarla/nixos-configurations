@@ -4,6 +4,7 @@
     curl
     wget
     bind
-    keychain # mosh
+    keychain
+    mosh
   ];
 }

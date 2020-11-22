@@ -14,6 +14,4 @@
     "ntp2.jst.mfeed.ad.jp"
     "ntp3.jst.mfeed.ad.jp"
   ];
-
-
 }

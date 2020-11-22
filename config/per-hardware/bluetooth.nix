@@ -4,7 +4,7 @@
   hardware.bluetooth.powerOnBoot = true;
   hardware.bluetooth.package = pkgs.bluezFull;
   hardware.bluetooth.config = {
-    Geeneral = {
+    General = {
       Enable = "Source,Sink,Media,Socket";
     };
   };

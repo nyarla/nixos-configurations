@@ -7,8 +7,7 @@ let
     pinentry-gnome
     libsecret
   ];
-in
-{
+in {
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 }

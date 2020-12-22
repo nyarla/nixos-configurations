@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   # tmp
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = false;

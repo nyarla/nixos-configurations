@@ -1,16 +1,13 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   i18n.defaultLocale = "ja_JP.UTF-8";
-  i18n.supportedLocales = [
-    "ja_JP.UTF-8/UTF-8"
-    "en_US.UTF-8/UTF-8"
-  ];
+  i18n.supportedLocales = [ "ja_JP.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" ];
 
   networking.hostId = "71ca914d";
   networking.hostName = "NyXPS15";
 
   services.btrfs.autoScrub.enable = true;
-  services.btrfs.autoScrub.fileSystems = [ "/" "/nix" "/home" "/run/media/nyarla/LINUX" ];
+  services.btrfs.autoScrub.fileSystems =
+    [ "/" "/nix" "/home" "/run/media/nyarla/LINUX" ];
   services.btrfs.autoScrub.interval = "*-*-* 03:00:00";
 
   services.snapper.cleanupInterval = "1d";
@@ -50,49 +47,45 @@
     };
   };
 
-  systemd.mounts = [
-    {
-      enable = true;
-      what = "/dev/disk/by-uuid/a31a21a8-4dee-43c2-aa78-9388e42875e8";
-      where = "/run/media/nyarla/LINUX";
-      type = "btrfs";
-      mountConfig = {
-        TimeoutSec = 10;
-        Options = [ "noauto" "x-systemd.automount" "noatime" "ssd" "compress=lzo" "space_cache" ];
-      };
-    }
-  ];
+  systemd.mounts = [{
+    enable = true;
+    what = "/dev/disk/by-uuid/a31a21a8-4dee-43c2-aa78-9388e42875e8";
+    where = "/run/media/nyarla/LINUX";
+    type = "btrfs";
+    mountConfig = {
+      TimeoutSec = 10;
+      Options = [
+        "noauto"
+        "x-systemd.automount"
+        "noatime"
+        "ssd"
+        "compress=lzo"
+        "space_cache"
+      ];
+    };
+  }];
 
-  systemd.automounts = [
-    {
-      enable = true;
-      where = "/run/media/nyarla/LINUX";
-      wantedBy = [ "multi-user.target" ];
-      automountConfig = {
-        DirectoryMode = "0755";
-      };
-    }
-  ];
+  systemd.automounts = [{
+    enable = true;
+    where = "/run/media/nyarla/LINUX";
+    wantedBy = [ "multi-user.target" ];
+    automountConfig = { DirectoryMode = "0755"; };
+  }];
 
   systemd.services.syncthing = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
     wants = [ "network.target" ];
-    after = [
-      "network-online.target"
-      "systemd-resolved.service"
-    ];
-    path = [
-      pkgs.syncthing
-    ];
+    after = [ "network-online.target" "systemd-resolved.service" ];
+    path = [ pkgs.syncthing ];
     serviceConfig = {
       Type = "simple";
       User = "nyarla";
       Group = "users";
       ExecStart = "${pkgs.writeScript "synthing" ''
-          #!${pkgs.stdenv.shell}
-          ${pkgs.syncthing}/bin/syncthing -no-browser
-        ''}";
+        #!${pkgs.stdenv.shell}
+        ${pkgs.syncthing}/bin/syncthing -no-browser
+      ''}";
     };
   };
 
@@ -121,45 +114,45 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeScript "backup" ''
-          #!${pkgs.stdenv.shell}
+        #!${pkgs.stdenv.shell}
 
-          export HOME=/home/nyarla
-          export tag="$(date +%Y-%m-%d)"
+        export HOME=/home/nyarla
+        export tag="$(date +%Y-%m-%d)"
 
-          backup() {
-            ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-              --tag=$tag \
-              --password-file=/etc/restic/password \
-              --exclude-file=/etc/restic/ignore \
-              -r rclone:teracloud:Backup/$1 backup $2
-          }
+        backup() {
+          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+            --tag=$tag \
+            --password-file=/etc/restic/password \
+            --exclude-file=/etc/restic/ignore \
+            -r rclone:teracloud:Backup/$1 backup $2
+        }
 
-          prune() {
-            ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
-              --password-file=/etc/restic/password \
-              -r rclone:teracloud:Backup/$1 \
-                forget \
-                  --prune \
-                  --keep-daily 7 \
-                  --keep-weekly 2 \
-                  --keep-monthly 3
-          }
+        prune() {
+          ${pkgs.restic}/bin/restic -o rclone.program="${pkgs.rclone}/bin/rclone" \
+            --password-file=/etc/restic/password \
+            -r rclone:teracloud:Backup/$1 \
+              forget \
+                --prune \
+                --keep-daily 7 \
+                --keep-weekly 2 \
+                --keep-monthly 3
+        }
 
 
-          backup Archives   /run/media/nyarla/DATA/Archives
-          backup Documents  $HOME/Documents
-          backup Files      /run/media/nyarla/LINUX/Files
-          backup Wine       /run/media/nyarla/LINUX/Wine
+        backup Archives   /run/media/nyarla/DATA/Archives
+        backup Documents  $HOME/Documents
+        backup Files      /run/media/nyarla/LINUX/Files
+        backup Wine       /run/media/nyarla/LINUX/Wine
 
-          backup dev        $HOME/local/dev/src/github.com/nyarla
-          backup dotfiles   $HOME/local/dotfiles
-          backup dotvim     $HOME/local/dotvim
-          backup nixos      /etc/nixos
+        backup dev        $HOME/local/dev/src/github.com/nyarla
+        backup dotfiles   $HOME/local/dotfiles
+        backup dotvim     $HOME/local/dotvim
+        backup nixos      /etc/nixos
 
-          for dest in Archives Documents Files Wine dev dotfiles dotvim nixos; do
-            prune $dest 
-          done
-        ''}";
+        for dest in Archives Documents Files Wine dev dotfiles dotvim nixos; do
+          prune $dest 
+        done
+      ''}";
       User = "nyarla";
       Group = "users";
     };

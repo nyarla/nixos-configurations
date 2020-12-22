@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   boot.kernelModules = [ "tcp_bbr" ];
   boot.kernel.sysctl = {
     "net.core.default_qdisc" = "fq";

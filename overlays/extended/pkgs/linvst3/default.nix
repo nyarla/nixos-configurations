@@ -1,38 +1,14 @@
-{ stdenv
-, fetchFromGitHub
-, fetchgit
-, pkgconfig
-, gnused
-, gnutar
-, cmake
-, freetype
-, fontconfig
-, xorg
-, cairo
-, gtkmm3
-, libxkbcommon
-, sqlite
-, libxcb
-, pcre
-, glib
-, utillinux
-, libselinux
-, libsepol
-, epoxy
-, libjack2
-, atk
-, at-spi2-core
-, dbus
-, wineWowPackages
-}:
+{ stdenv, fetchFromGitHub, fetchgit, pkgconfig, gnused, gnutar, cmake, freetype
+, fontconfig, xorg, cairo, gtkmm3, libxkbcommon, sqlite, libxcb, pcre, glib
+, utillinux, libselinux, libsepol, epoxy, libjack2, atk, at-spi2-core, dbus
+, wineWowPackages }:
 let
   vst3sdk = fetchgit {
     url = "https://github.com/steinbergmedia/vst3sdk";
     fetchSubmodules = true;
     sha256 = "0hqg5fl4xbrml4kr4mgbxxk8hnhags0f5lwb0m17nbajbksgan58";
   };
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   name = "linvst3";
   version = "1.8";
   src = fetchFromGitHub {

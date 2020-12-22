@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   imports = [
     ../per-console/cloud-toolchain.nix
     ../per-console/container-toolchain.nix

@@ -1,38 +1,8 @@
-{ stdenv
-, lib
-, fetchurl
-, callPackage
-, substituteAll
-, python3
-, pkgconfig
-, xorg
-, gtk3
-, glib
-, glib-networking
-, pango
-, cairo
-, gdk-pixbuf
-, atk
-, xorgserver
-, getopt
-, xauth
-, utillinux
-, which
-, ffmpeg_4
-, x264
-, libvpx
-, libwebp
-, x265
-, libfakeXinerama
-, wrapGAppsHook
-, dbus
-, gst_all_1
-, pulseaudio
-, gobject-introspection
-, buildFHSUserEnv
-, writeScript
-, pam
-}:
+{ stdenv, lib, fetchurl, callPackage, substituteAll, python3, pkgconfig, xorg
+, gtk3, glib, glib-networking, pango, cairo, gdk-pixbuf, atk, xorgserver, getopt
+, xauth, utillinux, which, ffmpeg_4, x264, libvpx, libwebp, x265
+, libfakeXinerama, wrapGAppsHook, dbus, gst_all_1, pulseaudio
+, gobject-introspection, buildFHSUserEnv, writeScript, pam }:
 
 with lib;
 let
@@ -61,42 +31,43 @@ let
     '';
 
     nativeBuildInputs = [ pkgconfig ];
-    buildInputs = with xorg; [
-      libX11
-      xorgproto
-      libXrender
-      libXi
-      libXtst
-      libXfixes
-      libXcomposite
-      libXdamage
-      libXrandr
-      libxkbfile
-    ] ++ [
-      cython
+    buildInputs = with xorg;
+      [
+        libX11
+        xorgproto
+        libXrender
+        libXi
+        libXtst
+        libXfixes
+        libXcomposite
+        libXdamage
+        libXrandr
+        libxkbfile
+      ] ++ [
+        cython
 
-      pango
-      cairo
-      gdk-pixbuf
-      atk.out
-      gtk3
-      glib
+        pango
+        cairo
+        gdk-pixbuf
+        atk.out
+        gtk3
+        glib
 
-      ffmpeg_4
-      libvpx
-      x264
-      libwebp
-      x265
+        ffmpeg_4
+        libvpx
+        x264
+        libwebp
+        x265
 
-      gst_all_1.gstreamer
-      gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-good
-      gst_all_1.gst-plugins-bad
-      gst_all_1.gst-libav
+        gst_all_1.gstreamer
+        gst_all_1.gst-plugins-base
+        gst_all_1.gst-plugins-good
+        gst_all_1.gst-plugins-bad
+        gst_all_1.gst-libav
 
-      pam
-      gobject-introspection
-    ];
+        pam
+        gobject-introspection
+      ];
     propagatedBuildInputs = with python3.pkgs; [
       pillow
       rencode
@@ -140,7 +111,7 @@ let
     passthru = { inherit xf86videodummy; };
 
     meta = {
-      homepage = http://xpra.org/;
+      homepage = "http://xpra.org/";
       downloadPage = "https://xpra.org/src/";
       downloadURLRegexp = "xpra-.*[.]tar[.]xz$";
       description = "Persistent remote applications for X";
@@ -161,66 +132,67 @@ let
 
   xpra-run = buildFHSUserEnv rec {
     name = "xpra-run";
-    targetPkgs = pkgs: (with pkgs.xorg; [
-      xorgserver
-      xauth
-      libX11
-      xorgproto
-      libXrender
-      libXi
-      libXtst
-      libXfixes
-      libXcomposite
-      libXdamage
-      libXrandr
-      libxkbfile
-    ]) ++ (with pkgs; [
-      cython
-      python3
+    targetPkgs = pkgs:
+      (with pkgs.xorg; [
+        xorgserver
+        xauth
+        libX11
+        xorgproto
+        libXrender
+        libXi
+        libXtst
+        libXfixes
+        libXcomposite
+        libXdamage
+        libXrandr
+        libxkbfile
+      ]) ++ (with pkgs; [
+        cython
+        python3
 
-      pango
-      cairo
-      gdk-pixbuf
-      atk.out
-      gtk3
-      glib
+        pango
+        cairo
+        gdk-pixbuf
+        atk.out
+        gtk3
+        glib
 
-      ffmpeg_4
-      libvpx
-      x264
-      libwebp
-      x265
+        ffmpeg_4
+        libvpx
+        x264
+        libwebp
+        x265
 
-      gst_all_1.gstreamer
-      gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-good
-      gst_all_1.gst-plugins-bad
-      gst_all_1.gst-libav
+        gst_all_1.gstreamer
+        gst_all_1.gst-plugins-base
+        gst_all_1.gst-plugins-good
+        gst_all_1.gst-plugins-bad
+        gst_all_1.gst-libav
 
-      pam
-      gobject-introspection
-    ]) ++ (with python3.pkgs; [
-      pillow
-      rencode
-      pycrypto
-      cryptography
-      pycups
-      lz4
-      dbus-python
-      netifaces
-      numpy
-      pygobject3
-      pycairo
-      gst-python
-      pam
-      pyopengl
-      paramiko
-      opencv4
-      python-uinput
-      pyxdg
-      ipaddress
-      idna
-    ]);
+        pam
+        gobject-introspection
+      ]) ++ (with python3.pkgs; [
+        pillow
+        rencode
+        pycrypto
+        cryptography
+        pycups
+        lz4
+        dbus-python
+        netifaces
+        numpy
+        pygobject3
+        pycairo
+        gst-python
+        pam
+        pyopengl
+        paramiko
+        opencv4
+        python-uinput
+        pyxdg
+        ipaddress
+        idna
+      ]);
 
     runScript = writeScript "xpra" ''
       #!${stdenv.shell}
@@ -233,8 +205,7 @@ let
       exec $cmd "$@"
     '';
   };
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   name = "xpra-wrapper";
 
   phases = [ "installPhase" "fixupPhase" ];
@@ -302,7 +273,7 @@ stdenv.mkDerivation rec {
     mkdir -p $out/bin
 
     cd ${xpra}/bin
-    for cmd in ''$(\ls .); do
+    for cmd in $(\ls .); do
       echo -e "#!${stdenv.shell}\nexec ${xpra-run}/bin/xpra-run ''${cmd} \"\$@\"" >$out/bin/''${cmd}
       chmod +x $out/bin/''${cmd}
     done

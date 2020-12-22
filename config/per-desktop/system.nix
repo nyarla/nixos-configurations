@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   programs.dconf.enable = true;
   services.accounts-daemon.enable = true;
   services.gnome3.gnome-keyring.enable = true;

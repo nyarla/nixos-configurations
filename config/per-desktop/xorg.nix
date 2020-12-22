@@ -12,8 +12,7 @@ let
     xorg.xdpyinfo
     xorg.xrdb
   ];
-in
-{
+in {
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 }

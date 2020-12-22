@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   services.avahi = {
     enable = true;
     interfaces = [ "wlp2s0" ];

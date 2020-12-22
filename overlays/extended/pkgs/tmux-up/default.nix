@@ -3,7 +3,8 @@ stdenv.mkDerivation rec {
   name = "tmux-up-${version}";
   version = "git";
   src = fetchurl {
-    url = "https://raw.githubusercontent.com/jamesottaway/tmux-up/master/tmux-up";
+    url =
+      "https://raw.githubusercontent.com/jamesottaway/tmux-up/master/tmux-up";
     sha256 = "0mm2y72qk1k80kl6cxhgzwyvlsbmbkkiyc7igwiq6pnn0fa7nl32";
   };
 

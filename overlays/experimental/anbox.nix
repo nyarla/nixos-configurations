@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   virtualisation.anbox = {
     enable = true;
     ipv4 = {

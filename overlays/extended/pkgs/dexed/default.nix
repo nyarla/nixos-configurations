@@ -1,15 +1,5 @@
-{ gcc7Stdenv
-, fetchurl
-, pkgconfig
-, freeglut
-, alsaLib
-, curl
-, openssl
-, freetype
-, libjack2
-, xorg
-, mesa
-}:
+{ gcc7Stdenv, fetchurl, pkgconfig, freeglut, alsaLib, curl, openssl, freetype
+, libjack2, xorg, mesa }:
 gcc7Stdenv.mkDerivation rec {
   name = "dexed";
   version = "0.9.4";
@@ -20,22 +10,15 @@ gcc7Stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkgconfig ];
 
-  buildInputs = [
-    freeglut
-    alsaLib
-    curl
-    openssl
-    freetype
-    libjack2
-    mesa
-  ] ++ (with xorg; [
-    libX11
-    libXcomposite
-    libXcursor
-    libXinerama
-    libXrandr
-    libXext
-  ]);
+  buildInputs = [ freeglut alsaLib curl openssl freetype libjack2 mesa ]
+    ++ (with xorg; [
+      libX11
+      libXcomposite
+      libXcursor
+      libXinerama
+      libXrandr
+      libXext
+    ]);
 
   buildPhase = ''
     cd Builds/Linux

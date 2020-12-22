@@ -9,7 +9,8 @@ stdenv.mkDerivation rec {
   };
 
   meta = with stdenv.lib; {
-    description = "Run command with CJK-friendly wcwidth(3) to fix ambiguous width chars";
+    description =
+      "Run command with CJK-friendly wcwidth(3) to fix ambiguous width chars";
     homepage = "https://github.com/fumiyas/wcwidth-cjk";
     license = stdenv.lib.licenses.bsd2;
     maintainers = [ "nyarla <nyarla@thotep.net>" ];

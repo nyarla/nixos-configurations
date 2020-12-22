@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   imports = [
     ../config/per-hardware/VirtualBox.nix
     ../config/per-host/NixBox.nix
@@ -12,8 +11,9 @@
     ../config/per-account/nyarla.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    # vimHugeX
-    neovim
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      # vimHugeX
+      neovim
+    ];
 }

@@ -1,3 +1,1 @@
-{ config, pkgs, ... }: {
-  programs.adb.enable = true;
-}
+{ config, pkgs, ... }: { programs.adb.enable = true; }

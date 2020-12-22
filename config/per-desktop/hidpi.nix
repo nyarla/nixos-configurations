@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   services.xserver.dpi = 192;
   fonts.fontconfig.dpi = 192;
 

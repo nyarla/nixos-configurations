@@ -10,14 +10,9 @@ stdenv.mkDerivation rec {
     sha256 = "0b61r8fhyin0bhwgja3mqsagqmmsw67r188k19pc06di8nf2xf6a";
   };
 
-  nativeBuildInputs = [
-    wineWowPackages.staging
-    gnused
-  ];
+  nativeBuildInputs = [ wineWowPackages.staging gnused ];
 
-  buildInputs = [
-    xorg.libX11
-  ];
+  buildInputs = [ xorg.libX11 ];
 
   patchPhase = ''
     rm Makefile

@@ -11,8 +11,7 @@ let
     inherit message;
   };
 
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   name = "plastik-themes-${version}";
   version = "2019-09-03";
   src = themes;

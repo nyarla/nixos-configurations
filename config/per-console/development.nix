@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     stdenv.cc
     gdb
@@ -22,7 +21,5 @@
     vlang
   ];
 
-  environment.etc = with pkgs; {
-    openjdk.source = openjdk;
-  };
+  environment.etc = with pkgs; { openjdk.source = openjdk; };
 }

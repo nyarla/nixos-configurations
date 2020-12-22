@@ -1,21 +1,6 @@
-{ stdenv
-, fetchFromGitHub
-, pantheon
-, pkgconfig
-, meson
-, python3
-, ninja
-, vala
-, gtk3
-, libgee
-, gettext
-, clutter-gtk
-, libunity
-, gnome2
-, polkit
-, wrapGAppsHook
-, gobject-introspection
-}:
+{ stdenv, fetchFromGitHub, pantheon, pkgconfig, meson, python3, ninja, vala
+, gtk3, libgee, gettext, clutter-gtk, libunity, gnome2, polkit, wrapGAppsHook
+, gobject-introspection }:
 stdenv.mkDerivation rec {
   pname = "elementary-tweaks";
   version = "git";
@@ -26,11 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "1njl51bh7asx5vf806wgs5fp525fdn2kdsvp8f0qhlcws5zkvikh";
   };
 
-  passthru = {
-    updateScript = pantheon.updateScript {
-      repoName = pname;
-    };
-  };
+  passthru = { updateScript = pantheon.updateScript { repoName = pname; }; };
 
   nativeBuildInputs = [
     gettext
@@ -55,7 +36,7 @@ stdenv.mkDerivation rec {
     polkit
   ];
 
-  PKG_CONFIG_SWITCHBOARD_2_0_PLUGSDIR = "${placeholder ''out''}/lib/switchboard";
+  PKG_CONFIG_SWITCHBOARD_2_0_PLUGSDIR = "${placeholder "out"}/lib/switchboard";
 
   postPatch = ''
     chmod +x meson/post_install.py

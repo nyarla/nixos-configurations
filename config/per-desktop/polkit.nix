@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
-let
-  apps = with pkgs; [
-    mate.mate-polkit
-  ];
-in
-{
+let apps = with pkgs; [ mate.mate-polkit ];
+in {
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 

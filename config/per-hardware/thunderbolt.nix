@@ -1,4 +1,1 @@
-{ config, pkgs, ... }:
-{
-  services.hardware.bolt.enable = true;
-}
+{ config, pkgs, ... }: { services.hardware.bolt.enable = true; }

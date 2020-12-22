@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   imports = [
     ../config/per-hardware/Hyper-V.nix
     ../config/per-host/Nix-V.nix
@@ -20,7 +19,5 @@
     ../config/per-account/nyarla.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
+  environment.systemPackages = with pkgs; [ neovim ];
 }

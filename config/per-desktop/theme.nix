@@ -9,8 +9,7 @@ let
     qt5.full
     libsForQt5.qtstyleplugins
   ];
-in
-{
+in {
   environment.variables = {
     GTK_CSD = "0";
     QT_QPA_PLATFORMTHEME = "gtk3";

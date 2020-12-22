@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   console.useXkbConfig = true;
   services.xserver.layout = "us";
   services.xserver.xkbModel = "pc104";

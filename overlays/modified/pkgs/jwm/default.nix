@@ -1,25 +1,6 @@
-{ stdenv
-, fetchurl
-, pkgconfig
-, gettext
-, which
-, xorg
-, libX11
-, libXext
-, libXinerama
-, libXpm
-, libXft
-, libXau
-, libXdmcp
-, libXmu
-, libpng
-, libjpeg
-, expat
-, xorgproto
-, librsvg
-, freetype
-, fontconfig
-}:
+{ stdenv, fetchurl, pkgconfig, gettext, which, xorg, libX11, libXext
+, libXinerama, libXpm, libXft, libXau, libXdmcp, libXmu, libpng, libjpeg, expat
+, xorgproto, librsvg, freetype, fontconfig }:
 
 stdenv.mkDerivation rec {
   pname = "jwm";

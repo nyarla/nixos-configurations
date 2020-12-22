@@ -1,30 +1,26 @@
 self: super: {
   qjackctl = super.qjackctl.override { libjack2 = super.jack1; };
 
-  wineWithWineASIO =
-    let
-      wineasio = super.fetchurl {
-        url = "https://github.com/jhernberg/wineasio/archive/master.tar.gz";
-        sha256 = "0c7xqkk2i3y9gxq80mvvhx3nbgi0bq2gbqpgnlzxdld9a3k3pipb";
-      };
+  wineWithWineASIO = let
+    wineasio = super.fetchurl {
+      url = "https://github.com/jhernberg/wineasio/archive/master.tar.gz";
+      sha256 = "0c7xqkk2i3y9gxq80mvvhx3nbgi0bq2gbqpgnlzxdld9a3k3pipb";
+    };
 
-      asiosdk = super.fetchurl {
-        url = "http://www.steinberg.net/sdk_downloads/asiosdk2.3.zip";
-        sha256 = "16qvyfc5hnsy9pgzq3xgxmlm799rb6spcq2cg1lgajhlx4h508k9";
-      };
+    asiosdk = super.fetchurl {
+      url = "http://www.steinberg.net/sdk_downloads/asiosdk2.3.zip";
+      sha256 = "16qvyfc5hnsy9pgzq3xgxmlm799rb6spcq2cg1lgajhlx4h508k9";
+    };
 
-      toBuildInputs = arch: pkgs: super.lib.concatList (map pkgs arch);
-      overrideAttrs = wine: super.lib.overrideDerivation wine (old: rec {
-        buildInputs = old.buildInputs ++ (toBuildInputs [ super.pkgs super.pkgsi686Linux ] (pkgs: [
-          pkgs.jack1
-        ])
-        );
+    toBuildInputs = arch: pkgs: super.lib.concatList (map pkgs arch);
+    overrideAttrs = wine:
+      super.lib.overrideDerivation wine (old: rec {
+        buildInputs = old.buildInputs
+          ++ (toBuildInputs [ super.pkgs super.pkgsi686Linux ]
+            (pkgs: [ pkgs.jack1 ]));
 
-        nativeBuildInputs = old.nativeBuildInputs ++ (with super; [
-          ed
-          gnused
-          unzip
-        ]);
+        nativeBuildInputs = old.nativeBuildInputs
+          ++ (with super; [ ed gnused unzip ]);
 
         postInstall = old.postInstall + ''
           cd ../
@@ -54,8 +50,5 @@ self: super: {
           fi
         '';
       });
-    in
-    overrideAttrs (super.wineUnstable.override {
-      wineBuild = "wineWow";
-    });
+  in overrideAttrs (super.wineUnstable.override { wineBuild = "wineWow"; });
 }

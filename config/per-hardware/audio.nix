@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   hardware.pulseaudio = {
     enable = true;
     support32Bit = true;
@@ -17,7 +16,6 @@
       flat-volumes = "no";
     };
   };
-
 
   # nixpkgs.config.pulseaudio = true;
 }

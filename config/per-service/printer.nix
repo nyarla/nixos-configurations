@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   hardware.sane.enable = true;
   environment.etc = {
     "sane.d/pixma.conf" = {
@@ -11,8 +10,5 @@
   networking.firewall.allowedUDPPorts = [ 8612 ];
 
   services.printing.enable = true;
-  services.printing.drivers = with pkgs; [
-    gutenprint
-    cups-bjnp
-  ];
+  services.printing.drivers = with pkgs; [ gutenprint cups-bjnp ];
 }

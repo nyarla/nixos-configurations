@@ -1,21 +1,5 @@
-{ stdenv
-, requireFile
-, unzip
-, patchelf
-, xorg
-, gtkmm3
-, atkmm
-, pangomm
-, cairomm
-, glibmm
-, glib
-, gtk3
-, gdk_pixbuf
-, libsigcxx
-, expat
-, zlib
-, libdrm
-, libpulseaudio
+{ stdenv, requireFile, unzip, patchelf, xorg, gtkmm3, atkmm, pangomm, cairomm
+, glibmm, glib, gtk3, gdk_pixbuf, libsigcxx, expat, zlib, libdrm, libpulseaudio
 }:
 stdenv.mkDerivation rec {
   name = "mirror-dtc-client-${version}";
@@ -56,7 +40,8 @@ stdenv.mkDerivation rec {
     stdenv.cc.cc
   ];
 
-  libPath = (stdenv.lib.makeLibraryPath buildInputs) + ":/run/opengl-driver/lib";
+  libPath = (stdenv.lib.makeLibraryPath buildInputs)
+    + ":/run/opengl-driver/lib";
 
   unpackPhase = ''
     unzip ${src}

@@ -16,26 +16,20 @@ let
     message = message;
   };
   host-src = fetchurl {
-    url = "https://codeload.github.com/mkubecek/vmware-host-modules/tar.gz/p15.5.0-k5.3";
+    url =
+      "https://codeload.github.com/mkubecek/vmware-host-modules/tar.gz/p15.5.0-k5.3";
     sha256 = "0rg8x9gamx9bn3fb28r1bdrvx1x3n82iw12a9bfysvwkq011c9yr";
   };
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   name = "vmware-host-modules-${version}";
   version = "15.5.0";
   srcs = [ vmci-src vsock-src host-src ];
 
-  hardeningDisable = [
-    "fortify"
-    "pic"
-    "stackprotector"
-  ];
+  hardeningDisable = [ "fortify" "pic" "stackprotector" ];
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
-  patches = [
-    ./vmware-host-modules.patch
-  ];
+  patches = [ ./vmware-host-modules.patch ];
 
   unpackPhase = ''
     mkdir -p tmp
@@ -56,7 +50,7 @@ stdenv.mkDerivation rec {
     for mod in vmmon vmnet vmci vsock; do
       cd "$mod"-only;
       sed -i 's|EXTRA_CFLAGS|ccflags-y|g' Makefile.kernel
-      make -C "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build" M=''$(pwd) SRCROOT=''$(pwd) VM_KBUILD=1 modules
+      make -C "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build" M=$(pwd) SRCROOT=$(pwd) VM_KBUILD=1 modules
       cd ../
     done
   '';

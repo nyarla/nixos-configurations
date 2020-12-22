@@ -11,8 +11,7 @@ let
     # tateditor
     simple-scan
   ];
-in
-{
+in {
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 }

@@ -1,9 +1,3 @@
-{ config, pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    lsof
-    htop
-    pciutils
-    usbutils
-  ];
+{ config, pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ lsof htop pciutils usbutils ];
 }

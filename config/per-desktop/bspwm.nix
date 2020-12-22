@@ -1,12 +1,6 @@
 { config, pkgs, ... }:
 let
-  apps = with pkgs; [
-    polybarFull
-    dunst
-    rofi
-    bspwm
-    sxhkd
-  ];
+  apps = with pkgs; [ polybarFull dunst rofi bspwm sxhkd ];
   addToXDGDirs = p: ''
     if test -d "${p}/share"; then
       case "''${XDG_DATA_DIRS}" in
@@ -34,24 +28,21 @@ let
       esac
     fi
   '';
-  nixos-gsettings-overrides = pkgs.runCommand "nixos-gsettings-overrides"
-    { }
-    ''
-      mkdir -p $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
-      cp -rf ${pkgs.gnome3.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0/schemas/*.xml \
-        $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
+  nixos-gsettings-overrides = pkgs.runCommand "nixos-gsettings-overrides" { } ''
+    mkdir -p $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
+    cp -rf ${pkgs.gnome3.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0/schemas/*.xml \
+      $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
 
-      ${pkgs.stdenv.lib.concatMapStrings
-        (p: ''
-          if test -d ${p}/share/gsettings-schemas; then
-            cp -rf ${p}/share/gsettings-schemas/*/glib-2.0/schemas/* \
-              $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
-          fi
-        '')
-        (config.environment.systemPackages ++ [ config.i18n.inputMethod.package ] ++ apps)}
+    ${pkgs.stdenv.lib.concatMapStrings (p: ''
+      if test -d ${p}/share/gsettings-schemas; then
+        cp -rf ${p}/share/gsettings-schemas/*/glib-2.0/schemas/* \
+          $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
+      fi
+    '') (config.environment.systemPackages
+      ++ [ config.i18n.inputMethod.package ] ++ apps)}
 
-      ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
-    '';
+    ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
+  '';
   polybar = pkgs.writeText "polybar" ''
     [colors]
     gray-brightest = #FFFFFF
@@ -280,22 +271,25 @@ let
 
     bspc config click_to_focus button1
     bspc config focus_follows_pointer true
-    
+
     bspc config pointer_modifier mod1
     bspc config pointer_action1 move
     bspc config pointer_action2 resize_side
     bspc config pointer_action3 resize_corner
-    
+
     bspc config external_rules_command ${bspwmRules}
 
     if test ! -d /run/media/nyarla/DATA ; then
-      ${pkgs.glib}/bin/gio mount -d ''$(${pkgs.coreutils}/bin/readlink -e /dev/disk/by-uuid/c915d2df-c24e-4cf6-ab32-bf996ca84505)
+      ${pkgs.glib}/bin/gio mount -d $(${pkgs.coreutils}/bin/readlink -e /dev/disk/by-uuid/c915d2df-c24e-4cf6-ab32-bf996ca84505)
     fi
-    
-    ${pkgs.hsetroot}/bin/hsetroot -full ${pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-mosaic-blue.png";
-      sha256 = "1cbcssa8qi0giza0k240w5yy4yb2bhc1p1r7pw8qmziprcmwv5n5";
-      }}
+
+    ${pkgs.hsetroot}/bin/hsetroot -full ${
+      pkgs.fetchurl {
+        url =
+          "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-mosaic-blue.png";
+        sha256 = "1cbcssa8qi0giza0k240w5yy4yb2bhc1p1r7pw8qmziprcmwv5n5";
+      }
+    }
     ${polybarLaunch} &
   '';
   Xresources = pkgs.writeText "Xresources" ''
@@ -387,14 +381,11 @@ let
     XF86MonBrightnessUp
       ${pkgs.light}/bin/light -A 5%
   '';
-in
-{
+in {
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 
-  systemd.packages = with pkgs; [
-    dunst
-  ];
+  systemd.packages = with pkgs; [ dunst ];
 
   services.compton = {
     enable = true;
@@ -403,9 +394,7 @@ in
     shadow = true;
     shadowOffsets = [ (-15) (-15) ];
     shadowOpacity = 0.2;
-    shadowExclude = [
-      "class_g = 'Firefox' && argb"
-    ];
+    shadowExclude = [ "class_g = 'Firefox' && argb" ];
 
     fade = true;
     fadeDelta = 10;
@@ -413,9 +402,7 @@ in
 
     vSync = true;
 
-    settings = {
-      "shadow-radius" = 15;
-    };
+    settings = { "shadow-radius" = 15; };
   };
 
   services.xserver = {
@@ -472,10 +459,9 @@ in
           export NIX_GSETTINGS_OVERRIDES_DIR=${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas
           export CAJA_EXTENSION_DIRS=$CAJA_EXTENSION_DIRS''${CAJA_EXTENSION_DIRS:+:}${config.system.path}/lib/caja/extensions-2.0/
 
-          ${pkgs.stdenv.lib.concatMapStrings
-            (p: ''
-              ${addToXDGDirs p}
-            '') config.environment.systemPackages}
+          ${pkgs.stdenv.lib.concatMapStrings (p: ''
+            ${addToXDGDirs p}
+          '') config.environment.systemPackages}
 
           export XCURSOR_THEME=capitaine-cursors-white
           export XCURSOR_SIZE=48

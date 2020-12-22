@@ -1,25 +1,17 @@
-{ fetchFromGitHub
-, pkgs
-, pkgsi686Linux
-, pkgsCross
-, pkgconfig
-, wineWowPackages
-, which
-}:
+{ fetchFromGitHub, pkgs, pkgsi686Linux, pkgsCross, pkgconfig, wineWowPackages
+, which }:
 let
   mkCarlaDerivation = arch: pkgs:
     let
-      winCross = (if arch == "32" then pkgsCross.mingw32 else pkgsCross.mingwW64);
+      winCross =
+        (if arch == "32" then pkgsCross.mingw32 else pkgsCross.mingwW64);
       winPrefix = (if arch == "32" then "i686" else "x86_64");
       pthread = winCross.windows.mingw_w64_pthreads.overrideAttrs (old: {
-        configureFlags = [
-          "--disable-shared"
-          "--enable-static"
-        ];
-        LDFLAGS = "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic";
+        configureFlags = [ "--disable-shared" "--enable-static" ];
+        LDFLAGS =
+          "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic";
       });
-    in
-    pkgs.stdenv.mkDerivation rec {
+    in pkgs.stdenv.mkDerivation rec {
       name = "carla";
       version = "v2.1";
       src = fetchFromGitHub {
@@ -39,22 +31,11 @@ let
         wineWowPackages.staging
       ];
 
-      pythonPath = with pkgs.python3Packages; [
-        rdflib
-        pyliblo
-        pyqt5
-      ];
+      pythonPath = with pkgs.python3Packages; [ rdflib pyliblo pyqt5 ];
 
-      buildInputs = with pkgs; [
-        file
-        liblo
-        alsaLib
-        fluidsynth
-        ffmpeg
-        jack2
-        libpulseaudio
-        libsndfile
-      ] ++ pythonPath;
+      buildInputs = with pkgs;
+        [ file liblo alsaLib fluidsynth ffmpeg jack2 libpulseaudio libsndfile ]
+        ++ pythonPath;
 
       installFlags = [ "PREFIX=$(out)" ];
 
@@ -98,8 +79,7 @@ let
 
   carla-32bit = mkCarlaDerivation "32" pkgsi686Linux;
   carla-64bit = mkCarlaDerivation "64" pkgs;
-in
-carla-64bit.overrideAttrs (old: {
+in carla-64bit.overrideAttrs (old: {
   postPatch = ''
     sed -i 's|"carla-bridge-posix32"|"carla-bridge-native"|' source/backend/engine/CarlaEngine.cpp
     sed -i 's!bridgeBinary(pData->options.binaryDir);!bridgeBinary( (btype == BINARY_POSIX32 || btype == BINARY_WIN32 ) ? "${carla-32bit}/lib/carla" : pData->options.binaryDir);!' \

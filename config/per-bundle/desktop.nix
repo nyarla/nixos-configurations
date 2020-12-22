@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   imports = [
     ../per-desktop/browser.nix
     ../per-desktop/jwm.nix

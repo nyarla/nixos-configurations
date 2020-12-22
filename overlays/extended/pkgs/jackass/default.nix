@@ -1,11 +1,11 @@
-{ multiStdenv, fetchzip, fetchurl, pkgsi686Linux, libjack2, wineWowPackages, xorg, gnused }:
+{ multiStdenv, fetchzip, fetchurl, pkgsi686Linux, libjack2, wineWowPackages
+, xorg, gnused }:
 let
   vst2sdk = fetchzip {
     url = "https://archive.org/download/VST2SDK/vst_sdk2_4_rev2.zip";
     sha256 = "1x4qfviwcssk4fswhqks745jicblpy352kd69p7cqmgfcxhckq79";
   };
-in
-multiStdenv.mkDerivation rec {
+in multiStdenv.mkDerivation rec {
   name = "Jackass-${version}";
   version = "v1.1";
   src = fetchurl {

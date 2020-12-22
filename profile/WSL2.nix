@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   imports = [
     # account
     ../config/per-account/nyarla.nix

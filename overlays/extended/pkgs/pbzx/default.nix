@@ -7,11 +7,7 @@ stdenv.mkDerivation rec {
     sha256 = "147xnhi0x488cjhryi641kyxpiplhk4m5fmz3d771bkhvkwkrnrk";
   };
 
-  buildInputs = [
-    lzma
-    xar
-    pkgconfig
-  ];
+  buildInputs = [ lzma xar pkgconfig ];
 
   buildPhase = ''
     ${stdenv.cc}/bin/gcc -o pbzx pbzx.c $(pkg-config liblzma --cflags --libs) -lxar

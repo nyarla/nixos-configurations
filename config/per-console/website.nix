@@ -1,9 +1,3 @@
-{ config, pkgs, ... }:
-{
-  environment.systemPackages = with pkgs; [
-    hugo
-    sassc
-    mecab
-    graphicsmagick
-  ];
+{ config, pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ hugo sassc mecab graphicsmagick ];
 }

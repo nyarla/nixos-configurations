@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   boot.kernelPackages = pkgs.linuxPackages_4_19;
   boot.kernelParams = [
     "acpi_rev_override=1"

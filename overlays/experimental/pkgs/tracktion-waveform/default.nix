@@ -1,28 +1,16 @@
-{ stdenv
-, fetchurl
-, atk
-, patchelf
-, alsaLib
-, freetype
-, curlFull
-, libjack2
-, libglvnd
-, libX11
-, libXext
-,
-}:
+{ stdenv, fetchurl, atk, patchelf, alsaLib, freetype, curlFull, libjack2
+, libglvnd, libX11, libXext, }:
 stdenv.mkDerivation rec {
   version = "8.2.7";
   name = "tracktion-waveform-${version}";
 
   src = fetchurl {
-    url = "https://s3-us-west-2.amazonaws.com/tracktion-marketplace-public/archive/waveform/827/Waveform-installer-64bit-linux-8.2.7.deb";
+    url =
+      "https://s3-us-west-2.amazonaws.com/tracktion-marketplace-public/archive/waveform/827/Waveform-installer-64bit-linux-8.2.7.deb";
     sha256 = "0rxgnakv5b4nz6q0swin8ykpvm5mh4q06qypfs3xgcvn8wkygps5";
   };
 
-  nativeBuildInputs = [
-    patchelf
-  ];
+  nativeBuildInputs = [ patchelf ];
 
   buildInputs = [
     atk

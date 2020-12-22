@@ -3,7 +3,8 @@ stdenv.mkDerivation rec {
   name = "deezer";
   version = "4.14.1";
   src = fetchurl {
-    url = "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
+    url =
+      "https://www.deezer.com/desktop/download/artifact/win32/x86/${version}";
     sha256 = "0z6z1qdqlxja4vx8248v67axncfc3rzqxx5m1w2xrcmg6rzpsyrc";
   };
 
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
 
   unpackPhase = ''
     echo ${src}
-    7z x -so ${src} "\''$PLUGINSDIR/app-32.7z"> app-32.7z 
+    7z x -so ${src} "\$PLUGINSDIR/app-32.7z"> app-32.7z 
     7z x -y -bsp0 -bso0 app-32.7z
     cd resources
     asar extract app.asar app
@@ -50,7 +51,7 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/bin
     echo "#!${stdenv.shell}" >$out/bin/deezer
-    echo "exec ${electron_5}/bin/electron ''${out}/share/deezer/app.asar \"\''$@\"" >>$out/bin/deezer
+    echo "exec ${electron_5}/bin/electron ''${out}/share/deezer/app.asar \"\$@\"" >>$out/bin/deezer
     chmod +x $out/bin/deezer
 
     mkdir -p $out/share/deezer

@@ -6,8 +6,7 @@ let
   #     url = "https://github.com/NixOS/nixpkgs/archive/1b89bffcf47dc1e271bea128635e33efd9481b93.tar.gz";
   #     sha256 = "1l02i0hlqbzwxr7sm0y92nw4498xpdvg0ll7i4ladkpm866r4pwj";
   #   }) { };
-in
-{
+in {
   bitwig-studio3 = super.bitwig-studio3.overrideAttrs (old: rec {
     name = "bitwig-studio3-${version}";
     version = "3.2";

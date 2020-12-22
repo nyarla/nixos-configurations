@@ -10,14 +10,9 @@ multiStdenv.mkDerivation rec {
     sha256 = "0b6381an8pphm937kk54jifxzjd0px3g0bnh553sv8av7hg5ifpp";
   };
 
-  nativeBuildInputs = [
-    wineWowPackages.staging
-    gnused
-  ];
+  nativeBuildInputs = [ wineWowPackages.staging gnused ];
 
-  buildInputs = [
-    xorg.libX11
-  ];
+  buildInputs = [ xorg.libX11 ];
 
   patchPhase = ''
     sed -i "s!/usr!$out!" Makefile

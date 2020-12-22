@@ -1,8 +1,6 @@
 self: super:
-let
-  require = path: args: super.callPackage (import path) args;
-in
-{
+let require = path: args: super.callPackage (import path) args;
+in {
   deezer = require ./pkgs/deezer/default.nix { };
   deno-land = require ./pkgs/deno-land/default.nix { };
   dexed = require ./pkgs/dexed/default.nix { };
@@ -22,7 +20,8 @@ in
   pbzx = require ./pkgs/pbzx/default.nix { };
   plastik-theme = require ./pkgs/plastik-theme/default.nix { };
   surge-synthesizer = require ./pkgs/surge-synthesizer/default.nix { };
-  switchboard-plug-locale = require ./pkgs/switchboard-plug-locale/default.nix { };
+  switchboard-plug-locale =
+    require ./pkgs/switchboard-plug-locale/default.nix { };
   tateditor = require ./pkgs/tateditor/default.nix { };
   violin = require ./pkgs/violin/default.nix { };
   tmux-up = require ./pkgs/tmux-up/default.nix { };

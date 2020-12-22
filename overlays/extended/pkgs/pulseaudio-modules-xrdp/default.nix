@@ -11,7 +11,9 @@ stdenv.mkDerivation rec {
     tar -xvf "${pulseaudioFull.src}" && mv pulseaudio-${pulseaudioFull.version} pulse
     cd pulse
     ${pulseaudioFull.preConfigure}
-    ./configure ${stdenv.lib.strings.concatStringsSep " " pulseaudioFull.configureFlags}
+    ./configure ${
+      stdenv.lib.strings.concatStringsSep " " pulseaudioFull.configureFlags
+    }
     cd ../
 
     sed -i "s!AC_PREFIX_PROGRAM(pulseaudio)!!g" configure.ac

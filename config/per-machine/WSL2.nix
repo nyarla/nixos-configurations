@@ -4,8 +4,7 @@ let
   syschdemd = import ../../external/WSL2/syschdemd.nix {
     inherit lib pkgs config defaultUser;
   };
-in
-{
+in {
   boot.isContainer = true;
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = false;

@@ -1,7 +1,9 @@
-{ multiStdenv, pkgs, pkgsi686Linux, fetchzip, fetchFromGitHub, meson, ninja, pkgconfig, cmake, wineWowPackages, patchelf }:
+{ multiStdenv, pkgs, pkgsi686Linux, fetchzip, fetchFromGitHub, meson, ninja
+, pkgconfig, cmake, wineWowPackages, patchelf }:
 let
   bitsery = fetchzip {
-    url = "https://github.com/fraillt/bitsery/archive/d24dfe14f5a756c0f8ad3d56ae6949ecc2c99b2e.zip";
+    url =
+      "https://github.com/fraillt/bitsery/archive/d24dfe14f5a756c0f8ad3d56ae6949ecc2c99b2e.zip";
     sha256 = "0r7v2yfb2hqn8jxz33qrh8hvbwqlv89wvsdak40v3y18iqqivd92";
   };
   tomlplusplus = fetchFromGitHub {
@@ -12,13 +14,15 @@ let
     fetchSubmodules = true;
   };
   dependences = ps: {
-    boostStatic = ps.boost.override { enableStatic = true; enableShared = false; };
+    boostStatic = ps.boost.override {
+      enableStatic = true;
+      enableShared = false;
+    };
     libxcb = ps.xorg.libxcb;
   };
   i686 = dependences pkgsi686Linux;
   x86_64 = dependences pkgs;
-in
-multiStdenv.mkDerivation rec {
+in multiStdenv.mkDerivation rec {
   pname = "yabridge";
   version = "git";
   src = fetchFromGitHub {
@@ -28,9 +32,7 @@ multiStdenv.mkDerivation rec {
     sha256 = "1gw66s1whngrcpslgsxkzn5khjaanzwpgvas0snbffw7arlg26c3";
   };
 
-  patches = [
-    ./build_on_nixos.patch
-  ];
+  patches = [ ./build_on_nixos.patch ];
 
   postPatch = ''
     sed -i 's|@XCB@|${multiStdenv.lib.getLib i686.libxcb}|' meson.build
@@ -51,20 +53,18 @@ multiStdenv.mkDerivation rec {
   '';
 
   preConfigure = ''
-    export BOOST_INCLUDEDIR="${multiStdenv.lib.getDev x86_64.boostStatic}/include"
+    export BOOST_INCLUDEDIR="${
+      multiStdenv.lib.getDev x86_64.boostStatic
+    }/include"
     export BOOST_LIBRARYDIR="${multiStdenv.lib.getLib x86_64.boostStatic}/lib"
-    export PKG_CONFIG_LIBDIR="${multiStdenv.lib.getDev i686.libxcb}/lib/pkgconfig:${multiStdenv.lib.getDev x86_64.libxcb}/lib/pkgconfig"
+    export PKG_CONFIG_LIBDIR="${
+      multiStdenv.lib.getDev i686.libxcb
+    }/lib/pkgconfig:${multiStdenv.lib.getDev x86_64.libxcb}/lib/pkgconfig"
     export PATH="${pkgs.gcc_multi}/bin:$PATH"
     export WINEPREFIX=$(pwd)/wineprefix
   '';
 
-  nativeBuildInputs = [
-    meson
-    ninja
-    pkgconfig
-    cmake
-    patchelf
-  ];
+  nativeBuildInputs = [ meson ninja pkgconfig cmake patchelf ];
 
   buildInputs = [
     wineWowPackages.staging

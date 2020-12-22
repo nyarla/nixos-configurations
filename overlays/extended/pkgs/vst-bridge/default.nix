@@ -1,11 +1,11 @@
-{ multiStdenv, fetchzip, fetchurl, pkgsi686Linux, xorg, wineWowPackages, gnused, file }:
+{ multiStdenv, fetchzip, fetchurl, pkgsi686Linux, xorg, wineWowPackages, gnused
+, file }:
 let
   vst2sdk = fetchzip {
     url = "https://archive.org/download/VST2SDK/vst_sdk2_4_rev2.zip";
     sha256 = "1x4qfviwcssk4fswhqks745jicblpy352kd69p7cqmgfcxhckq79";
   };
-in
-multiStdenv.mkDerivation rec {
+in multiStdenv.mkDerivation rec {
   name = "vst-bridge";
   version = "git";
   src = fetchurl {

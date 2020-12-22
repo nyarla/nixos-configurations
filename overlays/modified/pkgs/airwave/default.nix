@@ -1,11 +1,11 @@
-{ multiStdenv, pkgsi686Linux, fetchurl, fetchzip, cmake, makeWrapper, file, xorg, qt5, wineWowPackages }:
+{ multiStdenv, pkgsi686Linux, fetchurl, fetchzip, cmake, makeWrapper, file, xorg
+, qt5, wineWowPackages }:
 let
   vst2sdk = fetchzip {
     url = "https://archive.org/download/VST2SDK/vst_sdk2_4_rev2.zip";
     sha256 = "1x4qfviwcssk4fswhqks745jicblpy352kd69p7cqmgfcxhckq79";
   };
-in
-multiStdenv.mkDerivation rec {
+in multiStdenv.mkDerivation rec {
   version = "git";
   name = "airwave-${version}";
   src = fetchurl {
@@ -13,10 +13,7 @@ multiStdenv.mkDerivation rec {
     sha256 = "08f6rs5c4jliy502sbc5kha1h525i1mpwd8xp7da7hgglqbv0xnp";
   };
 
-  buildInputs = [
-    cmake
-    makeWrapper
-  ];
+  buildInputs = [ cmake makeWrapper ];
 
   nativeBuildInputs = [
     file

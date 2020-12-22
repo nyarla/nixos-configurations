@@ -13,8 +13,7 @@ let
     gnome3.dconf
     gnome3.dconf-editor
   ];
-in
-{
+in {
   environment.systemPackages = apps;
   services.dbus.packages = apps;
 }

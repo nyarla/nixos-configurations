@@ -1,14 +1,11 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     neovim
     editorconfig-core-c
 
-    nixpkgs-fmt
+    nixfmt
     rnix-lsp
   ];
 
-  services.dbus.packages = with pkgs; [
-    neovim
-  ];
+  services.dbus.packages = with pkgs; [ neovim ];
 }

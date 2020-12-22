@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   fonts = {
     fonts = with pkgs; [
       # basical fonts
@@ -10,7 +9,7 @@
 
       # monospace
       myrica
-      nerdfonts-symbols
+      (nerdfonts.override { fonts = [ "Noto" ]; })
 
       # documenation
       genjyuu-gothic
@@ -18,11 +17,11 @@
 
     fontconfig = {
       enable = true;
-
       defaultFonts = {
-        sansSerif = [ "Noto Sans JP" "Noto Color Emoji" ];
-        serif = [ "Noto Serif JP" "Noto Color Emoji" ];
-        monospace = [ "MyricaM M" "Symbols Nerd Font" "Noto Color Emoji" ];
+        sansSerif = [ "Noto Sans JP" ];
+        serif = [ "Noto Serif JP" ];
+        monospace = [ "MyricaM M" ];
+        emoji = [ "Noto Color Emoji" ];
       };
     };
   };

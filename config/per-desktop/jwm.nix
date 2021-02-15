@@ -35,7 +35,7 @@ let
     cp -rf ${pkgs.gnome3.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0/schemas/*.xml \
       $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
 
-    ${pkgs.stdenv.lib.concatMapStrings (p: ''
+    ${pkgs.lib.concatMapStrings (p: ''
       if test -d ${p}/share/gsettings-schemas; then
         cp -rf ${p}/share/gsettings-schemas/*/glib-2.0/schemas/* \
           $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
@@ -121,14 +121,14 @@ in {
     };
 
     desktopManager = {
-      session = pkgs.stdenv.lib.singleton {
+      session = pkgs.lib.singleton {
         name = "jwm";
         start = ''
           export GTK_DATA_PREFIX=${config.system.path}
           export NIX_GSETTINGS_OVERRIDES_DIR=${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas
           export CAJA_EXTENSION_DIRS=$CAJA_EXTENSION_DIRS''${CAJA_EXTENSION_DIRS:+:}${config.system.path}/lib/caja/extensions-2.0/
 
-          ${pkgs.stdenv.lib.concatMapStrings (p: ''
+          ${pkgs.lib.concatMapStrings (p: ''
             ${addToXDGDirs p}
           '') config.environment.systemPackages}
 

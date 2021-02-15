@@ -21,7 +21,7 @@ in {
 
   playonlinux = let
     python = super.python2.withPackages (ps: with ps; [ wxPython setuptools ]);
-    binPath = super.stdenv.lib.makeBinPath (([ python ]) ++ (with super; [
+    binPath = super.lib.makeBinPath (([ python ]) ++ (with super; [
       cabextract
       gettext
       glxinfo

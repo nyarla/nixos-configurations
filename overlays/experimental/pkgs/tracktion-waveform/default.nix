@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, atk, patchelf, alsaLib, freetype, curlFull, libjack2
+{ stdenv, lib, fetchurl, atk, patchelf, alsaLib, freetype, curlFull, libjack2
 , libglvnd, libX11, libXext, }:
 stdenv.mkDerivation rec {
   version = "8.2.7";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     stdenv.cc.cc
   ];
 
-  libPath = stdenv.lib.makeLibraryPath buildInputs;
+  libPath = lib.makeLibraryPath buildInputs;
 
   unpackPhase = ''
     ar vx ${src}

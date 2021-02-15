@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pulseaudioFull }:
+{ stdenv, lib, fetchurl, pulseaudioFull }:
 stdenv.mkDerivation rec {
   name = "pulseaudio-module-xrdp-${version}";
   version = "0.2";
@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     cd pulse
     ${pulseaudioFull.preConfigure}
     ./configure ${
-      stdenv.lib.strings.concatStringsSep " " pulseaudioFull.configureFlags
+      lib.strings.concatStringsSep " " pulseaudioFull.configureFlags
     }
     cd ../
 

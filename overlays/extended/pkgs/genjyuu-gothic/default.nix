@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, p7zip }:
+{ stdenv, lib, fetchurl, p7zip }:
 stdenv.mkDerivation rec {
   name = "genjyuu-gothic-${version}";
   version = "2015-06-07";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   ];
 
   unpackPhase = ''
-    ${stdenv.lib.strings.concatMapStrings (file: ''
+    ${lib.strings.concatMapStrings (file: ''
       ${p7zip}/bin/7z x -y ${file} 
     '') srcs}
   '';

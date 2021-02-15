@@ -1,10 +1,10 @@
-{ stdenv, makeWrapper, fetchurl, cabextract, gettext, glxinfo, gnupg, icoutils
-, imagemagick, netcat-gnu, p7zip, python2Packages, unzip, wget, xdg-user-dirs
-, xterm, pkgs, pkgsi686Linux, which, curl, jq, xorg, libGL }:
+{ stdenv, lib, makeWrapper, fetchurl, cabextract, gettext, glxinfo, gnupg
+, icoutils, imagemagick, netcat-gnu, p7zip, python2Packages, unzip, wget
+, xdg-user-dirs, xterm, pkgs, pkgsi686Linux, which, curl, jq, xorg, libGL }:
 let
   version = "4.3.4";
 
-  binpath = stdenv.lib.makeBinPath [
+  binpath = lib.makeBinPath [
     cabextract
     python2Packages.python
     gettext
@@ -30,7 +30,7 @@ let
   else
     throw "Unsupported platform for PlayOnLinux: ${stdenv.hostPlatform.system}";
   ld64 = "${stdenv.cc}/nix-support/dynamic-linker";
-  libs = pkgs: stdenv.lib.makeLibraryPath [ xorg.libX11 libGL ];
+  libs = pkgs: lib.makeLibraryPath [ xorg.libX11 libGL ];
 
   wine-rt-x86 = pkgs.pkgsi686Linux.buildFHSUserEnv rec {
     name = "wine-rt-x86-env";
@@ -248,7 +248,7 @@ in stdenv.mkDerivation {
     done
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "GUI for managing Windows programs under linux";
     homepage = "https://www.playonlinux.com/";
     license = licenses.gpl3;

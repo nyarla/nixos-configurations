@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, GConf, gtkmm, glibmm }:
+{ stdenv, lib, fetchurl, pkgconfig, GConf, gtkmm, glibmm }:
 
 stdenv.mkDerivation rec {
   name = "gconfmm-${minVer}.3";
@@ -15,9 +15,7 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "C++ wrappers for GConf";
-
-    license = stdenv.lib.licenses.lgpl2Plus;
-
-    platforms = stdenv.lib.platforms.linux;
+    license = lib.licenses.lgpl2Plus;
+    platforms = lib.platforms.linux;
   };
 }

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl }:
+{ stdenv, lib, fetchurl }:
 let
   fonts = [
     {
@@ -83,7 +83,7 @@ in stdenv.mkDerivation rec {
   unpackPhase = ''
     mkdir -p noto
 
-    ${stdenv.lib.strings.concatMapStrings (font: ''
+    ${lib.strings.concatMapStrings (font: ''
       cp ${font} noto  
     '') files}
   '';
@@ -93,7 +93,7 @@ in stdenv.mkDerivation rec {
     mv noto $out/share/fonts/
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Beautiful and free fonts for CJK languages";
     homepage = "https://www.google.com/get/noto/help/cjk/";
     longDescription = ''

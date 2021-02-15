@@ -8,11 +8,11 @@ stdenv.mkDerivation rec {
     sha256 = "1127cdwpl2shv1lsg7l1q0cyf9x6qyvl25c3m0gfpvha305i45bi";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description =
       "Run command with CJK-friendly wcwidth(3) to fix ambiguous width chars";
     homepage = "https://github.com/fumiyas/wcwidth-cjk";
-    license = stdenv.lib.licenses.bsd2;
+    license = lib.licenses.bsd2;
     maintainers = [ "nyarla <nyarla@thotep.net>" ];
   };
 

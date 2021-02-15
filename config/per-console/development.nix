@@ -2,6 +2,8 @@
   environment.systemPackages = with pkgs; [
     stdenv.cc
     gdb
+    clang
+    clang-tools
 
     go
     goimports

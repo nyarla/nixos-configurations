@@ -2,9 +2,9 @@
   boot.kernelPackages = pkgs.linuxPackages_4_19;
   boot.kernelParams = [
     "acpi_rev_override=1"
-    "enable_fbc=1"
-    "enable_psr=1"
-    "disable_power_well=0"
+    "i915.enable_fbc=1"
+    "i915.enable_psr=1"
+    "i915.disable_power_well=0"
     "pci=nommconf"
     "pcie_aspm=force"
     "nmi_watchdog=0"

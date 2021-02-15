@@ -23,6 +23,7 @@
         monospace = [ "MyricaM M" ];
         emoji = [ "Noto Color Emoji" ];
       };
+      subpixel = { lcdfilter = "light"; };
     };
   };
 }

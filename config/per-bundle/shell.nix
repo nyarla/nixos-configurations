@@ -6,5 +6,6 @@
     ../per-console/fs.nix
     ../per-console/network.nix
     ../per-console/shell.nix
+    ../../external/nix-ld/modules/nix-ld.nix
   ];
 }

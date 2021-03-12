@@ -22,7 +22,8 @@
     ../config/per-machine/WSL2.nix
 
     # service
-    ../config/per-service/docker.nix
+    # ../config/per-service/docker.nix
+    ../config/per-service/docker-desktop-wsl2.nix
     ../config/per-service/nixpkgs.nix
   ];
 }

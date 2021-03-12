@@ -178,7 +178,8 @@ in {
       sed -i "s|@DESTDIR@\$\$\[QT_INSTALL_PLUGINS\]|$out/lib/qt-${super.qt5.qtbase.version}/plugins|" qt5/immodule/quimplatforminputcontextplugin.pro.in
     '' + old.prePatch;
 
-    nativeBuildInputs = old.nativeBuildInputs ++ [ super.qt5.qmake ];
+    nativeBuildInputs = old.nativeBuildInputs
+      ++ [ super.qt5.qmake super.qt5.wrapQtAppsHook ];
 
     buildInputs = old.buildInputs ++ [
       super.qt5.qtbase.bin
@@ -190,46 +191,4 @@ in {
     configureFlags = old.configureFlags
       ++ [ "--with-qt5-immodule" "--with-qt5" ];
   });
-
-  virtualbox = super.virtualbox.overrideAttrs (old: rec {
-    version = "6.1.10";
-    src = super.fetchurl {
-      url =
-        "https://download.virtualbox.org/virtualbox/${version}/VirtualBox-${version}.tar.bz2";
-      sha256 =
-        "37d8b30c0be82a50c858f3fc70cde967882239b6212bb32e138d3615b423c477";
-    };
-  });
-
-  virtualboxExtpack = let version = "6.1.10";
-  in super.fetchurl rec {
-    name = "Oracle_VM_VirtualBox_Extension_Pack-${version}.vbox-extpack";
-    url = "https://download.virtualbox.org/virtualbox/${version}/${name}";
-    sha256 = "03067f27f4da07c5d0fdafc56d27e3ea23a60682b333b2a1010fb74ef9a40c28";
-  };
-  vlang = super.vlang.overrideAttrs (old: rec {
-    version = "0.2-dev";
-    src = super.fetchFromGitHub {
-      owner = "vlang";
-      repo = "v";
-      rev = "722a2c71c3549fa64a1625ebd940c3633d61814e";
-      sha256 = "0k4gmyc2pxrkwf7lh0dqrpbziagrzxzg2ww7kd3l659gp1jfwjbs";
-    };
-
-    vc = super.fetchFromGitHub {
-      owner = "vlang";
-      repo = "vc";
-      rev = "45f667a15bcb6f07949f3af62efa30929e82be59";
-      sha256 = "0swaw9s79djrgqxq98bdh1w5azkykp2d3vv80918ilwkn47n0pvi";
-    };
-
-    buildPhase = ''
-      runHook preBuild
-      cc -std=gnu11 $CFLAGS -w -o v $vc/v.c -lm $LDFLAGS
-      ./v self
-      runHook postBuild
-    '';
-  });
-
-  # xpra = require ./pkgs/xpra/default.nix { };
 }

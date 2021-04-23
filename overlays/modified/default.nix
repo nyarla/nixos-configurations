@@ -15,8 +15,8 @@ in {
   jwm = require ./pkgs/jwm/default.nix { };
 
   mlterm = super.mlterm.overrideAttrs (old: rec {
-    buildInputs = old.buildInputs ++ [ self.uim super.dbus ];
-    configureFlags = old.configureFlags ++ [ "--enable-uim" ];
+    buildInputs = old.buildInputs ++ [ self.ibus super.dbus ];
+    configureFlags = old.configureFlags ++ [ "--enable-ibus" ];
   });
 
   playonlinux = let

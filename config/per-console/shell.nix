@@ -10,9 +10,6 @@
   environment.systemPackages = with pkgs; [
     zsh
     fzy
-    wcwidth-cjk
-    tmux
-    tmux-up
 
     file
     gnused

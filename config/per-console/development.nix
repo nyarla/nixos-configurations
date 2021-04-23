@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     stdenv.cc
+    binutils
     gdb
     clang
     clang-tools

@@ -9,7 +9,9 @@
 
   environment.systemPackages = with pkgs; [
     zsh
+    starship
     fzy
+    wcwidth-cjk
 
     file
     gnused

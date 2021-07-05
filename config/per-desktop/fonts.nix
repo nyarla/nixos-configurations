@@ -9,10 +9,7 @@
 
       # monospace
       myrica
-      nerdfonts-symbols
-
-      # documenation
-      genjyuu-gothic
+      nerdfont-symbols-2048
     ];
 
     fontconfig = {

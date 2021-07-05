@@ -18,6 +18,8 @@
     ../config/per-service/nix-ld.nix
     ../config/per-service/nixpkgs.nix
     ../config/per-service/tailscale.nix
+
+    ../config/per-overrides/Nix-V.nix
   ];
 
   environment.systemPackages = with pkgs; [ neovim ];

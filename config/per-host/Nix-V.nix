@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  ipv4 = "169.254.229.129";
+  ipv4 = "192.168.254.254";
   app = with pkgs; [ mlterm xclip syncthing xorg.xauth ];
 in {
   imports = [
@@ -31,7 +31,7 @@ in {
     permitRootLogin = "no";
     forwardX11 = true;
     listenAddresses = [{
-      addr = ipv4;
+      addr = "0.0.0.0";
       port = 22;
     }];
   };

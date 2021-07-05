@@ -14,11 +14,6 @@ in {
 
   jwm = require ./pkgs/jwm/default.nix { };
 
-  mlterm = super.mlterm.overrideAttrs (old: rec {
-    buildInputs = old.buildInputs ++ [ self.ibus super.dbus ];
-    configureFlags = old.configureFlags ++ [ "--enable-ibus" ];
-  });
-
   playonlinux = let
     python = super.python2.withPackages (ps: with ps; [ wxPython setuptools ]);
     binPath = super.lib.makeBinPath (([ python ]) ++ (with super; [
@@ -159,36 +154,5 @@ in {
     postPatch = ''
       sed -i 's!attach "$DISPLAYNUM"!attach socket:///run/user/$(id -u)/xpra/$(hostname)-''${DISPLAYNUM#:}!' run_scaled
     '';
-  });
-
-  tmux = super.tmux.overrideAttrs (old: rec {
-    patches = [
-      (super.fetchurl {
-        url =
-          "https://raw.githubusercontent.com/z80oolong/tmux-eaw-fix/master/tmux-3.1c-fix.diff";
-        sha256 = "13fd4n0k07q5p0gbdqkxnch1vr1v7xk87zpgjlqim1604fr7f8rc";
-      })
-    ];
-  });
-
-  uim = (super.uim.override { withQt = false; }).overrideAttrs (old: rec {
-    dontUseQmakeConfigure = true;
-
-    prePatch = ''
-      sed -i "s|@DESTDIR@\$\$\[QT_INSTALL_PLUGINS\]|$out/lib/qt-${super.qt5.qtbase.version}/plugins|" qt5/immodule/quimplatforminputcontextplugin.pro.in
-    '' + old.prePatch;
-
-    nativeBuildInputs = old.nativeBuildInputs
-      ++ [ super.qt5.qmake super.qt5.wrapQtAppsHook ];
-
-    buildInputs = old.buildInputs ++ [
-      super.qt5.qtbase.bin
-      super.qt5.qtbase.dev
-      super.qt5.qtx11extras
-      super.qt5.qttools
-    ];
-
-    configureFlags = old.configureFlags
-      ++ [ "--with-qt5-immodule" "--with-qt5" ];
   });
 }

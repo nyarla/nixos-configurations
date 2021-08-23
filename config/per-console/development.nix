@@ -5,9 +5,13 @@
     gdb
     clang
     clang-tools
+    pkgconfig
 
     go
     goimports
+
+    nim
+    nimlsp
 
     rustup
 
@@ -18,10 +22,12 @@
 
     perl
     perlPackages.Appcpanminus
+    nix-generate-from-cpan
+
+    mecab
+    openssl
 
     openjdk
-
-    vlang
   ];
 
   environment.etc = with pkgs; { openjdk.source = openjdk; };

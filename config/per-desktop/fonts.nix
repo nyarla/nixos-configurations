@@ -3,7 +3,7 @@
     fonts = with pkgs; [
       # basical fonts
       noto-fonts
-      # noto-fonts-jp
+      noto-fonts-jp
       noto-fonts-extra
       noto-fonts-emoji
 
@@ -15,9 +15,16 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        sansSerif = [ "Noto Sans" ];
-        serif = [ "Noto Serif" ];
-        monospace = [ "MyricaM M" "Noto Color Emoji" "Symbols Nerd Font" ];
+        sansSerif =
+          [ "Noto Sans CJK JP" "Noto Sans Symbols" "Noto Sans Symbols2" ];
+        serif = [ "Noto Serif JP" "Noto Sans Symbols" "Noto Sans Symbols2" ];
+        monospace = [
+          "MyricaM M"
+          "Symbols Nerd Font"
+          "Noto Color Emoji"
+          "Noto Sans Symbols"
+          "Noto Sans Symbols2"
+        ];
         emoji = [ "Noto Color Emoji" ];
       };
       subpixel = { lcdfilter = "light"; };

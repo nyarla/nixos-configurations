@@ -6,6 +6,7 @@
     clang
     clang-tools
     pkgconfig
+    colordiff
 
     go
     goimports

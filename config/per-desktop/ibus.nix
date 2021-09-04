@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs; [ ibus-skk ];
+    ibus.engines = with pkgs; [ (ibus-skk.override { layout = "us"; }) ];
   };
 
   services.dbus.packages = [ config.i18n.inputMethod.package ];

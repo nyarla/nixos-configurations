@@ -1,0 +1,5 @@
+shift + ctrl + l
+  mlterm
+
+super + l
+  dm-tool switch-to-greeter

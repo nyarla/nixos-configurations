@@ -1,7 +1,6 @@
 { config, pkgs, ... }: {
   services.avahi = {
     enable = true;
-    interfaces = [ "wlp2s0" ];
     ipv4 = true;
     ipv6 = false;
     reflector = true;

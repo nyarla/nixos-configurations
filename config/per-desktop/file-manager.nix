@@ -1,11 +1,22 @@
 { config, pkgs, ... }:
 let
-  apps = (with pkgs.mate; [ caja caja-extensions engrampa eom atril pluma ])
-    ++ (with pkgs; [ gnome3.gnome-font-viewer udisks2 glib gnome3.ghex ]);
+  apps = (with pkgs.mate; [
+    caja
+    caja-extensions
+    engrampa
+    eom
+    atril
+    pluma
+    mate-polkit
+  ]) ++ (with pkgs; [ gnome3.gnome-font-viewer udisks2 glib gnome3.ghex ]);
 in {
   environment.systemPackages = apps;
   services.dbus.packages = apps;
+
+  services.gvfs.enable = true;
+
   users.groups.storage = { };
+
   security.polkit = {
     enable = true;
     extraConfig = ''
@@ -20,5 +31,10 @@ in {
       });
     '';
   };
-  services.gvfs.enable = true;
+
+  environment.etc."profile.d/caja" = {
+    text = ''
+      export CAJA_EXTENSION_DIRS=$CAJA_EXTENSION_DIRS''${CAJA_EXTENSION_DIRS:+:}${config.system.path}lib/caja/extensions-2.0
+    '';
+  };
 }

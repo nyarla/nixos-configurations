@@ -3,9 +3,10 @@ let
   apps = with pkgs; [
     firefox-bin
     thunderbird-bin
-    transmission-gtk
+    google-chrome
     pinentry-gnome
     libsecret
+    bitwarden
   ];
 in {
   environment.systemPackages = apps;

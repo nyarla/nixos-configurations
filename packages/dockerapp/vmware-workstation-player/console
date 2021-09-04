@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-state=$HOME/local/docker/vmware
-
-docker run --rm -it --init \
-  \
-  --volume=$state:/tmp/state:rw \
-  \
-  vmware-installed --login

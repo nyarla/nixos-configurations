@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   users.users.nyarla.extraGroups = [
-    # "kvm"
-    # "libvirtd"
+    "kvm"
+    "libvirtd"
     # "vboxusers"
   ];
 }

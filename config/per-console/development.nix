@@ -23,6 +23,7 @@
 
     perl
     perlPackages.Appcpanminus
+    perlPackages.PerlTidy
     nix-generate-from-cpan
 
     mecab

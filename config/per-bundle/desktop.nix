@@ -6,6 +6,7 @@
     ../per-desktop/multimedia.nix
     ../per-desktop/office.nix
     ../per-desktop/terminal.nix
+    ../per-desktop/wine.nix
 
     # desktop
     ../per-desktop/openbox.nix

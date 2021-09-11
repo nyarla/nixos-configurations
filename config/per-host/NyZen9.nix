@@ -22,7 +22,7 @@ in {
         8085
       ];
     };
-    "wlp5s0" = {
+    "wlan0" = {
       allowedTCPPorts = [
         # syncthing
         22000

@@ -7,6 +7,7 @@ let
     pinentry-gnome
     libsecret
     bitwarden
+    keepassxc
   ];
 in {
   environment.systemPackages = apps;

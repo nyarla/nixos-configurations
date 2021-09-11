@@ -1,5 +1,18 @@
 { config, pkgs, ... }:
-let apps = with pkgs; [ openbox sxhkd wmctrl mlterm hsetroot perl ];
+let
+  apps = (with pkgs; [
+    hsetroot
+    lxappearance
+    lxqt.lxqt-config
+    lxqt.lxqt-panel
+    mlterm
+    obconf
+    openbox
+    perl
+    sxhkd
+    wmctrl
+    xdotool
+  ]) ++ pkgs.lxqt.preRequisitePackages;
 in {
   imports = [
     ../per-desktop/fonts.nix
@@ -22,6 +35,19 @@ in {
         . /etc/profile.d/$rc
       done
 
+      export LANG=ja_JP.UTF-8
+      export LC_ALL=ja_JP.UTF-8
+
+      if test -z"''${$DBUS_SESSION_BUS_ADDRESS}"; then
+        eval "$(dbus-launch --exit-with-session --sh-syntax)"
+      fi
+
+      systemctl --user import-environment DISPLAY XAUTHORITY
+
+      if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+        dbus-update-activation-environment DISPLAY XAUTHORITY
+      fi
+
       ${pkgs.sxhkd}/bin/sxhkd -c /etc/nixos/dotfiles/openbox/sxhkdrc &
 
       ${pkgs.xorg.xsetroot}/bin/xsetroot -cursur_name left_ptr
@@ -29,5 +55,5 @@ in {
     '';
   };
 
-  i18n.defaultLocale = "ja_JP.UTF-8";
+  i18n.defaultLocale = "en_US.UTF-8";
 }

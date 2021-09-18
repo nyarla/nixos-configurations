@@ -2,9 +2,11 @@
 let
   apps = (with pkgs; [
     hsetroot
+    jq
     lxappearance
     lxqt.lxqt-config
     lxqt.lxqt-panel
+    maim
     mlterm
     obconf
     openbox
@@ -49,7 +51,6 @@ in {
       fi
 
       ${pkgs.sxhkd}/bin/sxhkd -c /etc/nixos/dotfiles/openbox/sxhkdrc &
-
       ${pkgs.xorg.xsetroot}/bin/xsetroot -cursur_name left_ptr
       ${pkgs.openbox}/bin/openbox-session
     '';

@@ -6,6 +6,7 @@ in {
   services.dbus.enable = true;
 
   programs.dconf.enable = true;
+  programs.seahorse.enable = true;
 
   services.accounts-daemon.enable = true;
   services.gnome.gnome-keyring.enable = true;
@@ -13,4 +14,6 @@ in {
   services.gnome.glib-networking.enable = true;
   services.system-config-printer.enable = true;
   services.upower.enable = config.powerManagement.enable;
+
+  security.pam.services.keyring.enableGnomeKeyring = true;
 }

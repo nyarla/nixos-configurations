@@ -1,4 +1,13 @@
 { pkgs, ... }: {
-  users.users.nyarla.extraGroups =
-    [ "audio" "video" "render" "disk" "input" "storage" "lightdm" ];
+  users.users.nyarla.extraGroups = [
+    "audio"
+    "video"
+    "render"
+    "disk"
+    "input"
+    "storage"
+    "lightdm"
+    "scanner"
+    "lp"
+  ];
 }

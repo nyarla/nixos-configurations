@@ -15,5 +15,6 @@
     driSupport = true;
     driSupport32Bit = true;
     setLdLibraryPath = true;
+    extraPackages = with pkgs; [ libglvnd libvdpau-va-gl ];
   };
 }

@@ -7,6 +7,7 @@ in {
     ../per-service/docker.nix
     ../per-service/firewall.nix
     ../per-service/kvm.nix
+    ../per-service/printer.nix
     ../per-service/tailscale.nix
   ];
 

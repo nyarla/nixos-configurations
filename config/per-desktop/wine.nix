@@ -4,6 +4,7 @@ let
     wineWowPackages.staging
     (winetricks.override { wine = wineWowPackages.staging; })
     samba
+    (wineasio.override { wine = wineWowPackages.staging; })
   ];
 in {
   environment.systemPackages = apps;
@@ -13,6 +14,8 @@ in {
     wine-preloader = {
       source = "${pkgs.wineWowPackages.staging}/bin/wine-preloader";
       capabilities = "cap_net_raw+epi";
+      owner = "root";
+      group = "wheel";
     };
   };
 

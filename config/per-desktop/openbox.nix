@@ -6,6 +6,7 @@ let
     lxappearance
     lxqt.lxqt-config
     lxqt.lxqt-panel
+    lxqt.qps
     maim
     mlterm
     obconf

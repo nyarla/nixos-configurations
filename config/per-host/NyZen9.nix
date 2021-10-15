@@ -66,6 +66,48 @@ in {
     };
   };
 
+  # samba
+  services.samba = {
+    enable = true;
+    enableNmbd = true;
+    enableWinbindd = true;
+    securityType = "user";
+    package = pkgs.samba4Full;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = nixos
+      netbios name = nixos
+      security = user
+      use sendfile = yes
+      hosts allow = 192.168.254.0/24 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+    '';
+    shares = {
+      data = {
+        "path" = "/run/media/nyarla/data";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "no";
+      };
+      local = {
+        "path" = "/home/nyarla/local";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "yes";
+      };
+    };
+  };
+
   # syncthing
   systemd.services.syncthing = {
     enable = true;
@@ -86,6 +128,9 @@ in {
   };
 
   # firewall
+  networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [ 139 445 ];
+  networking.firewall.allowedUDPPorts = [ 137 138 ];
   networking.firewall.interfaces = {
     "tailscale0" = {
       allowedTCPPorts = [
@@ -93,6 +138,7 @@ in {
         8085
       ];
     };
+
     "wlan0" = {
       allowedTCPPorts = [
         # syncthing

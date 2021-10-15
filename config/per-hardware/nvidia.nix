@@ -9,7 +9,6 @@
   '';
 
   hardware.nvidia.modesetting.enable = true;
-
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -17,4 +16,7 @@
     setLdLibraryPath = true;
     extraPackages = with pkgs; [ libglvnd libvdpau-va-gl ];
   };
+
+  environment.etc."glvnd/egl_vendor.d".source =
+    "${config.boot.kernelPackages.nvidia_x11}/share/glvnd/egl_vendor.d/";
 }

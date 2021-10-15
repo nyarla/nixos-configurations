@@ -23,5 +23,7 @@
 
     bc
     tree
+
+    perlPackages.Shell
   ];
 }

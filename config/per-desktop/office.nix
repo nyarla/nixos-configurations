@@ -1,13 +1,14 @@
 { config, pkgs, ... }:
 let
   apps = with pkgs; [
-    mate.mate-calc
-    gucharmap
+    calligra
     gimp
+    gucharmap
     inkscape
+    mate.mate-calc
     peek
-    spice-up
     simple-scan
+    spice-up
   ];
 in {
   environment.systemPackages = apps;

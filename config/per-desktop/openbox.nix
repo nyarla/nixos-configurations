@@ -2,6 +2,7 @@
 let
   apps = (with pkgs; [
     hsetroot
+    i3lock-fancy
     jq
     lxappearance
     lxqt.lxqt-config

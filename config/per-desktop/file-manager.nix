@@ -34,7 +34,7 @@ in {
 
   environment.etc."profile.d/caja" = {
     text = ''
-      export CAJA_EXTENSION_DIRS=$CAJA_EXTENSION_DIRS''${CAJA_EXTENSION_DIRS:+:}${config.system.path}lib/caja/extensions-2.0
+      export CAJA_EXTENSION_DIRS=$CAJA_EXTENSION_DIRS''${CAJA_EXTENSION_DIRS:+:}${config.system.path}/lib/caja/extensions-2.0
     '';
   };
 }

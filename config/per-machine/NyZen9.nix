@@ -22,4 +22,6 @@
   boot.kernelModules = [ "k10temp" "nct6775" ];
 
   hardware.cpu.amd.updateMicrocode = true;
+
+  powerManagement.cpuFreqGovernor = "performance";
 }

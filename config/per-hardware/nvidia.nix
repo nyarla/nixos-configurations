@@ -6,9 +6,11 @@
     Option "MetaModes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
     Option "AllowIndirectGLXProtocol" "off"
     Option "TripleBuffer" "on"
+    Option "Coolbits" "28"
+    Option "AllowEmptyInitialConfiguration"
   '';
 
-  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.modesetting.enable = false;
   hardware.opengl = {
     enable = true;
     driSupport = true;

@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let sync = with pkgs; [ syncthing ];
+let sync = with pkgs; [ syncthing mosh ];
 in {
   imports = [
     ../per-service/avahi.nix
@@ -32,7 +32,7 @@ in {
 
         export HOME=/home/nyarla
 
-        export RESTIC_REPOSITORY=rclone:Teracloud:NyZen9
+        export RESTIC_REPOSITORY=rclone:Teracloud:NixOS
         export RESTIC_PASSWORD_FILE=$HOME/.config/rclone/restic
 
         export RESTIC_FORGET_ARGS="--prune --keep-daily 7 --keep-weekly 2 --keep-monthly 3"
@@ -103,9 +103,23 @@ in {
         "force group" = "users";
         "force user" = "nyarla";
         "guest ok" = "no";
-        "read only" = "yes";
+        "read only" = "no";
       };
     };
+  };
+
+  # sshd
+  services.openssh = {
+    enable = true;
+    startWhenNeeded = true;
+    permitRootLogin = "no";
+    openFirewall = false;
+    passwordAuthentication = false;
+    challengeResponseAuthentication = false;
+    listenAddresses = [{
+      addr = "0.0.0.0";
+      port = 2222;
+    }];
   };
 
   # syncthing
@@ -136,7 +150,14 @@ in {
       allowedTCPPorts = [
         # calibre-server
         8085
+
+        # sshd
+        2222
       ];
+      allowedUDPPortRanges = [{
+        from = 60000;
+        to = 61000;
+      }];
     };
 
     "wlan0" = {

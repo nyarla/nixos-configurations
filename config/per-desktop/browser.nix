@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
 let
   apps = with pkgs; [
-    firefox-bin
-    thunderbird-bin
-    google-chrome
-    pinentry-gnome
-    libsecret
     bitwarden
+    firefox-bin
+    google-chrome
     keepassxc
+    libsecret
+    pinentry-gnome
+    thunderbird-bin
   ];
 in {
   environment.systemPackages = apps;

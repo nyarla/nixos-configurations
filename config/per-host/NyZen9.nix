@@ -1,5 +1,5 @@
 { pkgs, ... }:
-let sync = with pkgs; [ syncthing mosh ];
+let apps = with pkgs; [ syncthing mosh ];
 in {
   imports = [
     ../per-service/avahi.nix
@@ -11,8 +11,8 @@ in {
     ../per-service/tailscale.nix
   ];
 
-  environment.systemPackages = sync;
-  services.dbus.packages = sync;
+  environment.systemPackages = apps;
+  services.dbus.packages = apps;
 
   # avahi
   services.avahi.interfaces = [ "wlan0" ];
@@ -65,6 +65,124 @@ in {
       Persistent = "true";
     };
   };
+
+  # kvm
+  boot.kernelModules = [ "kvm-amd" "amd_iommu" ];
+  boot.kernelParams = [
+    "amd_iommnu=on"
+    "vfio-pci.ids=1022:149c,10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
+  ];
+
+  # environment.etc."libvirt/hooks/qemu.d/DTM/prepare/begin/cryptsetup.sh" = {
+  #   text = ''
+  #     #!${pkgs.stdenv.shell}
+
+  #     set -x
+
+  #     if test ! -e /dev/mapper/Win10Pro ; then
+  #       ${pkgs.cryptsetup}/bin/cryptsetup \
+  #         --key-file /home/nyarla/local/data/keys/Win10Pro.key \
+  #         luksOpen /dev/disk/by-uuid/72185511-1e14-40c0-8c3c-07e43594d8f5 Win10Pro
+  #     fi
+  #   '';
+  #   mode = "0755";
+  # };
+
+  # environment.etc."libvirt/hooks/qemu.d/DTM/prepare/begin/hugepage.sh" = {
+  #   text = ''
+  #     #!${pkgs.stdenv.shell}
+
+  #     set -x
+
+  #     echo 35200 > /proc/sys/vm/nr_hugepages
+  #     if test 35200 != $(cat /proc/sys/vm/nr_hugepages) ; then
+  #       echo "faild to set hugepages"
+  #       echo 0 > /proc/sys/vm/nr_hugepages
+  #       exit 1
+  #     fi
+  #   '';
+  #   mode = "0755";
+  # };
+
+  # environment.etc."libvirt/hooks/qemu.d/DTM/prepare/begin/vfio.sh" = {
+  #   text = ''
+  #     #!${pkgs.stdenv.shell}
+
+  #     set -x
+
+  #     systemctl stop display-manager.service
+
+  #     ${pkgs.kmod}/bin/modprobe -r nvidia_drm nvidia_modeset nvidia_uvm nvidia
+
+  #     echo 0 > /sys/class/vtconsole/vtcon0/bind
+  #     echo 0 > /sys/class/vtconsole/vtcon1/bind
+
+  #     echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/unbind
+
+  #     sleep 2
+
+  #     ${pkgs.kmod}/bin/modprobe vfio
+  #     ${pkgs.kmod}/bin/modprobe vfio_iommnu_type1
+  #     ${pkgs.kmod}/bin/modprobe vfio_pci
+
+  #     ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_07_00_0
+  #     ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_07_00_1
+  #     ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_07_00_2
+  #     ${pkgs.libvirt}/bin/virsh nodedev-detach pci_0000_07_00_3
+  #   '';
+  #   mode = "0755";
+  # };
+
+  # environment.etc."libvirt/hooks/qemu.d/DTM/release/end/cryptsetup.sh" = {
+  #   text = ''
+  #     #!${pkgs.stdenv.shell}
+
+  #     set -x
+
+  #     if test -e /dev/mapper/Win10Pro ; then
+  #       ${pkgs.cryptsetup}/bin/cryptsetup luksClose Win10Pro
+  #     fi
+  #   '';
+  #   mode = "0755";
+  # };
+
+  # environment.etc."libvirt/hooks/qemu.d/DTM/release/end/hugepage.sh" = {
+  #   text = ''
+  #     #!${pkgs.stdenv.shell}
+  #     echo 0 > /proc/sys/vm/nr_hugepages
+  #   '';
+  #   mode = "0755";
+  # };
+
+  # environment.etc."libvirt/hooks/qemu.d/DTM/release/end/vfio.sh" = {
+  #   text = ''
+  #     #!${pkgs.stdenv.shell}
+  #     set -x
+
+  #     ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_07_00_3
+  #     ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_07_00_2
+  #     ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_07_00_1
+  #     ${pkgs.libvirt}/bin/virsh nodedev-reattach pci_0000_07_00_0
+
+  #     ${pkgs.kmod}/bin/modprobe -r vfio_pci
+  #     ${pkgs.kmod}/bin/modprobe -r vfio_iommnu_type1
+  #     ${pkgs.kmod}/bin/modprobe -r vfio
+
+  #     echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/bind
+
+  #     echo 1 > /sys/class/vtconsole/vtcon0/bind
+  #     echo 1 > /sys/class/vtconsole/vtcon1/bind
+
+  #     ${pkgs.kmod}/bin/modprobe nvidia_drm
+  #     ${pkgs.kmod}/bin/modprobe nvidia_modeset
+  #     ${pkgs.kmod}/bin/modprobe nvidia_uvm
+  #     ${pkgs.kmod}/bin/modprobe nvidia
+
+  #     ${pkgs.systemd}/bin/systemctl start display-manager.service
+  #   '';
+
+  #   mode = "0755";
+  # };
 
   # samba
   services.samba = {

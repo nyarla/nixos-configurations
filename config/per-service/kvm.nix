@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   gui = if config.services.xserver.enable then
     (with pkgs; [ virt-manager remmina ])
@@ -18,18 +18,16 @@ let
     sed -i 's|#!/bin/bash|#!/run/current-system/sw/bin/bash|' $out/bin/qemu
     chmod +x $out/bin/qemu
   '';
+
+  hasNvidia = lib.hasPrefix (lib.findFirst (x: lib.hasPrefix x "nvidia") ""
+    config.services.xserver.videoDrivers) "nvidia";
+
 in {
   environment.systemPackages = gui ++ [ pkgs.bash ];
   services.dbus.packages = gui ++ [ pkgs.bash ];
 
-  boot.kernelModules = [ "amd_iommnu" "pcie_aspm" "iommu" "vfio_pci" ];
-  boot.kernelParams = [
-    "kvm.ignore_msrs=1"
-    "amd_iommu=on"
-    "pcie_aspm=off"
-    "iommu=pt"
-    "vfio-pci.ids=1022:149c"
-  ];
+  boot.kernelModules = [ "pcie_aspm" "iommu" ];
+  boot.kernelParams = [ "iommu=pt" "kvm.ignore_msrs=1" "pcie_aspm=off" ];
 
   system.activationScripts.libvirt-hooks.text = ''
     ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks
@@ -42,8 +40,8 @@ in {
 
   virtualisation.libvirtd = {
     enable = true;
-    qemuPackage = pkgs.qemu_kvm;
-    qemuRunAsRoot = true;
+    qemu.package = pkgs.qemu_kvm;
+    qemu.runAsRoot = true;
     extraConfig = ''
       unix_sock_group = "libvirtd"
       unix_sock_ro_perms = "0770"
@@ -54,19 +52,12 @@ in {
     '';
     onBoot = "ignore";
     onShutdown = "shutdown";
-    qemuVerbatimConfig = ''
-      user = "nyarla"
+    qemu.verbatimConfig = ''
+      user = "root"
       group = "libvirtd"
 
       cgroup_device_acl = [
-        "/dev/null",
-        "/dev/full",
-        "/dev/zero",
-        "/dev/random",
-        "/dev/urandom",
-        "/dev/ptmx",
-        "/dev/kvm",
-
+      ${lib.optionalString hasNvidia ''
         "/dev/nvidia-modeset",
         "/dev/nvidia-uvm",
         "/dev/nvidia-uvm-tools",
@@ -76,7 +67,16 @@ in {
         "/dev/nvidia3",
         "/dev/nvidiactl",
         "/dev/dri/card0",
-        "/dev/dri/renderD128"
+        "/dev/dri/renderD128",
+      ''}
+
+        "/dev/null",
+        "/dev/full",
+        "/dev/zero",
+        "/dev/random",
+        "/dev/urandom",
+        "/dev/ptmx",
+        "/dev/kvm"
       ]
     '';
   };

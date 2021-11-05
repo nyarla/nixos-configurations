@@ -1,23 +1,18 @@
 { config, pkgs, ... }:
 let
-  apps = with pkgs; [
-    wineWowPackages.staging
-    (winetricks.override { wine = wineWowPackages.staging; })
-    samba
-    (wineasio.override { wine = wineWowPackages.staging; })
-  ];
+  wine-related-packages = with pkgs;
+    let
+      wine-stating-full =
+        wineWowPackages.full.override { wineRelease = "staging"; };
+      winetricks = pkgs.winetricks.override { wine = wine-stating-full; };
+      wineasio = pkgs.wineasio.override { wine = wine-stating-full; };
+      yabridge = pkgs.yabridge.override { wine = wine-stating-full; };
+      yabridgectl = pkgs.yabridgectl.override { yabridge = yabridge; };
+      jackass = pkgs.jackass.override { wine = wine-stating-full; };
+    in [ jackass wine-stating-full wineasio winetricks yabridge yabridgectl ];
 in {
-  environment.systemPackages = apps;
-  services.dbus.packages = apps;
-
-  security.wrappers = {
-    wine-preloader = {
-      source = "${pkgs.wineWowPackages.staging}/bin/wine-preloader";
-      capabilities = "cap_net_raw+epi";
-      owner = "root";
-      group = "wheel";
-    };
-  };
+  environment.systemPackages = wine-related-packages;
+  services.dbus.packages = wine-related-packages;
 
   # workaround for kindle 1.16
   security.pki.certificates = [''

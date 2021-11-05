@@ -14,6 +14,10 @@
     ../config/per-bundle/development.nix
     ../config/per-bundle/shell.nix
 
+    # software
+    ../config/per-desktop/coin.nix
+    ../config/per-desktop/daw.nix
+
     # location
     ../config/per-location/jp.nix
 

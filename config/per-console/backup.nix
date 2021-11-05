@@ -1,3 +1,3 @@
 { config, pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ restic rclone ];
+  environment.systemPackages = with pkgs; [ bup rclone restic ];
 }

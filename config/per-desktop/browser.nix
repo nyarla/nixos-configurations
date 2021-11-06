@@ -9,7 +9,4 @@ let
     pinentry-gnome
     thunderbird-bin
   ];
-in {
-  environment.systemPackages = apps;
-  services.dbus.packages = apps;
-}
+in { environment.systemPackages = apps; }

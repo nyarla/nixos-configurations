@@ -7,6 +7,4 @@
     nsfminer
     xmrig
   ];
-
-  services.dbus.packages = with pkgs; [ electrum electrum-ltc ];
 }

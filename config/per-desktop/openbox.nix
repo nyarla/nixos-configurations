@@ -28,8 +28,6 @@ in {
   ];
 
   environment.systemPackages = apps;
-  services.dbus.packages = apps;
-  #systemd.packages = with pkgs; [ dunst ];
 
   services.xserver.displayManager.defaultSession = "openbox";
   services.xserver.desktopManager.session = pkgs.lib.singleton {

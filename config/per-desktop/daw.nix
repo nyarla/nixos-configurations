@@ -53,5 +53,4 @@ in {
   ];
 
   environment.systemPackages = packages;
-  services.dbus.packages = packages;
 }

@@ -2,7 +2,6 @@
 let utils = with pkgs; [ xclip xdg_utils libnotify gksu ];
 in {
   environment.systemPackages = utils;
-  services.dbus.packages = utils;
 
   console.useXkbConfig = true;
 

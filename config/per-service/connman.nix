@@ -6,7 +6,6 @@ let
     [ ];
 in {
   environment.systemPackages = apps;
-  services.dbus.packages = apps;
 
   networking.wireless.iwd.enable = true;
   services.connman = {

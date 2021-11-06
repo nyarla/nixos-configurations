@@ -12,7 +12,6 @@ let
     in [ jackass wine-stating-full wineasio winetricks yabridge yabridgectl ];
 in {
   environment.systemPackages = wine-related-packages;
-  services.dbus.packages = wine-related-packages;
 
   # workaround for kindle 1.16
   security.pki.certificates = [''

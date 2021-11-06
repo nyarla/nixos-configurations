@@ -9,5 +9,6 @@
     ../per-console/shell.nix
 
     ../per-service/nix-ld.nix
+    ../per-service/dbus.nix
   ];
 }

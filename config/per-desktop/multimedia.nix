@@ -10,5 +10,4 @@ let
   ];
 in {
   environment.systemPackages = apps;
-  services.dbus.packages = apps;
 }

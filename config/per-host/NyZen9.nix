@@ -12,7 +12,6 @@ in {
   ];
 
   environment.systemPackages = apps;
-  services.dbus.packages = apps;
 
   # avahi
   services.avahi.interfaces = [ "wlan0" ];

@@ -2,7 +2,6 @@
 let apps = with pkgs; [ mullvad-vpn wireguard-tools ];
 in {
   environment.systemPackages = apps;
-  services.dbus.packages = apps;
 
   networking.firewall.allowedUDPPorts = [ 51820 ];
 

@@ -2,7 +2,6 @@
 let apps = with pkgs.gnome3; [ zenity gsound dconf dconf-editor ];
 in {
   environment.systemPackages = apps ++ (with pkgs; [ gtk3 ]);
-  services.dbus.packages = apps;
   services.dbus.enable = true;
 
   programs.dconf.enable = true;

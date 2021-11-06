@@ -11,6 +11,6 @@ let
     libsForQt5.qtstyleplugins
   ];
 in {
-  environment.variables = { QT_QPA_PLATFORMTHEME = "gtk2"; };
+  environment.variables = { QT_QPA_PLATFORMTHEME = "gtk3"; };
   environment.systemPackages = themes;
 }

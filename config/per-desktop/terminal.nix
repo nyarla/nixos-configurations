@@ -2,7 +2,6 @@
 let apps = with pkgs; [ mlterm fbterm ];
 in {
   environment.systemPackages = apps;
-  services.dbus.packages = apps;
 
   security.wrappers = {
     fbterm = {

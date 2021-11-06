@@ -6,7 +6,6 @@ let
     [ ];
 in {
   environment.systemPackages = utils;
-  services.dbus.packages = utils;
 
   hardware.pulseaudio = {
     enable = true;

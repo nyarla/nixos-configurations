@@ -70,7 +70,7 @@ in {
             border-width = 0px
             layout-space = 8
 
-            background-image-size = cover
+            background-image-size = contain
             background-image = "${
               pkgs.fetchurl {
                 url =

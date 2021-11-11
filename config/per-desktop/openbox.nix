@@ -40,7 +40,7 @@ in {
       export LANG=ja_JP.UTF-8
       export LC_ALL=ja_JP.UTF-8
 
-      if test -z"''${$DBUS_SESSION_BUS_ADDRESS}"; then
+      if test -z "''${$DBUS_SESSION_BUS_ADDRESS}"; then
         eval "$(dbus-launch --exit-with-session --sh-syntax)"
       fi
 

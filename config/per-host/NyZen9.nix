@@ -49,6 +49,18 @@ in {
 
         backup $HOME/local
         backup $HOME/Music
+
+        if test -d /run/media/nyarla/src/local ; then
+          backup /run/media/nyarla/src/local
+        fi
+
+        if test -d /run/media/nyarla/data/local ; then
+          backup /run/media/nyarla/data/local
+        fi
+
+        if test -d /run/media/nyarla/data/Downloads ; then
+          backup /run/media/nyarla/data/Downloads
+        fi
       '';
       User = "nyarla";
       Group = "users";

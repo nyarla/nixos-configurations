@@ -24,7 +24,6 @@ let
 
 in {
   environment.systemPackages = gui ++ [ pkgs.bash ];
-  services.dbus.packages = gui ++ [ pkgs.bash ];
 
   boot.kernelModules = [ "pcie_aspm" "iommu" ];
   boot.kernelParams = [ "iommu=pt" "kvm.ignore_msrs=1" "pcie_aspm=off" ];
@@ -50,7 +49,7 @@ in {
       auth_unix_rw = "none"
       clear_emulator_capabilities = 0
     '';
-    onBoot = "ignore";
+    onBoot = "start";
     onShutdown = "shutdown";
     qemu.verbatimConfig = ''
       user = "root"

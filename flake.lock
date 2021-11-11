@@ -2,8 +2,11 @@
   "nodes": {
     "dotnix": {
       "locked": {
-        "lastModified": 1636163870,
-        "narHash": "sha256-idMh3jr0+tESEyshVBsDHWpP+WJgIYaIinWi6mM5m3A=",
+        "lastModified": 1636611207,
+        "narHash": "sha256-C5mF94hkDqn04wPVcrhud0Swa+rkS1SWKPygA+omabM=",
+        "ref": "main",
+        "rev": "51eeee62efac410e7ba9429f7648c916c98ceb3e",
+        "revCount": 18,
         "type": "git",
         "url": "file:///etc/nixos/external/dotnix"
       },

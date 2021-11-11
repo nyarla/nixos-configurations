@@ -1,5 +1,10 @@
 { config, pkgs, ... }: {
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnsupportedSystem = true;
-  nixpkgs.overlays = [ (import ../../external/dotnix/pkgs.nix) ];
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
+  nixpkgs = { config.allowUnfree = true; };
 }

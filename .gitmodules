@@ -1,9 +1,6 @@
 [submodule "external/WSL2"]
 	path = external/WSL2
 	url = https://github.com/Trundle/NixOS-WSL
-[submodule "external/nix-ld"]
-	path = external/nix-ld
-	url = https://github.com/Mic92/nix-ld
 [submodule "external/dotnix"]
 	path = external/dotnix
 	url = https://github.com/nyarla/dotnix

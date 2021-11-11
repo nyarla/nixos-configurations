@@ -1,17 +1,15 @@
 { config, pkgs, ... }:
 let
-  wine-related-packages = with pkgs;
-    let
-      wine-stating-full =
-        wineWowPackages.full.override { wineRelease = "staging"; };
-      winetricks = pkgs.winetricks.override { wine = wine-stating-full; };
-      wineasio = pkgs.wineasio.override { wine = wine-stating-full; };
-      yabridge = pkgs.yabridge.override { wine = wine-stating-full; };
-      yabridgectl = pkgs.yabridgectl.override { yabridge = yabridge; };
-      jackass = pkgs.jackass.override { wine = wine-stating-full; };
-    in [ jackass wine-stating-full wineasio winetricks yabridge yabridgectl ];
+  wine-related-packages = let
+    wine-stating-full =
+      pkgs.wineWowPackages.full.override { wineRelease = "staging"; };
+    wineasio = pkgs.wineasio.override { wine = wine-stating-full; };
+    yabridge = pkgs.yabridge.override { wine = wine-stating-full; };
+    yabridgectl = pkgs.yabridgectl.override { yabridge = yabridge; };
+    jackass = pkgs.jackass.override { wine = wine-stating-full; };
+  in [ jackass wine-stating-full wineasio yabridge yabridgectl ];
 in {
-  environment.systemPackages = wine-related-packages;
+  environment.systemPackages = wine-related-packages ++ [ pkgs.winetricks ];
 
   # workaround for kindle 1.16
   security.pki.certificates = [''

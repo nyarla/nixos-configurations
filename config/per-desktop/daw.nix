@@ -19,12 +19,12 @@ let
       yoshimi
     ];
 in {
-  boot.kernelModules = [ "snd-seq" "snd-rawmidi" ];
+  boot.kernelModules = [ "snd-seq" "snd-rawmidi" "snd_virmidi" ];
   boot.kernel.sysctl = {
     "vm.swapiness" = 10;
     "fs.inotify.max_user_watches" = 524288;
   };
-  boot.kernelParams = [ "threadirq" ];
+  boot.kernelParams = [ "threadirq" "snd_virmidi.midi_devs=1" ];
   security.pam.loginLimits = [
     {
       domain = "@audio";

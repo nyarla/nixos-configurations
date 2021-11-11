@@ -8,5 +8,6 @@ let
     libsecret
     pinentry-gnome
     thunderbird-bin
+    ungoogled-chromium
   ];
 in { environment.systemPackages = apps; }

@@ -251,25 +251,6 @@ in {
     }];
   };
 
-  # syncthing
-  systemd.services.syncthing = {
-    enable = true;
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network.target" ];
-    after = [ "network-online.target" "systemd-resolved.service" ];
-    path = [ pkgs.syncthing ];
-    serviceConfig = {
-      Type = "simple";
-      User = "nyarla";
-      Group = "users";
-      ExecStart = "${pkgs.writeScript "synthing" ''
-        #!${pkgs.stdenv.shell}
-
-        ${pkgs.syncthing}/bin/syncthing -no-browser
-      ''}";
-    };
-  };
-
   # firewall
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [ 139 445 ];

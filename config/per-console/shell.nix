@@ -12,6 +12,7 @@
     starship
     fzy
     wcwidth-cjk
+    home-manager
 
     file
     gnused

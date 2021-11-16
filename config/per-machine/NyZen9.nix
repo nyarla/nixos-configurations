@@ -18,6 +18,7 @@
     [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" ];
+  boot.kernelParams = [ "iwlwifi.power_save=0" "iwlmvm.power_scheme=1" ];
 
   # bootloader
   boot.loader.efi.canTouchEfiVariables = true;

@@ -1,13 +1,15 @@
 { pkgs, ... }: {
   users.users.nyarla.extraGroups = [
     "audio"
-    "video"
-    "render"
     "disk"
     "input"
-    "storage"
     "lightdm"
-    "scanner"
     "lp"
+    "networkmanager"
+    "nm-openvpn"
+    "render"
+    "scanner"
+    "storage"
+    "video"
   ];
 }

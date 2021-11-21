@@ -3,7 +3,7 @@ let apps = with pkgs; [ syncthing mosh ];
 in {
   imports = [
     ../per-service/avahi.nix
-    ../per-service/connman.nix
+    ../per-service/network-manager.nix
     ../per-service/docker.nix
     ../per-service/firewall.nix
     ../per-service/kvm.nix

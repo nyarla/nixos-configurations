@@ -1,14 +1,15 @@
 { config, pkgs, ... }:
 let
   apps = (with pkgs; [
+    appimage-run
     hsetroot
     i3lock-fancy
     jq
     lxappearance
     lxqt.lxqt-config
     lxqt.lxqt-panel
-    lxqt.qps
     maim
+    mate.mate-system-monitor
     mlterm
     obconf
     openbox

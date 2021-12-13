@@ -2,22 +2,30 @@
   description = "NixOS configurations for my PCs";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
+
     nix-ld.url = "github:Mic92/nix-ld/main";
     nix-ld.inputs.nixpkgs.follows = "nixpkgs";
 
     dotnix.url = "git+file:///etc/nixos/external/dotnix";
     dotnix.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, nix-ld, dotnix, ... }: {
+  outputs = inputs: {
     nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
+      nixos = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./config/per-machine/NyZen9.nix
           ./profile/NyZen9.nix
 
-          nix-ld.nixosModules.nix-ld
-          ({ ... }: { nixpkgs.overlays = [ dotnix.overlay ]; })
+          inputs.nix-ld.nixosModules.nix-ld
+          ({ ... }: {
+            environment.systemPackages =
+              [ inputs.home-manager.defaultPackage."x86_64-linux" ];
+            nixpkgs.overlays = [ inputs.dotnix.overlay ];
+          })
         ];
       };
     };

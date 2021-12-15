@@ -1,23 +1,26 @@
 { config, pkgs, ... }:
 let
-  packages = with pkgs;
-    [ a2jmidid jack2Full qjackctl ] ++ [ bitwig-studio3 carla ] ++ [
-      adlplug
-      ams-lv2
-      bristol
-      calf
-      # dexed
-      drumgizmo
-      drumkv1
-      fluidsynth
-      fmsynth
-      helm
-      hydrogen
-      linuxsampler
-      # surge-synthesizer
-      synthv1
-      yoshimi
-    ];
+  daw = with pkgs; [ bitwig-studio3 helio-workstation zrythm seq66 ];
+  jack = with pkgs; [ a2jmidid jack2Full qjackctl carla jack_capture japa ];
+  plugins = with pkgs; [
+    adlplug
+    ams-lv2
+    bristol
+    calf
+    # dexed
+    drumgizmo
+    drumkv1
+    fluidsynth
+    fmsynth
+    helm
+    hydrogen
+    linuxsampler
+    # surge-synthesizer
+    synthv1
+    yoshimi
+  ];
+
+  packages = daw ++ jack ++ plugins;
 in {
   boot.kernelModules = [ "snd-seq" "snd-rawmidi" "snd_virmidi" ];
   boot.kernel.sysctl = {

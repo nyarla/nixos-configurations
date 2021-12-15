@@ -49,6 +49,7 @@ in {
 
         backup $HOME/local
         backup $HOME/Music
+        backup $HOME/Documents
 
         if test -d /run/media/nyarla/src/local ; then
           backup /run/media/nyarla/src/local

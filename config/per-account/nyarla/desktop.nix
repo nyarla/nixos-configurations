@@ -10,6 +10,7 @@
     "render"
     "scanner"
     "storage"
+    "tty"
     "video"
   ];
 }

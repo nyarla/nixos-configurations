@@ -6,8 +6,7 @@ let
     wineasio = pkgs.wineasio.override { wine = wine-stating-full; };
     yabridge = pkgs.yabridge.override { wine = wine-stating-full; };
     yabridgectl = pkgs.yabridgectl.override { yabridge = yabridge; };
-    jackass = pkgs.jackass.override { wine = wine-stating-full; };
-  in [ jackass wine-stating-full wineasio yabridge yabridgectl ];
+  in [ wine-stating-full wineasio yabridge yabridgectl ];
 in {
   environment.systemPackages = wine-related-packages ++ [ pkgs.winetricks ];
 

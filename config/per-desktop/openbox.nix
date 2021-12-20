@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 let
   apps = (with pkgs; [
-    appimage-run
     hsetroot
     i3lock-fancy
     jq

@@ -27,7 +27,12 @@ in {
     "vm.swapiness" = 10;
     "fs.inotify.max_user_watches" = 524288;
   };
-  boot.kernelParams = [ "threadirq" "snd_virmidi.midi_devs=1" ];
+  boot.kernelParams = [
+    "threadirq"
+    "snd_virmidi.index=1,2"
+    "snd_virmidi.enable=1,1"
+    "snd_virmidi.midi_devs=4,4"
+  ];
   security.pam.loginLimits = [
     {
       domain = "@audio";

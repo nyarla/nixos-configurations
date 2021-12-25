@@ -31,7 +31,7 @@ in {
   };
 
   systemd.services.displayManagerCompat = {
-    enable = false;
+    enable = true;
     wants = [ "accounts-daemon.service" ];
     requires = [ "user.slice" ];
     after = [

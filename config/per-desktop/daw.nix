@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  daw = with pkgs; [ bitwig-studio3 helio-workstation zrythm seq66 ];
+  daw = with pkgs; [ bitwig-studio3 helio-workstation zrythm seq66 musescore ];
   jack = with pkgs; [ a2jmidid jack2Full qjackctl carla jack_capture japa ];
   plugins = with pkgs; [
     adlplug
@@ -60,5 +60,5 @@ in {
     }
   ];
 
-  environment.systemPackages = packages;
+  environment.systemPackages = packages ++ [ pkgs.qt5Full ];
 }

@@ -202,7 +202,7 @@ in {
     enableNmbd = true;
     enableWinbindd = true;
     securityType = "user";
-    package = pkgs.samba4Full;
+    # package = pkgs.samba4Full;
     extraConfig = ''
       workgroup = WORKGROUP
       server string = nixos

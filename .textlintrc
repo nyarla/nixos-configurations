@@ -13,7 +13,6 @@
     "common-misspellings": {
       "ignore": []
     },
-    "apostrophe": true,
     "stop-words": {
       "defaultWords": true,
       "skip": [

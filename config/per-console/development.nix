@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     stdenv.cc
+    stdenv.cc.cc.lib
     binutils
     gdb
     clang
@@ -18,6 +19,7 @@
 
     nodejs_latest
     yarn
+    python3
     # deno-land 
     # elmPackages.elm-format
 

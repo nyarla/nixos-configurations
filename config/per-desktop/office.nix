@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 let
   apps = with pkgs; [
-    calligra
     gimp
     gucharmap
     inkscape
+    libreoffice
     mate.mate-calc
     peek
     simple-scan

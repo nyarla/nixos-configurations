@@ -35,8 +35,8 @@ let
 
     ${lib.concatMapStrings (p: ''
       if test -d ${p}/share/gsettings-schemas; then
-        cp -rf ${p}/share/gsettings-schemas/*/glib-2.0/schemas/* \
-          $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
+        find ${p}/share/gsettings-schemas -name '*.xml' \
+          -exec cp -rf {} $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/ \;
       fi
     '')
     (config.environment.systemPackages ++ [ config.i18n.inputMethod.package ])}

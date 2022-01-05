@@ -26,4 +26,6 @@
 
     perlPackages.Shell
   ];
+
+  environment.pathsToLink = [ "/share/zsh" ];
 }

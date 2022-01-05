@@ -3,7 +3,7 @@ let
   wineApps = let
     super = pkgs;
     jackass =
-      super.jackass.override { wine = super.wineWowPackages.stagingFull; };
+      super.jackass-bin.override { wine = super.wineWowPackages.stagingFull; };
     wineasio =
       super.wineasio.override { wine = super.wineWowPackages.stagingFull; };
     yabridge =

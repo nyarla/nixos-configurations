@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  daw = with pkgs; [ bitwig-studio3 helio-workstation zrythm seq66 musescore ];
+  daw = with pkgs; [ bitwig-studio3 helio-workstation zrythm musescore ];
   jack = with pkgs; [ a2jmidid jack2Full qjackctl carla jack_capture japa ];
   plugins = with pkgs; [
     adlplug
@@ -27,12 +27,7 @@ in {
     "vm.swapiness" = 10;
     "fs.inotify.max_user_watches" = 524288;
   };
-  boot.kernelParams = [
-    "threadirq"
-    "snd_virmidi.index=1,2"
-    "snd_virmidi.enable=1,1"
-    "snd_virmidi.midi_devs=4,4"
-  ];
+  boot.kernelParams = [ "threadirq" ];
   security.pam.loginLimits = [
     {
       domain = "@audio";

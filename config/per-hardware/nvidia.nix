@@ -25,4 +25,6 @@
     "${config.boot.kernelPackages.nvidia_x11}/share/glvnd/egl_vendor.d/";
   environment.etc."gbm/nvidia-drm_gbm.so".source =
     "${config.boot.kernelPackages.nvidia_x11}/lib/libnvidia-allocator.so";
+
+  environment.systemPackages = with pkgs; [ cudatoolkit_11_5 ];
 }

@@ -9,6 +9,7 @@ let
     peek
     simple-scan
     spice-up
+    gnome.pomodoro
   ];
 in {
   environment.systemPackages = apps;

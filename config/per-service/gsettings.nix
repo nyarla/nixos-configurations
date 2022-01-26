@@ -30,7 +30,7 @@ let
 
   nixos-gsettings-overrides = pkgs.runCommand "nixos-gsettings-overrides" { } ''
     mkdir -p $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
-    cp -rf ${pkgs.gnome3.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0/schemas/*.xml \
+    cp -rf ${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/gsettings-desktop-schemas*/glib-2.0/schemas/*.xml \
       $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
 
     ${lib.concatMapStrings (p: ''

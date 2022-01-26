@@ -1,17 +1,20 @@
-{ config, pkgs, ...} :{
+{ config, pkgs, ... }: {
   environment.systemPackages = (with pkgs.mate; [
-    caja caja-extensions engrampa eom atril pluma mate-polkit]) ++(with pkgs;[
-    gnome3.gnome-font-viewer udisks2 glib gnome3.ghex
-  ]);
-
-  services.dbus.packages = with pkgs; [
-    mate.caja
-    mate.engrampa
-    mate.atril
-    mate.pluma
+    caja
+    caja-extensions
+    engrampa
+    eom
+    atril
+    pluma
+    mate-polkit
+  ]) ++ (with pkgs; [
     gnome3.gnome-font-viewer
     udisks2
-  ];
+    glib
+    gnome3.ghex
+    gnome3.gvfs
+    gnome3.gnome-disk-utility
+  ]);
 
   services.gvfs.enable = true;
 

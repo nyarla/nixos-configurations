@@ -1,3 +1,3 @@
 { config, pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ curlFull wget bind keychain mosh ];
+  environment.systemPackages = with pkgs; [ curlFull wget bind ];
 }

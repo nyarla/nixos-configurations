@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  environment.systemPackages = with pkgs; [ zlib ];
+  environment.systemPackages = with pkgs; [ zlib stdenv.cc stdenv.cc.cc.lib ];
   environment.variables = {
     NIX_LD_LIBRARY_PATH = lib.makeLibraryPath config.environment.systemPackages;
     NIX_LD = "${pkgs.stdenv.cc}/nix-support/dynamic-linker";

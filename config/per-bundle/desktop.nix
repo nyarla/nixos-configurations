@@ -1,7 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
     # applications
-    ../per-desktop/browser.nix
     ../per-desktop/container.nix
     ../per-desktop/file-manager.nix
     ../per-desktop/multimedia.nix

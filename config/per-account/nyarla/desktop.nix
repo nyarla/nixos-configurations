@@ -3,7 +3,6 @@
     "audio"
     "disk"
     "input"
-    "lightdm"
     "lp"
     "networkmanager"
     "nm-openvpn"

@@ -1,6 +1,1 @@
-{ pkgs, ... }: {
-  users.users.nyarla.extraGroups = [
-    "docker"
-    # "adbusers"
-  ];
-}
+{ pkgs, ... }: { users.users.nyarla.extraGroups = [ "docker" "adbusers" ]; }

@@ -13,9 +13,10 @@
     ../config/per-account/nyarla/vm.nix
 
     # system
-    ../config/per-console/fs.nix
-    ../config/per-console/hardware.nix
-    ../config/per-console/network.nix
+    ../config/per-toolchain/editor.nix
+    ../config/per-toolchain/fs.nix
+    ../config/per-toolchain/hardware.nix
+    ../config/per-toolchain/network.nix
 
     ../config/per-service/dbus.nix
     ../config/per-service/nix-ld.nix

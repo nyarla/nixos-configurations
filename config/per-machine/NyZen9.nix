@@ -1,4 +1,4 @@
-{ config, modulesPath, ... }: {
+{ config, modulesPath, pkgs, ... }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
 
@@ -10,13 +10,14 @@
     ../per-hardware/optical.nix
     ../per-hardware/tcp-bbr.nix
 
-    ../per-console/hardware.nix
+    ../per-toolchain/hardware.nix
   ];
 
-  # kernel modules
+  # kernel
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" ];
   boot.kernelParams = [ "iwlwifi.power_save=0" "iwlmvm.power_scheme=1" ];
 

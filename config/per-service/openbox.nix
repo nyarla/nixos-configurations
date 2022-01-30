@@ -19,12 +19,12 @@ let
   ]) ++ pkgs.lxqt.preRequisitePackages;
 in {
   imports = [
-    ../per-desktop/fonts.nix
-    ../per-desktop/theme.nix
-    ../per-service/gnome-compatible.nix
-    ../per-service/gsettings.nix
-    ../per-service/picom.nix
-    ../per-service/xorg.nix
+    ./fonts.nix
+    ./theme.nix
+    ./gnome-compatible.nix
+    ./gsettings.nix
+    ./picom.nix
+    ./xorg.nix
   ];
 
   environment.systemPackages = apps;

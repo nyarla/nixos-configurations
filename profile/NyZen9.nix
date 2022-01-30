@@ -23,17 +23,21 @@
 
     ../config/per-location/jp.nix
 
-    # ---
+    # desktop
+    ../config/per-service/coin.nix
+    ../config/per-service/appimage.nix
+    ../config/per-service/daw.nix
+    ../config/per-service/file-manager.nix
+    ../config/per-service/multimedia.nix
+    ../config/per-service/office.nix
+    ../config/per-service/terminal.nix
+    ../config/per-service/wine.nix
 
     # desktop
-    ../config/per-bundle/desktop.nix
-
-    # software
-    ../config/per-desktop/coin.nix
-    ../config/per-desktop/daw.nix
+    ../config/per-service/openbox.nix
+    ../config/per-service/ibus.nix
 
     # host
     ../config/per-host/NyZen9.nix
-
   ];
 }

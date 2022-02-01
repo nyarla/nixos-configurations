@@ -35,7 +35,8 @@
 
     # desktop
     ../config/per-service/openbox.nix
-    ../config/per-service/ibus.nix
+    #../config/per-service/labwc.nix
+    ../config/per-service/uim.nix
 
     # host
     ../config/per-host/NyZen9.nix

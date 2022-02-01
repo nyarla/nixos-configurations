@@ -1,16 +1,15 @@
 { config, pkgs, ... }:
 let
   wineApps = let
-    super = pkgs;
-    jackass =
-      super.jackass-bin.override { wine = super.wineWowPackages.stagingFull; };
-    wineasio =
-      super.wineasio.override { wine = super.wineWowPackages.stagingFull; };
-    yabridge =
-      super.yabridge.override { wine = super.wineWowPackages.stagingFull; };
-    yabridgectl = super.yabridgectl.override { inherit yabridge; };
+    wine = pkgs.wineWowPackages.stagingFull;
+    jackass = pkgs.jackass.override { inherit wine; };
+    jackass-bin = pkgs.jackass-bin.override { inherit wine; };
+    wineasio = pkgs.wineasio.override { inherit wine; };
+    yabridge = pkgs.yabridge.override { inherit wine; };
+    yabridgectl = pkgs.yabridgectl.override { inherit yabridge; };
   in [
     jackass
+    jackass-bin
     pkgs.wineWowPackages.stagingFull
     pkgs.winetricks
     wineasio
@@ -49,5 +48,5 @@ in {
     4fQRbxC1lfznQgUy286dUV4otp6F01vvpX1FQHKOtw5rDgb7MzVIcbidJ4vEZV8N
     hnacRHr2lVz2XTIIM6RUthg/aFzyQkqFOFSDX9HoLPKsEdao7WNq
     -----END CERTIFICATE-----
-        ''];
+  ''];
 }

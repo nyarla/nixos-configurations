@@ -4,6 +4,7 @@ let
     clipman
     grim
     kanshi
+    labwc
     mako
     swaybg
     swaylock
@@ -12,15 +13,9 @@ let
     wlay
     wlr-randr
     wtype
-    labwc
   ]);
 in {
-  imports = [
-    ../per-desktop/fonts.nix
-    ../per-desktop/theme.nix
-    ../per-service/gnome-compatible.nix
-    ../per-service/gsettings.nix
-  ];
+  imports = [ ./fonts.nix ./theme.nix ./gnome-compatible.nix ./gsettings.nix ];
 
   environment.systemPackages = apps;
 
@@ -32,4 +27,5 @@ in {
       source = "${pkgs.labwc}/bin/labwc";
     };
   };
+  security.pam.services.swaylock = { };
 }

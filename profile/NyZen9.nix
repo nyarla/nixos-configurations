@@ -25,7 +25,6 @@
 
     # desktop
     ../config/per-service/coin.nix
-    ../config/per-service/appimage.nix
     ../config/per-service/daw.nix
     ../config/per-service/file-manager.nix
     ../config/per-service/multimedia.nix

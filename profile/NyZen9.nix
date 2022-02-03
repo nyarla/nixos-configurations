@@ -24,7 +24,6 @@
     ../config/per-location/jp.nix
 
     # desktop
-    ../config/per-service/coin.nix
     ../config/per-service/daw.nix
     ../config/per-service/file-manager.nix
     ../config/per-service/multimedia.nix

@@ -1,11 +1,14 @@
-{ gcc7Stdenv, fetchurl, pkgconfig, freeglut, alsaLib, curl, openssl, freetype
-, libjack2, xorg, mesa }:
+{ gcc7Stdenv, fetchFromGitHub, pkgconfig, freeglut, alsaLib, curl, openssl
+, freetype, libjack2, xorg, mesa }:
 gcc7Stdenv.mkDerivation rec {
   name = "dexed";
   version = "0.9.4";
-  src = fetchurl {
-    url = "https://github.com/asb2m10/dexed/archive/v0.9.4.tar.gz";
-    sha256 = "0vv6gry8va7cd3rk6z79xvddb1as2iccx0bjv833qgwzrgc431v2";
+  src = fetchFromGitHub {
+    owner = "asb2m10";
+    repo = "dexed";
+    rev = "v0.9.6";
+    fetchSubmodules = true;
+    sha256 = "1n0840jq1lls9czvr2fdy1h59yhrlfywziiam7b49i4y49rjmil8";
   };
 
   nativeBuildInputs = [ pkgconfig ];
@@ -21,6 +24,8 @@ gcc7Stdenv.mkDerivation rec {
     ]);
 
   buildPhase = ''
+    ${JUCE}/bin/Projucer --resave Dexed.jucer
+
     cd Builds/Linux
     make \
       CONFIG=Release \

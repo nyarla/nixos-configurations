@@ -1,3 +1,0 @@
-usb: 			/usr/lib/vmware/bin/vmware-usbarbitrator -f
-networks: /usr/bin/vmware-networks --start
-vmplayer: sleep 2 && sudo -u nyarla /usr/bin/vmplayer; bash -c 'kill $(pgrep shoreman); exit 0'

@@ -1,34 +1,16 @@
 { config, pkgs, ... }:
 let utils = with pkgs; [ xclip xdg_utils libnotify sx ];
 in {
+  imports = [
+    ./fonts.nix
+    ./theme.nix
+    ./gnome-compatible.nix
+    ./gsettings.nix
+    ./picom.nix
+  ];
+
   environment.systemPackages = utils;
   console.useXkbConfig = true;
-
-  systemd.user.services.clipboard-keep = {
-    enable = true;
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-    path = [ pkgs.xclip ];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      ExecStart = "${pkgs.writeShellScript "clipboard-keep.sh" ''
-        clipboard=
-
-        while true; do
-          content="$(${pkgs.xclip}/bin/xclip -o -selection clipboard 2>/dev/null)"
-
-          if test -z "''${content:-}"; then
-            echo -n $clipboard | ${pkgs.xclip}/bin/xclip -i -selection clipboard -rmlastnl
-          else
-            export clipboard="''${content:-}"
-          fi
-
-          sleep 1
-        done
-      ''}";
-    };
-  };
 
   systemd.services.displayManagerCompat = {
     enable = true;

@@ -32,4 +32,4 @@ let
     } 
     ${lib.concatMapStrings (p: addDBus p "share/dbus-1/system.d") target} 
   '';
-in { services.dbus.packages = lib.singleton dbusBundlePackage; }
+in { services.dbus.packages = lib.mkForce (lib.singleton dbusBundlePackage); }

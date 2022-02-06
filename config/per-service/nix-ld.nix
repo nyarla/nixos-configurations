@@ -6,6 +6,11 @@
 
       gtk2
     ]);
-    NIX_LD = lib.fileContents "${stdenv.cc}/nix-support/dynamic-linker";
+  };
+
+  environment.etc."profile.d/nix-ld" = {
+    text = ''
+      export NIX_LD=$(cat ${pkgs.stdenv.cc}/nix-support/dynamic-linker)
+    '';
   };
 }

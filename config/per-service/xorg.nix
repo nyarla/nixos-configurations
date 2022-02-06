@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-let utils = with pkgs; [ xclip xdg_utils libnotify gksu sx ];
+let utils = with pkgs; [ xclip xdg_utils libnotify sx ];
 in {
   environment.systemPackages = utils;
   console.useXkbConfig = true;

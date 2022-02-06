@@ -1,28 +1,5 @@
-{ config, pkgs, ... }:
-let
-  daw = with pkgs; [ bitwig-studio3 helio-workstation zrythm musescore ];
-  jack = with pkgs; [ a2jmidid jack2Full qjackctl carla jack_capture japa ];
-  plugins = with pkgs; [
-    adlplug
-    ams-lv2
-    bristol
-    calf
-    # dexed
-    drumgizmo
-    drumkv1
-    fluidsynth
-    fmsynth
-    helm
-    hydrogen
-    linuxsampler
-    # surge-synthesizer
-    synthv1
-    yoshimi
-  ];
-
-  packages = daw ++ jack ++ plugins;
-in {
-  boot.kernelModules = [ "snd-seq" "snd-rawmidi" "snd_virmidi" ];
+{ config, pkgs, ... }: {
+  boot.kernelModules = [ "snd-seq" "snd-rawmidi" ];
   boot.kernel.sysctl = {
     "vm.swapiness" = 10;
     "fs.inotify.max_user_watches" = 524288;
@@ -54,6 +31,4 @@ in {
       value = "99999";
     }
   ];
-
-  environment.systemPackages = packages ++ [ pkgs.qt5Full ];
 }

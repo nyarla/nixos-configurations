@@ -31,7 +31,9 @@
     ../config/per-service/terminal.nix
     ../config/per-service/wine.nix
 
-    # desktop
+    ../config/per-service/mining.nix
+
+    # desktop environment
     #../config/per-service/labwc.nix
     ../config/per-service/xorg.nix
     ../config/per-service/uim.nix

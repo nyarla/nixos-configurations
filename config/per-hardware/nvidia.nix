@@ -13,7 +13,7 @@
   '';
 
   hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  hardware.nvidia.package = pkgs.nvidia-x11_latest;
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -26,6 +26,4 @@
     "${config.boot.kernelPackages.nvidia_x11}/share/glvnd/egl_vendor.d/";
   environment.etc."gbm/nvidia-drm_gbm.so".source =
     "${config.boot.kernelPackages.nvidia_x11}/lib/libnvidia-allocator.so";
-
-  environment.systemPackages = with pkgs; [ cudatoolkit_11_5 ];
 }

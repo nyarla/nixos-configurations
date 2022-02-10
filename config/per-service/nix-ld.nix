@@ -5,6 +5,7 @@
       stdenv.cc.libc
 
       gtk2
+      cudatoolkit_latest
     ]);
   };
 

@@ -3,9 +3,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
 
-    wayland.url = "github:nix-community/nixpkgs-wayland/master";
-    wayland.inputs.nixpkgs.follows = "nixpkgs";
-
     nix-ld.url = "github:Mic92/nix-ld/main";
     nix-ld.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -21,7 +18,10 @@
           ./profile/NyZen9.nix
 
           inputs.nix-ld.nixosModules.nix-ld
-          ({ ... }: { nixpkgs.overlays = (with inputs; [ dotnix.overlay ]); })
+          ({ ... }: {
+            nixpkgs.overlays =
+              (with inputs; [ dotnix.overlay (import ./pkgs) ]);
+          })
         ];
       };
     };

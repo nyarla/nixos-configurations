@@ -1,8 +1,10 @@
 self: super:
 let require = path: args: super.callPackage (import path) args;
 in {
+  # musics
+  currennt = require ./currennt { cudatoolkit = self.cudatoolkit_latest; };
+
   # nvidia
-  nvidia-x11_latest = super.linuxPackages.nvidiaPackages.stable;
   cudatoolkit_latest = super.cudatoolkit.override {
     version = "11.6.0";
     url =
@@ -10,6 +12,7 @@ in {
     sha256 = "10wcv42ljp7hz1k0wzgwb4hi8834rfipzdc01428c1wpcdnxm0qp";
     gcc = super.gcc10;
   };
+  nvidia-x11_latest = super.linuxPackages.nvidiaPackages.stable;
 
   # mining
   ethminer = (super.ethminer.override {

@@ -33,7 +33,7 @@ in {
     '';
   });
 
-  nsfminer = (require ./pkgs/nsfminer {
+  nsfminer = (require ./nsfminer {
     stdenv = super.llvmPackages_13.stdenv;
     cudatoolkit = self.cudatoolkit_11_5;
   }).overrideAttrs (old: rec {
@@ -44,7 +44,7 @@ in {
   });
 
   xmrig = super.xmrig.override { stdenv = super.llvmPackages_13.stdenv; };
-  xmrig-cuda = require ./pkgs/xmrig-cuda {
+  xmrig-cuda = require ./xmrig-cuda {
     stdenv = super.llvmPackages_13.stdenv;
     cudatoolkit = self.cudatoolkit_11_5;
   };

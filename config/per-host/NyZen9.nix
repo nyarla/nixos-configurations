@@ -136,7 +136,7 @@ in {
 
   # samba
   services.samba = {
-    enable = false;
+    enable = true;
     enableNmbd = true;
     enableWinbindd = true;
     securityType = "user";
@@ -153,18 +153,8 @@ in {
       map to guest = bad user
     '';
     shares = {
-      data = {
-        "path" = "/run/media/nyarla/data";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force group" = "users";
-        "force user" = "nyarla";
-        "guest ok" = "no";
-        "read only" = "no";
-      };
-      local = {
-        "path" = "/home/nyarla/local";
+      Downloads = {
+        "path" = "/home/nyarla/Downloads";
         "browseable" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";

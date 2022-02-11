@@ -40,5 +40,8 @@
 
     # host
     ../config/per-host/NyZen9.nix
+
+    # temporary
+    ../config/per-service/patch.nix
   ];
 }

@@ -41,6 +41,9 @@
     # host
     ../config/per-host/NyZen9.nix
 
+    # services
+    ../config/per-service/webapp.nix
+
     # temporary
     ../config/per-service/patch.nix
   ];

@@ -192,6 +192,10 @@ in {
 
         # sshd
         2222
+
+        # http
+        80
+        443
       ];
       allowedUDPPortRanges = [{
         from = 60000;

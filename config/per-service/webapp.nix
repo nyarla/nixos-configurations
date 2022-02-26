@@ -22,8 +22,12 @@
 
   services.n8n = {
     enable = true;
-    settings = { generic = { timezone = "Asia/Tokyo"; }; };
+    settings = {
+      executions = { saveDataOnSuccess = "none"; };
+      generic = { timezone = "Asia/Tokyo"; };
+    };
   };
+  systemd.services.n8n.environment = { DB_SQLITE_VACUUM_ON_STARTUP = "true"; };
 
   # nginx
   security.acme = {

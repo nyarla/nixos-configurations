@@ -3,7 +3,6 @@
     ntfs3g
     hfsprogs
     exfat
-    exfat-utils
     btrfs-progs
     gptfdisk
     gocryptfs

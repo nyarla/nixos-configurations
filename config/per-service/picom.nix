@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   services.picom = {
     enable = true;
     backend = "xrender";
@@ -7,9 +7,10 @@
     shadowOffsets = [ (-15) (-15) ];
     shadowOpacity = 0.2;
     shadowExclude = [
-      "class_g = 'Firefox' && argb"
+      "class_g = 'firefox' && argb"
       "class_g = 'Thunderbird' && argb"
       "class_g %= '*.exe' && argb"
+      "class_g %= '*.exe.*' && argb"
     ];
 
     fade = true;

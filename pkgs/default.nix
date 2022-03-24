@@ -12,12 +12,12 @@ in {
     sha256 = "10wcv42ljp7hz1k0wzgwb4hi8834rfipzdc01428c1wpcdnxm0qp";
     gcc = super.gcc10;
   };
-  nvidia-x11_latest = super.linuxPackages.nvidiaPackages.stable;
+  nvidia-x11_latest = super.linuxPackages_lqx.nvidiaPackages.stable;
 
   # mining
   ethminer = (super.ethminer.override {
-    stdenv = super.llvmPackages_13.stdenv;
-    cudatoolkit = self.cudatoolkit_11_5;
+    inherit (super.llvmPackages_13) stdenv;
+    cudatoolkit = self.cudatoolkit_latest;
   }).overrideAttrs (old: rec {
     version = "1.9.2";
     src = super.fetchFromGitHub {
@@ -34,8 +34,8 @@ in {
   });
 
   nsfminer = (require ./nsfminer {
-    stdenv = super.llvmPackages_13.stdenv;
-    cudatoolkit = self.cudatoolkit_11_5;
+    inherit (super.llvmPackages_13) stdenv;
+    cudatoolkit = self.cudatoolkit_latest;
   }).overrideAttrs (old: rec {
     postPatch = old.preConfigure + ''
       sed -i 's/set(CMAKE_CXX_FLAGS "''${CMAKE_CXX_FLAGS} -stdlib=libstdc++ -fcolor-diagnostics -Qunused-arguments")//' cmake/EthCompilerSettings.cmake
@@ -43,9 +43,18 @@ in {
     '';
   });
 
-  xmrig = super.xmrig.override { stdenv = super.llvmPackages_13.stdenv; };
+  xmrig = (super.xmrig.override {
+    inherit (super.llvmPackages_13) stdenv;
+  }).overrideAttrs (old: rec {
+    src = super.fetchFromGitHub {
+      owner = "MoneroOcean";
+      repo = "xmrig";
+      rev = "v6.16.4-mo1";
+      sha256 = "sha256-OnKz/Sl/b0wpZ1tqeEXhNxNNmQJXBhv5YNnKu9aOVZA=";
+    };
+  });
   xmrig-cuda = require ./xmrig-cuda {
-    stdenv = super.llvmPackages_13.stdenv;
-    cudatoolkit = self.cudatoolkit_11_5;
+    inherit (super.llvmPackages_13) stdenv;
+    cudatoolkit = self.cudatoolkit_latest;
   };
 }

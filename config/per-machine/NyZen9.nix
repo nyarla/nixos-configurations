@@ -17,9 +17,10 @@
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  # boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
-  boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" ];
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
+  boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "v4l2loopback" ];
   boot.kernelParams = [ "iwlwifi.power_save=0" "iwlmvm.power_scheme=1" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   # bootloader
   boot.loader.efi.canTouchEfiVariables = true;

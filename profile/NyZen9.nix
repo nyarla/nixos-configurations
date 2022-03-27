@@ -26,16 +26,14 @@
 
     # desktop
     ../config/per-service/daw.nix
-    ../config/per-service/file-manager.nix
-    ../config/per-service/multimedia.nix
-    ../config/per-service/office.nix
+    ../config/per-service/files.nix
     ../config/per-service/terminal.nix
     ../config/per-service/wine.nix
 
     ../config/per-service/mining.nix
 
     # desktop environment
-    #../config/per-service/labwc.nix
+    ../config/per-service/wayland.nix
     ../config/per-service/xorg.nix
     ../config/per-service/uim.nix
 

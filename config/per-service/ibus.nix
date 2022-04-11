@@ -2,7 +2,7 @@
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs;
-      [ (ibus-skk.override { layout = config.services.xserver.layout; }) ];
+      [ (ibus-skk.override { inherit (config.services.xserver) layout; }) ];
   };
 
   services.dbus.packages = [ config.i18n.inputMethod.package ];

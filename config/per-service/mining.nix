@@ -4,6 +4,7 @@
     goreman
     msr-tools
     nsfminer
+    patchelf
     xmrig
     xmrig-cuda
   ];

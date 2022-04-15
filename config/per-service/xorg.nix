@@ -1,13 +1,7 @@
 { config, pkgs, ... }:
 let utils = with pkgs; [ xclip xdg_utils libnotify sx ];
 in {
-  imports = [
-    ./fonts.nix
-    ./theme.nix
-    ./gnome-compatible.nix
-    ./gsettings.nix
-    ./picom.nix
-  ];
+  imports = [ ./fonts.nix ./gnome-compatible.nix ./gsettings.nix ./picom.nix ];
 
   environment.systemPackages = utils;
   console.useXkbConfig = true;

@@ -2,7 +2,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
 
-    ../per-hardware/audio.nix
+    ../per-hardware/pipewire.nix
     ../per-hardware/bluetooth.nix
     ../per-hardware/console.nix
     ../per-hardware/keyboard-us.nix

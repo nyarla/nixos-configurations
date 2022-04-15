@@ -5,33 +5,14 @@ in {
   currennt = require ./currennt { cudatoolkit = self.cudatoolkit_latest; };
 
   # nvidia
-  cudatoolkit_latest = super.cudatoolkit.override {
-    version = "11.6.0";
-    url =
-      "https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run";
-    sha256 = "10wcv42ljp7hz1k0wzgwb4hi8834rfipzdc01428c1wpcdnxm0qp";
-    gcc = super.gcc10;
-  };
+  cudatoolkit_latest = super.cudaPackages_11_6.cudatoolkit;
   nvidia-x11_latest = super.linuxPackages_lqx.nvidiaPackages.stable;
 
   # mining
-  ethminer = (super.ethminer.override {
+  ethminer = super.ethminer.override {
     inherit (super.llvmPackages_13) stdenv;
     cudatoolkit = self.cudatoolkit_latest;
-  }).overrideAttrs (old: rec {
-    version = "1.9.2";
-    src = super.fetchFromGitHub {
-      owner = "danieleftodi";
-      repo = "ethminer";
-      rev = "59e063c57d44b3de5393b81f92d89b76d86107a3";
-      sha256 = "1ra1jlc8s3r12qzqkbqzf8646cbj219mqdms04wdzaya2af444h6";
-      fetchSubmodules = true;
-    };
-    postPatch = ''
-      sed -i 's|jsoncpp_static|jsoncpp|' libpoolprotocols/CMakeLists.txt
-      sed -i 's|-Wall|-Wall -Ofast -funroll-loops|g' cmake/EthCompilerSettings.cmake
-    '';
-  });
+  };
 
   nsfminer = (require ./nsfminer {
     inherit (super.llvmPackages_13) stdenv;

@@ -9,11 +9,7 @@ let
 
   gtkThemes = with pkgs; [ victory-gtk-theme gnome3.gnome-themes-extra ];
 
-  extra = with pkgs; [
-    gtk-engine-murrine
-    gtk_engines
-    libsForQt5.qtstyleplugins
-  ];
+  extra = with pkgs; [ gtk-engine-murrine gtk_engines ];
 
   global-icon-name = pkgs.callPackage ({ stdenv }:
     stdenv.mkDerivation rec {

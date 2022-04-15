@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [ networkmanagerapplet ];
   networking.networkmanager = {
     enable = true;
-    packages = with pkgs; [ networkmanager-openvpn ];
+    plugins = with pkgs; [ networkmanager-openvpn ];
     wifi = {
       backend = "iwd";
       powersave = false;

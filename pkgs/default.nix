@@ -10,12 +10,12 @@ in {
 
   # mining
   ethminer = super.ethminer.override {
-    inherit (super.llvmPackages_13) stdenv;
+    inherit (super.llvmPackages_14) stdenv;
     cudatoolkit = self.cudatoolkit_latest;
   };
 
   nsfminer = (require ./nsfminer {
-    inherit (super.llvmPackages_13) stdenv;
+    inherit (super.llvmPackages_14) stdenv;
     cudatoolkit = self.cudatoolkit_latest;
   }).overrideAttrs (old: rec {
     postPatch = old.preConfigure + ''
@@ -24,18 +24,9 @@ in {
     '';
   });
 
-  xmrig = (super.xmrig.override {
-    inherit (super.llvmPackages_13) stdenv;
-  }).overrideAttrs (old: rec {
-    src = super.fetchFromGitHub {
-      owner = "MoneroOcean";
-      repo = "xmrig";
-      rev = "v6.16.4-mo1";
-      sha256 = "sha256-OnKz/Sl/b0wpZ1tqeEXhNxNNmQJXBhv5YNnKu9aOVZA=";
-    };
-  });
+  xmrig = super.xmrig.override { inherit (super.llvmPackages_14) stdenv; };
   xmrig-cuda = require ./xmrig-cuda {
-    inherit (super.llvmPackages_13) stdenv;
+    inherit (super.llvmPackages_14) stdenv;
     cudatoolkit = self.cudatoolkit_latest;
   };
 }

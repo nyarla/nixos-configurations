@@ -1,11 +1,11 @@
 { stdenv, fetchurl, cudatoolkit, cmake, pkgconfig }:
 stdenv.mkDerivation rec {
   pname = "xmrig-cuda";
-  version = "v.6.15.1";
+  version = "v.6.17.0";
   src = fetchurl {
     url =
-      "https://github.com/xmrig/xmrig-cuda/archive/refs/tags/v6.15.1.tar.gz";
-    sha256 = "1qaiz5risqbbnz34ifmh1rsj0gsp1ny64rlgr6f0hq8qhmjvhrm9";
+      "https://github.com/xmrig/xmrig-cuda/archive/refs/tags/v6.17.0.tar.gz";
+    sha256 = "0r2z4bv3l119z22qm5ir34f9ggzm7113in2f9q150mcwv77pjab6";
   };
 
   cmakeFlags = [ "-DCUDA_LIB=${cudatoolkit}/lib/stubs/libcuda.so" ];

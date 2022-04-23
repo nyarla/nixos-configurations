@@ -18,10 +18,7 @@
           ./profile/NyZen9.nix
 
           inputs.nix-ld.nixosModules.nix-ld
-          ({ ... }: {
-            nixpkgs.overlays =
-              (with inputs; [ dotnix.overlay (import ./pkgs) ]);
-          })
+          (_: { nixpkgs.overlays = [ inputs.dotnix.overlay (import ./pkgs) ]; })
         ];
       };
     };

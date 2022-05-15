@@ -1,7 +1,12 @@
-{ config, pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ glib gnome3.gvfs udisks2 ];
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs;
+    [ glib udisks2 ]
+    ++ (with pkgs.gnome3; [ gvfs ghex gnome-disk-utility gnome-font-viewer ])
+    ++ (with pkgs.xfce; [ exo thunar garcon libxfce4ui xfconf ])
+    ++ (with pkgs.mate; [ atril atril engrampa eom mate-polkit pluma ]);
 
   services.gvfs.enable = true;
+  services.tumbler.enable = true;
 
   users.groups.storage = { };
 
@@ -17,12 +22,6 @@
           return polkit.Result.YES; 
         }
       });
-    '';
-  };
-
-  environment.etc."profile.d/caja" = {
-    text = ''
-      export CAJA_EXTENSION_DIRS=$CAJA_EXTENSION_DIRS''${CAJA_EXTENSION_DIRS:+:}${config.system.path}/lib/caja/extensions-2.0
     '';
   };
 }

@@ -7,6 +7,7 @@
     gptfdisk
     gocryptfs
     cryptsetup
+    e2fsprogs
   ];
 
   programs.fuse.userAllowOther = true;

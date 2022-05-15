@@ -9,7 +9,7 @@ let
 
       for file in $(ls); do
         if test -f $file ; then
-          ln -sf ${pkg}/${ns}/$file $out/${ns}/$file
+          cp -RLf ${pkg}/${ns}/$file $out/${ns}/$file
         fi
       done
     fi

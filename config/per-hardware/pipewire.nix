@@ -11,17 +11,66 @@
     pulse.enable = true;
     wireplumber.enable = true;
 
+    config.client = {
+      "stream.properties" = {
+        "context.properties" = {
+          "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+          "default.clock.rate" = 96000;
+          "default.clock.quantum" = 512;
+          "default.clock.min-quantum" = 32;
+          "default.clock.max-quantum" = 1024;
+        };
+        "node.latecy" = "512/192000";
+      };
+    };
+
+    config.client-rt = {
+      "context.properties" = {
+        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.rate" = 96000;
+        "default.clock.quantum" = 512;
+        "default.clock.min-quantum" = 32;
+        "default.clock.max-quantum" = 1024;
+      };
+      "stream.properties" = { "node.latecy" = "512/96000"; };
+    };
+
+    config.pipewire-pulse = {
+      "context.properties" = {
+        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.rate" = 96000;
+        "default.clock.quantum" = 512;
+        "default.clock.min-quantum" = 32;
+        "default.clock.max-quantum" = 1024;
+      };
+      "stream.properties" = {
+        "node.latecy" = "512/96000";
+        "channelmix.upmix" = false;
+      };
+    };
+
+    config.jack = {
+      "context.properties" = {
+        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.rate" = 96000;
+        "default.clock.quantum" = 512;
+        "default.clock.min-quantum" = 32;
+        "default.clock.max-quantum" = 1024;
+      };
+      "stream.properties" = { "node.latecy" = "512/96000"; };
+    };
+
     config.pipewire = {
       "context.properties" = {
-        "default.clock.allowed-rates" = [ 41000 48000 96000 192000 ];
-        "default.clock.rate" = 192000;
+        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.rate" = 96000;
         "default.clock.quantum" = 512;
         "default.clock.min-quantum" = 32;
         "default.clock.max-quantum" = 1024;
       };
 
       "streams.properties" = {
-        "node.latency" = "512/192000";
+        "node.latency" = "512/96000";
         "node.autoconnect" = true;
         "resample.quality" = 15;
       };
@@ -33,6 +82,7 @@
             "factory.name" = "support.null-audio-sink";
             "node.name" = "44100Hz";
             "media.class" = "Audio/Duplex";
+            "object.linger" = true;
             "audio.channels" = 2;
             "audio.format" = "S16LE";
             "audio.position" = [ "FL" "FR" ];
@@ -45,6 +95,7 @@
             "factory.name" = "support.null-audio-sink";
             "node.name" = "96000Hz";
             "media.class" = "Audio/Duplex";
+            "object.linger" = true;
             "audio.channels" = 2;
             "audio.format" = "S24LE";
             "audio.position" = [ "FL" "FR" ];
@@ -52,50 +103,6 @@
           };
         }
       ];
-
-      #     "context.modules" = [{
-      #       name = "libpipewire-module-loopback";
-      #       args = {
-      #         "audio.position" = [ "FL" "FR" ];
-      #         "capture.props" = {
-      #           "media.class" = "Audio/Sink";
-
-      #           "node.name" = "44100Hz-capture";
-      #           "node.description" = "44100Hz_capture";
-
-      #           "node.latency" = "512/44100";
-      #           "node.lock-quantum" = true;
-      #           "node.force-quantum" = 512;
-      #           "node.passive" = false;
-      #           "audio.rate" = 44100;
-      #           "audio.channels" = 2;
-      #           "audio.format" = "S16LE";
-      #           "audio.position" = [ "FL" "FR" ];
-      #           "resample.disable" = true;
-      #           "channelmix.disable" = true;
-      #           "node.target" = "44100Hz";
-      #           "monitor.channel-volumes" = false;
-      #         };
-      #         "playback.props" = {
-      #           "media.class" = "Audio/Source";
-
-      #           "node.name" = "44100Hz-source";
-      #           "node.description" = "44100Hz_source";
-
-      #           "node.latency" = "512/44100";
-      #           "node.lock-quantum" = true;
-      #           "node.force-quantum" = 512;
-      #           "node.passive" = false;
-      #           "audio.rate" = 44100;
-      #           "audio.channels" = 2;
-      #           "audio.format" = "S16LE";
-      #           "audio.position" = [ "FL" "FR" ];
-      #           "resample.disable" = true;
-      #           "channelmix.disable" = true;
-      #           "monitor.channel-volumes" = false;
-      #         };
-      #       };
-      #     }];
     };
   };
 }

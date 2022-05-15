@@ -6,7 +6,6 @@ in {
 
   # nvidia
   cudatoolkit_latest = super.cudaPackages_11_6.cudatoolkit;
-  nvidia-x11_latest = super.linuxPackages_lqx.nvidiaPackages.stable;
 
   # mining
   ethminer = super.ethminer.override {

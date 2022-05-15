@@ -13,12 +13,14 @@
   '';
 
   hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.package = pkgs.nvidia-x11_latest;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidia_x11;
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
     setLdLibraryPath = true;
+    package = config.boot.kernelPackages.nvidia_x11;
+    package32 = config.boot.kernelPackages.nvidia_x11_legacy390;
     extraPackages = with pkgs; [ libglvnd nvidia-vaapi-driver ];
   };
 

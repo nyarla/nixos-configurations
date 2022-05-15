@@ -154,7 +154,7 @@ in {
     '';
     shares = {
       Downloads = {
-        "path" = "/home/nyarla/Downloads";
+        "path" = "/home/nyarla/Downloads/KVM";
         "browseable" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";

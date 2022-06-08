@@ -1,6 +1,13 @@
 { pkgs, ... }: {
   environment.systemPackages = (with pkgs; [ pavucontrol helvum ])
     ++ (with pkgs.pipewire; [ out jack pulse ]);
+
+  # temporary fix for `pactl` it not found
+  systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
+
+  systemd.user.services.pipewire.serviceConfig = { Nice = -19; };
+  systemd.user.services.pipewire-pulse.serviceConfig = { Nice = -19; };
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -12,36 +19,34 @@
     wireplumber.enable = true;
 
     config.client = {
-      "stream.properties" = {
-        "context.properties" = {
-          "default.clock.allowed-rates" = [ 44100 48000 96000 ];
-          "default.clock.rate" = 96000;
-          "default.clock.quantum" = 512;
-          "default.clock.min-quantum" = 32;
-          "default.clock.max-quantum" = 1024;
-        };
-        "node.latecy" = "512/192000";
+      "context.properties" = {
+        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
+        "default.clock.rate" = 96000;
+        "default.clock.quantum" = 512;
+        "default.clock.min-quantum" = 256;
+        "default.clock.max-quantum" = 2048;
       };
+      "stream.properties" = { "node.latecy" = "512/192000"; };
     };
 
     config.client-rt = {
       "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
         "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 32;
-        "default.clock.max-quantum" = 1024;
+        "default.clock.min-quantum" = 256;
+        "default.clock.max-quantum" = 2048;
       };
       "stream.properties" = { "node.latecy" = "512/96000"; };
     };
 
     config.pipewire-pulse = {
       "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
         "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 32;
-        "default.clock.max-quantum" = 1024;
+        "default.clock.min-quantum" = 256;
+        "default.clock.max-quantum" = 2048;
       };
       "stream.properties" = {
         "node.latecy" = "512/96000";
@@ -51,28 +56,28 @@
 
     config.jack = {
       "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
         "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 32;
-        "default.clock.max-quantum" = 1024;
+        "default.clock.min-quantum" = 256;
+        "default.clock.max-quantum" = 2048;
       };
       "stream.properties" = { "node.latecy" = "512/96000"; };
     };
 
     config.pipewire = {
       "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 ];
+        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
         "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 32;
-        "default.clock.max-quantum" = 1024;
+        "default.clock.min-quantum" = 256;
+        "default.clock.max-quantum" = 2048;
       };
 
       "streams.properties" = {
         "node.latency" = "512/96000";
         "node.autoconnect" = true;
-        "resample.quality" = 15;
+        "resample.quality" = 10;
       };
 
       "context.objects" = [
@@ -93,6 +98,19 @@
           factory = "adapter";
           args = {
             "factory.name" = "support.null-audio-sink";
+            "node.name" = "48000Hz";
+            "media.class" = "Audio/Duplex";
+            "object.linger" = true;
+            "audio.channels" = 2;
+            "audio.format" = "S24LE";
+            "audio.position" = [ "FL" "FR" ];
+            "audio.rate" = 48000;
+          };
+        }
+        {
+          factory = "adapter";
+          args = {
+            "factory.name" = "support.null-audio-sink";
             "node.name" = "96000Hz";
             "media.class" = "Audio/Duplex";
             "object.linger" = true;
@@ -100,6 +118,7 @@
             "audio.format" = "S24LE";
             "audio.position" = [ "FL" "FR" ];
             "audio.rate" = 96000;
+            "node.latecy" = "1024/96000";
           };
         }
       ];

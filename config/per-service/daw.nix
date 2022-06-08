@@ -1,6 +1,5 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [ currennt ];
-
   boot.kernelModules = [ "snd-seq" "snd-rawmidi" "snd-virmidi" ];
   boot.kernel.sysctl = {
     "vm.swapiness" = 10;

@@ -8,6 +8,7 @@
     auth.autoLogin = false;
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
   };
+  services.phpfpm.phpPackage = pkgs.php80;
 
   # nitter
   services.nitter = {

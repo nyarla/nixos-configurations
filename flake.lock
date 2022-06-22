@@ -3,7 +3,10 @@
     "dotnix": {
       "locked": {
         "lastModified": 1649990255,
-        "narHash": "sha256-7F0jLsAjAS3hyQJOmvp54ce6a0Ar8HPhICjtz/6jn3E=",
+        "narHash": "sha256-VUfs6VwKPHs5VTRsl/07xcgezV1wjl9uFqQgAOwZ6ow=",
+        "ref": "refs/heads/main",
+        "rev": "96769d55a6449df7e3258b31e031bbbc23e64773",
+        "revCount": 36,
         "type": "git",
         "url": "file:///etc/nixos/external/dotnix"
       },
@@ -36,11 +39,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1654222056,
-        "narHash": "sha256-1SJLwmq8wvA8U1nOLZ+Rsy6/zNlIblb5QyXv6/I2hzU=",
+        "lastModified": 1655421021,
+        "narHash": "sha256-3VsqDhA72n/EEpIv4fixsfNx+U8jNg/0gFkABa406E4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8d154ac14c6746ed6c58caa2685d6e6959e82038",
+        "rev": "1829c5b002d128c9c94f43d8b11c0added3863eb",
         "type": "github"
       },
       "original": {

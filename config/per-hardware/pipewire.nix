@@ -2,6 +2,9 @@
   environment.systemPackages = (with pkgs; [ pavucontrol helvum ])
     ++ (with pkgs.pipewire; [ out jack pulse ]);
 
+  boot.kernelModules = [ "snd_aloop" ];
+  boot.kernelParams = [ "snd_aloop.index=10" ];
+
   # temporary fix for `pactl` it not found
   systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
 
@@ -21,35 +24,35 @@
     config.client = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 96000;
-        "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 256;
-        "default.clock.max-quantum" = 2048;
+        "default.clock.rate" = 192000;
+        "default.clock.quantum" = 2048;
+        "default.clock.min-quantum" = 512;
+        "default.clock.max-quantum" = 4096;
       };
-      "stream.properties" = { "node.latecy" = "512/192000"; };
+      "stream.properties" = { "node.latecy" = "2048/192000"; };
     };
 
     config.client-rt = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
-        "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 256;
-        "default.clock.max-quantum" = 2048;
+        "default.clock.quantum" = 1024;
+        "default.clock.min-quantum" = 512;
+        "default.clock.max-quantum" = 4096;
       };
-      "stream.properties" = { "node.latecy" = "512/96000"; };
+      "stream.properties" = { "node.latecy" = "1024/96000"; };
     };
 
     config.pipewire-pulse = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
-        "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 256;
-        "default.clock.max-quantum" = 2048;
+        "default.clock.quantum" = 1024;
+        "default.clock.min-quantum" = 512;
+        "default.clock.max-quantum" = 4096;
       };
       "stream.properties" = {
-        "node.latecy" = "512/96000";
+        "node.latecy" = "1024/96000";
         "channelmix.upmix" = false;
       };
     };
@@ -58,24 +61,24 @@
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
-        "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 256;
-        "default.clock.max-quantum" = 2048;
+        "default.clock.quantum" = 1024;
+        "default.clock.min-quantum" = 512;
+        "default.clock.max-quantum" = 4096;
       };
-      "stream.properties" = { "node.latecy" = "512/96000"; };
+      "stream.properties" = { "node.latecy" = "1024/96000"; };
     };
 
     config.pipewire = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 96000;
-        "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 256;
-        "default.clock.max-quantum" = 2048;
+        "default.clock.quantum" = 1024;
+        "default.clock.min-quantum" = 512;
+        "default.clock.max-quantum" = 4096;
       };
 
       "streams.properties" = {
-        "node.latency" = "512/96000";
+        "node.latency" = "1024/96000";
         "node.autoconnect" = true;
         "resample.quality" = 10;
       };
@@ -119,6 +122,16 @@
             "audio.position" = [ "FL" "FR" ];
             "audio.rate" = 96000;
             "node.latecy" = "1024/96000";
+          };
+        }
+        {
+          factory = "adapter";
+          args = {
+            "factory.name" = "api.alsa.pcm.source";
+            "node.name" = "DroidCam";
+            "object.linger" = true;
+            "audio.channels" = 1;
+            "api.alsa.path" = "hw:10,1,0";
           };
         }
       ];

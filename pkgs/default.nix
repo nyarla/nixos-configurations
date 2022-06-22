@@ -1,6 +1,9 @@
 self: super:
 let require = path: args: super.callPackage (import path) args;
 in {
+  # input method
+  fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
+
   # musics
   currennt = require ./currennt { cudatoolkit = self.cudatoolkit_latest; };
 

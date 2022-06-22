@@ -172,7 +172,7 @@ in {
     startWhenNeeded = true;
     permitRootLogin = "no";
     openFirewall = false;
-    passwordAuthentication = false;
+    passwordAuthentication = true;
     kbdInteractiveAuthentication = false;
     listenAddresses = [{
       addr = "0.0.0.0";

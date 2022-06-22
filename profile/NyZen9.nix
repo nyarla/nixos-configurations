@@ -26,6 +26,7 @@
 
     # desktop
     ../config/per-service/daw.nix
+    ../config/per-service/droidcam.nix
     ../config/per-service/files.nix
     ../config/per-service/terminal.nix
     ../config/per-service/wine.nix

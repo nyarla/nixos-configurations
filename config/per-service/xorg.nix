@@ -51,7 +51,7 @@ in {
   nixpkgs.config.packageOverrides = super: rec {
     sx = super.sx.overrideAttrs (old: rec {
       postPatch = ''
-        sed -i 's!Xorg!/run/wrappers/bin/Xorg!' sx
+        sed -i 's!Xorg!/run/wrappers/bin/Xorg!' bin/sx
       '';
     });
   };

@@ -5,7 +5,16 @@ let
     jackass = pkgs.jackass.override { inherit wine; };
     jackass-bin = pkgs.jackass-bin.override { inherit wine; };
     wineasio = pkgs.wineasio.override { inherit wine; };
-    yabridge = pkgs.yabridge.override { inherit wine; };
+    yabridge = pkgs.yabridge.override {
+      inherit wine;
+
+      # temporary fix for 3.8.1
+      boost = pkgs.boost175;
+      pkgsi686Linux = {
+        boost = pkgs.pkgsi686Linux.boost175;
+        xorg.libxcb = pkgs.pkgsi686Linux.xorg.libxcb;
+      };
+    };
     yabridgectl = pkgs.yabridgectl.override { inherit yabridge; };
   in [
     jackass

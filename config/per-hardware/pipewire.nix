@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  environment.systemPackages = (with pkgs; [ pavucontrol helvum ])
+  environment.systemPackages = (with pkgs; [ pavucontrol helvum pipewire ])
     ++ (with pkgs.pipewire; [ out jack pulse ]);
 
   boot.kernelModules = [ "snd_aloop" ];
@@ -7,9 +7,6 @@
 
   # temporary fix for `pactl` it not found
   systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
-
-  systemd.user.services.pipewire.serviceConfig = { Nice = -19; };
-  systemd.user.services.pipewire-pulse.serviceConfig = { Nice = -19; };
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -25,9 +22,6 @@
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
         "default.clock.rate" = 192000;
-        "default.clock.quantum" = 2048;
-        "default.clock.min-quantum" = 512;
-        "default.clock.max-quantum" = 4096;
       };
       "stream.properties" = { "node.latecy" = "2048/192000"; };
     };
@@ -35,10 +29,7 @@
     config.client-rt = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 96000;
-        "default.clock.quantum" = 1024;
-        "default.clock.min-quantum" = 512;
-        "default.clock.max-quantum" = 4096;
+        "default.clock.rate" = 192000;
       };
       "stream.properties" = { "node.latecy" = "1024/96000"; };
     };
@@ -46,24 +37,15 @@
     config.pipewire-pulse = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 96000;
-        "default.clock.quantum" = 1024;
-        "default.clock.min-quantum" = 512;
-        "default.clock.max-quantum" = 4096;
+        "default.clock.rate" = 192000;
       };
-      "stream.properties" = {
-        "node.latecy" = "1024/96000";
-        "channelmix.upmix" = false;
-      };
+      "stream.properties" = { "node.latecy" = "1024/96000"; };
     };
 
     config.jack = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 96000;
-        "default.clock.quantum" = 1024;
-        "default.clock.min-quantum" = 512;
-        "default.clock.max-quantum" = 4096;
+        "default.clock.rate" = 192000;
       };
       "stream.properties" = { "node.latecy" = "1024/96000"; };
     };
@@ -71,10 +53,7 @@
     config.pipewire = {
       "context.properties" = {
         "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 96000;
-        "default.clock.quantum" = 1024;
-        "default.clock.min-quantum" = 512;
-        "default.clock.max-quantum" = 4096;
+        "default.clock.rate" = 192000;
       };
 
       "streams.properties" = {
@@ -121,7 +100,6 @@
             "audio.format" = "S24LE";
             "audio.position" = [ "FL" "FR" ];
             "audio.rate" = 96000;
-            "node.latecy" = "1024/96000";
           };
         }
         {

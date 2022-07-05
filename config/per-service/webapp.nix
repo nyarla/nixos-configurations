@@ -5,6 +5,8 @@
     virtualHost = "reader.home.thotep.net";
     selfUrlPath = "https://reader.home.thotep.net";
     database.passwordFile = "/etc/home-hosted/tt-rss/dbpassword";
+    database.type = "mysql";
+    database.createLocally = true;
     auth.autoLogin = false;
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
   };

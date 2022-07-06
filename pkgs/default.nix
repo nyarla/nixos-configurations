@@ -1,6 +1,13 @@
 self: super:
 let require = path: args: super.callPackage (import path) args;
 in {
+  # terminal
+  mlterm = super.mlterm.overrideAttrs (old: rec {
+    buildInputs = old.buildInputs ++ [ super.libxkbcommon ];
+    configureFlags = (super.lib.remove "--with-gui=xlib,fb" old.configureFlags)
+      ++ [ "--with-gui=xlib,fb,wayland" ];
+  });
+
   # input method
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
 

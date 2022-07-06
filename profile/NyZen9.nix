@@ -9,12 +9,6 @@
     # hardware
     ../config/per-machine/NyZen9.nix
 
-    # account
-    ../config/per-account/nyarla.nix
-    ../config/per-account/nyarla/desktop.nix
-    ../config/per-account/nyarla/development.nix
-    ../config/per-account/nyarla/vm.nix
-
     # system
     ../config/per-toolchain/editor.nix
     ../config/per-toolchain/fs.nix

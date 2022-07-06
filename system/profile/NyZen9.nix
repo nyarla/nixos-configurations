@@ -5,5 +5,6 @@ _: {
     ../config/i18n/en.nix
     ../config/radio/jp.nix
     ../config/user/nyarla.nix
+    ../config/wireless/bluetooth.nix
   ];
 }

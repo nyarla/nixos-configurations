@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, config, ... }: {
+  # mysql
+  services.mysql.settings = {
+    mysqld = { character-set-server = "utf8mb4"; };
+    client = { default-character-set = "utf8mb4"; };
+  };
+
   # TT-RSS
   services.tt-rss = {
     enable = true;
@@ -9,6 +15,9 @@
     database.createLocally = true;
     auth.autoLogin = false;
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
+    extraConfig = ''
+      putenv('MYSQL_CHARSET=utf8mb4');
+    '';
   };
   services.phpfpm.phpPackage = pkgs.php80;
 

@@ -11,13 +11,10 @@
     virtualHost = "reader.home.thotep.net";
     selfUrlPath = "https://reader.home.thotep.net";
     database.passwordFile = "/etc/home-hosted/tt-rss/dbpassword";
-    database.type = "mysql";
+    database.type = "pgsql";
     database.createLocally = true;
     auth.autoLogin = false;
     themePackages = with pkgs; [ tt-rss-theme-feedly ];
-    extraConfig = ''
-      putenv('MYSQL_CHARSET=utf8mb4');
-    '';
   };
   services.phpfpm.phpPackage = pkgs.php80;
 

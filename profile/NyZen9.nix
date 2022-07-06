@@ -1,5 +1,8 @@
 { pkgs, ... }: {
   imports = [
+    # system (wip: migration)
+    ../system/profile/NyZen9.nix
+
     # nixpkgs
     ../config/per-service/nixpkgs.nix
 
@@ -21,8 +24,6 @@
 
     ../config/per-service/dbus.nix
     ../config/per-service/nix-ld.nix
-
-    ../config/per-location/jp.nix
 
     # desktop
     ../config/per-service/daw.nix

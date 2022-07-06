@@ -1,15 +1,23 @@
 { pkgs, ... }: {
-  environment.systemPackages = (with pkgs; [ pavucontrol helvum pipewire ])
-    ++ (with pkgs.pipewire; [ out jack pulse ]);
-
+  # for droidcam
   boot.kernelModules = [ "snd_aloop" ];
   boot.kernelParams = [ "snd_aloop.index=10" ];
 
-  # temporary fix for `pactl` it not found
-  systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
+  # packages
+  environment.systemPackages = (with pkgs; [ pavucontrol pipewire ])
+    ++ (with pkgs.pipewire; [ out jack pulse ]);
 
+  # temporary fix for `pactl` is not found in pipewire-pulse service
+  systemd.user.services.pipewire-pulse.path = with pkgs; [ pulseaudio ];
+
+  # pipewire
   security.rtkit.enable = true;
-  services.pipewire = {
+  services.pipewire = let
+    common = {
+      "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
+      "default.clock.rate" = 192000;
+    };
+  in {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
@@ -18,52 +26,28 @@
     pulse.enable = true;
     wireplumber.enable = true;
 
-    config.client = {
-      "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 192000;
-      };
-      "stream.properties" = { "node.latecy" = "2048/192000"; };
-    };
+    config = {
+      client."context.properties" = { } // common;
+      client."stream.properties" = { "node.latency" = "2048/192000"; };
 
-    config.client-rt = {
-      "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 192000;
-      };
-      "stream.properties" = { "node.latecy" = "1024/96000"; };
-    };
+      client-rt."context.properties" = { } // common;
+      client-rt."stream.properties" = { "node.latency" = "1024/96000"; };
 
-    config.pipewire-pulse = {
-      "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 192000;
-      };
-      "stream.properties" = { "node.latecy" = "1024/96000"; };
-    };
+      pipewire-pulse."context.properties" = { } // common;
+      pipewire-pulse."stream.properties" = { "node.latency" = "1024/96000"; };
 
-    config.jack = {
-      "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 192000;
-      };
-      "stream.properties" = { "node.latecy" = "1024/96000"; };
-    };
+      jack."context.properties" = { } // common;
+      jack."stream.properties" = { "node.latency" = "1024/96000"; };
 
-    config.pipewire = {
-      "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
-        "default.clock.rate" = 192000;
-      };
-
-      "streams.properties" = {
+      pipewire."context.properties" = { } // common;
+      pipewire."stream.properties" = {
         "node.latency" = "1024/96000";
         "node.autoconnect" = true;
         "resample.quality" = 10;
       };
-
-      "context.objects" = [
+      pipewire."context.object" = [
         {
+          # bit-perfect for 44100Hz
           factory = "adapter";
           args = {
             "factory.name" = "support.null-audio-sink";
@@ -77,6 +61,7 @@
           };
         }
         {
+          # bit-perfect for 48000Hz
           factory = "adapter";
           args = {
             "factory.name" = "support.null-audio-sink";
@@ -90,6 +75,7 @@
           };
         }
         {
+          # bit-perfect for 96000Hz
           factory = "adapter";
           args = {
             "factory.name" = "support.null-audio-sink";
@@ -103,6 +89,7 @@
           };
         }
         {
+          # for droidcam
           factory = "adapter";
           args = {
             "factory.name" = "api.alsa.pcm.source";

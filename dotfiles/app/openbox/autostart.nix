@@ -1,4 +1,4 @@
-{ fetchurl, writeShellScript }:
+{ fetchurl, writeShellScript, pkgs }:
 let
   automount = uuid: path: ''
     if test -e "/dev/disk/by-uuid/${uuid}" ; then
@@ -21,7 +21,7 @@ in writeShellScript "autostart" ''
   }
 
   run hsetroot -fill ${wallpaper}
-  run ~/.nix-profile/libexec/openbox-xdg-autostart GNONE MATE LXQt
+  run ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE LXQt
   run clipit
 
   if test "$(hostname)" == "nixos"; then

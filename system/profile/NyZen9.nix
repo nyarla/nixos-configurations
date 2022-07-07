@@ -9,6 +9,8 @@
     ../config/linux/console.nix
     ../config/linux/lodpi.nix
     ../config/networking/tcp-bbr.nix
+    ../config/tools/git.nix
+    ../config/tools/nvim.nix
     ../config/user/nyarla.nix
     ../config/video/droidcam.nix
     ../config/video/nvidia.nix

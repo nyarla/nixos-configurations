@@ -38,7 +38,6 @@
     }];
     initExtraFirst = ''
       # enable home-manager
-      source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
       export PATH=${
         lib.strings.concatStringsSep ":" [
           "$HOME/local/textlintrc/node_modules/.bin"

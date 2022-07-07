@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   environment.variables = {
     NIX_LD_LIBRARY_PATH =
-      lib.makeLibraryPath (with pkgs; [ cudatoolkit_latest ]);
+      lib.makeLibraryPath (with pkgs; [ cudaPackages.cudatoolkit ]);
   };
 
   environment.etc."profile.d/nix-ld" = {

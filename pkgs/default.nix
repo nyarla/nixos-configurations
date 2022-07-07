@@ -2,13 +2,13 @@ self: super:
 let require = path: super.callPackage (import path);
 in {
   # additional packages
-  currennt = require ./currennt { inherit (cudaPackages) cudatoolkit; };
+  currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
 
   # modified packages
   ethminer = super.ethminer.override {
     inherit (super.llvmPackages_14) stdenv;
-    inherit (cudaPackages) cudatookit;
+    inherit (super.cudaPackages) cudatoolkit;
   };
 
   firefox-bin-unwrapped =
@@ -22,7 +22,7 @@ in {
 
   nsfminer = (require ./nsfminer {
     inherit (super.llvmPackages_14) stdenv;
-    cudatoolkit = self.cudatoolkit_latest;
+    inherit (super.cudaPackages) cudatoolkit;
   }).overrideAttrs (old: rec {
     postPatch = old.preConfigure + ''
       sed -i 's/set(CMAKE_CXX_FLAGS "''${CMAKE_CXX_FLAGS} -stdlib=libstdc++ -fcolor-diagnostics -Qunused-arguments")//' cmake/EthCompilerSettings.cmake
@@ -36,6 +36,6 @@ in {
   xmrig = super.xmrig.override { inherit (super.llvmPackages_14) stdenv; };
   xmrig-cuda = require ./xmrig-cuda {
     inherit (super.llvmPackages_14) stdenv;
-    inherit (cudaPackages) cudatookit;
+    inherit (super.cudaPackages) cudatoolkit;
   };
 }

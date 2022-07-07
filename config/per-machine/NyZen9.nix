@@ -2,7 +2,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
 
-    ../per-hardware/nvidia.nix
     ../per-hardware/optical.nix
     ../per-hardware/tcp-bbr.nix
 

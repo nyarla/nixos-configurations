@@ -10,6 +10,7 @@ _: {
     ../config/linux/lodpi.nix
     ../config/radio/jp.nix
     ../config/user/nyarla.nix
+    ../config/video/nvidia.nix
     ../config/wireless/bluetooth.nix
   ];
 

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ config, ... }: {
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
 
   services.xserver.videoDrivers = [ "nvidia" ];

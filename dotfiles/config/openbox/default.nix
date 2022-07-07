@@ -51,6 +51,9 @@ in {
       qgnomeplatform
       victory-gtk-theme
 
+      libsecret
+      pinentry-gnome
+
       clipit
       hsetroot
       i3lock-fancy

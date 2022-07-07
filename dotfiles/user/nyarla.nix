@@ -5,6 +5,7 @@ _: {
     ../config/app/chat.nix
     ../config/app/multimedia.nix
     ../config/services/dunst.nix
+    ../config/services/keychain.nix
     ../config/services/syncthing.nix
     ../config/shell/starship.nix
     ../config/shell/zsh.nix

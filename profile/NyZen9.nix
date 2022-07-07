@@ -14,7 +14,6 @@
     ../config/per-service/android.nix
 
     ../config/per-service/dbus.nix
-    ../config/per-service/nix-ld.nix
 
     # desktop
     ../config/per-service/daw.nix

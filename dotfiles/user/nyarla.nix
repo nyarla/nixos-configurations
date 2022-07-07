@@ -16,6 +16,7 @@ _: {
     ../config/tools/git.nix
 
     ../config/mlterm
+    ../config/openbox
   ];
 
   # More customizations

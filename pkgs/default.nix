@@ -7,6 +7,7 @@ in {
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
+  restic-run = require ./restic-run { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
   wcwidth-cjk = require ./wcwidth-cjk { };

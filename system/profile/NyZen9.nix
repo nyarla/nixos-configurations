@@ -85,4 +85,60 @@
 
   # firmware
   hardware.enableRedistributableFirmware = true;
+
+  # Services
+  # --------
+
+  # backup
+  systemd.user.services.backup = {
+    enable = true;
+    description = "Automatic backup by restic and rclone";
+    requiredBy = [ "default.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = toString (pkgs.writeScript "backup.sh" ''
+        export PATH=${pkgs.restic-run}/bin:$PATH
+
+        if test -e ~/.cache/backup.lock ; then
+          echo "backup process is running or dead lokced"
+          exit 0
+        fi
+
+        touch ~/.cache/backup.lock
+
+        # ~/Documents
+        cd ~/Documents && restic-backup documents .
+
+        # ~/Music
+        # cd ~/Music && restic-backup musics .
+
+        # ~/local
+        cd ~/local && restic-backup dotfiles .
+
+        # /run/media/nyarla/data/Downloads
+        (cd /run/media/nyarla/data/Downloads && restic-backup stuck .)
+
+        # /run/media/nyarla/data/local
+        (cd /run/media/nyarla/data/local && restic-backup source .)
+
+        # /run/media/nyarla/src/local
+        (cd /run/media/nyarla/src/local && restic-backup daw .)
+
+        # /run/media/nyarla/src/Music
+        (cd /run/media/nyarla/src/Music && restic-backup musics .)
+
+        rm ~/.cache/backup.lock
+      '');
+    };
+  };
+  systemd.user.timers.backup = {
+    enable = true;
+    description = "Timer for automatic backup by restic and rclone";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 02:00:00";
+      RandomizedDelaySec = "5m";
+      Persistent = true;
+    };
+  };
 }

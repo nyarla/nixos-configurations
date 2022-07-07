@@ -2,7 +2,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
 
-    ../per-hardware/keyboard-us.nix
     ../per-hardware/nvidia.nix
     ../per-hardware/optical.nix
     ../per-hardware/tcp-bbr.nix
@@ -38,7 +37,6 @@
   boot.tmpOnTmpfs = true;
 
   # cpu
-  powerManagement.cpuFreqGovernor = "performance";
 
   # filesystem
   fileSystems."/" = {

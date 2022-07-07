@@ -5,7 +5,7 @@ let
       xset dpms force off
 
     super + alt + l
-      mlterm
+      ${pkgs.mlterm}/bin/mlterm
   '';
 
   sxrc = pkgs.writeShellScript "xinitrc" ''
@@ -75,7 +75,7 @@ in {
   xdg.configFile = {
     # openbox
     "openbox/autostart".source = toString (with pkgs;
-      (import ./autostart.nix) { inherit fetchurl writeShellScript; });
+      (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
 
     "openbox/menu.xml".text = (import ./menu.nix) { };
 

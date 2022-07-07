@@ -1,27 +1,21 @@
 self: super:
 let require = path: super.callPackage (import path);
 in {
-  # terminal
+  # additional packages
+  currennt = require ./currennt { inherit (cudaPackages) cudatoolkit; };
+  fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
+
+  # modified packages
+  ethminer = super.ethminer.override {
+    inherit (super.llvmPackages_14) stdenv;
+    inherit (cudaPackages) cudatookit;
+  };
+
   mlterm = super.mlterm.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ super.libxkbcommon ];
     configureFlags = (super.lib.remove "--with-gui=xlib,fb" old.configureFlags)
       ++ [ "--with-gui=xlib,fb,wayland" ];
   });
-
-  # input method
-  fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
-
-  # musics
-  currennt = require ./currennt { cudatoolkit = self.cudatoolkit_latest; };
-
-  # nvidia
-  cudatoolkit_latest = super.cudaPackages_11_6.cudatoolkit;
-
-  # mining
-  ethminer = super.ethminer.override {
-    inherit (super.llvmPackages_14) stdenv;
-    cudatoolkit = self.cudatoolkit_latest;
-  };
 
   nsfminer = (require ./nsfminer {
     inherit (super.llvmPackages_14) stdenv;
@@ -36,6 +30,6 @@ in {
   xmrig = super.xmrig.override { inherit (super.llvmPackages_14) stdenv; };
   xmrig-cuda = require ./xmrig-cuda {
     inherit (super.llvmPackages_14) stdenv;
-    cudatoolkit = self.cudatoolkit_latest;
+    inherit (cudaPackages) cudatookit;
   };
 }

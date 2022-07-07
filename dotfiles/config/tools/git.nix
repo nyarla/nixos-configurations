@@ -2,8 +2,6 @@
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
-    userName = "nyarla";
-    userEmail = "nyarla@kalaclista.com";
     aliases = {
       co = "checkout";
       ci = "commit";

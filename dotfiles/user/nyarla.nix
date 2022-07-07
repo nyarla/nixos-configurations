@@ -12,6 +12,9 @@ _: {
     ../config/tools/git.nix
   ];
 
+  programs.git.userName = "nyarla";
+  programs.git.userEmail = "nyarla@kalaclista.com";
+
   home.stateVersion =
     (import ../../system/config/nixos/version.nix).stateVersion;
 }

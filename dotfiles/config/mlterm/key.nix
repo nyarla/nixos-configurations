@@ -1,0 +1,1 @@
+{ "Control+p" = ''"proto:paste"''; }

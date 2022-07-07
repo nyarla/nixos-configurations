@@ -14,6 +14,8 @@ _: {
     ../config/tools/archiver.nix
     ../config/tools/development.nix
     ../config/tools/git.nix
+
+    ../config/mlterm
   ];
 
   # More customizations

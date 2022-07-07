@@ -28,12 +28,12 @@ let
     <separator />
   '';
 
-  scripts = "/etc/nixos/dotfiles/scripts";
+  scripts = "/etc/nixos/dotfiles/files/scripts";
   scriptsCmd = cmd: "${scripts}/${cmd}";
   activateCmd = cmd: class:
     "${scripts}/window-activate ${cmd} &#39;${class}&#39;";
 
-  wine = "/etc/nixos/dotfiles/wine";
+  wine = "/etc/nixos/dotfiles/files/wine";
   wineCmd = app: "${wine}/${app}";
   iLokCmd = prefix: ''
     bash -c &#34;cd &#39;/run/media/nyarla/src/local/daw/plugins/${prefix}&#39; &amp;&amp; wine-run wine explorer &#39;C:\Program Files (x86)\iLok License Manager\iLok License Manager.exe&#39;&#34;

@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-let apps = with pkgs; [ mlterm fbterm ];
+let apps = with pkgs; [ fbterm ];
 in {
   environment.systemPackages = apps;
 

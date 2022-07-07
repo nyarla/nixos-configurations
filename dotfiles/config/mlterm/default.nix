@@ -10,6 +10,8 @@ let
   terminfo = pkgs.terminfo-mlterm-256color;
 
 in {
+  home.packages = with pkgs; [ mlterm-wrapped ];
+
   home.file.".mlterm/aafont".text = toKV aafont."${pkgs.stdenv.system}";
   home.file.".mlterm/color".text = toKV color;
   home.file.".mlterm/key".text = toKV key;

@@ -42,9 +42,6 @@ in {
     '';
   });
 
-  quodlibet =
-    super.quodlibet.overrideAttrs (_: rec { doInstallCheck = false; });
-
   thunderbird-bin-unwrapped =
     super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 

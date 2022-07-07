@@ -1,5 +1,5 @@
 self: super:
-let require = path: args: super.callPackage (import path) args;
+let require = path: super.callPackage (import path);
 in {
   # terminal
   mlterm = super.mlterm.overrideAttrs (old: rec {

@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+export WINEPREFIX=$HOME/local/wine/AmazonMusic
+#export WINEDLLOVERRIDES="libglesv2=d"
+
+export LD_PRELOAD=
+
+exec nice -n -19 wine explorer 'C:\users\nyarla\AppData\Local\Amazon Music\Amazon Music.exe'

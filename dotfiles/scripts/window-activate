@@ -1,0 +1,31 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+sub main {
+  my $binary = shift;
+  my $regexp = shift;
+  my @argv = @_;
+
+  my @windows = 
+    map { $_->[0] }
+    grep {
+      defined($_->[2]) && $_->[2] =~ $regexp
+    }
+    map {
+      chomp($_);
+      [ split qr{ +}, $_ ]
+    }
+    `wmctrl -l -x`;
+
+  my $wid = shift @windows;
+
+  if ( ! defined $wid ) {
+    exec $binary, @argv;
+  }
+
+  exec qw(wmctrl -i -a), $wid;
+}
+
+main(@ARGV);

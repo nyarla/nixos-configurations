@@ -28,12 +28,12 @@ let
     <separator />
   '';
 
-  scripts = "/home/nyarla/local/dotfiles/scripts";
+  scripts = "/etc/nixos/dotfiles/scripts";
   scriptsCmd = cmd: "${scripts}/${cmd}";
   activateCmd = cmd: class:
     "${scripts}/window-activate ${cmd} &#39;${class}&#39;";
 
-  wine = "/home/nyarla/local/dotfiles/wine";
+  wine = "/etc/nixos/dotfiles/wine";
   wineCmd = app: "${wine}/${app}";
   iLokCmd = prefix: ''
     bash -c &#34;cd &#39;/run/media/nyarla/src/local/daw/plugins/${prefix}&#39; &amp;&amp; wine-run wine explorer &#39;C:\Program Files (x86)\iLok License Manager\iLok License Manager.exe&#39;&#34;
@@ -44,9 +44,7 @@ in ''
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
 
   ${makeMenu "applications-main" "Main" [
-    (makeExecute "mlterm" (scriptsCmd "mlterm"))
-    (makeExecute "notes" (scriptsCmd "notes"))
-    (makeExecute "mining" (scriptsCmd "mining"))
+    (makeExecute "mlterm" "mlterm")
     (makeExecute "virt-manager" "virt-manager")
   ]}
 

@@ -1,0 +1,46 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+my %e = (
+  "&" => "&amp;",
+  ">" => "&gt;",
+  "<" => "&lt;",
+  "'" => "&#39;",
+  '"' => "&quot;",
+);
+
+sub escape_xml {
+  my $src = shift @_;
+  $src =~ s{([&><'"])}{$e{$1}}g;
+  return $src
+}
+
+sub main {
+  my $out = qq{<openbox_pipe_menu label="Windows">};
+
+  for my $item (sort { $a cmp $b } `wmctrl -x -l`) {
+      chomp($item);
+
+      my ( $wid, $desktop, $wc, $machine, $title )
+        = ( $item =~ m{^([^ ]+)\s+([^ ]+)\s+([^ ]+)\s+([^ ]+)\s+(.+)$} );
+     
+      next if ( $wc eq q{lxqt-panel.lxqt-panel} );
+      
+      $title = escape_xml($title);
+
+      $out .= qq{<item label="${title}"><action name="Execute"><command>wmctrl -i -a ${wid}</command></action></item>};
+  }
+ 
+  if ( $out !~ m{</item>} ) {
+    $out .= qq{<item label="none"><action name="Execute"><command>true</command></action></item>};
+  }
+
+  $out .= qq{</openbox_pipe_menu>};
+
+  print $out;
+  exit 0;
+}
+
+main;

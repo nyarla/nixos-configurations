@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+DTM=/run/media/nyarla/src/local/daw
+
+for dir in $HOME/local/wine $DTM/daw $DTM/plugins; do
+  for prefix in $(ls "${dir}"); do
+      cwd=$(pwd)
+
+      cd "${dir}/${prefix}"
+      echo $(pwd)
+      wine-run wineboot -u
+      cd $cwd
+  done
+done

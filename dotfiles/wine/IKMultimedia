@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export WINEPREFIX=/run/media/nyarla/src/local/daw/plugins/IKMultimedia
+export LD_PRELOAD=
+
+exec wine explorer 'C:\Program Files\IK Multimedia\IK Product Manager\IK Product Manager.exe'

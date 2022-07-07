@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+export WINEPREFIX=$HOME/local/wine/MP3Tag
+export LD_PRELOAD=
+
+wine explorer 'C:\Program Files (x86)\Mp3tag\Mp3tag.exe'

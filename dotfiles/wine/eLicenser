@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export WINEPREFIX=/run/media/nyarla/src/local/daw/plugins/Steinberg
+export LD_PRELOAD=
+
+exec wine explorer 'C:\Program Files (x86)\eLicenser\eLCC\eLCC.exe' 

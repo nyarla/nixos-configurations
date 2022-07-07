@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export WINEPREFIX=/run/media/nyarla/src/local/daw/plugins/Arturia
+export LD_PRELOAD=
+
+exec wine explorer 'C:\Program Files (x86)\Arturia\Arturia Software Center\Arturia Software Center.exe'

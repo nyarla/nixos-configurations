@@ -4,14 +4,14 @@ let
     #!${stdenv.shell}
 
     cd $HOME
-    ${wcwidth-cjk}/bin/wcwidth-cjk -- mlterm -e ${zsh}/bin/zsh --login &
+    ${wcwidth-cjk}/bin/wcwidth-cjk -- ${mlterm}/bin/mlterm -e ${zsh}/bin/zsh --login &
   '';
 
   mlterm-wl = writeScript "mlterm-wl" ''
     #!${stdenv.shell}
 
     cd $HOME
-    ${wcwidth-cjk}/bin/wcwidth-cjk -- mlterm-wl -e ${zsh}/bin/zsh --login &
+    ${wcwidth-cjk}/bin/wcwidth-cjk -- ${mlterm}/bin/mlterm-wl -e ${zsh}/bin/zsh --login &
   '';
 
   mlterm-fb = writeScript "mlterm-fb" ''
@@ -21,7 +21,7 @@ let
     export MOUSE_INPUT_NUM=$(${coreutils}/bin/readlink /dev/input/by-id/usb-PixArt_USB_Optical_Mouse-event-mouse | ${coreutils}/bin/cut -dt -f2)
 
     cd $HOME
-    ${wcwidth-cjk}/bin/wcwidth-cjk -- mlterm-fb -e ${zsh}/bin/zsh --login &
+    ${wcwidth-cjk}/bin/wcwidth-cjk -- ${mlterm}/bin/mlterm-fb -e ${zsh}/bin/zsh --login &
   '';
 in runCommand "mlterm-wrapped" { } ''
   mkdir -p $out/bin

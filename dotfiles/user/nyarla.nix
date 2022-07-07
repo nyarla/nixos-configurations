@@ -3,6 +3,7 @@ _: {
     ../config/app/appimage.nix
     ../config/app/browser.nix
     ../config/app/chat.nix
+    ../config/shell/starship.nix
     ../config/shell/zsh.nix
     ../config/tools/archiver.nix
     ../config/tools/development.nix

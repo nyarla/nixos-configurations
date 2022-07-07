@@ -9,6 +9,7 @@
     ../config/linux/console.nix
     ../config/linux/lodpi.nix
     ../config/networking/tcp-bbr.nix
+    ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
     ../config/tools/git.nix
     ../config/tools/nvim.nix

@@ -1,6 +1,7 @@
 _: {
   imports = [
     ../config/app/appimage.nix
+    ../config/app/browser.nix
     ../config/app/chat.nix
     ../config/tools/archiver.nix
     ../config/tools/git.nix

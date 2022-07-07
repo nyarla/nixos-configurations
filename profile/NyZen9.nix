@@ -19,7 +19,6 @@
     ../config/per-service/daw.nix
     ../config/per-service/files.nix
     ../config/per-service/terminal.nix
-    ../config/per-service/wine.nix
 
     ../config/per-service/mining.nix
 

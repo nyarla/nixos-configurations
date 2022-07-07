@@ -2,7 +2,6 @@
 let
   wineApps = let
     wine = pkgs.wineWowPackages.stagingFull;
-    jackass = pkgs.jackass.override { inherit wine; };
     jackass-bin = pkgs.jackass-bin.override { inherit wine; };
     wineasio = pkgs.wineasio.override { inherit wine; };
     yabridge = pkgs.yabridge.override {
@@ -17,7 +16,6 @@ let
     };
     yabridgectl = pkgs.yabridgectl.override { inherit yabridge; };
   in [
-    jackass
     jackass-bin
     pkgs.wineWowPackages.stagingFull
     pkgs.winetricks
@@ -26,7 +24,7 @@ let
     yabridgectl
   ];
 in {
-  environment.systemPackages = wineApps;
+  environment.systemPackages = wineApps ++ (with pkgs; [ wine-run ]);
   # workaround for kindle 1.16
   security.pki.certificates = [''
     -----BEGIN CERTIFICATE-----

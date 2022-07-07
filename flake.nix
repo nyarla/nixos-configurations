@@ -44,7 +44,7 @@
           (_: {
             nixpkgs.overlays = [ dotnix.overlay (import ./pkgs) ];
             system.stateVersion =
-              (import ./system/config/stateVersion).stateVersion;
+              (import ./system/config/nixos/version.nix).stateVersion;
           })
         ];
       };

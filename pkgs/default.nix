@@ -11,6 +11,9 @@ in {
     inherit (cudaPackages) cudatookit;
   };
 
+  firefox-bin-unwrapped =
+    super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
+
   mlterm = super.mlterm.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ super.libxkbcommon ];
     configureFlags = (super.lib.remove "--with-gui=xlib,fb" old.configureFlags)
@@ -26,6 +29,9 @@ in {
       sed -i 's|-Wall|-Wall -Ofast -funroll-loops|g' cmake/EthCompilerSettings.cmake
     '';
   });
+
+  thunderbird-bin-unwrapped =
+    super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   xmrig = super.xmrig.override { inherit (super.llvmPackages_14) stdenv; };
   xmrig-cuda = require ./xmrig-cuda {

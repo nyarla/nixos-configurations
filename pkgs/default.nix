@@ -4,6 +4,7 @@ in {
   # additional packages
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
+  skk-dicts-xl = require ./skk-dicts-xl { };
 
   # modified packages
   calibre = super.calibre.overrideAttrs (old: rec {

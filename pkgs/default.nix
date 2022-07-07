@@ -11,6 +11,7 @@ in {
   skk-dicts-xl = require ./skk-dicts-xl { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
   wcwidth-cjk = require ./wcwidth-cjk { };
+  wine-run = require ./wine-run { };
 
   # modified packages
   calibre = super.calibre.overrideAttrs (old: rec {

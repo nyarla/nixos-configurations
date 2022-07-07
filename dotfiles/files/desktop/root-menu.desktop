@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=OpenBox Menu
+Exec=xdotool key alt+F1
+Icon=Terminal
+Terminal=false

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   console.colors = [
     "000000"
     "FF6633"
@@ -18,6 +18,5 @@
     "FFFFFF"
   ];
 
-  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v16n.psf.gz";
   console.earlySetup = true;
 }

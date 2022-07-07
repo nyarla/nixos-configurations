@@ -41,6 +41,16 @@ let
 in {
   home.packages = with pkgs;
     [
+      capitaine-cursors
+      flatery-icon-theme
+      gnome.adwaita-icon-theme
+      gnome.gnome-themes-extra
+      gtk-engine-murrine
+      gtk_engines
+      hicolor-icon-theme
+      qgnomeplatform
+      victory-gtk-theme
+
       clipit
       hsetroot
       i3lock-fancy

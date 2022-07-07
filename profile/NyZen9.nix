@@ -6,9 +6,6 @@
     # nixpkgs
     ../config/per-service/nixpkgs.nix
 
-    # hardware
-    ../config/per-machine/NyZen9.nix
-
     # system
     ../config/per-toolchain/editor.nix
     ../config/per-toolchain/fs.nix
@@ -21,7 +18,6 @@
 
     # desktop
     ../config/per-service/daw.nix
-    ../config/per-service/droidcam.nix
     ../config/per-service/files.nix
     ../config/per-service/terminal.nix
     ../config/per-service/wine.nix

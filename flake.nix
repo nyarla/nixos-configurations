@@ -30,7 +30,7 @@
       in nixosSystem {
         inherit system;
         modules = [
-          ./config/per-machine/NyZen9.nix
+          ./system/profile/NyZen9.nix
           ./profile/NyZen9.nix
 
           nix-ld.nixosModules.nix-ld

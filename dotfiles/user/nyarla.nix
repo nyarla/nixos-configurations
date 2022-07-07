@@ -16,6 +16,7 @@ _: {
     ../config/tools/archiver.nix
     ../config/tools/development.nix
 
+    ../app/git
     ../app/mlterm
     ../app/openbox
   ];

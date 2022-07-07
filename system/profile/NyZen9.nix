@@ -1,6 +1,7 @@
 _: {
   imports = [
     ../config/audio/pipewire.nix
+    ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/i18n/en.nix
     ../config/linux/console.nix
@@ -9,4 +10,12 @@ _: {
     ../config/user/nyarla.nix
     ../config/wireless/bluetooth.nix
   ];
+
+  # More customizations
+  # -------------------
+
+  # CPU
+  # ---
+  powerManagement.cpuFreqGovernor = "performance";
+
 }

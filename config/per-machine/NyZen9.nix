@@ -38,7 +38,6 @@
   boot.tmpOnTmpfs = true;
 
   # cpu
-  hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
 
   # filesystem

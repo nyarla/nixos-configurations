@@ -6,6 +6,10 @@ in {
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
 
   # modified packages
+  calibre = super.calibre.overrideAttrs (old: rec {
+    buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
+  });
+
   ethminer = super.ethminer.override {
     inherit (super.llvmPackages_14) stdenv;
     inherit (super.cudaPackages) cudatoolkit;
@@ -29,6 +33,9 @@ in {
       sed -i 's|-Wall|-Wall -Ofast -funroll-loops|g' cmake/EthCompilerSettings.cmake
     '';
   });
+
+  quodlibet =
+    super.quodlibet.overrideAttrs (_: rec { doInstallCheck = false; });
 
   thunderbird-bin-unwrapped =
     super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };

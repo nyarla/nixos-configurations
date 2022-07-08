@@ -4,6 +4,7 @@
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/i18n/en.nix
+    ../config/i18n/locales.nix
     ../config/keyboard/us.nix
     ../config/keyboard/zinc.nix
     ../config/linux/console.nix

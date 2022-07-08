@@ -11,11 +11,10 @@ let
       pkgs.fetchurl {
         url =
           "https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/master/libvirt_hooks/qemu";
-        sha256 = "155dz6535lxxy1pc8yq8kbmc80fh6x35459n7ppf3zwmcdb63rg6";
+        sha256 = "sha256-oLOodU2PtO7nX67W8PufloPYam9ayy0wWZGjYl/3bWA=";
       }
     } $out/bin/qemu
 
-    sed -i 's|#!/bin/bash|#!/run/current-system/sw/bin/bash|' $out/bin/qemu
     chmod +x $out/bin/qemu
   '';
 

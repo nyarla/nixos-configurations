@@ -1,4 +1,4 @@
-{ runCommand, writeShellScript, restic, rclone }:
+{ runCommand, writeShellScript, restic, rclone, nettools }:
 let
   restic-run = writeShellScript "restic-run.sh" ''
     set -euo pipefail
@@ -11,7 +11,7 @@ let
     export HOME=/home/nyarla
     export RESTIC_PASSWORD_FILE=$HOME/.config/rclone/restic
 
-    export RESTIC_REPOSITORY=rclone:Teracloud:Restic/$(hostname)/''${1}
+    export RESTIC_REPOSITORY=rclone:Teracloud:Restic/$(${nettools}/bin/hostname)/''${1}
 
     shift 1
 

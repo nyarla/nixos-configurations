@@ -98,7 +98,7 @@
     requiredBy = [ "default.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = toString (pkgs.writeScript "backup.sh" ''
+      ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
         export PATH=${pkgs.restic-run}/bin:$PATH
 
         if test -e ~/.cache/backup.lock ; then

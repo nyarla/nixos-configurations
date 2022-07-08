@@ -20,8 +20,6 @@
     ../config/per-service/files.nix
     ../config/per-service/terminal.nix
 
-    ../config/per-service/mining.nix
-
     # desktop environment
     ../config/per-service/wayland.nix
     ../config/per-service/xorg.nix

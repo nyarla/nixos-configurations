@@ -9,6 +9,7 @@ in {
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   restic-run = require ./restic-run { };
   skk-dicts-xl = require ./skk-dicts-xl { };
+  sysmontask = require ./sysmontask { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };

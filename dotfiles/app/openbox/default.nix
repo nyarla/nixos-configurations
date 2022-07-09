@@ -62,11 +62,11 @@ in {
       lxqt.lxqt-config
       lxqt.lxqt-panel
       maim
-      mate.mate-system-monitor
       obconf
       openbox
       perl
       sxhkd
+      sysmontask
       wmctrl
       xdotool
       xsettingsd

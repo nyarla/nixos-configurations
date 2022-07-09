@@ -123,7 +123,7 @@ in ''
 
   ${makeMenu "system-utils" "Utilities" [
     (makeExecute "Audio" "pavucontrol")
-    (makeExecute "System Monitor" "mate-system-monitor")
+    (makeExecute "System Monitor" "sysmontask")
     (makeExecute "Bluetooth" "blueman-manager")
   ]}
 

@@ -10,6 +10,7 @@
     ../config/linux/console.nix
     ../config/linux/filesystem.nix
     ../config/linux/lodpi.nix
+    ../config/linux/optical.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
     ../config/networking/tcp-bbr.nix

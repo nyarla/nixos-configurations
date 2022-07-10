@@ -45,7 +45,7 @@
         "node.autoconnect" = true;
         "resample.quality" = 10;
       };
-      pipewire."context.object" = [
+      pipewire."context.objects" = [
         {
           # bit-perfect for 44100Hz
           factory = "adapter";

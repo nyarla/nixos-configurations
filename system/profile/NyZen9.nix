@@ -10,6 +10,7 @@
     ../config/linux/console.nix
     ../config/linux/lodpi.nix
     ../config/linux/wine.nix
+    ../config/networking/agent.nix
     ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix

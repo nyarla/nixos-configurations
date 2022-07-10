@@ -1,13 +1,13 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    ntfs3g
-    hfsprogs
-    exfat
     btrfs-progs
-    gptfdisk
-    gocryptfs
     cryptsetup
     e2fsprogs
+    exfat
+    gocryptfs
+    gptfdisk
+    hfsprogs
+    ntfs3g
   ];
 
   programs.fuse.userAllowOther = true;

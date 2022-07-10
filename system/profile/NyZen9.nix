@@ -8,6 +8,7 @@
     ../config/keyboard/us.nix
     ../config/keyboard/zinc.nix
     ../config/linux/console.nix
+    ../config/linux/filesystem.nix
     ../config/linux/lodpi.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix

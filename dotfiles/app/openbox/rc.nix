@@ -79,7 +79,7 @@ in ''
         ])
 
         (props "theme" [
-          (prop "name" "Victory-medium")
+          (prop "name" "Arc-Dark")
           (prop "titleLayout" "NLIMC")
           (prop "keepBorder" "yes")
           (prop "animateIconify" "yes")

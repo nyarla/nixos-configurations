@@ -41,15 +41,21 @@ let
 in {
   home.packages = with pkgs;
     [
+      # icon and themes
+      arc-theme
+      arc-openbox
       capitaine-cursors
-      flatery-icon-theme
+      hicolor-icon-theme
+      flat-remix-icon-theme
+
+      # fallback
       gnome.adwaita-icon-theme
       gnome.gnome-themes-extra
+
+      # theme engine
       gtk-engine-murrine
       gtk_engines
-      hicolor-icon-theme
       qgnomeplatform
-      victory-gtk-theme
 
       libsecret
       pinentry-gnome

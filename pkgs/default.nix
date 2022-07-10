@@ -3,6 +3,7 @@ let require = path: super.callPackage (import path);
 in {
   # additional packages
   JUCE = require ./JUCE { };
+  arc-openbox = require ./arc-openbox { };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };

@@ -5,6 +5,10 @@
     client = { default-character-set = "utf8mb4"; };
   };
 
+  # postgresql
+  services.postgresql.enable = true;
+  services.postgresql.dataDir = "/home/postgres/14";
+
   # TT-RSS
   services.tt-rss = {
     enable = true;

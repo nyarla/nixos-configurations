@@ -3,7 +3,7 @@
     [ glib udisks2 ]
     ++ (with pkgs.gnome3; [ gvfs ghex gnome-disk-utility gnome-font-viewer ])
     ++ (with pkgs.xfce; [ exo thunar garcon libxfce4ui xfconf ])
-    ++ (with pkgs.mate; [ atril atril engrampa eom mate-polkit pluma ]);
+    ++ (with pkgs.mate; [ atril engrampa eom mate-polkit pluma ]);
 
   services.gvfs.enable = true;
   services.tumbler.enable = true;

@@ -15,6 +15,7 @@ let
       }
     } $out/bin/qemu
 
+    sed -i 's|#!/usr/bin/env bash|#!${pkgs.bash}/bin/bash|' $out/bin/qemu
     chmod +x $out/bin/qemu
   '';
 

@@ -22,13 +22,13 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     audio.enable = true;
-    jack.enable = true;
+    jack.enable = false;
     pulse.enable = true;
     wireplumber.enable = true;
 
     config = {
       client."context.properties" = { } // common;
-      client."stream.properties" = { "node.latency" = "2048/192000"; };
+      client."stream.properties" = { "node.latency" = "1024/96000"; };
 
       client-rt."context.properties" = { } // common;
       client-rt."stream.properties" = { "node.latency" = "1024/96000"; };
@@ -36,8 +36,8 @@
       pipewire-pulse."context.properties" = { } // common;
       pipewire-pulse."stream.properties" = { "node.latency" = "1024/96000"; };
 
-      jack."context.properties" = { } // common;
-      jack."stream.properties" = { "node.latency" = "1024/96000"; };
+      #jack."context.properties" = { } // common;
+      #jack."stream.properties" = { "node.latency" = "1024/96000"; };
 
       pipewire."context.properties" = { } // common;
       pipewire."stream.properties" = {

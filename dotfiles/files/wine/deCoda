@@ -13,5 +13,21 @@ cp /run/current-system/sw/lib/wine/x86_64-unix/wineasio.dll.so \
 
 wine64 regsvr32 wineasio.dll
 
+# launch jackd
+jackd -d alsa -d pipewire -p 1024 -r 96000 -X seq &
+jackPID=$!
+
+sleep 1
+
+a2j_control --ehw --start
+
 # FL Studio
-exec wine explorer 'C:\Program Files\zplane\deCoda\deCoda.exe'
+wine 'C:\Program Files\zplane\deCoda\deCoda.exe' &
+waitPID=$!
+
+test -n "$waitPID" && wait $waitPID
+
+a2j_control --stop
+kill $jackPID
+
+exit 0

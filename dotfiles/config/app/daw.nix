@@ -6,7 +6,10 @@
     zrythm
 
     # jackaudio
+    a2jmidid
     carla
+    jack2-classic
+    qjackctl
 
     # plugins
     ChowKick
@@ -38,7 +41,7 @@
     # surge
     surge-XT
     synthv1
-    vcv-rack
+    # vcv-rack
     x42-avldrums
     x42-gmsynth
     yoshimi

@@ -61,6 +61,7 @@ in {
       pinentry-gnome
 
       clipit
+      gnome-usage
       hsetroot
       i3lock-fancy
       jq
@@ -68,6 +69,7 @@ in {
       lxqt.lxqt-config
       lxqt.lxqt-panel
       maim
+      mate.mate-system-monitor
       obconf
       openbox
       perl

@@ -5,4 +5,11 @@ export WINEPREFIX=$HOME/local/wine/AmazonMusic
 
 export LD_PRELOAD=
 
-exec nice -n -19 wine explorer 'C:\users\nyarla\AppData\Local\Amazon Music\Amazon Music.exe'
+wine 'C:\users\nyarla\AppData\Local\Amazon Music\Amazon Music.exe' &
+waitPID=$!
+
+test -n "${waitPID}" && wait $waitPID
+
+wineserver -k
+
+exit 0

@@ -60,16 +60,16 @@ in ''
     (makeExecute "Thunar" "thunar")
     (makeExecute "Atril" "atril")
     (makeExecute "Pluma" "pluma")
+    (makeExecute "GHex" "ghex")
   ]}
 
   ${makeMenu "applications-multimedia" "Multimedia" [
     (makeExecute "Calibre" "calibre")
-    (makeExecute "QuodLibet"
-      "env PIPEWIRE_LATENCY=1024/192000 pw-jack quodlibet")
+    (makeExecute "QuodLibet" "env PIPEWIRE_LATENCY=1024/96000 quodlibet")
     (makeExecute "Picard" "picard")
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))
     "${sep}"
-    (makeExecute "Audacity" "nice -n -19 audacity")
+    (makeExecute "Audacity" "audacity")
     (makeExecute "DeaDBeeF" "deadbeef")
     "${sep}"
     (makeExecute "Kindle" (wineCmd "Kindle"))
@@ -96,13 +96,13 @@ in ''
   ]}
 
   ${makeMenu "applications-daw" "Music" [
-    (makeExecute "Carla" "pw-jack carla")
+    (makeExecute "Carla" "carla")
 
     (makeMenu "submenu-daw" "DAW" [
-      (makeExecute "Bitwig Studio" "pw-jack bitwig-studio")
-      (makeExecute "Zrythm" "pw-jack zrythm")
-      (makeExecute "Helio.fm" "pw-jack helio")
-      (makeExecute "MuseScore" "pw-jack musescore")
+      (makeExecute "Bitwig Studio" (scriptsCmd "bitwig-studio"))
+      (makeExecute "Zrythm" "zrythm")
+      (makeExecute "Helio.fm" "helio")
+      (makeExecute "MuseScore" "musescore")
       "${sep}"
       (makeExecute "FL Studio" (wineCmd "FLStudio"))
       (makeExecute "deCoda" (wineCmd "deCoda"))
@@ -123,8 +123,15 @@ in ''
 
   ${makeMenu "system-utils" "Utilities" [
     (makeExecute "Audio" "pavucontrol")
-    (makeExecute "System Monitor" "sysmontask")
     (makeExecute "Bluetooth" "blueman-manager")
+    "${sep}"
+    (makeExecute "Seahorse" "seahorse")
+    "${sep}"
+    (makeExecute "Disk Utility" "gnome-disks")
+    (makeExecute "Usage" "gnome-usage")
+    "${sep}"
+    (makeExecute "Task manager" "sysmontask")
+    (makeExecute "System monitor" "mate-system-monitor")
   ]}
 
   ${makeMenu "system-actions" "System" [

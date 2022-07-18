@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ../config/audio/pipewire.nix
+    ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/i18n/en.nix

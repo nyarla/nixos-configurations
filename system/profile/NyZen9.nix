@@ -43,6 +43,7 @@
       device = "/dev/disk/by-uuid/81494384-9f87-4e1c-917a-b5741306fd99";
       preLVM = true;
       allowDiscards = false;
+      bypassWorkqueues = true;
     };
   };
 

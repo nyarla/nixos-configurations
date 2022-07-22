@@ -28,14 +28,6 @@ in {
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  jack2-classic = super.jack2.overrideAttrs (old: rec {
-    pname = "jack2-classic";
-    buildInputs = with super.lib;
-      remove super.pkgs.python3Packages.dbus-python
-      (remove super.pkgs.dbus old.buildInputs);
-    wafConfigureFlags = [ "--classic" "--autostart=classic" "--alsa" ];
-  });
-
   mlterm = super.mlterm.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ super.libxkbcommon ];
     configureFlags = (super.lib.remove "--with-gui=xlib,fb" old.configureFlags)

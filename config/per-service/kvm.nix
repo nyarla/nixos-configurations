@@ -11,7 +11,7 @@ let
       pkgs.fetchurl {
         url =
           "https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/master/libvirt_hooks/qemu";
-        sha256 = "sha256-oLOodU2PtO7nX67W8PufloPYam9ayy0wWZGjYl/3bWA=";
+        sha256 = "sha256-PzupILi7Fs7EnG36NbtUP+oeHuQpqBEsGx0n17n1H7E=";
       }
     } $out/bin/qemu
 

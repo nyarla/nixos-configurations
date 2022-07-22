@@ -4,25 +4,9 @@ let
     wine = pkgs.wineWowPackages.stagingFull;
     jackass-bin = pkgs.jackass-bin.override { inherit wine; };
     wineasio = pkgs.wineasio.override { inherit wine; };
-    yabridge = pkgs.yabridge.override {
-      inherit wine;
-
-      # temporary fix for 3.8.1
-      boost = pkgs.boost175;
-      pkgsi686Linux = {
-        boost = pkgs.pkgsi686Linux.boost175;
-        xorg.libxcb = pkgs.pkgsi686Linux.xorg.libxcb;
-      };
-    };
+    yabridge = pkgs.yabridge.override { inherit wine; };
     yabridgectl = pkgs.yabridgectl.override { inherit yabridge; };
-  in [
-    jackass-bin
-    pkgs.wineWowPackages.stagingFull
-    pkgs.winetricks
-    wineasio
-    yabridge
-    yabridgectl
-  ];
+  in [ jackass-bin wine pkgs.winetricks wineasio yabridge yabridgectl ];
 in {
   environment.systemPackages = wineApps ++ (with pkgs; [ wine-run ]);
   # workaround for kindle 1.16

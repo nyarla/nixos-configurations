@@ -9,6 +9,7 @@ for dir in $HOME/local/wine $DTM/daw $DTM/plugins; do
       cd "${dir}/${prefix}"
       echo $(pwd)
       wine-run wineboot -u
+      wine-run wineserver -k
       cd $cwd
   done
 done

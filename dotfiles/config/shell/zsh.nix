@@ -12,6 +12,8 @@
         ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
       "nixos-apply" =
         ''sudo nixos-rebuild switch --flake "/etc/nixos#$(hostname)"'';
+      "nixos-build" =
+        ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
     };
     sessionVariables = {
       GOPATH = "$HOME/dev";

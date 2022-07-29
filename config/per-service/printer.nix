@@ -1,7 +1,7 @@
-{ config, pkgs, ... }: {
-  hardware.sane.enable = true;
-  # networking.firewall.allowedUDPPorts = [ 8612 ];
-
+{ pkgs, ... }: {
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
+
+  hardware.sane.enable = true;
+  hardware.sane.extraBackends = with pkgs; [ sane-airscan ];
 }

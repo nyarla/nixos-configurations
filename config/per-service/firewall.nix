@@ -1,1 +1,1 @@
-{ config, pkgs, ... }: { networking.firewall.enable = true; }
+{ config, pkgs, ... }: { networking.firewall.enable = false; }

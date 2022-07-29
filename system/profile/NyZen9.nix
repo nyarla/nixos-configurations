@@ -103,37 +103,42 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
-        export PATH=${pkgs.restic-run}/bin:$PATH
+        export PATH=${pkgs.restic-run}/bin:${pkgs.coreutils}/bin:$PATH
+        export HOME=/home/nyarla
+        export MEDIA=/run/media/nyarla
 
-        if test -e ~/.cache/backup.lock ; then
+        if test -e $HOME/.cache/backup.lock ; then
           echo "backup process is running or dead lokced"
           exit 0
         fi
 
-        touch ~/.cache/backup.lock
+        touch $HOME/.cache/backup.lock
 
-        # ~/Documents
-        cd ~/Documents && restic-backup documents .
+        if test -e $HOME/Documents ; then
+          cd $HOME/Documents && restic-backup documents .
+        fi
 
-        # ~/Music
-        # cd ~/Music && restic-backup musics .
+        if test -e $HOME/local ; then
+          cd $HOME/local && restic-backup dotfiles .
+        fi
 
-        # ~/local
-        cd ~/local && restic-backup dotfiles .
+        if test -e $MEDIA/data/Downloads ; then
+          cd $MEDIA/data/Downloads && restic-backup stuck .
+        fi
 
-        # /run/media/nyarla/data/Downloads
-        (cd /run/media/nyarla/data/Downloads && restic-backup stuck .)
+        if test -e $MEDIA/data/local ; then
+          cd $MEDIA/data/local && restic-backup source .
+        fi
 
-        # /run/media/nyarla/data/local
-        (cd /run/media/nyarla/data/local && restic-backup source .)
+        if test -e $MEDIA/src/local ; then
+          cd $MEDIA/src/local && restic-backup daw .
+        fi
 
-        # /run/media/nyarla/src/local
-        (cd /run/media/nyarla/src/local && restic-backup daw .)
+        if test -e $MEDIA/src/Music ; then
+          cd $MEDIA/src/Music && restic-backup musics .
+        fi
 
-        # /run/media/nyarla/src/Music
-        (cd /run/media/nyarla/src/Music && restic-backup musics .)
-
-        rm ~/.cache/backup.lock
+        rm $HOME/.cache/backup.lock
       '');
     };
   };

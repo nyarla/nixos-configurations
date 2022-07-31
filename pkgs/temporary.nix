@@ -1,8 +1,11 @@
 self: super:
 let require = path: super.callPackage (import path);
 in {
-  quodlibet =
-    super.quodlibet.overrideAttrs (_: rec { doInstallCheck = false; });
+  quodlibet = super.quodlibet.overrideAttrs (old: rec {
+    doInstallCheck = false;
+    nativeBuildInputs = old.nativeBuildInputs
+      ++ [ super.gobject-introspection ];
+  });
 
   cnijfilter2 = super.cnijfilter2.overrideAttrs
     (old: rec { NIX_CFLAGS_COMPILE = " -fcommon"; });

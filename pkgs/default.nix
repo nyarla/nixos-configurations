@@ -5,6 +5,7 @@ in {
   JUCE = require ./JUCE { };
   arc-openbox = require ./arc-openbox { };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
+  deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };

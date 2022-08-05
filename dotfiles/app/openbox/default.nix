@@ -62,6 +62,7 @@ in {
 
       clipit
       gnome-usage
+      gyazo-diy
       hsetroot
       i3lock-fancy
       jq

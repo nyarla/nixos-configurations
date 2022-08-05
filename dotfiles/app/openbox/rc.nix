@@ -161,8 +161,8 @@ in ''
 
           (keybind "A-F1" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
 
-          (keybind "0x6B" [ (exec "gyazo capture") ])
-          (keybind "S-0x6B" [ (exec "gyazo screenshot") ])
+          (keybind "F7" [ (exec "gyazo capture") ])
+          (keybind "F10" [ (exec "gyazo screenshot") ])
 
           (keybind "A-Left" [
             (action "UnmaximizeFull" [ ])

@@ -1,34 +1,28 @@
 { stdenv, fetchFromGitHub, fetchzip, pkgconfig, cmake, alsaLib, curlFull
 , doxygen, freetype, glib, graphviz, gtk3, ladspa-sdk, libjack2, libjpeg_turbo
-, libpng, pcre, python3, webkitgtk, zlib, xorg, libGLU, JUCE, lib }:
-let
-  payload = fetchzip {
-    url = "https://github.com/juce-framework/JUCE/archive/refs/tags/6.1.6.zip";
-    sha256 = "1pxm5ly4480xh7z1xljmsd27qyyfkjflf66g6gi6rcvdh976vzww";
-  };
-in stdenv.mkDerivation rec {
+, libpng, pcre, python3, webkitgtk, zlib, xorg, libGLU, juce-framework, lib }:
+stdenv.mkDerivation rec {
   pname = "dexed";
   version = "git";
 
   src = fetchFromGitHub {
     owner = "asb2m10";
     repo = "dexed";
-    rev = "1df9a58780fd5853ed79bf01aacdb1d7dea69c79";
+    rev = "2c036316bcd512818aa9cc8129767ad9e0ec7132";
     fetchSubmodules = true;
-    sha256 = "1s3pw1l94wk5qqydzfhrzshw89m89vinjwwzfrccxmy4pa3gpjzs";
+    sha256 = "1f6vjyxiwp19kcbf4qwrdrh5i6g35f9i3kv23nim2ilqpl1szfz9";
   };
-
-  dontUseCmakeConfigure = true;
-  dontFixup = true;
 
   postUnpack = ''
     mkdir -p source/assets/JUCE
-    cp -R ${payload}/* source/assets/JUCE
-    chmod +w source/assets/JUCE
+    cp -R ${juce-framework.src}/* source/assets/JUCE
+    chmod -R +w source/assets/JUCE
 
-    cp ${JUCE}/bin/Projucer source/assets/JUCE/Projucer
+    cp ${juce-framework}/bin/Projucer source/assets/JUCE/Projucer
     chmod +x source/assets/JUCE/Projucer
   '';
+
+  dontFixup = true;
 
   cmakeFlags = [
     "-DCMAKE_AR=${stdenv.cc.cc}/bin/gcc-ar"
@@ -61,28 +55,22 @@ in stdenv.mkDerivation rec {
     libXrender
   ]);
 
-  preConfigure = ''
-    bash scripts/projuce.sh
-  '';
-
   libPath = lib.makeLibraryPath
     (buildInputs ++ [ curlFull.out stdenv.cc.cc stdenv.cc.libc ]);
 
-  buildPhase = ''
-    export CONFIG=Release
-    cd Builds/Linux
-    make VST3 Standalone
-
-    patchelf --set-rpath "${libPath}" build/Dexed
-    patchelf --set-rpath "${libPath}" build/Dexed.vst3/Contents/x86_64-linux/Dexed.so
-  '';
-
   installPhase = ''
     mkdir -p $out/bin
-    cp build/Dexed $out/bin/Dexed
-    chmod +x $out/bin/*
+    mkdir -p $out/lib/vst3
 
-    mkdir -p $out/lib/vst3/Dexed.vst3
-    cp -R build/Dexed.vst3/* $out/lib/vst3/Dexed.vst3/
+    cp Source/Dexed_artefacts/Release/Standalone/Dexed \
+      $out/bin
+
+    chmod +x $out/bin/Dexed
+
+    cp -R Source/Dexed_artefacts/Release/VST3/Dexed.vst3 \
+      $out/lib/vst3/Dexed.vst3
+
+    patchelf --set-rpath "${libPath}" $out/bin/Dexed
+    patchelf --set-rpath "${libPath}" $out/lib/vst3/Dexed.vst3/Contents/x86_64-linux/Dexed.so
   '';
 }

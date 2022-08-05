@@ -2,11 +2,12 @@
 , graphviz, gtk3, ladspa-sdk, libjack2, libjpeg_turbo, libpng, pcre, python3
 , webkitgtk, zlib, xorg, libGLU }:
 stdenv.mkDerivation rec {
-  pname = "JUCE-framework";
-  version = "6.1.6";
+  pname = "juce-framework";
+  version = "7.0.1";
   src = fetchzip {
-    url = "https://github.com/juce-framework/JUCE/archive/refs/tags/6.1.6.zip";
-    sha256 = "1pxm5ly4480xh7z1xljmsd27qyyfkjflf66g6gi6rcvdh976vzww";
+    url =
+      "https://github.com/juce-framework/JUCE/archive/refs/tags/${version}.zip";
+    sha256 = "0pwpa77i86bwlv8727qss633vn2584zmhanybn1lnbkrdx1qbpkj";
   };
 
   nativeBuildInputs = [ cmake pkgconfig doxygen python3 ];

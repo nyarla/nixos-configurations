@@ -2,13 +2,13 @@ self: super:
 let require = path: super.callPackage (import path);
 in {
   # additional packages
-  JUCE = require ./JUCE { };
   arc-openbox = require ./arc-openbox { };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   gyazo-diy = require ./gyazo-diy { };
+  juce-framework = require ./juce-framework { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   restic-run = require ./restic-run { };
   skk-dicts-xl = require ./skk-dicts-xl { };

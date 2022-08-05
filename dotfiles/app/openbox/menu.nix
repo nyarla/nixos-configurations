@@ -96,6 +96,7 @@ in ''
   ]}
 
   ${makeMenu "applications-daw" "Music" [
+    (makeExecute "QJackCtl" "qjackctl")
     (makeExecute "Carla" "carla")
 
     (makeMenu "submenu-daw" "DAW" [

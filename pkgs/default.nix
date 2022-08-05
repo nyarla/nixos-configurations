@@ -8,6 +8,7 @@ in {
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
+  gyazo-diy = require ./gyazo-diy { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   restic-run = require ./restic-run { };
   skk-dicts-xl = require ./skk-dicts-xl { };

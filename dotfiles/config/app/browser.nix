@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     bitwarden
-    firefox-bin
+    firefox
     google-chrome
     keepassxc
     thunderbird-bin

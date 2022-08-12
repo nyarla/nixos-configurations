@@ -53,6 +53,7 @@ in ''
     (makeExecute "Thunderbird" (activateCmd "thunderbird" "thunderbird"))
     (makeExecute "Google Chrome"
       (activateCmd "google-chrome-stable" "^google-chrome"))
+    (makeExecute "Brave" (activateCmd "brave" "^brave-browser"))
     (makeExecute "Bitwarden" "bitwarden")
   ]}
 

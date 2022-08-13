@@ -7,7 +7,6 @@
   environment.systemPackages = with pkgs; [ pavucontrol pulseaudioFull ];
 
   # configuration
-
   hardware.pulseaudio = {
     enable = true;
     support32Bit = true;
@@ -29,9 +28,14 @@
       load-module module-null-sink sink_name=48000Hz sink_properties=device.description=48000Hz format=s24le rate=48000 channels=2 formats=pcm
       load-module module-null-sink sink_name=96000Hz sink_properties=device.description=96000Hz format=s24le rate=96000 channels=2 formats=pcm
 
-      load-module module-loopback source=44100Hz.monitor source_dont_move=true adjust_time=0 latency_msec=1 remix=false format=s16le rate=44100 channels=2
-      load-module module-loopback source=48000Hz.monitor source_dont_move=true adjust_time=0 latency_msec=1 remix=false format=s24le rate=48000 channels=2
-      load-module module-loopback source=96000Hz.monitor source_dont_move=true adjust_time=0 latency_msec=1 remix=false format=s24le rate=96000 channels=2
+      load-module module-loopback source=44100Hz.monitor source_dont_move=true adjust_time=0 remix=false format=s16le rate=44100 channels=2
+      load-module module-loopback source=48000Hz.monitor source_dont_move=true adjust_time=0 remix=false format=s24le rate=48000 channels=2
+      load-module module-loopback source=96000Hz.monitor source_dont_move=true adjust_time=0 remix=false format=s24le rate=96000 channels=2
     '';
   };
+
+  # ignore midi devices
+  services.udev.extraRules = ''
+    ATTRS{idVendor}=="1acc", ATTRS{idProduct}=="1a0f", ENV{PULSE_IGNORE}="1"
+  '';
 }

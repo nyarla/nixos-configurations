@@ -66,7 +66,7 @@ in ''
 
   ${makeMenu "applications-multimedia" "Multimedia" [
     (makeExecute "Calibre" "calibre")
-    (makeExecute "QuodLibet" "env PIPEWIRE_LATENCY=1024/96000 quodlibet")
+    (makeExecute "QuodLibet" "quodlibet")
     (makeExecute "Picard" "picard")
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))
     "${sep}"
@@ -101,7 +101,7 @@ in ''
     (makeExecute "Carla" "carla")
 
     (makeMenu "submenu-daw" "DAW" [
-      (makeExecute "Bitwig Studio" (scriptsCmd "bitwig-studio"))
+      (makeExecute "Bitwig Studio" "bitwig-studio")
       (makeExecute "Zrythm" "zrythm")
       (makeExecute "Helio.fm" "helio")
       (makeExecute "MuseScore" "musescore")

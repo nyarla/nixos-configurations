@@ -17,6 +17,7 @@ _: {
     ../config/tools/development.nix
 
     ../app/git
+    ../app/labwc
     ../app/mlterm
     ../app/openbox
   ];

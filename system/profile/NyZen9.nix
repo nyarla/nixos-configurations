@@ -1,8 +1,9 @@
 { pkgs, ... }: {
   imports = [
-    ../config/audio/alsa.nix
+    ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
+    ../config/graphic/labwc.nix
     ../config/i18n/en.nix
     ../config/i18n/locales.nix
     ../config/keyboard/us.nix

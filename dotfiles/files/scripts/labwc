@@ -8,16 +8,16 @@ for rc in $(ls $HOME/.config/profile.d); do
   . $HOME/.config/profile.d/$rc
 done
 
-config="$HOME/.config/gtk-3.0/settings.ini"
-if test -e $config ; then
-  schema="org.gnome.desktop.interface"
-  gsettings set $schema gtk-theme "$(grep 'gtk-theme-name' "$config" | cut -d= -f2)"
-  gsettings set $schema icon-theme "$(grep 'gtk-icon-theme-name' "$config" | cut -d= -f2)"
-  gsettings set $schema cursor-theme "$(grep 'gtk-cursor-theme-name' "$config" | cut -d= -f2)"
-  gsettings set $schema font-name "$(grep 'gtk-font-name' "$config" | cut -d= -f2)"
-fi
+export XCURSOR_PATH=/run/current-system/etc/profiles/per-user/nyarla/share/icons:$HOME/.icons/default
+export XCURSOR_THEME=capitaine-cursors-white
 
-export XDG_DATA_DIRS=$HOME/.local/share:/run/current-system/sw/share:$XDG_DATA_DIRS
+schema="org.gnome.desktop.interface"
+gsettings set $schema gtk-theme "Arc"
+gsettings set $schema icon-theme "Flat-Remix-Cyan-Light"
+gsettings set $schema cursor-theme $XCURSOR_THEME
+gsettings set $schema font-name "Sans 9"
+
+export XDG_DATA_DIRS=$HOME/.local/share:/run/current-system/etc/profiles/per-user/nyarla/share:$XDG_DATA_DIRS
 
 export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=labwc

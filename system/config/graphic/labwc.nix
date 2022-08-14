@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   xdg.portal.wlr.enable = true;
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   xdg.portal.wlr.settings = {
     screencast = {
       output_name = "HDMI-A-1";
@@ -11,5 +11,12 @@
     };
   };
 
+  services.gnome.gnome-remote-desktop.enable = true;
+
   services.pipewire.enable = true;
+  environment.systemPackages = with pkgs; [
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-wlr
+  ];
 }

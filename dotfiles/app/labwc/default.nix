@@ -41,8 +41,6 @@
   xdg.configFile."labwc/menu.xml".text = (import ./menu.nix) { };
 
   xdg.configFile."labwc/environment".text = ''
-    XDG_SESSION_TYPE=wayland
-
     GTK2_RC_FILES=$HOME/.gtkrc-2.0
 
     LANG=ja_JP.UTF_8

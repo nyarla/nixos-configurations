@@ -20,7 +20,7 @@ gsettings set $schema font-name "Sans 9"
 export XDG_DATA_DIRS=$HOME/.local/share:/run/current-system/etc/profiles/per-user/nyarla/share:$XDG_DATA_DIRS
 
 export XDG_SESSION_TYPE=wayland
-export XDG_CURRENT_DESKTOP=labwc
+export XDG_CURRENT_DESKTOP=wlroots
 
 export GBM_BACKEND=nvidia-drm
 export GBM_BACKEND_PATH=/etc/gbm

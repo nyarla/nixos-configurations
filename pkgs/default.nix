@@ -11,13 +11,14 @@ in {
   juce-framework = require ./juce-framework { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   restic-run = require ./restic-run { };
-  skk-dicts-xl = require ./skk-dicts-xl { };
   sfwbar = require ./sfwbar { };
+  skk-dicts-xl = require ./skk-dicts-xl { };
   sysmontask = require ./sysmontask { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
   wayout = require ./wayout { };
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };
+  xembed-sni-proxy = require ./xembed-sni-proxy { };
 
   # modified packages
   calibre = super.calibre.overrideAttrs (old: rec {

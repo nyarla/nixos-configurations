@@ -21,6 +21,7 @@ in writeShellScript "autostart" ''
   }
 
   run swaybg -i ${wallpaper} -m fit
+  run xembedsniproxy
 
   ${pkgs.openbox}/libexec/openbox-xdg-autostart GNOME Mate
   systemctl --user start nm-applet

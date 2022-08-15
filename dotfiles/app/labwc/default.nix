@@ -27,6 +27,7 @@
     swayidle
     swaylock-effects
     sfwbar
+    xembed-sni-proxy
 
     wayout
     wev

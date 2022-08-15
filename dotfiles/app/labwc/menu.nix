@@ -31,7 +31,7 @@ let
   scripts = "/etc/nixos/dotfiles/files/scripts";
   scriptsCmd = cmd: "${scripts}/${cmd}";
 
-  wine = "/home/nyarla/local/dotfiles/wine";
+  wine = "/etc/nixos/dotfiles/files/wine";
   wineCmd = app: "${wine}/${app}";
   iLokCmd = prefix: ''
     bash -c &#34;cd &#39;/run/media/nyarla/src/local/daw/plugins/${prefix}&#39; &amp;&amp; wine-run wine explorer &#39;C:\Program Files (x86)\iLok License Manager\iLok License Manager.exe&#39;&#34;

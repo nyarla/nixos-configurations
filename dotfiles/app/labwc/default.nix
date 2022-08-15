@@ -65,4 +65,57 @@
     MOZ_ENABLE_WAYLAND=1
     MOZ_WEBRENDER=1
   '';
+
+  home.file.".local/bin/sw" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+
+      for rc in $(ls /etc/profile.d); do
+        . /etc/profile.d/$rc
+      done
+
+      for rc in $(ls $HOME/.config/profile.d); do
+        . $HOME/.config/profile.d/$rc
+      done
+
+      export XCURSOR_PATH=/run/current-system/etc/profiles/per-user/nyarla/share/icons:$HOME/.icons/default
+      export XCURSOR_THEME=capitaine-cursors-white
+
+      schema="org.gnome.desktop.interface"
+      gsettings set $schema gtk-theme "Arc"
+      gsettings set $schema icon-theme "Flat-Remix-Cyan-Light"
+      gsettings set $schema cursor-theme $XCURSOR_THEME
+      gsettings set $schema font-name "Sans 9"
+
+      export XDG_DATA_DIRS=$HOME/.local/share:/run/current-system/etc/profiles/per-user/nyarla/share:$XDG_DATA_DIRS
+
+      export XDG_SESSION_TYPE=wayland
+      export XDG_CURRENT_DESKTOP=wlroots
+
+      export GBM_BACKEND=nvidia-drm
+      export GBM_BACKEND_PATH=/etc/gbm
+
+      export VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json:/run/opengl-driver-32/share/vulkan/icd.d/nvidia_icd.json
+      export __GLX_VENDOR_LIBRARY_NAME=nvidia
+      export LIBSEAT_BACKEND=logind
+
+      export WLR_NO_HARDWARE_CURSORS=1
+      #export WLR_RENDERER=vulkan
+
+      systemctl --user import-environment WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE 
+      systemctl --user start graphical-session.target
+
+      labwc &
+      waitPID=$!
+
+      dbus-update-activation-environment --systemd --all
+
+      test -n "$waitPID" && wait "$waitPID"
+
+      systemctl --user stop graphical-session.target
+
+      exit 0
+    '';
+  };
 }

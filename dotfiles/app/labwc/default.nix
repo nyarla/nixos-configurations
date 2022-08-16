@@ -35,6 +35,7 @@
     wmname
     ydotool
   ];
+  xdg.configFile."sfwbar/sfwbar.config".text = (import ./sfwbar.nix) { };
 
   xdg.configFile."labwc/autostart".source = toString (with pkgs;
     (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });

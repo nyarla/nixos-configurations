@@ -40,6 +40,7 @@
     (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
 
   xdg.configFile."labwc/menu.xml".text = (import ./menu.nix) { };
+  xdg.configFile."labwc/rc.xml".text = (import ./rc.nix) { };
 
   xdg.configFile."labwc/environment".text = ''
     GTK2_RC_FILES=$HOME/.gtkrc-2.0

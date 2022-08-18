@@ -31,7 +31,12 @@ in writeShellScript "autostart" ''
   run wl-paste -t text --watch clipman store
   run sfwbar
 
-  swayidle -w timeout 600 'wayout --off HDMI-A-1' resume 'wayout --on HDMI-A-1' &
+  swayidle -w \
+    timeout 60 'swaylock -f' \
+    timeout 90 'wayout --off HDMI-A-1' resume 'wayout --on HDMI-A-1' \
+    before-sleep 'swaylock -f' \
+    lock 'swaylock -f' \
+  &
 
   if test "$(hostname)" == "nixos"; then
     ${automount "05b4746c-9eed-4228-b306-922a9ef6ac4e" "/run/media/nyarla/data"}

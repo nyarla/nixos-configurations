@@ -54,7 +54,7 @@ in ''
 
   (props "theme" [
     (prop "name" "Arc-Dark")
-    (prop "courierRadius" "0")
+    (prop "cornerRadius" "0")
     (font "ActiveWindow" {
       name = "sans";
       size = "9";

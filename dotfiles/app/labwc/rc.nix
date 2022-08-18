@@ -80,5 +80,6 @@ in ''
     (keybind "A-Down" [ (action "SnapToEdge" [ (prop "direction" "down") ]) ])
 
     (keybind "A-m" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
+    (keybind "C-W-q" [ (exec "swaylock -f") ])
   ])
 ])

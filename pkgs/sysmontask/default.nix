@@ -25,7 +25,7 @@ python3.pkgs.buildPythonApplication rec {
 
   buildInputs = [ glib gtk3 cairo gobject-introspection libwnck lshw psutils ];
 
-  nativeBuildInputs = [ wrapGAppsHook ];
+  nativeBuildInputs = [ wrapGAppsHook gobject-introspection ];
 
   propagatedBuildInputs = with python3.pkgs; [ psutil pycairo pygobject3 ];
 

@@ -6,9 +6,6 @@
     # nixpkgs
     ../config/per-service/nixpkgs.nix
 
-    # system
-    ../config/per-service/android.nix
-
     ../config/per-service/dbus.nix
 
     # desktop

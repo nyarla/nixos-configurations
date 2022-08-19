@@ -3,6 +3,7 @@
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
+    ../config/gadgets/android.nix
     ../config/graphic/labwc.nix
     ../config/i18n/en.nix
     ../config/i18n/locales.nix

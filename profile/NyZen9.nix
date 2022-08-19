@@ -7,7 +7,6 @@
     ../config/per-service/nixpkgs.nix
 
     # system
-    ../config/per-toolchain/editor.nix
     ../config/per-toolchain/hardware.nix
     ../config/per-service/android.nix
 

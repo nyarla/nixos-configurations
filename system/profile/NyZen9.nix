@@ -17,8 +17,8 @@
     ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
+    ../config/tools/editors.nix
     ../config/tools/git.nix
-    ../config/tools/nvim.nix
     ../config/user/nyarla.nix
     ../config/video/droidcam.nix
     ../config/video/nvidia.nix

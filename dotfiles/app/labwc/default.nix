@@ -105,7 +105,7 @@
       export WLR_NO_HARDWARE_CURSORS=1
       #export WLR_RENDERER=vulkan
 
-      systemctl --user import-environment WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE 
+      systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE 
       systemctl --user start graphical-session.target
 
       labwc &

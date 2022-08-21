@@ -1,4 +1,1 @@
-{
-  "Control+p" = ''"proto:paste"'';
-  "Control+j" = "IM_HOTKEY";
-}
+{ "Control+p" = ''"proto:paste"''; }

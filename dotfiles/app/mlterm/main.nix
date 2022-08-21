@@ -3,8 +3,7 @@ let
   optional = {
     "x86_64-linux" = {
       use_xim = true;
-      input_method = "skk:/home/nyarla/.config/skk/SKK-JISYO.XL";
-      type_engine = "xft";
+      input_method = "none";
     };
   };
 in {

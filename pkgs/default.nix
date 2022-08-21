@@ -8,6 +8,8 @@ in {
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   gyazo-diy = require ./gyazo-diy { };
+  hack-nerdfonts = require ./hack-nerdfonts { };
+  hackgen = require ./hackgen { };
   juce-framework = require ./juce-framework { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   restic-run = require ./restic-run { };

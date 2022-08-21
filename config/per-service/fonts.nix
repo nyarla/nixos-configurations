@@ -8,8 +8,8 @@
       noto-fonts-emoji
 
       # monospace
-      myrica
-      nerdfont-symbols-2048
+      hackgen
+      hack-nerdfonts
 
       # fallback
       dejavu_fonts
@@ -21,10 +21,12 @@
       defaultFonts = {
         sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
         serif = [ "Noto Serif JP" "DejaVu Serif" ];
-        monospace = [ "MyricaM M" "Symbols Nerd Font" "DejaVu Sans" ];
+        monospace = [ "HackGen" "Hack Nerd Font" "DejaVu Sans" ];
         emoji = [ "Noto Color Emoji" ];
       };
       subpixel = { lcdfilter = "light"; };
+
+      hinting.style = "hintfull";
     };
   };
 }

@@ -11,12 +11,13 @@
       color = { ui = true; };
       init = { defaultBranch = "main"; };
       core = {
-        fileMode = false;
-        preloadindex = true;
-        fscache = true;
         autoCRLF = false;
-        quotepath = false;
+        editor = "nvr --remote-wait-silent";
+        fileMode = false;
+        fscache = true;
         hooksPath = "/home/nyarla/local/githooks/hooks";
+        preloadindex = true;
+        quotepath = false;
       };
     };
     ignores = import ./gitignore.nix;

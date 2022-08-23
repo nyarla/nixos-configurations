@@ -24,8 +24,7 @@ in writeShellScript "autostart" ''
   run xembedsniproxy
 
   ${pkgs.openbox}/libexec/openbox-xdg-autostart GNOME Mate
-  systemctl --user stop nm-applet
-  systemctl --user start nm-applet
+  systemctl --user restart nm-applet
 
   run ydotoold
   run wl-paste -t text --watch clipman store

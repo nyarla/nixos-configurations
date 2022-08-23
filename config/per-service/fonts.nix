@@ -25,8 +25,6 @@
         emoji = [ "Noto Color Emoji" ];
       };
       subpixel = { lcdfilter = "light"; };
-
-      hinting.style = "hintfull";
     };
   };
 }

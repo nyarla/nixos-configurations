@@ -37,12 +37,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-08-19";
+      version = "2022-08-23";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "52d1e32b59a2bc3e5222ff2aa1102dbe910c4127";
-        sha256 = "1kyqlp519w3m5fzfpwzxr2dhsbv703n7sm9b9fkmnz7zn2g32pqs";
+        rev = "33bc37e7d05b870164d8faad2f0f057910a62eaa";
+        sha256 = "1i19ns129kxiiqzapaghk28b57jdfpmns9hl7jdckmsz1cz2z6vz";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });

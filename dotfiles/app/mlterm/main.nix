@@ -2,8 +2,8 @@
 let
   optional = {
     "x86_64-linux" = {
-      use_xim = true;
-      input_method = "none";
+      use_xim = false;
+      input_method = "skk:dict=/home/nyarla/.config/skk/SKK-JISYO.XL";
     };
   };
 in {

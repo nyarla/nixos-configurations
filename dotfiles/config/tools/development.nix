@@ -31,8 +31,11 @@
 
     # node.js
     nodejs_latest
-    python3
     yarn
+
+    # python3
+    conda
+    python3
 
     # perl
     perl

@@ -3,7 +3,7 @@ let
   optional = {
     "x86_64-linux" = {
       use_xim = false;
-      input_method = "skk:dict=/home/nyarla/.config/skk/SKK-JISYO.XL";
+      input_method = "fcitx";
     };
   };
 in {

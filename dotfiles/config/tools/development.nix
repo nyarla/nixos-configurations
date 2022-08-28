@@ -55,6 +55,7 @@
     editorconfig-core-c
 
     # vcs
+    git-lfs
     mercurial
     subversion
     cvs

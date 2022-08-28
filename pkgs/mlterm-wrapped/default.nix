@@ -12,6 +12,10 @@ let
     exec ${wcwidth-cjk}/bin/wcwidth-cjk -- ${mlterm}/bin/mlterm-wl $@
   '';
 
+  mlterm-sdl2 = writeScript "mlterm-sdl2" ''
+    exec ${wcwidth-cjk}/bin/wcwidth-cjk -- ${mlterm}/bin/mlterm-sdl2 $@
+  '';
+
   mlterm-fb = writeScript "mlterm-fb" ''
     #!${stdenv.shell}
 
@@ -25,6 +29,7 @@ in runCommand "mlterm-wrapped" { } ''
 
   cp ${mlterm-sh} $out/bin/mlterm
   cp ${mlterm-wl} $out/bin/mlterm-wl
+  cp ${mlterm-sdl2} $out/bin/mlterm-sdl2
   cp ${mlterm-fb} $out/bin/mlterm-fb
 
   chmod +x $out/bin/*

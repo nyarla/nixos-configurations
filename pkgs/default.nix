@@ -48,9 +48,14 @@ in {
     });
 
   mlterm = super.mlterm.overrideAttrs (old: rec {
-    buildInputs = old.buildInputs ++ [ super.libxkbcommon ];
+    buildInputs = old.buildInputs
+      ++ (with super; [ libxkbcommon SDL2.dev gdk-pixbuf.dev ]);
     configureFlags = (super.lib.remove "--with-gui=xlib,fb" old.configureFlags)
-      ++ [ "--with-gui=xlib,fb,wayland" ];
+      ++ [ "--with-gui=xlib,fb,wayland,sdl2" ];
+
+    NIX_LDFLAGS = old.NIX_LDFLAGS + ''
+      -lm
+    '';
   });
 
   nsfminer = (require ./nsfminer {

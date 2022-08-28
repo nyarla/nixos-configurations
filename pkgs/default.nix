@@ -11,6 +11,7 @@ in {
   hack-nerdfonts = require ./hack-nerdfonts { };
   hackgen = require ./hackgen { };
   juce-framework = require ./juce-framework { };
+  locale-eaw = require ./locale-eaw { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   restic-run = require ./restic-run { };
   sfwbar = require ./sfwbar { };

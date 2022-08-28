@@ -130,7 +130,6 @@
 
   home.packages = with pkgs; [
     fzy
-    wcwidth-cjk
 
     file
     gawk

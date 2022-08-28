@@ -38,12 +38,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-08-23";
+      version = "2022-08-28";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "33bc37e7d05b870164d8faad2f0f057910a62eaa";
-        sha256 = "1i19ns129kxiiqzapaghk28b57jdfpmns9hl7jdckmsz1cz2z6vz";
+        rev = "a32e1ff8f9ec5b92989cd6b2601aa37cdf6bd08f";
+        sha256 = "0mvxcvkb7xr6sbxhizbf7vg2z7p0j9w460xfh298y7dknvqyjrmp";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -73,13 +73,13 @@ in {
     super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   wlroots = super.wlroots.overrideAttrs (old: rec {
-    version = "2022-08-13";
+    version = "2022-08-28";
     src = super.fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = "c20468cfa292e99357fd504fc5b5884f6078ca96";
-      sha256 = "sha256-O7o/25v07Da4Wt4lBq3CZ5kOObyx3Knp4zFnlvvwHmU=";
+      rev = "fa7d2cb8d60ed48c44c707106c03682056ddfaca";
+      sha256 = "1058kk0nas944nw3305dqh43ck1h2ndh1xbyzj9kp8221ly85jbx";
     };
 
     patches = [ ../patches/wlroots-workaround.patch ];

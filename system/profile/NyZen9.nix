@@ -20,6 +20,7 @@
     ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
+    ../config/security/clamav.nix
     ../config/tools/editors.nix
     ../config/tools/git.nix
     ../config/user/nyarla.nix

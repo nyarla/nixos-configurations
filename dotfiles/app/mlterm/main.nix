@@ -20,7 +20,7 @@ in {
   use_anti_alias = true;
   box_drawing_font = "unicode";
   type_engine = "cairo";
-  unicode_full_width_areas = "U+2600-27FF,U+1F000-1FFFF";
+  unicode_full_width_areas = "U+E000-FD46,U+1F000-1FFFF";
 
   # appearance
   scrollbar_mode = false;

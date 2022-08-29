@@ -20,6 +20,8 @@ in writeShellScript "autostart" ''
     fi
   }
 
+  systemctl --user start sfwbar
+
   run swaybg -i ${wallpaper} -m fit
   run xembedsniproxy
 
@@ -28,7 +30,6 @@ in writeShellScript "autostart" ''
 
   run ydotoold
   run wl-paste -t text --watch clipman store
-  run sfwbar
 
   swayidle -w \
     timeout 60 'swaylock -f' \

@@ -26,7 +26,6 @@
     swaybg
     swayidle
     swaylock-effects
-    sfwbar
     xembed-sni-proxy
 
     wayout
@@ -35,7 +34,6 @@
     wmname
     ydotool
   ];
-  xdg.configFile."sfwbar/sfwbar.config".text = (import ./sfwbar.nix) { };
 
   xdg.configFile."labwc/autostart".source = toString (with pkgs;
     (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
@@ -105,11 +103,11 @@
       export WLR_NO_HARDWARE_CURSORS=1
       #export WLR_RENDERER=vulkan
 
-      systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE 
-      systemctl --user start graphical-session.target
-
       labwc &
       waitPID=$!
+
+      systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE 
+      systemctl --user start graphical-session.target
 
       dbus-update-activation-environment --systemd --all
 

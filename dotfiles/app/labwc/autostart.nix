@@ -33,13 +33,13 @@ in writeShellScript "autostart" ''
   systemctl --user start nm-applet
   systemctl --user start blueman-applet
 
+  systemctl --user clipboard-wayland-to-xorg
+  systemctl --user clipboard-xorg-to-wayland
+
   run swaybg -i ${wallpaper} -m fit
   run xembedsniproxy
 
-
   run ydotoold
-  run wl-paste -t text --watch clipman store
-
   swayidle -w \
     timeout 60 'swaylock -f' \
     timeout 90 'wayout --off HDMI-A-1' resume 'wayout --on HDMI-A-1' \

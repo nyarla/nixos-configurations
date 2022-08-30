@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ../../config/services/blueman-applet.nix
+    ../../config/services/clipboard.nix
     ../../config/services/fcitx5.nix
     ../../config/services/gnome-keyring.nix
     ../../config/services/polkit.nix

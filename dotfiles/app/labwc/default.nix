@@ -1,4 +1,12 @@
 { pkgs, ... }: {
+  imports = [
+    ../../config/services/blueman-applet.nix
+    ../../config/services/fcitx5.nix
+    ../../config/services/gnome-keyring.nix
+    ../../config/services/polkit.nix
+    ../../config/services/sfwbar.nix
+  ];
+
   home.packages = with pkgs; [
     # icon and themes
     arc-theme
@@ -106,7 +114,8 @@
       labwc &
       waitPID=$!
 
-      systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE 
+      systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE  
+      systemctl --user import-environment LD_LIBRARY_PATH GIO_EXTRA_MODULES GI_TYPELIB_PATH
       systemctl --user start graphical-session.target
 
       dbus-update-activation-environment --systemd --all

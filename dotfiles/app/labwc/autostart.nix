@@ -20,13 +20,22 @@ in writeShellScript "autostart" ''
     fi
   }
 
+  systemctl --user start gnome-keyring-pkcs11
+  systemctl --user start gnome-keyring-secrets
+  systemctl --user start gnome-keyring-ssh
+
+  systemctl --user start polkit-mate-authentication-agent-1 
+
   systemctl --user start sfwbar
+
+  systemctl --user start fcitx5
+
+  systemctl --user start nm-applet
+  systemctl --user start blueman-applet
 
   run swaybg -i ${wallpaper} -m fit
   run xembedsniproxy
 
-  ${pkgs.openbox}/libexec/openbox-xdg-autostart GNOME Mate
-  systemctl --user restart nm-applet
 
   run ydotoold
   run wl-paste -t text --watch clipman store

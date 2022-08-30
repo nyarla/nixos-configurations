@@ -12,7 +12,7 @@
       Type = "simple";
       Restart = "on-failure";
       ExecStart = "${pkgs.sfwbar}/bin/sfwbar";
-      Environment = "WAYLAND_DISPLAY=wayland-0";
+      Environment = [ "WAYLAND_DISPLAY=wayland-0" "LANG=ja_JP.UTF-8" ];
     };
 
     Install = { WantedBy = [ "graphical-session.target" ]; };

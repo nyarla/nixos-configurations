@@ -33,9 +33,6 @@ in writeShellScript "autostart" ''
   systemctl --user start nm-applet
   systemctl --user start blueman-applet
 
-  systemctl --user clipboard-wayland-to-xorg
-  systemctl --user clipboard-xorg-to-wayland
-
   run swaybg -i ${wallpaper} -m fit
   run xembedsniproxy
 

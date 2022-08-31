@@ -20,6 +20,8 @@ in writeShellScript "autostart" ''
     fi
   }
 
+  fcitx5 -rd
+
   systemctl --user start gnome-keyring-pkcs11
   systemctl --user start gnome-keyring-secrets
   systemctl --user start gnome-keyring-ssh
@@ -27,8 +29,6 @@ in writeShellScript "autostart" ''
   systemctl --user start polkit-mate-authentication-agent-1 
 
   systemctl --user start sfwbar
-
-  systemctl --user start fcitx5
 
   systemctl --user start nm-applet
   systemctl --user start blueman-applet

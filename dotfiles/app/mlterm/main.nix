@@ -3,7 +3,7 @@ let
   optional = {
     "x86_64-linux" = {
       use_xim = false;
-      input_method = "fcitx";
+      input_method = "none";
     };
   };
 in {

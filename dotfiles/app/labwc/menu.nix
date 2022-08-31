@@ -42,7 +42,8 @@ in ''
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
 
   ${makeMenu "applications-main" "Main" [
-    (makeExecute "mlterm" "mlterm-sdl2")
+    (makeExecute "mlterm-wl" "mlterm-wl -m none")
+    (makeExecute "mlterm-sdl2" "env DISPLAY= mlterm-sdl2")
     (makeExecute "virt-manager" "virt-manager")
   ]}
 

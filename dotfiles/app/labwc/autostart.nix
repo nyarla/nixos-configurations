@@ -14,13 +14,20 @@ let
     sha256 = "0cqjkgp30428c1yy8s4418k4qz0ycr6fzcg4rdi41wkh5g1hzjnl";
   };
 in writeShellScript "autostart" ''
+  export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
+
   run() {
     if type "''${1}" >/dev/null 2>&1 ; then
       $@ &
     fi
   }
 
-  fcitx5 -rd
+  run fcitx5 -rd
+
+  wl-paste -p -w clipsync copy primary &
+  wl-paste -w clipsync copy clipboard &
+  while clipnotify ; do xclip -o -selection primary | clipsync copy primary ; done &
+  while clipnotify ; do xclip -o -selection clipboard | clipsync copy clipboard ; done &
 
   systemctl --user start gnome-keyring-pkcs11
   systemctl --user start gnome-keyring-secrets

@@ -24,10 +24,11 @@
     qgnomeplatform
 
     # wayland
-    clipman
     grim
     slurp
     wl-clipboard
+    xclip
+    clipnotify
 
     labwc
     swaybg

@@ -43,7 +43,7 @@ in ''
 
   ${makeMenu "applications-main" "Main" [
     (makeExecute "mlterm-wl" "mlterm-wl -m none")
-    (makeExecute "mlterm-sdl2" "env DISPLAY= mlterm-sdl2")
+    (makeExecute "mlterm" "mlerm")
     (makeExecute "virt-manager" "virt-manager")
   ]}
 

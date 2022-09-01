@@ -3,7 +3,7 @@ let
   optional = {
     "x86_64-linux" = {
       use_xim = false;
-      input_method = "none";
+      input_method = "fcitx";
     };
   };
 in {
@@ -15,7 +15,7 @@ in {
   bidi_mode = "left";
 
   # font
-  fontsize = 16;
+  fontsize = 15;
   line_space = 2;
   use_anti_alias = true;
   box_drawing_font = "unicode";

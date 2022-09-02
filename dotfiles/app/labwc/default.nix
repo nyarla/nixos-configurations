@@ -70,9 +70,6 @@
 
     SDL_VIDEODRIVER=wayland
     _JAVA_AWT_WM_NONREPARENTING=1
-
-    MOZ_ENABLE_WAYLAND=1
-    MOZ_WEBRENDER=1
   '';
 
   home.file.".local/bin/sw" = {

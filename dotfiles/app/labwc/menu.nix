@@ -48,8 +48,8 @@ in ''
   ]}
 
   ${makeMenu "applications-web" "Web" [
-    (makeExecute "Firefox" "firefox")
-    (makeExecute "Thunderbird" "thunderbird")
+    (makeExecute "Firefox" "env GDK_BACKEND=x11 firefox")
+    (makeExecute "Thunderbird" "env GDK_BACKEND=x11 thunderbird")
     (makeExecute "Google Chrome" "google-chrome-stable")
     (makeExecute "Bitwarden" "bitwarden --no-sandbox")
   ]}
@@ -62,7 +62,7 @@ in ''
   ]}
 
   ${makeMenu "applications-multimedia" "Multimedia" [
-    (makeExecute "Calibre" "calibre")
+    (makeExecute "Calibre" "env QT_QPA_PLATFORM=xcb calibre")
     (makeExecute "QuodLibet" "quodlibet")
     (makeExecute "Picard" "picard")
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))

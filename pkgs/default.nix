@@ -39,14 +39,22 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-08-29";
+      version = "2022-09-02";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "9c271d792d32030525c4d4c39715640aa10725d2";
-        sha256 = "118aqvxz08c4fs99fmq5bassn858w1b2nfp28gxz76j9gifnvz58";
+        rev = "f7b1bc1de82da76cdb47815bc83cf019b56918e4";
+        sha256 = "sha256-4664ElMjNruuGbxM2cQmWt4E22kkTT4k2udvzMnhH1c=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
+
+      patches = [
+        (super.fetchpatch {
+          url =
+            "https://patch-diff.githubusercontent.com/raw/labwc/labwc/pull/438.patch";
+          sha256 = "12jdgsmprx0ai0iwiay11rbkzmmrfcjx2p5pz0wzbyn7gw3f0816";
+        })
+      ];
     });
 
   mlterm = super.mlterm.overrideAttrs (old: rec {

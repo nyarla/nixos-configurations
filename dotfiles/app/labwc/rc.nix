@@ -47,7 +47,7 @@ in ''
   (props "core" [
     (prop "decoration" "server")
     (prop "gap" "0")
-    (prop "adaptiveSync" "yes")
+    (prop "adaptiveSync" "no")
   ])
 
   (props "focus" [ (prop "followMouse" "yes") (prop "raiseOnFocus" "no") ])

@@ -4,6 +4,7 @@
     ../../config/services/gnome-keyring.nix
     ../../config/services/polkit.nix
     ../../config/services/sfwbar.nix
+    ../../config/services/swaylock.nix
   ];
 
   home.packages = with pkgs; [

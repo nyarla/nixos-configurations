@@ -29,6 +29,8 @@ in writeShellScript "autostart" ''
   while clipnotify ; do xclip -o -selection primary | clipsync copy primary ; done &
   while clipnotify ; do xclip -o -selection clipboard | clipsync copy clipboard ; done &
 
+  systemctl --user start swaylock
+
   systemctl --user start gnome-keyring-pkcs11
   systemctl --user start gnome-keyring-secrets
   systemctl --user start gnome-keyring-ssh
@@ -44,12 +46,6 @@ in writeShellScript "autostart" ''
   run xembedsniproxy
 
   run ydotoold
-  swayidle -w \
-    timeout 60 'swaylock -f' \
-    timeout 90 'wayout --off HDMI-A-1' resume 'wayout --on HDMI-A-1' \
-    before-sleep 'swaylock -f' \
-    lock 'swaylock -f' \
-  &
 
   if test "$(hostname)" == "nixos"; then
     ${automount "05b4746c-9eed-4228-b306-922a9ef6ac4e" "/run/media/nyarla/data"}

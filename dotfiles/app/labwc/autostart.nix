@@ -17,17 +17,31 @@ in writeShellScript "autostart" ''
   export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
 
   run() {
-    if type "''${1}" >/dev/null 2>&1 ; then
-      $@ &
-    fi
+    local waitPID
+    $@ >/dev/null 2>&1 & waitPID=$!
+
+    while wait $waidPID ; do
+      $@ >/dev/null 2>&1 & waitPID=$!
+    done & echo $! >>$HOME/.cache/sw-background
   }
 
-  run fcitx5 -rd
+  once() {
+    $@ &
+  }
 
-  wl-paste -p -w clipsync copy primary &
-  wl-paste -w clipsync copy clipboard &
-  while clipnotify ; do xclip -o -selection primary | clipsync copy primary ; done &
-  while clipnotify ; do xclip -o -selection clipboard | clipsync copy clipboard ; done &
+  waiting() {
+    while test "x$(pgrep "$1")" = "x"; do sleep 1 ; done
+  }
+
+  run fcitx5 -rD
+
+  run bash -c 'wl-paste -p -w clipsync copy primary'
+  run bash -c 'wl-paste -w clipsync copy clipboard'
+  run bash -c 'while clipnotify ; do xclip -o -selection primary    | clipsync copy primary   ; done'
+  run bash -c 'while clipnotify ; do xclip -o -selection clipboard  | clipsync copy clipboard ; done'
+
+  run xembedsniproxy
+  run ydotoold
 
   systemctl --user start swaylock
 
@@ -37,20 +51,17 @@ in writeShellScript "autostart" ''
 
   systemctl --user start polkit-mate-authentication-agent-1 
 
-  systemctl --user start sfwbar
-
   systemctl --user start nm-applet
   systemctl --user start blueman-applet
 
-  run swaybg -i ${wallpaper} -m fit
-  run xembedsniproxy
+  systemctl --user start sfwbar
 
-  run ydotoold
+  once swaybg -i ${wallpaper} -m fit
 
   if test "$(hostname)" == "nixos"; then
     ${automount "05b4746c-9eed-4228-b306-922a9ef6ac4e" "/run/media/nyarla/data"}
     ${automount "470d2a2f-bdea-49a2-8e9b-242e4f3e1381" "/run/media/nyarla/src"}
 
-    run calibre --start-in-tray
+    once calibre --start-in-tray
   fi
 ''

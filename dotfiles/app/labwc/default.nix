@@ -123,6 +123,11 @@
 
       test -n "$waitPID" && wait "$waitPID"
 
+      for pid in $(tac $HOME/.cache/sw-background); do
+        kill $pid || true >/dev/null 2>&1
+      done
+      rm $HOME/.cache/sw-background
+
       systemctl --user stop graphical-session.target
 
       exit 0

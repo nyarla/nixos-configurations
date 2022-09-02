@@ -7,6 +7,7 @@ in {
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
+  galendae = require ./galendae { };
   gyazo-diy = require ./gyazo-diy { };
   hack-nerdfonts = require ./hack-nerdfonts { };
   hackgen = require ./hackgen { };
@@ -42,7 +43,7 @@ in {
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "adc1e0876dc3f55c275f13d7e102df0eb3dbdab8";
+        rev = "9c271d792d32030525c4d4c39715640aa10725d2";
         sha256 = "118aqvxz08c4fs99fmq5bassn858w1b2nfp28gxz76j9gifnvz58";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];

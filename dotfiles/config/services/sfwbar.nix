@@ -1,5 +1,12 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [ sfwbar ];
+{ pkgs, lib, config, ... }: {
+  home.packages = with pkgs; [ sfwbar galendae ];
+
+  xdg.configFile."galendae/calendar.conf".text =
+    let toKV = lib.generators.toKeyValue { };
+    in toKV {
+      background_color = "#F8F8F8";
+      week_start = "0";
+    };
 
   systemd.user.services.sfwbar = {
     Unit = {
@@ -75,6 +82,7 @@
         style = "datetime"
         interval = 1000
         value = Time("%Y-%m-%d %H:%M:%S（%a）")
+        action[1] = Exec "galendae -c ${config.home.homeDirectory}/.config/galendae/calendar.conf"
       }
     }
 

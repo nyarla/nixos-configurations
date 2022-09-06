@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ../../config/services/blueman-applet.nix
+    ../../config/services/clipboard.nix
     ../../config/services/gnome-keyring.nix
     ../../config/services/polkit.nix
     ../../config/services/sfwbar.nix
@@ -9,11 +10,11 @@
 
   home.packages = with pkgs; [
     # icon and themes
-    arc-theme
     arc-openbox
+    arc-theme
     capitaine-cursors
-    hicolor-icon-theme
     flat-remix-icon-theme
+    hicolor-icon-theme
 
     # fallback
     gnome.adwaita-icon-theme
@@ -25,11 +26,11 @@
     qgnomeplatform
 
     # wayland
+    clipnotify
     grim
     slurp
     wl-clipboard
     xclip
-    clipnotify
 
     labwc
     swaybg

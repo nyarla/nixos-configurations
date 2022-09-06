@@ -16,6 +16,8 @@ let
 in writeShellScript "autostart" ''
   export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
 
+  systemctl --user import-environment WAYLAND_DISPLAY DISPLAY HOME
+
   run() {
     local waitPID
     $@ >/dev/null 2>&1 & waitPID=$!
@@ -29,19 +31,13 @@ in writeShellScript "autostart" ''
     $@ &
   }
 
-  waiting() {
-    while test "x$(pgrep "$1")" = "x"; do sleep 1 ; done
-  }
-
   run fcitx5 -rD
-
-  run bash -c 'wl-paste -p -w clipsync copy primary'
-  run bash -c 'wl-paste -w clipsync copy clipboard'
-  run bash -c 'while clipnotify ; do xclip -o -selection primary    | clipsync copy primary   ; done'
-  run bash -c 'while clipnotify ; do xclip -o -selection clipboard  | clipsync copy clipboard ; done'
 
   run xembedsniproxy
   run ydotoold
+
+  systemctl --user start clipsync-wayland-to-xorg-primary
+  systemctl --user start clipsync-wayland-to-xorg-clipboard
 
   systemctl --user start swaylock
 

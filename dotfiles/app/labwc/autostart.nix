@@ -18,23 +18,9 @@ in writeShellScript "autostart" ''
 
   systemctl --user import-environment WAYLAND_DISPLAY DISPLAY HOME
 
-  run() {
-    local waitPID
-    $@ >/dev/null 2>&1 & waitPID=$!
-
-    while wait $waidPID ; do
-      $@ >/dev/null 2>&1 & waitPID=$!
-    done & echo $! >>$HOME/.cache/sw-background
-  }
-
-  once() {
-    $@ &
-  }
-
-  run fcitx5 -rD
-
-  run xembedsniproxy
-  run ydotoold
+  fcitx5 -rD      &
+  xembedsniproxy  &
+  ydotoold        &
 
   systemctl --user start clipsync-wayland-to-xorg-primary
   systemctl --user start clipsync-wayland-to-xorg-clipboard
@@ -52,7 +38,7 @@ in writeShellScript "autostart" ''
 
   systemctl --user start sfwbar
 
-  once swaybg -i ${wallpaper} -m fit
+  swaybg -i ${wallpaper} -m fit &
 
   if test "$(hostname)" == "nixos"; then
     ${automount "05b4746c-9eed-4228-b306-922a9ef6ac4e" "/run/media/nyarla/data"}

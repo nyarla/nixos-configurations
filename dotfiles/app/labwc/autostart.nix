@@ -16,6 +16,8 @@ let
 in writeShellScript "autostart" ''
   export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
 
+  systemctl --user start mympd
+
   systemctl --user import-environment WAYLAND_DISPLAY DISPLAY HOME
 
   fcitx5 -rD      &

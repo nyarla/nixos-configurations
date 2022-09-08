@@ -197,6 +197,10 @@ in {
         # http
         80
         443
+
+        # mpd
+        6600
+        9999
       ];
       allowedUDPPortRanges = [{
         from = 60000;

@@ -37,5 +37,6 @@
   # ignore midi devices
   services.udev.extraRules = ''
     ATTRS{idVendor}=="1acc", ATTRS{idProduct}=="1a0f", ENV{PULSE_IGNORE}="1"
+    ATTRS{idVendor}=="1235", ATTRS{idProduct}=="8205", ENV{PULSE_IGNORE}="1"
   '';
 }

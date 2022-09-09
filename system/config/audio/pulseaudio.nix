@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   # for droidcam
   boot.kernelModules = [ "snd_aloop" ];
   boot.kernelParams = [ "snd_aloop.index=10" ];

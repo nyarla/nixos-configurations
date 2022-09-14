@@ -42,14 +42,13 @@ in ''
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
 
   ${makeMenu "applications-main" "Main" [
-    (makeExecute "mlterm-wl" "mlterm-wl -m none")
-    (makeExecute "mlterm" "mlterm")
+    (makeExecute "mlterm-wl" "mlterm-wl")
     (makeExecute "virt-manager" "virt-manager")
   ]}
 
   ${makeMenu "applications-web" "Web" [
-    (makeExecute "Firefox" "env GDK_BACKEND=x11 firefox")
-    (makeExecute "Thunderbird" "env GDK_BACKEND=x11 thunderbird")
+    (makeExecute "Firefox" "firefox")
+    (makeExecute "Thunderbird" "thunderbird")
     (makeExecute "Google Chrome" "google-chrome-stable")
     (makeExecute "Bitwarden" "bitwarden --no-sandbox")
   ]}

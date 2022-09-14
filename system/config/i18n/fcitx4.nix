@@ -1,12 +1,7 @@
 { config, pkgs, ... }: {
   i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-configtool
-      fcitx5-gtk
-      fcitx5-skk
-      libsForQt5.fcitx5-qt
-    ];
+    enabled = "fcitx";
+    fcitx.engines = with pkgs.fcitx-engines; [ skk ];
   };
 
   services.dbus.packages = [ config.i18n.inputMethod.package ];

@@ -16,7 +16,6 @@
     # desktop environment
     ../config/per-service/wayland.nix
     ../config/per-service/xorg.nix
-    ../config/per-service/fcitx.nix
 
     # host
     ../config/per-host/NyZen9.nix

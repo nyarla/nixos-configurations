@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, lib, config, ... }: {
   # mysql
   services.mysql.settings = {
     mysqld = { character-set-server = "utf8mb4"; };
@@ -31,6 +31,9 @@
       hostname = "nitter.home.thotep.net";
     };
     config = { tokenCount = 1; };
+  };
+  systemd.services.nitter.environment = {
+    LD_LIBRARY_PATH = "${lib.makeLibraryPath (with pkgs; [ openssl ])}";
   };
 
   services.n8n = {

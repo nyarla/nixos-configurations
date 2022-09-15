@@ -1,11 +1,11 @@
 { stdenv, fetchzip }:
 stdenv.mkDerivation rec {
   pname = "hackgen";
-  version = "v2.7.0";
+  version = "v2.7.1";
   src = fetchzip {
     url =
       "https://github.com/yuru7/HackGen/releases/download/${version}/HackGen_${version}.zip";
-    sha256 = "1phimpm5sb6lany94w4gbhi2fmn0agdhh31k329hdkl8bvl2lfln";
+    sha256 = "09lpb1q517gy5kgdmgpz3wg9cs2in0fk6nrccwy8nksxdpnabchf";
   };
 
   phases = [ "installPhase" ];

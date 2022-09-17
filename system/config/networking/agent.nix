@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ aria bind curlFull wget ];
+  environment.systemPackages = with pkgs; [ aria bind curlFull rclone wget ];
 }

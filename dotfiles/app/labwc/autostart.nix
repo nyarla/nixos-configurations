@@ -20,7 +20,7 @@ in writeShellScript "autostart" ''
 
   systemctl --user import-environment WAYLAND_DISPLAY DISPLAY HOME
 
-  fcitx -rD      &
+  fcitx5 -rD      &
   xembedsniproxy  &
   ydotoold        &
 

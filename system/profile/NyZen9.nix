@@ -7,7 +7,7 @@
     ../config/gadgets/android.nix
     ../config/graphic/labwc.nix
     ../config/i18n/en.nix
-    ../config/i18n/fcitx4.nix
+    ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix
     ../config/keyboard/us.nix
     ../config/keyboard/zinc.nix

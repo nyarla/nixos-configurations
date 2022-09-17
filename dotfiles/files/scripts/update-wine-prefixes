@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DTM=/run/media/nyarla/src/local/daw
+DTM=/run/media/nyarla/data/local/daw/daw
 
 for dir in $HOME/local/wine $DTM/daw $DTM/plugins; do
   for prefix in $(ls "${dir}"); do

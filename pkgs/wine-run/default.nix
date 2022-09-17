@@ -4,7 +4,7 @@ let
     export LD_PRELOAD=
 
     case "$(pwd)/" in
-      /run/media/nyarla/src/local/daw/*/*/)
+      /run/media/nyarla/data/local/daw/daw/*/*/)
         export WINEPREFIX=$(pwd)
         ;;
       $HOME/local/wine/*/)

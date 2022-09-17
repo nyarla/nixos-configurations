@@ -3,7 +3,7 @@ let
   automount = uuid: path: ''
     if test -e "/dev/disk/by-uuid/${uuid}" ; then
       if test ! -d ${path} ; then
-        gio mount -d ${uuid} ${path} &
+        gio mount -d ${uuid} ${path}
       fi
     fi
   '';
@@ -15,6 +15,13 @@ let
   };
 in writeShellScript "autostart" ''
   export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
+
+  if test "$(hostname)" == "nixos"; then
+    ${automount "05b4746c-9eed-4228-b306-922a9ef6ac4e" "/run/media/nyarla/dev"}
+    ${automount "470d2a2f-bdea-49a2-8e9b-242e4f3e1381" "/run/media/nyarla/data"}
+
+    env QT_QPA_PLATFORM=xcb calibre --start-in-tray &
+  fi
 
   systemctl --user start mympd
 
@@ -42,10 +49,4 @@ in writeShellScript "autostart" ''
 
   swaybg -i ${wallpaper} -m fit &
 
-  if test "$(hostname)" == "nixos"; then
-    ${automount "05b4746c-9eed-4228-b306-922a9ef6ac4e" "/run/media/nyarla/dev"}
-    ${automount "470d2a2f-bdea-49a2-8e9b-242e4f3e1381" "/run/media/nyarla/data"}
-
-    env QT_QPA_PLATFORM=xcb calibre --start-in-tray &
-  fi
 ''

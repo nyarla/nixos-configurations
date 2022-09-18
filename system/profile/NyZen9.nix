@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   imports = [
     ../config/audio/mpd.nix
     ../config/audio/pulseaudio.nix
@@ -110,42 +110,18 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
-        export PATH=${pkgs.restic-run}/bin:${pkgs.coreutils}/bin:$PATH
+        export PATH=${lib.makeBinPath (with pkgs; [ rclone coreutils ])}:$PATH
         export HOME=/home/nyarla
-        export MEDIA=/run/media/nyarla
+        export DATA=/run/media/nyarla/data
 
-        if test -e $HOME/.cache/backup.lock ; then
-          echo "backup process is running or dead lokced"
-          exit 0
-        fi
+        cd $DATA
+        for dir in Downloads local Music Photo ; do
+          cd "''${DATA}/''${dir}" \
+            && rclone sync -P -l . "backup:''${dir}" --exclude-from $HOME/.config/rclone/ignore --delete-excluded \
+            || true
 
-        touch $HOME/.cache/backup.lock
-
-        if test -e $HOME/Documents ; then
-          cd $HOME/Documents && restic-backup documents .
-        fi
-
-        if test -e $HOME/local ; then
-          cd $HOME/local && restic-backup dotfiles .
-        fi
-
-        if test -e $MEDIA/data/Downloads ; then
-          cd $MEDIA/data/Downloads && restic-backup stuck .
-        fi
-
-        if test -e $MEDIA/data/local ; then
-          cd $MEDIA/data/local && restic-backup source .
-        fi
-
-        if test -e $MEDIA/src/local ; then
-          cd $MEDIA/src/local && restic-backup daw .
-        fi
-
-        if test -e $MEDIA/src/Music ; then
-          cd $MEDIA/src/Music && restic-backup musics .
-        fi
-
-        rm $HOME/.cache/backup.lock
+          cd "''${DATA}"
+        done
       '');
     };
   };

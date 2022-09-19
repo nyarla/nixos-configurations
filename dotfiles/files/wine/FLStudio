@@ -1,33 +1,21 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-export WINEPREFIX=/run/media/nyarla/src/local/daw/daw/FLStudio
+set -euo pipefail
+
+export WINEPREFIX=/run/media/nyarla/data/local/daw/daw/daw/FLStudio
 export LD_PRELOAD=
-export PIPEWIRE_LATENCY=512/96000
 
-cd $WINEPREFIX
-
-# wineasio.dll
 chmod +w $WINEPREFIX/drive_c/windows/system32/wineasio.dll
 cp /run/current-system/sw/lib/wine/x86_64-unix/wineasio.dll.so \
   $WINEPREFIX/drive_c/windows/system32/wineasio.dll
 
 wine64 regsvr32 wineasio.dll
 
-# launch jackd
-jackd -d alsa -d pipewire -p 1024 -r 96000 -X seq &
-jackPID=$!
-
-sleep 1
-
-a2j_control --ehw --start
-
-# FL Studio
 wine 'C:\Program Files\Image-Line\FL Studio 20\FL64.exe' &
 waitPID=$!
 
 test -n "$waitPID" && wait $waitPID
 
-a2j_control --stop
-kill $jackPID
+wineserver -k
 
 exit 0

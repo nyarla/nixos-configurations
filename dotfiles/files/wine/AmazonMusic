@@ -1,8 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-export WINEPREFIX=$HOME/local/wine/AmazonMusic
-#export WINEDLLOVERRIDES="libglesv2=d"
+set -euo pipefail
 
+export WINEPREFIX=/run/media/nyarla/data/local/wine/AmazonMusic
 export LD_PRELOAD=
 
 wine 'C:\users\nyarla\AppData\Local\Amazon Music\Amazon Music.exe' &

@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-export WINEPREFIX=/run/media/nyarla/src/local/daw/plugins/IKMultimedia
+set -euo pipefail
+
+export WINEPREFIX=/run/media/nyarla/data/local/daw/daw/plugins/IKMultimedia
 export LD_PRELOAD=
 
-exec wine explorer 'C:\Program Files\IK Multimedia\IK Product Manager\IK Product Manager.exe'
+wine 'C:\Program Files\IK Multimedia\IK Product Manager\IK Product Manager.exe' &
+waitPID=$!
+
+test -n "$waitPID" && wait $waitPID
+
+wineserver -k
+
+exit 0

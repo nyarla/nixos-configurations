@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
-export WINEPREFIX=/run/media/nyarla/src/local/daw/plugins/NI
+set -euo pipefail
+  
+export WINEPREFIX=/run/media/nyarla/data/local/daw/daw/plugins/NI
 export LD_PRELOAD=
 
-exec wine explorer 'C:\Program Files\Native Instruments\Native Access\Native Access.exe'
+wine 'C:\Program Files\Native Instruments\Native Access\Native Access.exe' &
+waitPID=$!
+
+test -n "$waitPID" && wait $waitPID
+
+wineserver -k
+
+exit 0
+

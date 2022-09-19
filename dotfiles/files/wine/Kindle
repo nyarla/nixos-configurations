@@ -1,6 +1,15 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-export WINEPREFIX=$HOME/local/wine/Kindle
+set -euo pipefail
+
+export WINEPREFIX=/run/media/nyarla/data/local/wine/Kindle
 export LD_PRELOAD=
 
-wine 'C:\Program Files (x86)\Amazon\Kindle\Kindle.exe'
+wine 'C:\Program Files (x86)\Amazon\Kindle\Kindle.exe' &
+waitPID=$!
+
+test -n "$waitPID" && wait $waitPID
+
+wineserver -k
+
+exit 0

@@ -117,7 +117,18 @@
         cd $DATA
         for dir in Downloads local Music Photo ; do
           cd "''${DATA}/''${dir}" \
-            && rclone sync -P -l . "backup:''${dir}" --exclude-from $HOME/.config/rclone/ignore --delete-excluded \
+            && rclone sync -P -l . "backup:''${dir}" \
+              --check-first \
+              --checkers 8 \
+              --human-readable \
+              --max-backlog=-1 \
+              --order-by=size,asc \
+              --size-only \
+              --fast-list \
+              --transfers 8 \
+              \
+              --exclude-from=$HOME/.config/rclone/ignore \
+              --delete-excluded \
             || true
 
           cd "''${DATA}"
@@ -130,7 +141,7 @@
     description = "Timer for automatic backup by restic and rclone";
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnCalendar = "*-*-* 02:00:00";
+      OnCalendar = "*-*-* 01:00:00";
       RandomizedDelaySec = "5m";
       Persistent = true;
     };

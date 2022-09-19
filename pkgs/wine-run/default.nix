@@ -7,7 +7,7 @@ let
       /run/media/nyarla/data/local/daw/daw/*/*/)
         export WINEPREFIX=$(pwd)
         ;;
-      $HOME/local/wine/*/)
+      /run/media/nyarla/data/local/wine/*/)
         export WINEPREFIX=$(pwd)
         ;;
       *)

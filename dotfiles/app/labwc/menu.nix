@@ -54,7 +54,7 @@ in ''
   ]}
 
   ${makeMenu "applications-file" "Files" [
-    (makeExecute "Thunar" "thunar")
+    (makeExecute "Thunar" "env GDK_BACKEND=x11 thunar")
     (makeExecute "Atril" "atril")
     (makeExecute "Pluma" "pluma")
     (makeExecute "GHex" "ghex")

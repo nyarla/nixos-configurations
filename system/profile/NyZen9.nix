@@ -110,29 +110,18 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
-        export PATH=${lib.makeBinPath (with pkgs; [ rclone coreutils ])}:$PATH
+        set -euo pipefail
+
+        export PATH=${lib.makeBinPath (with pkgs; [ restic-run ])}:$PATH
         export HOME=/home/nyarla
         export DATA=/run/media/nyarla/data
 
         cd $DATA
-        for dir in Downloads local Music Photo ; do
-          cd "''${DATA}/''${dir}" \
-            && rclone sync -P -l . "backup:''${dir}" \
-              --check-first \
-              --checkers 8 \
-              --human-readable \
-              --max-backlog=-1 \
-              --order-by=size,asc \
-              --size-only \
-              --fast-list \
-              --transfers 8 \
-              \
-              --exclude-from=$HOME/.config/rclone/ignore \
-              --delete-excluded \
-            || true
-
-          cd "''${DATA}"
+        for dir in Downloads Music Photo local ; do
+          restic-backup $dir
         done
+
+        exit 0
       '');
     };
   };

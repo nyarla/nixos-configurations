@@ -35,6 +35,8 @@
   systemd.services.nitter.environment = {
     LD_LIBRARY_PATH = "${lib.makeLibraryPath (with pkgs; [ openssl ])}";
   };
+  systemd.services.nitter.serviceConfig.ExecStart = lib.mkForce
+    "${pkgs.coreutils}/bin/env -i NITTER_CONF_FILE=/var/lib/nitter/nitter.conf ${pkgs.nitter}/bin/nitter";
 
   services.n8n = {
     enable = true;

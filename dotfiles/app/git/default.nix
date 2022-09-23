@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  home.packages = with pkgs; [ rbw ];
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -20,6 +21,7 @@
         preloadindex = true;
         quotepath = false;
       };
+      credential.helper = "rbw";
     };
     ignores = import ./gitignore.nix;
   };

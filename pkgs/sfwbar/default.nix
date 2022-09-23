@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "LBCrion";
     repo = "sfwbar";
-    rev = "794b92c92c03e4d058119e4554d2fba9540de7c7";
-    sha256 = "1n01wwl5vpw075kr97qg0xn2sclb1g82q7z4w4jcnq7hcmwsl50l";
+    rev = "ab683b986f06cfb1c6cd8c30a0f1fcbc3a2d81d4";
+    sha256 = "08mjwq24z6y47ga9x8y0is4wngr2i5lq11vsfz1zl9fkc5pr526w";
   };
 
   postPatch = ''

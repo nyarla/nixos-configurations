@@ -74,15 +74,13 @@
         value = ""
       }
       
-      tray {
-        css = "* { min-width 16px; min-height: 16px; margin: 0px 4px; padding: 0px; }"
-      }
+      tray {}
 
       label {
         style = "datetime"
         interval = 1000
         value = Time("%Y-%m-%d %H:%M:%S（%a）")
-        action[1] = Exec "galendae -c ${config.home.homeDirectory}/.config/galendae/calendar.conf"
+        action[1] = Exec "galendae -c /home/nyarla/.config/galendae/calendar.conf"
       }
     }
 
@@ -93,23 +91,37 @@
 
     button#taskbar_normal image,
     button#taskbar_normal:hover image,
-    button#taskbar_active image {
+    button#taskbar_active image,
+    button#tray_normal image,
+    button#tray_nornal:hover image,
+    button#tray_active image {
       min-width: 18px;
       min-height: 18px;
-      padding: 2px 2px 0px 2px ;
+      -GtkWidget-vexpand: true;
+    }
+
+    button#taskbar_normal image,
+    button#taskbar_normal:hover image,
+    button#taskbar_active image {
+      padding: 0 1px;
     }
 
     button#taskbar_normal,
     button#taskbar_normal:hover,
     button#taskbar_active {
       margin: 0px 2px;
-      padding: 0px 2px;
 
       background-image: none;
       
       border-image: none;
       border-radius: 3px ;
       border-color: transparent;
+    }
+
+    button#tray_normal,
+    button#tray_nornal:hover,
+    button#tray_active {
+      border: none;
     }
 
     button#launch:hover,

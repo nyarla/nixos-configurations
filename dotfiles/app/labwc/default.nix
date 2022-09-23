@@ -110,14 +110,12 @@
       export WLR_NO_HARDWARE_CURSORS=1
       #export WLR_RENDERER=vulkan
 
+      dbus-update-activation-environment --systemd --all
+
       labwc &
       waitPID=$!
 
-      systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID XDG_SESSION_TYPE  
-      systemctl --user import-environment LD_LIBRARY_PATH GIO_EXTRA_MODULES GI_TYPELIB_PATH
       systemctl --user start graphical-session.target
-
-      dbus-update-activation-environment --systemd --all
 
       test -n "$waitPID" && wait "$waitPID"
 

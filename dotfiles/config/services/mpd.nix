@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  home.packages = with pkgs; [ mpc-cli ];
   services.mpd = {
     enable = true;
     musicDirectory = "/run/media/nyarla/data/Music";

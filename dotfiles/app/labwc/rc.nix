@@ -81,5 +81,7 @@ in ''
 
     (keybind "A-m" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
     (keybind "C-W-q" [ (exec "swaylock -f") ])
+
+    (keybind "XF86_AudioPlay" [ (exec "mpc toggle") ])
   ])
 ])

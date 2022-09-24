@@ -102,6 +102,8 @@ in ''
       (makeExecute "Helio.fm" "helio")
       (makeExecute "MuseScore" "musescore")
       "${sep}"
+      (makeExecute "Sononym" "sononym --no-sandbox")
+      "${sep}"
       (makeExecute "FL Studio" (wineCmd "FLStudio"))
       (makeExecute "deCoda" (wineCmd "deCoda"))
     ])

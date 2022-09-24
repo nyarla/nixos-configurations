@@ -17,6 +17,7 @@ in {
   restic-run = require ./restic-run { };
   sfwbar = require ./sfwbar { };
   skk-dicts-xl = require ./skk-dicts-xl { };
+  sononym-bin = require ./sononym-bin { };
   sysmontask = require ./sysmontask { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
   wayout = require ./wayout { };

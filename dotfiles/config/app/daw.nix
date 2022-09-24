@@ -5,6 +5,9 @@
     musescore
     zrythm
 
+    # samples manager
+    sononym-bin
+
     # jackaudio
     a2jmidid
     carla

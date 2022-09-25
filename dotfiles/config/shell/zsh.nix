@@ -6,6 +6,8 @@
       "cd" = "__cd";
       "ls" = "ls --color -F";
       "l" = "ls --color -F -la";
+      "lefthook-install" =
+        "cp $HOME/local/githooks/lefthook.yml . && cp -R $HOME/local/githooks/.lefthook . && lefthook install -f";
       "nvim-resume" = "pkill -SIGCONT nvim";
       "rm" = "trash";
       "nixos-upgrade" =

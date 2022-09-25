@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ rbw ];
+  home.packages = with pkgs; [ rbw lefthook ];
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -17,7 +17,6 @@
         editor = "nvr --remote-wait-silent";
         fileMode = false;
         fscache = true;
-        hooksPath = "/home/nyarla/local/githooks/hooks";
         preloadindex = true;
         quotepath = false;
       };

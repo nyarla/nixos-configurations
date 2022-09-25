@@ -169,4 +169,7 @@
   "/*.zip"
 
   # End of https://www.toptal.com/developers/gitignore/api/node,perl
+
+  "lefthook.yml"
+  ".lefthook"
 ]

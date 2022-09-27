@@ -1,4 +1,4 @@
 { pkgs, ... }: {
-  imports = [ ./fonts.nix ./gnome-compatible.nix ];
+  imports = [ ./gnome-compatible.nix ];
   security.pam.services.swaylock = { };
 }

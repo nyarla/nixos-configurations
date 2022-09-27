@@ -5,7 +5,6 @@ in {
     ../per-service/avahi.nix
     ../per-service/network-manager.nix
     ../per-service/docker.nix
-    ../per-service/firewall.nix
     ../per-service/kvm.nix
     ../per-service/printer.nix
     ../per-service/tailscale.nix
@@ -179,50 +178,4 @@ in {
       port = 2222;
     }];
   };
-
-  # firewall
-  networking.firewall.checkReversePath = "loose";
-  networking.firewall.allowPing = true;
-  networking.firewall.allowedTCPPorts = [ 139 445 ];
-  networking.firewall.allowedUDPPorts = [ 137 138 ];
-  networking.firewall.interfaces = {
-    "tailscale0" = {
-      allowedTCPPorts = [
-        # calibre-server
-        8085
-
-        # sshd
-        2222
-
-        # http
-        80
-        443
-
-        # mpd
-        6600
-        9999
-      ];
-      allowedUDPPortRanges = [{
-        from = 60000;
-        to = 61000;
-      }];
-    };
-
-    "wlan0" = {
-      allowedTCPPorts = [
-        # syncthing
-        22000
-      ];
-      allowedUDPPorts = [
-        # service
-        22000
-        21027
-
-        # scanner
-        8610
-        8612
-      ];
-    };
-  };
-
 }

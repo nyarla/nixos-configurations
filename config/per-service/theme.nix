@@ -7,7 +7,7 @@ let
     hicolor-icon-theme
   ];
 
-  gtkThemes = with pkgs; [ victory-gtk-theme gnome3.gnome-themes-extra ];
+  gtkThemes = with pkgs; [ victory-gtk-theme gnome.gnome-themes-extra ];
 
   extra = with pkgs; [ gtk-engine-murrine gtk_engines ];
 

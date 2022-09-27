@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-let utils = with pkgs; [ xclip xdg_utils libnotify sx ];
+let utils = with pkgs; [ xclip xdg-utils libnotify sx ];
 in {
   imports = [ ./fonts.nix ./gnome-compatible.nix ./picom.nix ];
 

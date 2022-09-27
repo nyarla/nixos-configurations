@@ -1,4 +1,4 @@
-{ rustPlatform, fetchgit, lib, pkgconfig, wayland, egl-wayland, wayland-scanner
+{ rustPlatform, fetchgit, lib, pkg-config, wayland, egl-wayland, wayland-scanner
 , wayland-protocols, patchelf }:
 rustPlatform.buildRustPackage rec {
   pname = "wayout";
@@ -10,7 +10,7 @@ rustPlatform.buildRustPackage rec {
   };
 
   buildInputs = [ wayland wayland-scanner wayland-protocols ];
-  nativeBuildInputs = [ pkgconfig ];
+  nativeBuildInputs = [ pkg-config ];
 
   cargoSha256 = "sha256-INjMIAkT9rN7XUsmKbQOv5jnEFSdbLjL8g9s/Yiu93k=";
 

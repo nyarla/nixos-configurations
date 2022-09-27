@@ -11,7 +11,7 @@
     # jackaudio
     a2jmidid
     carla
-    jack2Full
+    jack2
     qjackctl
 
     # plugins

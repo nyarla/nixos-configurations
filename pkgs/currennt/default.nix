@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, cmake, pkgconfig, boost, cudatoolkit, netcdf }:
+{ stdenv, fetchFromGitHub, cmake, pkg-config, boost, cudatoolkit, netcdf }:
 stdenv.mkDerivation rec {
   pname = "currennt";
   version = "git";
@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
     sha256 = "0kizzi2qlm8xknayi8kb5sfr9mqqiigqsg5swxcrqlzvs2zxzppx";
   };
 
-  nativeBuildInputs = [ cmake pkgconfig ];
+  nativeBuildInputs = [ cmake pkg-config ];
   buildInputs = [ boost.dev cudatoolkit netcdf ];
 
   postUnpack = ''

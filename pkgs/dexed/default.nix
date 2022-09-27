@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, fetchzip, pkgconfig, cmake, alsaLib, curlFull
+{ stdenv, fetchFromGitHub, fetchzip, pkg-config, cmake, alsa-lib, curlFull
 , doxygen, freetype, glib, graphviz, gtk3, ladspa-sdk, libjack2, libjpeg_turbo
 , libpng, pcre, python3, webkitgtk, zlib, xorg, libGLU, juce-framework, lib }:
 stdenv.mkDerivation rec {
@@ -29,9 +29,9 @@ stdenv.mkDerivation rec {
     "-DCMAKE_RANLIB=${stdenv.cc.cc}/bin/gcc-ranlib"
   ];
 
-  nativeBuildInputs = [ cmake pkgconfig doxygen python3 ];
+  nativeBuildInputs = [ cmake pkg-config doxygen python3 ];
   buildInputs = [
-    alsaLib
+    alsa-lib
     curlFull.dev
     freetype
     glib.dev

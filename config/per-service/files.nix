@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs;
     [ glib udisks2 ]
-    ++ (with pkgs.gnome3; [ gvfs ghex gnome-disk-utility gnome-font-viewer ])
+    ++ (with pkgs.gnome; [ gvfs ghex gnome-disk-utility gnome-font-viewer ])
     ++ (with pkgs.xfce; [ exo thunar garcon libxfce4ui xfconf ])
     ++ (with pkgs.mate; [ atril engrampa eom mate-polkit pluma ]);
 

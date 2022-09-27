@@ -7,13 +7,16 @@ in {
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
+  flatery-icon-theme = require ./flatery-icon-theme { };
   galendae = require ./galendae { };
   gyazo-diy = require ./gyazo-diy { };
   hack-nerdfonts = require ./hack-nerdfonts { };
   hackgen = require ./hackgen { };
+  jackass-bin = require ./jackass-bin { };
   juce-framework = require ./juce-framework { };
   locale-eaw = require ./locale-eaw { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
+  noto-fonts-jp = require ./noto-fonts-jp { };
   restic-run = require ./restic-run { };
   sfwbar = require ./sfwbar { };
   skk-dicts-xl = require ./skk-dicts-xl { };
@@ -23,6 +26,8 @@ in {
   wayout = require ./wayout { };
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };
+  wine-vst-wrapper = require ./wine-vst-wrapper { };
+  wineasio = require ./wineasio { };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
   # modified packages

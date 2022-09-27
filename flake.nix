@@ -11,11 +11,8 @@
 
     wayland.url = "github:nix-community/nixpkgs-wayland";
     wayland.inputs.nixpkgs.follows = "nixpkgs";
-
-    dotnix.url = "git+file:///etc/nixos/external/dotnix";
-    dotnix.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { nix-ld, home-manager, dotnix, wayland, ... }@inputs: {
+  outputs = { nix-ld, home-manager, wayland, ... }@inputs: {
     nixosConfigurations = let
       applyPatch = args:
         inputs.nixpkgs.legacyPackages.${args.system}.applyPatches {
@@ -50,12 +47,8 @@
               "nixos-config=/etc/nixos/configuration.nix"
               "/nix/var/nix/profiles/per-user/root/channels"
             ];
-            nixpkgs.overlays = [
-              dotnix.overlay
-              (import ./pkgs)
-              (import ./pkgs/temporary.nix)
-              wayland.overlay
-            ];
+            nixpkgs.overlays =
+              [ (import ./pkgs) (import ./pkgs/temporary.nix) wayland.overlay ];
             system.stateVersion =
               (import ./system/config/nixos/version.nix).stateVersion;
           })

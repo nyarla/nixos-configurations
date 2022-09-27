@@ -15,7 +15,7 @@
     binutils
     clang-tools
     gdb
-    pkgconfig
+    pkg-config
     stdenv.cc
 
     # go

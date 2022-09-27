@@ -4,13 +4,13 @@
     cpio
     dmg2img
     gnutar
-    lzma
     nodePackages.asar
     p7zip
     pbzx
     unrar
     unzip
     xar
+    xz
     zip
     zstd
   ];

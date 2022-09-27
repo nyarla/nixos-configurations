@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, wrapGAppsHook, pkgconfig, meson, ninja, gtk3, glib
+{ stdenv, fetchFromGitHub, wrapGAppsHook, pkg-config, meson, ninja, gtk3, glib
 , gtk-layer-shell, json_c }:
 stdenv.mkDerivation rec {
   pname = "sfwbar";
@@ -16,5 +16,5 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs = [ gtk3 gtk-layer-shell json_c glib.dev ];
-  nativeBuildInputs = [ pkgconfig meson ninja wrapGAppsHook ];
+  nativeBuildInputs = [ pkg-config meson ninja wrapGAppsHook ];
 }

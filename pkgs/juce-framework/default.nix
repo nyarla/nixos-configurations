@@ -1,4 +1,4 @@
-{ stdenv, fetchzip, pkgconfig, cmake, alsaLib, curl, doxygen, freetype, glib
+{ stdenv, fetchzip, pkg-config, cmake, alsa-lib, curl, doxygen, freetype, glib
 , graphviz, gtk3, ladspa-sdk, libjack2, libjpeg_turbo, libpng, pcre, python3
 , webkitgtk, zlib, xorg, libGLU }:
 stdenv.mkDerivation rec {
@@ -10,9 +10,9 @@ stdenv.mkDerivation rec {
     sha256 = "0sswn2c9bm8nzcfwba2i3827pbrzi9syihg90kfhay7m5nizb78v";
   };
 
-  nativeBuildInputs = [ cmake pkgconfig doxygen python3 ];
+  nativeBuildInputs = [ cmake pkg-config doxygen python3 ];
   buildInputs = [
-    alsaLib
+    alsa-lib
     curl.dev
     freetype
     glib.dev

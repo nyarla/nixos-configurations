@@ -22,8 +22,5 @@
 
     # services
     ../config/per-service/webapp.nix
-
-    # temporary
-    ../config/per-service/patch.nix
   ];
 }

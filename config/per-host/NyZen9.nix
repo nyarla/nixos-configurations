@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let apps = with pkgs; [ syncthing mosh ];
 in {
-  imports = [ ../per-service/docker.nix ../per-service/kvm.nix ];
+  imports = [ ../per-service/kvm.nix ];
 
   environment.systemPackages = apps;
 

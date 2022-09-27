@@ -6,8 +6,6 @@
     # nixpkgs
     ../config/per-service/nixpkgs.nix
 
-    ../config/per-service/dbus.nix
-
     # desktop
     ../config/per-service/daw.nix
     ../config/per-service/files.nix

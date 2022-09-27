@@ -14,6 +14,7 @@
     ../config/keyboard/us.nix
     ../config/keyboard/zinc.nix
     ../config/linux/console.nix
+    ../config/linux/dbus.nix
     ../config/linux/filesystem.nix
     ../config/linux/hardware.nix
     ../config/linux/lodpi.nix

@@ -122,6 +122,9 @@
           restic-backup $dir
         done
 
+        cd $HOME
+        restic-backup Documents
+
         exit 0
       '');
     };

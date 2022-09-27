@@ -7,6 +7,7 @@
     ../config/gadgets/android.nix
     ../config/graphic/fonts.nix
     ../config/graphic/labwc.nix
+    ../config/graphic/lodpi.nix
     ../config/i18n/en.nix
     ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix

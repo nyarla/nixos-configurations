@@ -24,7 +24,6 @@
         monospace = [ "HackGen" "Hack Nerd Font" "DejaVu Sans" ];
         emoji = [ "Noto Color Emoji" ];
       };
-      subpixel = { lcdfilter = "light"; };
     };
   };
 }

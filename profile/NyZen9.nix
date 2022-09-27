@@ -7,7 +7,6 @@
     ../config/per-service/nixpkgs.nix
 
     # desktop
-    ../config/per-service/daw.nix
     ../config/per-service/files.nix
     ../config/per-service/terminal.nix
 

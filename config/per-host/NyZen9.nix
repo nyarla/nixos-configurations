@@ -1,14 +1,7 @@
 { pkgs, ... }:
 let apps = with pkgs; [ syncthing mosh ];
 in {
-  imports = [
-    ../per-service/avahi.nix
-    ../per-service/network-manager.nix
-    ../per-service/docker.nix
-    ../per-service/kvm.nix
-    ../per-service/printer.nix
-    ../per-service/tailscale.nix
-  ];
+  imports = [ ../per-service/docker.nix ../per-service/kvm.nix ];
 
   environment.systemPackages = apps;
 
@@ -163,19 +156,5 @@ in {
         "read only" = "no";
       };
     };
-  };
-
-  # sshd
-  services.openssh = {
-    enable = true;
-    startWhenNeeded = true;
-    permitRootLogin = "no";
-    openFirewall = false;
-    passwordAuthentication = true;
-    kbdInteractiveAuthentication = false;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 2222;
-    }];
   };
 }

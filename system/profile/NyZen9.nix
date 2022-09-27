@@ -19,6 +19,11 @@
     ../config/linux/process.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
+    ../config/networking/avahi.nix
+    ../config/networking/network-manager.nix
+    ../config/networking/openssh.nix
+    ../config/networking/printer.nix
+    ../config/networking/tailscale.nix
     ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix

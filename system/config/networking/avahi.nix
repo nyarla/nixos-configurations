@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+_: {
   services.avahi = {
     enable = true;
     ipv4 = true;

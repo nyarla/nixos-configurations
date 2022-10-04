@@ -38,10 +38,11 @@
     python3
 
     # perl
+    nix-generate-from-cpan
     perl
+    perl-shell
     perlPackages.Appcpanminus
     perlPackages.PerlTidy
-    nix-generate-from-cpan
 
     # java
     openjdk

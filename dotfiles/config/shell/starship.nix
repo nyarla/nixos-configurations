@@ -40,8 +40,15 @@ _: {
       git_status = { format = " [$ahead_behind](cyan)"; };
 
       env_var = {
-        format = "[](bold gray)[](cyan)";
-        variable = "IN_NIX_SHELL";
+        IN_NIX_SHELL = {
+          format = "[](bold gray)[](cyan)";
+          variable = "IN_NIX_SHELL";
+        };
+
+        IN_PERL_SHELL = {
+          format = "[](bold gray)[](purple)";
+          variable = "IN_PERL_SHELL";
+        };
       };
     };
   };

@@ -18,6 +18,7 @@
         ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
     };
     sessionVariables = {
+      FAKE_RELEASE = 1;
       GOPATH = "$HOME/dev";
       NIXPKGS_ALLOW_UNFREE = 1;
     };
@@ -121,6 +122,20 @@
         else
           z --add "''${dir}"
           \cd "''${dir}"
+        fi
+      }
+
+      function minil-release() {
+        if type lefthook >/dev/null 2>&1 ; then
+          lefthook uninstall
+        fi
+
+        FAKE_RELEASE= minil release
+
+        if type lefthook >/dev/null 2>&1 ; then
+          cp $HOME/local/githooks/lefthook.yml . \
+          && cp -R $HOME/local/githooks/.lethook . \
+          && lefthook install
         fi
       }
 

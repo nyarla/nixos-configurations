@@ -17,6 +17,7 @@ in {
   locale-eaw = require ./locale-eaw { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   noto-fonts-jp = require ./noto-fonts-jp { };
+  perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
   sfwbar = require ./sfwbar { };
   skk-dicts-xl = require ./skk-dicts-xl { };

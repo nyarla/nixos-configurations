@@ -5,5 +5,5 @@
   };
 
   services.dbus.packages = [ config.i18n.inputMethod.package ];
-  environment.systemPackages = with pkgs; [ skk-dicts skktools ];
+  environment.systemPackages = with pkgs; [ skk-dicts skktools fcitx5-fbterm ];
 }

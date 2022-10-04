@@ -13,6 +13,7 @@ _: {
     ../config/services/mpd.nix
     ../config/services/sfwbar.nix
     ../config/services/syncthing.nix
+    ../config/shell/fbterm.nix
     ../config/shell/starship.nix
     ../config/shell/zsh.nix
     ../config/tools/archiver.nix

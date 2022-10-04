@@ -6,6 +6,7 @@ in {
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
+  fcitx5-fbterm = require ./fcitx5-fbterm { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   flatery-icon-theme = require ./flatery-icon-theme { };
   galendae = require ./galendae { };
@@ -41,6 +42,29 @@ in {
     inherit (super.cudaPackages) cudatoolkit;
   };
 
+  fbterm = super.fbterm.overrideAttrs (old: rec {
+    patches = old.patches ++ (with super; [
+      (fetchpatch {
+        url =
+          "https://aur.archlinux.org/cgit/aur.git/plain/color_palette.patch?h=fbterm";
+        name = "color_palette.patch";
+        sha256 = "sha256-SkWxzfapyBTtMpTXkiFHRAw8/uXw7cAWwg5Q3TqWlk8=";
+      })
+      (fetchpatch {
+        url =
+          "https://aur.archlinux.org/cgit/aur.git/plain/fbconfig.patch?h=fbterm";
+        name = "fbconfig.patch";
+        sha256 = "sha256-skCdUqyMkkqxS1YUI7cofsfnNNo3SL/qe4WEIXlhm/s=";
+      })
+      (fetchpatch {
+        url =
+          "https://aur.archlinux.org/cgit/aur.git/plain/fbterm.patch?h=fbterm";
+        name = "fbterm.patch";
+        sha256 = "sha256-XNHBTGQGeaQPip2XgcKlr123VDwils2pnyiGqkBGhzU=";
+      })
+    ]);
+  });
+
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
@@ -55,6 +79,13 @@ in {
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
+
+  libskk = super.libskk.overrideAttrs (old: rec {
+    postPatch = ''
+      sed -i 's|"C-j": "set-input-mode-hiragana"|"C-j": "set-input-mode-hiragana", "C-;": "set-input-mode-hiragana"|' rules/default/keymap/latin.json
+      sed -i 's|"C-j": "set-input-mode-hiragana"|"C-j": "set-input-mode-hiragana", "C-;": "set-input-mode-hiragana"|' rules/default/keymap/wide-latin.json
+    '';
+  });
 
   mlterm = super.mlterm.overrideAttrs (old: rec {
     buildInputs = old.buildInputs

@@ -19,4 +19,6 @@
   ];
 
   console.earlySetup = true;
+
+  environment.systemPackages = with pkgs; [ fbterm ];
 }

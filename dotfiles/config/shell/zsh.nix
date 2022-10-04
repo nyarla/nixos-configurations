@@ -4,6 +4,7 @@
     autocd = true;
     shellAliases = {
       "cd" = "__cd";
+      "fbterm" = "fcitx5 -rd >/dev/null 2>&1 ; fbterm -i fcitx5-fbterm";
       "ls" = "ls --color -F";
       "l" = "ls --color -F -la";
       "lefthook-install" =

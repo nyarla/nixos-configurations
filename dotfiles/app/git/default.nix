@@ -14,7 +14,6 @@
       init = { defaultBranch = "main"; };
       core = {
         autoCRLF = false;
-        editor = "nvr --remote-wait-silent";
         fileMode = false;
         fscache = true;
         preloadindex = true;

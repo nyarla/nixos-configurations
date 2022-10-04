@@ -55,7 +55,6 @@
 
     # editor
     neovim
-    neovim-remote
     editorconfig-core-c
 
     # vcs

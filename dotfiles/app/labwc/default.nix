@@ -69,6 +69,9 @@
     QT_QPA_PLATFORMTHEME=gnome
     QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
+    MOZ_ENABLE_WAYLAND=1
+    MOZ_USE_XINPUT2=1
+
     SDL_VIDEODRIVER=wayland
     _JAVA_AWT_WM_NONREPARENTING=1
   '';
@@ -104,11 +107,13 @@
       export GBM_BACKEND_PATH=/etc/gbm
 
       export VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json:/run/opengl-driver-32/share/vulkan/icd.d/nvidia_icd.json
+      export __GL_GSYNC_ALLOWED=0
+      export __GL_VRR_ALLOWED=0
       export __GLX_VENDOR_LIBRARY_NAME=nvidia
       export LIBSEAT_BACKEND=logind
 
       export WLR_NO_HARDWARE_CURSORS=1
-      #export WLR_RENDERER=vulkan
+      # export WLR_RENDERER=vulkan
 
       dbus-update-activation-environment --systemd --all
 

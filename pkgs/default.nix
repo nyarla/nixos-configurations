@@ -70,12 +70,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-09-23";
+      version = "2022-10-03";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "d424514e24bbee1c32b19c9192a065c18c9e7fe5";
-        sha256 = "0h4nsb0sfx52298ms4kx059rmfnhnbxkaw118dw2jw4jyag1wnin";
+        rev = "cc5d364f0f4acb0d508991adb79fced03869332a";
+        sha256 = "1n414vigm0vdwjlvd7xfag7wk13319ch4wrgb3rxza26l2hkhlqm";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });

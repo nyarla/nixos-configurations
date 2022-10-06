@@ -5,14 +5,14 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "nyarla";
     repo = "WineVSTWrapper";
-    rev = "5392ebb46bd60aeffeee1d43236433e45965f817";
-    sha256 = "1iq1y8gihbhz7if77ivnfhnfb9accab31anah574i21k7cl9g0w8";
+    rev = "6f4c3017dfe2a3fb50240b1ce3b3226739106a8b";
+    sha256 = "1w00wq5641kr6224gdll38rpqkngf0ir42vd7a2cpnk655wiwwq3";
   };
 
   nativeBuildInputs = [ pkgsCross.mingwW64.buildPackages.gcc ];
 
   buildPhase = ''
-    make win64
+    make
   '';
 
   installPhase = ''

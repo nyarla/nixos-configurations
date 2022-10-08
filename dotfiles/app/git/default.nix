@@ -8,6 +8,10 @@
       co = "checkout";
       ci = "commit";
       st = "status";
+      prune =
+        "!git branch -r --merged | grep -vP 'main|master' | cut -d/ -f2 | xargs -I{} git push --delete origin {}";
+      clean =
+        "!git branch --merged | grep -vP 'main|master' | xargs -I{} git branch -d {}";
     };
     extraConfig = {
       color = { ui = true; };

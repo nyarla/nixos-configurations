@@ -94,7 +94,7 @@ in ''
 
   ${makeMenu "applications-daw" "Music" [
     (makeExecute "QJackCtl" "qjackctl")
-    (makeExecute "Carla" "carla")
+    (makeExecute "Carla" "env QT_QPA_PLATFORM=xcb carla")
 
     (makeMenu "submenu-daw" "DAW" [
       (makeExecute "Bitwig Studio" "bitwig-studio")

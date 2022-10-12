@@ -4,8 +4,8 @@ let
     pname = "sononym";
     version = "1.3.1";
     src = fetchurl {
-      url = "https://www.sononym.net/download/sononym-1.3.1.tar.bz2";
-      sha256 = "18wf1x9c5idhhbqh7jdj1ng7k8jjqzif8hxqas5bcksby8wjj5cb";
+      url = "https://www.sononym.net/download/sononym-1.4.1.tar.bz2";
+      sha256 = "0r123xx59j3mlwh0nviyjw83vypmqdcjngaq66p3xn6ihj5msfmd";
     };
 
     phases = [ "unpackPhase" "installPhase" ];

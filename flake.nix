@@ -24,7 +24,7 @@
       nixos = let
         name = "nixpkgs-custom-NyZen9";
         system = "x86_64-linux";
-        patches = [ ./patches/nvidia-open.patch ];
+        patches = [ ];
         nixpkgs = applyPatch { inherit name system patches; };
         nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
       in nixosSystem {

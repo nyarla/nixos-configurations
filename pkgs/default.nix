@@ -70,12 +70,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-10-03";
+      version = "2022-10-12";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "cc5d364f0f4acb0d508991adb79fced03869332a";
-        sha256 = "1n414vigm0vdwjlvd7xfag7wk13319ch4wrgb3rxza26l2hkhlqm";
+        rev = "cfdf60b1da0e23c1dd48aa0a0ad70214c8229fe6";
+        sha256 = "1dgdwsy909qxac7dipl7smb9wqyqvriybf32nnn5pd47qnviic10";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -117,8 +117,8 @@ in {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = "fa7d2cb8d60ed48c44c707106c03682056ddfaca";
-      sha256 = "1058kk0nas944nw3305dqh43ck1h2ndh1xbyzj9kp8221ly85jbx";
+      rev = "694e9bbb9d7114f39311d93e885e010606a88dae";
+      sha256 = "198h7krkzx8ys7v6309b325g31gvx4cfdq5qgm7rxqzjr7k6j3x2";
     };
 
     patches = [ ../patches/wlroots-workaround.patch ];

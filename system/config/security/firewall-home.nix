@@ -7,7 +7,7 @@ _: {
       "tailscale0" = {
         allowedTCPPorts = [
           # calibre
-          8805
+          8085
 
           # http
           80

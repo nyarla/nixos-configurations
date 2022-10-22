@@ -3,6 +3,7 @@ let require = path: super.callPackage (import path);
 in {
   # additional packages
   arc-openbox = require ./arc-openbox { };
+  git-credential-keepassxc = require ./git-credential-keepassxc { };
   cuda-shell = require ./cuda-shell { };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };

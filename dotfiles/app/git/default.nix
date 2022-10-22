@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ rbw lefthook ];
+  home.packages = with pkgs; [ git-credential-keepassxc lefthook ];
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -9,9 +9,9 @@
       ci = "commit";
       st = "status";
       prune =
-        "!git branch -r --merged | grep -vP 'main|master' | cut -d/ -f2 | xargs -I{} git push --delete origin {}";
-      clean =
-        "!git branch --merged | grep -vP 'main|master' | xargs -I{} git branch -d {}";
+        "!f() { git branch -r --merged | grep -vP 'main|master' | cut -d/ -f2 | xargs -I{} git push --delete origin {} }; f";
+      cleanup =
+        "!f() { git branch --merged | grep -vP 'main|master' | xargs -I{} git branch -d {} }; f";
     };
     extraConfig = {
       color = { ui = true; };
@@ -23,7 +23,7 @@
         preloadindex = true;
         quotepath = false;
       };
-      credential.helper = "rbw";
+      credential.helper = "keepassxc";
     };
     ignores = import ./gitignore.nix;
   };

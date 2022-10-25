@@ -50,6 +50,9 @@ in ''
     (makeExecute "Firefox" "firefox")
     (makeExecute "Thunderbird" "thunderbird")
     (makeExecute "Google Chrome" "google-chrome-stable")
+    "${sep}"
+    (makeExecute "Trickle" (scriptsCmd "trickle"))
+    "${sep}"
     (makeExecute "KeePassXC" "env QT_QPA_PLATFORM=xcb keepassxc")
     (makeExecute "Bitwarden" "bitwarden --no-sandbox")
   ]}

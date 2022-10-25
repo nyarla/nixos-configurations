@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd $HOME
+nix run nixpkgs#electron_20 -- --no-sandbox ~/.local/share/trickle/app.asar

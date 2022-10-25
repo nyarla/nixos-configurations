@@ -115,11 +115,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (old: rec {
     pname = "tt-rss";
-    version = "2022-10-08";
+    version = "2022-10-25";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "68dee4578230306da895d5090b7997d8dd23952e";
-      sha256 = "1pr1wx0bg79hivrmlw2gvjprlmvvrc00jai7bi7yy96s5vns8jwz";
+      rev = "602e8684258062937d7f554ab7889e8e02318c96";
+      sha256 = "sha256-vgRaxo998Gx9rVeZZl52jppK1v11jpEK0J0NoDMT44I=";
     };
 
     installPhase = ''
@@ -134,12 +134,12 @@ in {
   });
 
   tt-rss-theme-feedly = super.tt-rss-theme-feedly.overrideAttrs (old: rec {
-    version = "2022-10-08";
+    version = "2022-10-25";
     src = super.fetchFromGitHub {
       owner = "levito";
       repo = "tt-rss-feedly-theme";
-      rev = "d9657718eb4a8aeabffab7660ea336c72db811fb";
-      sha256 = "1isvkxsj1wn77xghrfxjgqgh9vrnw8cqs4gbg12fj4nlzk66nsmb";
+      rev = "6bda014a4ad9d178be10e75273f9b901556d5324";
+      sha256 = "sha256-CLNnlLvMhaL3n5pV3Voobuk22drrmJYRJJyZGaQHAfM=";
     };
   });
 

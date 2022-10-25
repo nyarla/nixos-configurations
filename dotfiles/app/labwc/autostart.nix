@@ -21,7 +21,6 @@ in writeShellScript "autostart" ''
     ${automount "470d2a2f-bdea-49a2-8e9b-242e4f3e1381" "/run/media/nyarla/data"}
 
     env QT_QPA_PLATFORM=xcb calibre --start-in-tray &
-    env QT_QPA_PLATFORM=xcb keepassxc &
   fi
 
   systemctl --user start mympd

@@ -8,9 +8,9 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "asb2m10";
     repo = "dexed";
-    rev = "2c036316bcd512818aa9cc8129767ad9e0ec7132";
+    rev = "9e01c0cbb1ff68297b180ffdeee0b5fb09af7e56";
     fetchSubmodules = true;
-    sha256 = "1f6vjyxiwp19kcbf4qwrdrh5i6g35f9i3kv23nim2ilqpl1szfz9";
+    sha256 = "sha256-4x8lgq0j50DxD1H5TKmnRIFN+Yotlk/f0CurTuShklA=";
   };
 
   postUnpack = ''

@@ -9,7 +9,6 @@
 
       # monospace
       hackgen
-      hack-nerdfonts
 
       # fallback
       dejavu_fonts
@@ -19,9 +18,10 @@
       enable = true;
 
       defaultFonts = {
-        sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
-        serif = [ "Noto Serif JP" "DejaVu Serif" ];
-        monospace = [ "HackGen" "Hack Nerd Font" "DejaVu Sans" ];
+        sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" "Noto Color Emoji" ];
+        serif = [ "Noto Serif JP" "DejaVu Serif" "Noto Color Emoji" ];
+        monospace =
+          [ "HackGen Console NF" "DejaVu Sans Mono" "Noto Color Emoji" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };

@@ -4,8 +4,8 @@ stdenv.mkDerivation rec {
   version = "v2.7.1";
   src = fetchzip {
     url =
-      "https://github.com/yuru7/HackGen/releases/download/${version}/HackGen_${version}.zip";
-    sha256 = "09lpb1q517gy5kgdmgpz3wg9cs2in0fk6nrccwy8nksxdpnabchf";
+      "https://github.com/yuru7/HackGen/releases/download/${version}/HackGen_NF_${version}.zip";
+    sha256 = "sha256-OwXbQuw1zaWKZriO9hawDc7qXTQTqomKk7frTicWFug=";
   };
 
   phases = [ "installPhase" ];

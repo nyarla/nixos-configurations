@@ -1,6 +1,6 @@
 {
   "x86_64-linux" = let
-    Monospace = "HackGen Console 15";
+    Monospace = "monospace 15";
     Fallback = "DejaVu Sans Mono";
     Emoji = "Noto Color Emoji 15";
   in {
@@ -9,8 +9,6 @@
     "U+2190-21FF" = Fallback;
     "U+2700-27BF" = Fallback;
     "U+2800-28FF" = "Noto Sans Symbols2 15";
-
-    "U+E000-FD46" = "Hack Nerd Font 15";
 
     "U+A9" = Emoji;
     "U+AE" = Emoji;

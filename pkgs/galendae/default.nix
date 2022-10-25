@@ -10,6 +10,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ gtk3.dev pkg-config ];
+  nativeBuildInupts = [ wrapGAppsHook ];
 
   patchPhase = ''
     sed 's|CFLAGS += -DVERSION|#CFLAGS += -DVERSION|' makefile

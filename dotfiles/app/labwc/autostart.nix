@@ -31,8 +31,7 @@ in writeShellScript "autostart" ''
   xembedsniproxy  &
   ydotoold        &
 
-  systemctl --user start clipsync-wayland-to-xorg-primary
-  systemctl --user start clipsync-wayland-to-xorg-clipboard
+  systemctl --user start clipboard-sync
 
   systemctl --user start swaylock
 

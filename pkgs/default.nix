@@ -3,7 +3,7 @@ let require = path: super.callPackage (import path);
 in {
   # additional packages
   arc-openbox = require ./arc-openbox { };
-  git-credential-keepassxc = require ./git-credential-keepassxc { };
+  clipboard-sync = require ./clipboard-sync { };
   cuda-shell = require ./cuda-shell { };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
@@ -12,6 +12,7 @@ in {
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   flatery-icon-theme = require ./flatery-icon-theme { };
   galendae = require ./galendae { };
+  git-credential-keepassxc = require ./git-credential-keepassxc { };
   gyazo-diy = require ./gyazo-diy { };
   hack-nerdfonts = require ./hack-nerdfonts { };
   hackgen = require ./hackgen { };

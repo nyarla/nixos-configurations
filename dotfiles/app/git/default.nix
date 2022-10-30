@@ -9,9 +9,9 @@
       ci = "commit";
       st = "status";
       prune =
-        "!f() { git branch -r --merged | grep -vP 'main|master' | cut -d/ -f2 | xargs -I{} git push --delete origin {} }; f";
+        "!git branch -r --merged | grep -v main | grep -v master | cut -d/ -f2 | xargs -I{} git push --delete origin {}";
       cleanup =
-        "!f() { git branch --merged | grep -vP 'main|master' | xargs -I{} git branch -d {} }; f";
+        "!git branch --merged | grep -v main | grep -v master | xargs -I{} git branch -d {}";
     };
     extraConfig = {
       color = { ui = true; };

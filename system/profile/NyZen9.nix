@@ -75,7 +75,7 @@
   boot.tmpOnTmpfs = true;
 
   # kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
+  boot.kernelPackages = pkgs.linuxKernel.packageAliases.linux_latest;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" ];
   boot.kernelParams = [ "iwlwifi.power_save=0" "iwlmvm.power_scheme=1" ];
 

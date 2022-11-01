@@ -73,12 +73,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-10-25";
+      version = "2022-11-01";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "deb658b672fbf4810de33fb66c973aec20a3ebc6";
-        sha256 = "sha256-VrNR83cjkPR+bOIZZDiM5Zu/URE7uZRKiVR7bNZ3bj8=";
+        rev = "cce2fffa1dc306b5b95b00a5b3b9fc0f5b7b67c1";
+        sha256 = "sha256-lopi5Sd2nEXt6EqfxqRP2v0HYBQ4EhXebn2yNdfU0Y4=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -135,12 +135,12 @@ in {
   });
 
   tt-rss-theme-feedly = super.tt-rss-theme-feedly.overrideAttrs (old: rec {
-    version = "2022-10-25";
+    version = "2022-11-01";
     src = super.fetchFromGitHub {
       owner = "levito";
       repo = "tt-rss-feedly-theme";
-      rev = "6bda014a4ad9d178be10e75273f9b901556d5324";
-      sha256 = "sha256-CLNnlLvMhaL3n5pV3Voobuk22drrmJYRJJyZGaQHAfM=";
+      rev = "c0e57078ccd455b8af874456177349950a67b986";
+      sha256 = "sha256-NEbdJMfgo80NkDIEVa5E6b464Dc8B6+Mdr0zD8cZQ3s=";
     };
   });
 

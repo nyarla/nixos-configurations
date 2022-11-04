@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   imports = [
     ../../config/services/blueman-applet.nix
-    ../../config/services/clipboard.nix
     ../../config/services/gnome-keyring.nix
     ../../config/services/polkit.nix
     ../../config/services/sfwbar.nix
@@ -20,13 +19,7 @@
     gnome.adwaita-icon-theme
     gnome.gnome-themes-extra
 
-    # theme engine
-    gtk-engine-murrine
-    gtk_engines
-    qgnomeplatform
-
     # wayland
-    clipnotify
     grim
     slurp
     wl-clipboard

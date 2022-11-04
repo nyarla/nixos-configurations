@@ -1,0 +1,383 @@
+# from https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/182580.patch
+From aa7c7bd9e4dc8630d719c3fe741d4c46c20a4cb6 Mon Sep 17 00:00:00 2001
+From: linsui <linsui555@gmail.com>
+Date: Sun, 23 Oct 2022 21:46:02 +0800
+Subject: [PATCH 1/2] Add gnome theme for qt6
+
+---
+ nixos/modules/config/qt5.nix                  | 10 +++++++++-
+ pkgs/data/themes/adwaita-qt/default.nix       | 19 +++++++++++++++----
+ .../libraries/qgnomeplatform/default.nix      | 18 +++++++++++++++---
+ pkgs/top-level/all-packages.nix               |  8 ++++++++
+ 4 files changed, 47 insertions(+), 8 deletions(-)
+
+diff --git a/nixos/modules/config/qt5.nix b/nixos/modules/config/qt5.nix
+index cb3180d7b96a5..7225388f99d2f 100644
+--- a/nixos/modules/config/qt5.nix
++++ b/nixos/modules/config/qt5.nix
+@@ -12,7 +12,13 @@ let
+   isLxqt = cfg.platformTheme == "lxqt";
+   isKde = cfg.platformTheme == "kde";
+ 
+-  packages = if isQGnome then [ pkgs.qgnomeplatform pkgs.adwaita-qt ]
++  packages =
++    if isQGnome then [
++      pkgs.qgnomeplatform
++      pkgs.adwaita-qt
++      pkgs.qgnomeplatform-qt6
++      pkgs.adwaita-qt6
++    ]
+     else if isQtStyle then [ pkgs.libsForQt5.qtstyleplugins ]
+     else if isQt5ct then [ pkgs.libsForQt5.qt5ct ]
+     else if isLxqt then [ pkgs.lxqt.lxqt-qtplugin pkgs.lxqt.lxqt-config ]
+@@ -40,6 +46,7 @@ in
+         example = "gnome";
+         relatedPackages = [
+           "qgnomeplatform"
++          "qgnomeplatform-qt6"
+           ["libsForQt5" "qtstyleplugins"]
+           ["libsForQt5" "qt5ct"]
+           ["lxqt" "lxqt-qtplugin"]
+@@ -71,6 +78,7 @@ in
+         example = "adwaita";
+         relatedPackages = [
+           "adwaita-qt"
++          "adwaita-qt6"
+           ["libsForQt5" "qtstyleplugins"]
+         ];
+         description = lib.mdDoc ''
+diff --git a/pkgs/data/themes/adwaita-qt/default.nix b/pkgs/data/themes/adwaita-qt/default.nix
+index 869c9beb9b7ce..28f648d97e3a8 100644
+--- a/pkgs/data/themes/adwaita-qt/default.nix
++++ b/pkgs/data/themes/adwaita-qt/default.nix
+@@ -1,16 +1,17 @@
+-{ mkDerivation
+-, stdenv
++{ stdenv
+ , lib
+ , fetchFromGitHub
+ , nix-update-script
+ , cmake
+ , ninja
+ , qtbase
++, qtwayland
+ , qt5
+ , xorg
++, useQt6 ? false
+ }:
+ 
+-mkDerivation rec {
++stdenv.mkDerivation rec {
+   pname = "adwaita-qt";
+   version = "1.4.1";
+ 
+@@ -30,9 +31,19 @@ mkDerivation rec {
+ 
+   buildInputs = [
+     qtbase
+-    qt5.qtx11extras
+   ] ++ lib.optionals stdenv.isLinux [
+     xorg.libxcb
++  ] ++ lib.optionals (!useQt6) [
++    qt5.qtx11extras
++  ] ++ lib.optionals useQt6 [
++    qtwayland
++  ];
++
++  # Qt setup hook complains about missing `wrapQtAppsHook` otherwise.
++  dontWrapQtApps = true;
++
++  cmakeFlags = lib.optionals useQt6 [
++    "-DUSE_QT6=true"
+   ];
+ 
+   postPatch = ''
+diff --git a/pkgs/development/libraries/qgnomeplatform/default.nix b/pkgs/development/libraries/qgnomeplatform/default.nix
+index cc8ddf43c021b..e8071fad6132c 100644
+--- a/pkgs/development/libraries/qgnomeplatform/default.nix
++++ b/pkgs/development/libraries/qgnomeplatform/default.nix
+@@ -1,19 +1,23 @@
+-{ mkDerivation
++{ stdenv
+ , lib
+ , fetchFromGitHub
+ , nix-update-script
+ , cmake
+ , pkg-config
+ , adwaita-qt
++, adwaita-qt6
+ , glib
+ , gtk3
+ , qtbase
++, qtwayland
++, libsForQt5
+ , pantheon
+ , substituteAll
+ , gsettings-desktop-schemas
++, useQt6 ? false
+ }:
+ 
+-mkDerivation rec {
++stdenv.mkDerivation rec {
+   pname = "qgnomeplatform";
+   version = "0.8.4";
+ 
+@@ -38,15 +41,25 @@ mkDerivation rec {
+   ];
+ 
+   buildInputs = [
+-    adwaita-qt
+     glib
+     gtk3
+     qtbase
++  ] ++ lib.optionals (!useQt6) [
++    adwaita-qt
++    libsForQt5.qtwayland
++  ] ++ lib.optionals useQt6 [
++    adwaita-qt6
++    qtwayland
+   ];
+ 
++  # Qt setup hook complains about missing `wrapQtAppsHook` otherwise.
++  dontWrapQtApps = true;
++
+   cmakeFlags = [
+     "-DGLIB_SCHEMAS_DIR=${glib.getSchemaPath gsettings-desktop-schemas}"
+     "-DQT_PLUGINS_DIR=${placeholder "out"}/${qtbase.qtPluginPrefix}"
++  ] ++ lib.optionals useQt6 [
++    "-DUSE_QT6=true"
+   ];
+ 
+   passthru = {
+diff --git a/pkgs/top-level/all-packages.nix b/pkgs/top-level/all-packages.nix
+index d29ed9613cdda..ffa394892a764 100644
+--- a/pkgs/top-level/all-packages.nix
++++ b/pkgs/top-level/all-packages.nix
+@@ -21902,6 +21902,10 @@ with pkgs;
+ 
+   qgnomeplatform = libsForQt5.callPackage ../development/libraries/qgnomeplatform { };
+ 
++  qgnomeplatform-qt6 = qt6Packages.callPackage ../development/libraries/qgnomeplatform {
++    useQt6 = true;
++  };
++
+   randomx = darwin.apple_sdk_11_0.callPackage ../development/libraries/randomx { };
+ 
+   remodel = callPackage ../development/tools/remodel {
+@@ -25827,6 +25831,10 @@ with pkgs;
+ 
+   adwaita-qt = libsForQt5.callPackage ../data/themes/adwaita-qt { };
+ 
++  adwaita-qt6 = qt6Packages.callPackage ../data/themes/adwaita-qt {
++    useQt6 = true;
++  };
++
+   adw-gtk3 = callPackage ../data/themes/adw-gtk3 { };
+ 
+   agave = callPackage ../data/fonts/agave { };
+
+From 0027b2777c844bc9d5bcfb3e27c9f0ba7fab2b2c Mon Sep 17 00:00:00 2001
+From: linsui <linsui555@gmail.com>
+Date: Sun, 23 Oct 2022 21:46:07 +0800
+Subject: [PATCH 2/2] rename config.qt5 -> config.qt
+
+---
+ .../manual/configuration/x-windows.chapter.md  |  6 +++---
+ .../configuration/x-windows.chapter.xml        |  6 +++---
+ nixos/modules/config/{qt5.nix => qt.nix}       | 18 ++++++++++++------
+ ...stallation-cd-graphical-calamares-gnome.nix |  2 +-
+ nixos/modules/module-list.nix                  |  2 +-
+ .../services/x11/desktop-managers/cinnamon.nix |  8 ++++----
+ .../services/x11/desktop-managers/gnome.nix    |  4 ++--
+ .../services/x11/desktop-managers/pantheon.nix |  8 ++++----
+ nixos/tests/keepassxc.nix                      |  2 +-
+ 9 files changed, 31 insertions(+), 25 deletions(-)
+ rename nixos/modules/config/{qt5.nix => qt.nix} (83%)
+
+diff --git a/nixos/doc/manual/configuration/x-windows.chapter.md b/nixos/doc/manual/configuration/x-windows.chapter.md
+index 27d117238807b..825bf5ba232e2 100644
+--- a/nixos/doc/manual/configuration/x-windows.chapter.md
++++ b/nixos/doc/manual/configuration/x-windows.chapter.md
+@@ -199,9 +199,9 @@ GTK themes can be installed either to user profile or system-wide (via
+ GTK ones, you can use the following configuration:
+ 
+ ```nix
+-qt5.enable = true;
+-qt5.platformTheme = "gtk2";
+-qt5.style = "gtk2";
++qt.enable = true;
++qt.platformTheme = "gtk2";
++qt.style = "gtk2";
+ ```
+ 
+ ## Custom XKB layouts {#custom-xkb-layouts .unnumbered}
+diff --git a/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml b/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml
+index c17e98983b27d..cf77210916b9e 100644
+--- a/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml
++++ b/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml
+@@ -223,9 +223,9 @@ services.xserver.libinput.touchpad.tapping = false;
+       configuration:
+     </para>
+     <programlisting language="bash">
+-qt5.enable = true;
+-qt5.platformTheme = &quot;gtk2&quot;;
+-qt5.style = &quot;gtk2&quot;;
++qt.enable = true;
++qt.platformTheme = &quot;gtk2&quot;;
++qt.style = &quot;gtk2&quot;;
+ </programlisting>
+   </section>
+   <section xml:id="custom-xkb-layouts">
+diff --git a/nixos/modules/config/qt5.nix b/nixos/modules/config/qt.nix
+similarity index 83%
+rename from nixos/modules/config/qt5.nix
+rename to nixos/modules/config/qt.nix
+index 7225388f99d2f..35defb8fbd990 100644
+--- a/nixos/modules/config/qt5.nix
++++ b/nixos/modules/config/qt.nix
+@@ -4,7 +4,7 @@ with lib;
+ 
+ let
+ 
+-  cfg = config.qt5;
++  cfg = config.qt;
+ 
+   isQGnome = cfg.platformTheme == "gnome" && builtins.elem cfg.style ["adwaita" "adwaita-dark"];
+   isQtStyle = cfg.platformTheme == "gtk2" && !(builtins.elem cfg.style ["adwaita" "adwaita-dark"]);
+@@ -23,17 +23,23 @@ let
+     else if isQt5ct then [ pkgs.libsForQt5.qt5ct ]
+     else if isLxqt then [ pkgs.lxqt.lxqt-qtplugin pkgs.lxqt.lxqt-config ]
+     else if isKde then [ pkgs.libsForQt5.plasma-integration pkgs.libsForQt5.systemsettings ]
+-    else throw "`qt5.platformTheme` ${cfg.platformTheme} and `qt5.style` ${cfg.style} are not compatible.";
++    else throw "`qt.platformTheme` ${cfg.platformTheme} and `qt.style` ${cfg.style} are not compatible.";
+ 
+ in
+ 
+ {
+   meta.maintainers = [ maintainers.romildo ];
+ 
++  imports = [
++    (mkRenamedOptionModule ["qt5" "enable" ] ["qt" "enable" ])
++    (mkRenamedOptionModule ["qt5" "platformTheme" ] ["qt" "platformTheme" ])
++    (mkRenamedOptionModule ["qt5" "style" ] ["qt" "style" ])
++  ];
++
+   options = {
+-    qt5 = {
++    qt = {
+ 
+-      enable = mkEnableOption (lib.mdDoc "Qt5 theming configuration");
++      enable = mkEnableOption (lib.mdDoc "Qt theming configuration");
+ 
+       platformTheme = mkOption {
+         type = types.enum [
+@@ -53,7 +59,7 @@ in
+           ["libsForQt5" "plasma-integration"]
+         ];
+         description = lib.mdDoc ''
+-          Selects the platform theme to use for Qt5 applications.
++          Selects the platform theme to use for Qt applications.
+ 
+           The options are
+           - `gtk`: Use GTK theme with [qtstyleplugins](https://github.com/qt/qtstyleplugins)
+@@ -82,7 +88,7 @@ in
+           ["libsForQt5" "qtstyleplugins"]
+         ];
+         description = lib.mdDoc ''
+-          Selects the style to use for Qt5 applications.
++          Selects the style to use for Qt applications.
+ 
+           The options are
+           - `adwaita`, `adwaita-dark`: Use Adwaita Qt style with
+diff --git a/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix b/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix
+index d015e10c11d81..12feb2d96eccb 100644
+--- a/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix
++++ b/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix
+@@ -31,7 +31,7 @@
+   };
+ 
+   # Theme calamares with GNOME theme
+-  qt5 = {
++  qt = {
+     enable = true;
+     platformTheme = "gnome";
+   };
+diff --git a/nixos/modules/module-list.nix b/nixos/modules/module-list.nix
+index 5c59e41bbc087..27ca0a96f8408 100644
+--- a/nixos/modules/module-list.nix
++++ b/nixos/modules/module-list.nix
+@@ -28,7 +28,7 @@
+   ./config/nsswitch.nix
+   ./config/power-management.nix
+   ./config/pulseaudio.nix
+-  ./config/qt5.nix
++  ./config/qt.nix
+   ./config/resolvconf.nix
+   ./config/shells-environment.nix
+   ./config/swap.nix
+diff --git a/nixos/modules/services/x11/desktop-managers/cinnamon.nix b/nixos/modules/services/x11/desktop-managers/cinnamon.nix
+index 3d79a3b8513b8..27f06abb9505a 100644
+--- a/nixos/modules/services/x11/desktop-managers/cinnamon.nix
++++ b/nixos/modules/services/x11/desktop-managers/cinnamon.nix
+@@ -183,10 +183,10 @@ in
+       programs.bash.vteIntegration = mkDefault true;
+       programs.zsh.vteIntegration = mkDefault true;
+ 
+-      # Harmonize Qt5 applications under Pantheon
+-      qt5.enable = true;
+-      qt5.platformTheme = "gnome";
+-      qt5.style = "adwaita";
++      # Harmonize Qt applications under Pantheon
++      qt.enable = true;
++      qt.platformTheme = "gnome";
++      qt.style = "adwaita";
+ 
+       # Default Fonts
+       fonts.fonts = with pkgs; [
+diff --git a/nixos/modules/services/x11/desktop-managers/gnome.nix b/nixos/modules/services/x11/desktop-managers/gnome.nix
+index 9c1978e362bc7..dadfb421d3a87 100644
+--- a/nixos/modules/services/x11/desktop-managers/gnome.nix
++++ b/nixos/modules/services/x11/desktop-managers/gnome.nix
+@@ -352,8 +352,8 @@ in
+         })
+       ];
+ 
+-      # Harmonize Qt5 application style and also make them use the portal for file chooser dialog.
+-      qt5 = {
++      # Harmonize Qt application style and also make them use the portal for file chooser dialog.
++      qt = {
+         enable = mkDefault true;
+         platformTheme = mkDefault "gnome";
+         style = mkDefault "adwaita";
+diff --git a/nixos/modules/services/x11/desktop-managers/pantheon.nix b/nixos/modules/services/x11/desktop-managers/pantheon.nix
+index 5c0203224e139..f5cc2d8187da5 100644
+--- a/nixos/modules/services/x11/desktop-managers/pantheon.nix
++++ b/nixos/modules/services/x11/desktop-managers/pantheon.nix
+@@ -250,10 +250,10 @@ in
+       programs.bash.vteIntegration = mkDefault true;
+       programs.zsh.vteIntegration = mkDefault true;
+ 
+-      # Harmonize Qt5 applications under Pantheon
+-      qt5.enable = true;
+-      qt5.platformTheme = "gnome";
+-      qt5.style = "adwaita";
++      # Harmonize Qt applications under Pantheon
++      qt.enable = true;
++      qt.platformTheme = "gnome";
++      qt.style = "adwaita";
+ 
+       # Default Fonts
+       fonts.fonts = with pkgs; [
+diff --git a/nixos/tests/keepassxc.nix b/nixos/tests/keepassxc.nix
+index 303be13304057..debb469032a62 100644
+--- a/nixos/tests/keepassxc.nix
++++ b/nixos/tests/keepassxc.nix
+@@ -17,7 +17,7 @@ import ./make-test-python.nix ({ pkgs, ...} :
+     services.xserver.enable = true;
+ 
+     # Regression test for https://github.com/NixOS/nixpkgs/issues/163482
+-    qt5 = {
++    qt = {
+       enable = true;
+       platformTheme = "gnome";
+       style = "adwaita-dark";

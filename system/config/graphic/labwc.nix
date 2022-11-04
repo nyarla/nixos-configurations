@@ -13,8 +13,18 @@
 
   services.gnome.gnome-remote-desktop.enable = true;
 
+  qt.enable = true;
+  qt.platformTheme = "gnome";
+  qt.style = "adwaita";
+
   services.pipewire.enable = true;
   environment.systemPackages = with pkgs; [
+    gtk-engine-murrine
+    gtk_engines
+    qgnomeplatform
+    qgnomeplatform-qt6
+    adwaita-qt
+    adwaita-qt6
     xdg-desktop-portal
     xdg-desktop-portal-gtk
     xdg-desktop-portal-wlr

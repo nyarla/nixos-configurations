@@ -53,7 +53,7 @@ in ''
     "${sep}"
     (makeExecute "Trickle" (scriptsCmd "trickle"))
     "${sep}"
-    (makeExecute "KeePassXC" "env QT_QPA_PLATFORM=xcb keepassxc")
+    (makeExecute "KeePassXC" "keepassxc")
     (makeExecute "Bitwarden" "bitwarden --no-sandbox")
   ]}
 
@@ -65,7 +65,7 @@ in ''
   ]}
 
   ${makeMenu "applications-multimedia" "Multimedia" [
-    (makeExecute "Calibre" "env QT_QPA_PLATFORM=xcb calibre")
+    (makeExecute "Calibre" "calibre")
     (makeExecute "QuodLibet" "quodlibet")
     (makeExecute "Picard" "picard")
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))

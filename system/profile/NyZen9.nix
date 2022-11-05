@@ -77,7 +77,14 @@
   # kernel
   boot.kernelPackages = pkgs.linuxKernel.packageAliases.linux_latest;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" ];
-  boot.kernelParams = [ "iwlwifi.power_save=0" "iwlmvm.power_scheme=1" ];
+  boot.kernelParams = [
+    "iwlwifi.power_save=0"
+    "iwlmvm.power_scheme=1"
+
+    "noibrs"
+    "pti=off"
+    "kpti=off"
+  ];
 
   # filesystem
   fileSystems."/" = {
@@ -118,7 +125,6 @@
   systemd.user.services.backup = {
     enable = true;
     description = "Automatic backup by restic and rclone";
-    requiredBy = [ "default.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
@@ -146,6 +152,53 @@
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "*-*-* 01:00:00";
+      RandomizedDelaySec = "5m";
+      Persistent = true;
+    };
+  };
+
+  # ClamAV
+  services.clamav.daemon.settings = {
+    LogFile = "/home/nyarla/ClamAV/scan.log";
+    ExcludePath = [
+      "^/bin"
+      "^/boot"
+      "^/dev"
+      "^/home/nyarla/ClamAV"
+      "^/home/postgres"
+      "^/lost+found"
+      "^/nix"
+      "^/proc"
+      "^/sys"
+    ];
+    MaxThreads = 30;
+  };
+
+  systemd.services.clamav-scan = {
+    enable = true;
+    description = "Full Virus Scan by ClamAV";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = toString (pkgs.writeShellScript "clamav-scan.sh" ''
+        set -euo pipefail
+
+        export PATH=${lib.makeBinPath (with pkgs; [ clamav ])}:$PATH
+
+        rm /home/nyarla/ClamAV/scan.log
+        clamdscan -i -m --fdpass / || true
+        chown nyarla:users /home/nyarla/ClamAV/scan.log
+
+        exit 0
+      '');
+    };
+  };
+
+  systemd.timers.clamav-scan = {
+    enable = true;
+    description = "Full Virus Scan by ClamAV";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 03:00:00";
       RandomizedDelaySec = "5m";
       Persistent = true;
     };

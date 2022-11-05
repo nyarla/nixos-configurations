@@ -8,5 +8,6 @@
     glib.out
     picard
     quodlibet-full
+    foliate
   ];
 }

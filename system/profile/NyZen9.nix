@@ -159,7 +159,6 @@
 
   # ClamAV
   services.clamav.daemon.settings = {
-    LogFile = "/home/nyarla/ClamAV/scan.log";
     ExcludePath = [
       "^/bin"
       "^/boot"
@@ -174,7 +173,7 @@
     MaxThreads = 30;
   };
 
-  systemd.services.clamav-scan = {
+  systemd.user.services.clamav-scan = {
     enable = true;
     description = "Full Virus Scan by ClamAV";
     serviceConfig = {
@@ -184,16 +183,14 @@
 
         export PATH=${lib.makeBinPath (with pkgs; [ clamav ])}:$PATH
 
-        rm /home/nyarla/ClamAV/scan.log
-        clamdscan -i -m --fdpass / || true
-        chown nyarla:users /home/nyarla/ClamAV/scan.log
+        clamdscan -l /home/nyarla/ClamAV/scan.log -i -m --fdpass / || true
 
         exit 0
       '');
     };
   };
 
-  systemd.timers.clamav-scan = {
+  systemd.user.timers.clamav-scan = {
     enable = true;
     description = "Full Virus Scan by ClamAV";
     wantedBy = [ "timers.target" ];

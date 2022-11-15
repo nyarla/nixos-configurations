@@ -315,25 +315,6 @@ index 5c59e41bbc087..27ca0a96f8408 100644
    ./config/resolvconf.nix
    ./config/shells-environment.nix
    ./config/swap.nix
-diff --git a/nixos/modules/services/x11/desktop-managers/cinnamon.nix b/nixos/modules/services/x11/desktop-managers/cinnamon.nix
-index 3d79a3b8513b8..27f06abb9505a 100644
---- a/nixos/modules/services/x11/desktop-managers/cinnamon.nix
-+++ b/nixos/modules/services/x11/desktop-managers/cinnamon.nix
-@@ -183,10 +183,10 @@ in
-       programs.bash.vteIntegration = mkDefault true;
-       programs.zsh.vteIntegration = mkDefault true;
- 
--      # Harmonize Qt5 applications under Pantheon
--      qt5.enable = true;
--      qt5.platformTheme = "gnome";
--      qt5.style = "adwaita";
-+      # Harmonize Qt applications under Pantheon
-+      qt.enable = true;
-+      qt.platformTheme = "gnome";
-+      qt.style = "adwaita";
- 
-       # Default Fonts
-       fonts.fonts = with pkgs; [
 diff --git a/nixos/modules/services/x11/desktop-managers/gnome.nix b/nixos/modules/services/x11/desktop-managers/gnome.nix
 index 9c1978e362bc7..dadfb421d3a87 100644
 --- a/nixos/modules/services/x11/desktop-managers/gnome.nix

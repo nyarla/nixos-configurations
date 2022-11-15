@@ -73,12 +73,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-11-01";
+      version = "2022-11-15";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "cce2fffa1dc306b5b95b00a5b3b9fc0f5b7b67c1";
-        sha256 = "sha256-lopi5Sd2nEXt6EqfxqRP2v0HYBQ4EhXebn2yNdfU0Y4=";
+        rev = "f37a3ffa8653144d2215a9469ed615b4f31a4123";
+        sha256 = "sha256-LPCi+p2Tr0SnS1h0ykgFZjl0wP8W2Ane2r1KKSXi8q0=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -116,11 +116,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (old: rec {
     pname = "tt-rss";
-    version = "2022-10-25";
+    version = "2022-11-15";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "602e8684258062937d7f554ab7889e8e02318c96";
-      sha256 = "sha256-vgRaxo998Gx9rVeZZl52jppK1v11jpEK0J0NoDMT44I=";
+      rev = "9a0dcdd6cc515de343c0625fae57860e1a63885c";
+      sha256 = "sha256-sjl6WjG0iSWy3Zww5odtNE3GgskTiW7e0GxhulkpQWA=";
     };
 
     installPhase = ''
@@ -139,19 +139,19 @@ in {
     src = super.fetchFromGitHub {
       owner = "levito";
       repo = "tt-rss-feedly-theme";
-      rev = "c0e57078ccd455b8af874456177349950a67b986";
-      sha256 = "sha256-NEbdJMfgo80NkDIEVa5E6b464Dc8B6+Mdr0zD8cZQ3s=";
+      rev = "816730456cf09555b897101b0e9bafb72b28a868";
+      sha256 = "sha256-RkJT4tw3yrQdW+OitKHIK7Tpe9D1CcOPuhuWT7JS+gU=";
     };
   });
 
   wlroots = super.wlroots.overrideAttrs (old: rec {
-    version = "2022-08-28";
+    version = "2022-11-15";
     src = super.fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = "694e9bbb9d7114f39311d93e885e010606a88dae";
-      sha256 = "198h7krkzx8ys7v6309b325g31gvx4cfdq5qgm7rxqzjr7k6j3x2";
+      rev = "05454618cd2d49fb3a5f0c560b0d2c455cf32467";
+      sha256 = "1h55gkhdcgjzfz1r1784zkqj8lw1xfrldq6rw3qdz1y0wbx6r04";
     };
 
     patches = [ ../patches/wlroots-workaround.patch ];

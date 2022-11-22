@@ -73,12 +73,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-11-15";
+      version = "2022-11-18";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "f37a3ffa8653144d2215a9469ed615b4f31a4123";
-        sha256 = "sha256-LPCi+p2Tr0SnS1h0ykgFZjl0wP8W2Ane2r1KKSXi8q0=";
+        rev = "029700f0bf6c80c0920e67d9edb5589b1cd20a91";
+        sha256 = "sha256-P1hKYTW++dpV3kdmI5nBGun080gVTrKzi2WOJKR84j4=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -150,11 +150,15 @@ in {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = "05454618cd2d49fb3a5f0c560b0d2c455cf32467";
-      sha256 = "1h55gkhdcgjzfz1r1784zkqj8lw1xfrldq6rw3qdz1y0wbx6r04";
+      rev = "f84f7c771061696b52e39b2d3d994de9db1dbd65";
+      sha256 = "000000000000000000000000000000000000000000000000000";
     };
 
     patches = [ ../patches/wlroots-workaround.patch ];
+
+    postPatch = ''
+      sed -i 's/0.17.0-dev/0.16.0/' meson.build
+    '';
   });
 
   xmrig = super.xmrig.override { inherit (super.llvmPackages_14) stdenv; };

@@ -20,7 +20,9 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake extra-cmake-modules gettext gcc pkg-config ];
 
-  buildInputs = [ libskk fcitx5 fcitx5-qt ] ++ lib.optional enableQt qt5.full;
+  buildInputs = [ libskk fcitx5 fcitx5-qt ] ++ lib.optional enableQt qt5.qtbase;
+
+  dontWrapQtApps = true;
 
   meta = with lib; {
     description =

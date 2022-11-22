@@ -51,7 +51,7 @@ in stdenv.mkDerivation rec {
   nativeBuildInputs = [ qt5.wrapQtAppsHook python3.pkgs.wrapPython ];
 
   buildInputs =
-    [ wineasio_32bit wineasio_64bit python3 python3Packages.pyqt5 qt5.full ];
+    [ wineasio_32bit wineasio_64bit python3 python3Packages.pyqt5 qt5.qtbase ];
 
   pythonPath = with python3Packages; [ pyqt5 ];
 

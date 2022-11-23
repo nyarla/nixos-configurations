@@ -139,7 +139,7 @@ in {
       netbios name = nixos
       security = user
       use sendfile = yes
-      hosts allow = 192.168.254.0/24 localhost
+      hosts allow = 192.168.240.0/24 localhost
       hosts deny = 0.0.0.0/0
       guest account = nobody
       map to guest = bad user
@@ -154,6 +154,28 @@ in {
         "force user" = "nyarla";
         "guest ok" = "no";
         "read only" = "no";
+      };
+
+      Music = {
+        "path" = "/run/media/nyarla/data/Music";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "yes";
+      };
+
+      eBooks = {
+        "path" = "/run/media/nyarla/data/local/calibre";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "yes";
       };
     };
   };

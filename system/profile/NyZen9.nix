@@ -22,6 +22,7 @@
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
+    ../config/linux/waydroid.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
     ../config/networking/avahi.nix
@@ -61,7 +62,7 @@
     nixos = {
       device = "/dev/disk/by-uuid/81494384-9f87-4e1c-917a-b5741306fd99";
       preLVM = true;
-      allowDiscards = false;
+      allowDiscards = true;
       bypassWorkqueues = true;
     };
   };
@@ -120,6 +121,9 @@
 
   # Services
   # --------
+
+  # systemd-oomd
+  systemd.oomd.enable = false;
 
   # backup
   systemd.user.services.backup = {

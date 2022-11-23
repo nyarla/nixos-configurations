@@ -21,8 +21,6 @@ in writeShellScript "autostart" ''
     ${automount "470d2a2f-bdea-49a2-8e9b-242e4f3e1381" "/run/media/nyarla/data"}
   fi
 
-  systemctl --user start mympd
-
   systemctl --user import-environment WAYLAND_DISPLAY DISPLAY HOME
 
   fcitx5 -rD      &
@@ -43,4 +41,6 @@ in writeShellScript "autostart" ''
   systemctl --user start sfwbar
 
   swaybg -i ${wallpaper} -m fit &
+
+  waydroid session start &
 ''

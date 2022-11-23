@@ -44,6 +44,7 @@ in ''
   ${makeMenu "applications-main" "Main" [
     (makeExecute "mlterm-wl" "mlterm-wl")
     (makeExecute "virt-manager" "virt-manager")
+    (makeExecute "waydroid" "waydroid show-full-ui")
   ]}
 
   ${makeMenu "applications-web" "Web" [

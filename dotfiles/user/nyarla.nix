@@ -10,7 +10,6 @@ _: {
     ../config/nixos/gsettings.nix
     ../config/services/dunst.nix
     ../config/services/keychain.nix
-    ../config/services/mpd.nix
     ../config/services/sfwbar.nix
     ../config/services/syncthing.nix
     ../config/shell/fbterm.nix

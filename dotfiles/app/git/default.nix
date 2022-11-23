@@ -8,7 +8,7 @@
       co = "checkout";
       ci = "commit";
       st = "status";
-      prune =
+      purge =
         "!git branch -r --merged | grep -v main | grep -v master | cut -d/ -f2 | xargs -I{} git push --delete origin {}";
       cleanup =
         "!git branch --merged | grep -v main | grep -v master | xargs -I{} git branch -d {}";

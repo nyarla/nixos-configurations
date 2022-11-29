@@ -77,8 +77,8 @@ in {
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "029700f0bf6c80c0920e67d9edb5589b1cd20a91";
-        sha256 = "sha256-P1hKYTW++dpV3kdmI5nBGun080gVTrKzi2WOJKR84j4=";
+        rev = "b67eccc99a36911156380bf18685c8ae5ec9a9e3";
+        sha256 = "sha256-1zBQh+n4Tuaqes7iSJFLT+HNc/H4sq15bhdVUZgwNnU=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });

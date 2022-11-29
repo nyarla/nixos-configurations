@@ -31,7 +31,6 @@
         inherit system;
         modules = [
           ./system/profile/NyZen9.nix
-          ./profile/NyZen9.nix
 
           nix-ld.nixosModules.nix-ld
           home-manager.nixosModules.home-manager

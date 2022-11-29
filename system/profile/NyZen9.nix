@@ -1,10 +1,81 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+let
+  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/prepare/begin/hugepage.sh"
+  kvmHugePageSetupScript = pkgs.writeShellScript "hugepage-setup.sh" ''
+    set -xeuo pipefail
+
+    echo 35200 > /proc/sys/vm/nr_hugepages
+    if test 35200 != $(cat /proc/sys/vm/nr_hugepages); then
+      echo "failed to enable hugepage"
+      echo 0 > /proc/sys/vm/nr_hugepages
+      exit 1
+    fi
+  '';
+
+  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/release/end/hugepage.sh"
+  kvmHugePageShutdownScript = pkgs.writeShellScript "hugepage-shutdown.sh" ''
+    echo 0 > /proc/sys/vm/nr_hugepages
+  '';
+
+  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/prepare/begin/vfio.sh"
+  kvmVFIOSetupScript = pkgs.writeShellScript "vfio-setup.sh" ''
+    set -xeuo pipefail
+    export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
+
+    modprobe -r nvidia_drm nvidia_modeset nvidia_uvm nvidia
+
+    echo 0 > /sys/class/vtconsole/vtcon0/bind
+    echo 0 > /sys/class/vtconsole/vtcon1/bind
+
+    echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/unbind
+
+    sleep 2
+
+    modprobe vfio
+    modprobe vfio_iommnu_type1
+    modprobe vfio_pci
+
+    virsh nodedev-detach pci_0000_07_00_0
+    virsh nodedev-detach pci_0000_07_00_1
+    virsh nodedev-detach pci_0000_07_00_2
+    virsh nodedev-detach pci_0000_07_00_3
+  '';
+
+  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/release/end/vfio.sh"
+  kvmVFIOShutdownScript = pkgs.writeShellScript "vfio-shutdown.sh" ''
+    set -xeuo pipefail
+    export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
+
+    virsh nodedev-reattach pci_0000_07_00_3
+    virsh nodedev-reattach pci_0000_07_00_2
+    virsh nodedev-reattach pci_0000_07_00_1
+    virsh nodedev-reattach pci_0000_07_00_0
+
+    modprobe -r vfio_pci
+    modprobe -r vfio_iommnu_type1
+    modprobe -r vfio
+
+    echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/bind
+
+    echo 1 > /sys/class/vtconsole/vtcon0/bind
+    echo 1 > /sys/class/vtconsole/vtcon1/bind
+
+    modprobe nvidia_drm
+    modprobe nvidia_modeset
+    modprobe nvidia_uvm
+    modprobe nvidia
+  '';
+
+in {
   imports = [
     ../config/audio/daw.nix
     ../config/audio/mpd.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
+    ../config/desktop/files.nix
+    ../config/desktop/wayland.nix
+    ../config/desktop/xorg.nix
     ../config/gadgets/android.nix
     ../config/graphic/fonts.nix
     ../config/graphic/labwc.nix
@@ -19,6 +90,7 @@
     ../config/linux/docker.nix
     ../config/linux/filesystem.nix
     ../config/linux/hardware.nix
+    ../config/linux/kvm.nix
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
@@ -33,6 +105,7 @@
     ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
+    ../config/nixos/nixpkgs.nix
     ../config/security/clamav.nix
     ../config/security/firewall-home.nix
     ../config/security/gnupg.nix
@@ -41,6 +114,7 @@
     ../config/user/nyarla.nix
     ../config/video/droidcam.nix
     ../config/video/nvidia.nix
+    ../config/webapp/NyZen9.nix
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix
     ../config/wireless/jp.nix
@@ -77,14 +151,20 @@
 
   # kernel
   boot.kernelPackages = pkgs.linuxKernel.packageAliases.linux_latest;
-  boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" ];
+  boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
   boot.kernelParams = [
+    # WiFi
     "iwlwifi.power_save=0"
     "iwlmvm.power_scheme=1"
 
+    # CPU
     "noibrs"
     "pti=off"
     "kpti=off"
+
+    # KVM
+    "amd_iommu=on"
+    "vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
   ];
 
   # filesystem
@@ -118,6 +198,66 @@
 
   # firmware
   hardware.enableRedistributableFirmware = true;
+
+  # Network
+  # -------
+
+  # avahi
+  services.avahi.interfaces = [ "wlan0" ];
+
+  # samba
+  services.samba = {
+    enable = true;
+    enableNmbd = true;
+    enableWinbindd = true;
+    securityType = "user";
+    # package = pkgs.samba4Full;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = nixos
+      netbios name = nixos
+      security = user
+      use sendfile = yes
+      hosts allow = 192.168.240.0/24 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+    '';
+    shares = {
+      Downloads = {
+        "path" = "/home/nyarla/Downloads/KVM";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "no";
+      };
+
+      Music = {
+        "path" = "/run/media/nyarla/data/Music";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "yes";
+      };
+
+      eBooks = {
+        "path" = "/run/media/nyarla/data/local/calibre";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "yes";
+      };
+    };
+  };
 
   # Services
   # --------

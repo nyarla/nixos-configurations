@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
-let utils = with pkgs; [ xclip xdg-utils libnotify sx ];
+let utils = with pkgs; [ xclip xdg-utils libnotify ];
 in {
-  imports = [ ./gnome-compatible.nix ./picom.nix ];
-
   environment.systemPackages = utils;
   console.useXkbConfig = true;
 
@@ -37,22 +35,5 @@ in {
       job.environment.LANG = "ja_JP.UTF-8";
       lightdm = { enable = false; };
     };
-  };
-
-  security.wrappers = {
-    "Xorg" = {
-      setuid = true;
-      owner = "root";
-      group = "root";
-      source = "${pkgs.xorg.xorgserver}/bin/Xorg";
-    };
-  };
-
-  nixpkgs.config.packageOverrides = super: rec {
-    sx = super.sx.overrideAttrs (old: rec {
-      postPatch = ''
-        sed -i 's!Xorg!/run/wrappers/bin/Xorg!' bin/sx
-      '';
-    });
   };
 }

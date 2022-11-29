@@ -1,4 +1,6 @@
-_: {
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ mosh ];
+
   services.openssh = {
     enable = true;
     startWhenNeeded = true;

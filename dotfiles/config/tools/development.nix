@@ -5,6 +5,7 @@
     awscli
     goaccess
     gh
+    flyctl
 
     # container toolchain
     linuxkit

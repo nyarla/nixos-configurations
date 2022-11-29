@@ -53,6 +53,7 @@ in ''
     (makeExecute "Google Chrome" "google-chrome-stable")
     "${sep}"
     (makeExecute "Trickle" (scriptsCmd "trickle"))
+    (makeExecute "Whalebird" "whalebird --no-sandbox")
     "${sep}"
     (makeExecute "KeePassXC" "keepassxc")
     (makeExecute "Bitwarden" "bitwarden --no-sandbox")

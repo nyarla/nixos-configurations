@@ -6,5 +6,6 @@
     google-chrome
     keepassxc
     thunderbird-bin
+    whalebird
   ];
 }

@@ -116,11 +116,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (old: rec {
     pname = "tt-rss";
-    version = "2022-11-15";
+    version = "2022-11-29";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "9a0dcdd6cc515de343c0625fae57860e1a63885c";
-      sha256 = "sha256-sjl6WjG0iSWy3Zww5odtNE3GgskTiW7e0GxhulkpQWA=";
+      rev = "292ca86665d13582028d32d6d40bbb6f4d8f5cc1";
+      sha256 = "sha256-ZlwwgW6VCkdpE0lP5RfAc2ofHhs9qLN6I0+AjROH2/0=";
     };
 
     installPhase = ''

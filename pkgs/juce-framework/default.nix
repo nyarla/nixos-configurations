@@ -3,11 +3,11 @@
 , webkitgtk, zlib, xorg, libGLU }:
 stdenv.mkDerivation rec {
   pname = "juce-framework";
-  version = "7.0.2";
+  version = "7.0.3";
   src = fetchzip {
     url =
       "https://github.com/juce-framework/JUCE/archive/refs/tags/${version}.zip";
-    sha256 = "0sswn2c9bm8nzcfwba2i3827pbrzi9syihg90kfhay7m5nizb78v";
+    sha256 = "sha256-6YX/ur8sJzG578F6aK27tQaP2z6taO+ntIEGAcJoD84=";
   };
 
   nativeBuildInputs = [ cmake pkg-config doxygen python3 ];

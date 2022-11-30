@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
+APP=/run/media/nyarla/data/local/wine
 DTM=/run/media/nyarla/data/local/daw/daw
 
-for dir in $HOME/local/wine $DTM/daw $DTM/plugins; do
+for dir in $APP $DTM/daw $DTM/plugins; do
   for prefix in $(ls "${dir}"); do
       cwd=$(pwd)
 

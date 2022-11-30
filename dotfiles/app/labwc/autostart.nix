@@ -42,5 +42,6 @@ in writeShellScript "autostart" ''
 
   swaybg -i ${wallpaper} -m fit &
 
-  waydroid session start &
+  waydroid session stop || true
+  nohup waydroid session start >/dev/null &
 ''

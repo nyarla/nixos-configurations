@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -xeuo pipefail
+
+export BOTTLES=/run/media/nyarla/data/local/daw/daw/plugins
+
+main() {
+  local prefix=${1:-}
+
+  if test "x${prefix}" = "x"; then
+    echo "Usage: ${0} <prefix>"
+    return 1
+  fi
+
+  if test ! -d $BOTTLES/$prefix ; then
+    echo "wine prefix does not exist: ${BOTTLES}/${prefix}";
+    return 1
+  fi
+ 
+  export WINEPREFIX=$BOTTLES/$prefix
+  wine 'C:\Program Files (x86)\iLok License Manager\iLok License Manager.exe' &
+  waitPID=$!
+
+  test -n "$waitPID" && wait $waitPID
+
+  wineserver -k
+
+  return 0;
+}
+
+main "${@}"

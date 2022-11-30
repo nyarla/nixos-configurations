@@ -33,10 +33,8 @@ let
 
   wine = "/etc/nixos/dotfiles/files/wine";
   wineCmd = app: "${wine}/${app}";
-  iLokCmd = prefix: ''
-    bash -c &#34;cd &#39;/run/media/nyarla/src/local/daw/plugins/${prefix}&#39; &amp;&amp; wine-run wine explorer &#39;C:\Program Files (x86)\iLok License Manager\iLok License Manager.exe&#39;&#34;
-  '';
 
+  iLokCmd = prefix: "${wine}/iLok ${prefix}";
 in ''
   <?xml version="1.0" encoding="UTF-8"?>
   <openbox_menu xmlns="http://openbox.org/3.4/menu">

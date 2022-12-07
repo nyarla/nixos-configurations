@@ -69,7 +69,6 @@ let
 in {
   imports = [
     ../config/audio/daw.nix
-    ../config/audio/mpd.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
@@ -150,7 +149,7 @@ in {
   boot.tmpOnTmpfs = true;
 
   # kernel
-  boot.kernelPackages = pkgs.linuxKernel.packageAliases.linux_latest;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
   boot.kernelParams = [
     # WiFi
@@ -164,12 +163,12 @@ in {
 
     # KVM
     "amd_iommu=on"
-    "vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
+    "vfio-pci.ids=1022:149c,10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
   ];
 
   # filesystem
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/cd13a39c-a851-4bf1-85c6-488e4d0cbb85";
+    device = "/dev/disk/by-uuid/84841e74-8b46-4b56-9375-1792eefff803";
     fsType = "ext4";
   };
 

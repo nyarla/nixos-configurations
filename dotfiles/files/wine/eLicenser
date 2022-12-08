@@ -5,7 +5,7 @@ set -euo pipefail
 export WINEPREFIX=/run/media/nyarla/data/local/daw/daw/plugins/Steinberg
 export LD_PRELOAD=
 
-wine explorer 'C:\Program Files (x86)\eLicenser\eLCC\eLCC.exe' &
+wine 'C:\Program Files (x86)\eLicenser\eLCC\eLCC.exe' &
 waitPID=$!
 
 test -n "$waitPID" && wait $waitPID

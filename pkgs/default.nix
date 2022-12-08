@@ -73,12 +73,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
     (old: rec {
-      version = "2022-11-18";
+      version = "2022-12-08";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "b67eccc99a36911156380bf18685c8ae5ec9a9e3";
-        sha256 = "sha256-1zBQh+n4Tuaqes7iSJFLT+HNc/H4sq15bhdVUZgwNnU=";
+        rev = "1ebf5bce9020de974c481cb0c68d7a65d53298ef";
+        sha256 = "sha256-+XxRVBdVOjPpmA7Y7UMM0Vu4azm1/feytoVzdTF25eM=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -145,19 +145,20 @@ in {
   });
 
   wlroots = super.wlroots.overrideAttrs (old: rec {
-    version = "2022-11-15";
-    src = super.fetchFromGitLab {
-      domain = "gitlab.freedesktop.org";
-      owner = "wlroots";
-      repo = "wlroots";
-      rev = "f84f7c771061696b52e39b2d3d994de9db1dbd65";
-      sha256 = "000000000000000000000000000000000000000000000000000";
+    version = "2022-12-08";
+    src = super.fetchFromGitHub {
+      owner = "danvd";
+      repo = "wlroots-eglstreams";
+      rev = "6ea541730e87ac8ce4187e55a0c3aa3cefef5624";
+      sha256 = "0cz076cjmdivw5byf5w4n3k6i3fkkpqs665423lhy1i5qk43r9qn";
     };
 
     patches = [ ../patches/wlroots-workaround.patch ];
 
     postPatch = ''
-      sed -i 's/0.17.0-dev/0.16.0/' meson.build
+      substituteInPlace render/gles2/renderer.c --replace "glFlush();" "glFinish();"
+
+      sed -i 's/0.16.0-dev/0.16.0/' meson.build
     '';
   });
 

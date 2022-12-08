@@ -261,8 +261,11 @@ in {
   # Services
   # --------
 
-  # systemd-oomd
-  systemd.oomd.enable = false;
+  # systemd
+  systemd.extraConfig = ''
+    DefaultTimeoutStartSec=90s
+    DefaultTimeoutStopSec=90s
+  '';
 
   # backup
   systemd.user.services.backup = {

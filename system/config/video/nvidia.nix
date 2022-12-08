@@ -14,7 +14,7 @@
 
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.package =
-    config.boot.kernelPackages.nvidiaPackages.production;
+    config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
   hardware.nvidia.open = true;
   hardware.opengl = {
     enable = true;

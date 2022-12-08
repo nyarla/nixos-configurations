@@ -145,12 +145,13 @@ in {
   });
 
   wlroots = super.wlroots.overrideAttrs (old: rec {
-    version = "2022-12-08";
-    src = super.fetchFromGitHub {
-      owner = "danvd";
-      repo = "wlroots-eglstreams";
-      rev = "6ea541730e87ac8ce4187e55a0c3aa3cefef5624";
-      sha256 = "0cz076cjmdivw5byf5w4n3k6i3fkkpqs665423lhy1i5qk43r9qn";
+    version = "2022-11-15";
+    src = super.fetchFromGitLab {
+      domain = "gitlab.freedesktop.org";
+      owner = "wlroots";
+      repo = "wlroots";
+      rev = "f84f7c771061696b52e39b2d3d994de9db1dbd65";
+      sha256 = "000000000000000000000000000000000000000000000000000";
     };
 
     patches = [ ../patches/wlroots-workaround.patch ];
@@ -158,7 +159,7 @@ in {
     postPatch = ''
       substituteInPlace render/gles2/renderer.c --replace "glFlush();" "glFinish();"
 
-      sed -i 's/0.16.0-dev/0.16.0/' meson.build
+      sed -i 's/0.17.0-dev/0.16.0/' meson.build
     '';
   });
 

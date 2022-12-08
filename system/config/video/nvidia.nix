@@ -13,7 +13,8 @@
   '';
 
   hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidia_x11;
+  hardware.nvidia.package =
+    config.boot.kernelPackages.nvidiaPackages.production;
   hardware.nvidia.open = true;
   hardware.opengl = {
     enable = true;
@@ -23,9 +24,9 @@
   };
 
   environment.etc."glvnd/egl_vendor.d".source =
-    "${config.boot.kernelPackages.nvidia_x11}/share/glvnd/egl_vendor.d/";
+    "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
   environment.etc."gbm/nvidia-drm_gbm.so".source =
-    "${config.boot.kernelPackages.nvidia_x11}/lib/libnvidia-allocator.so";
+    "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
 
   environment.systemPackages = with pkgs;
     [ (cuda-shell.override { linuxPackages = config.boot.kernelPackages; }) ];

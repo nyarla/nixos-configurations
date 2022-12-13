@@ -149,7 +149,7 @@ in {
   boot.tmpOnTmpfs = true;
 
   # kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_10;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
   boot.kernelParams = [
     # WiFi

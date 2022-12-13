@@ -63,7 +63,7 @@
     QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
     MOZ_ENABLE_WAYLAND=1
-    MOZ_WEBRENDER=0
+    MOZ_WEBRENDER=1
     MOZ_USE_XINPUT2=1
 
     SDL_VIDEODRIVER=wayland
@@ -105,6 +105,7 @@
       export __GL_GSYNC_ALLOWED=0
       export __GL_VRR_ALLOWED=0
       export __GLX_VENDOR_LIBRARY_NAME=nvidia
+      export __GL_MaxFramesAllowed=1
       export LIBSEAT_BACKEND=logind
 
       export WLR_NO_HARDWARE_CURSORS=1

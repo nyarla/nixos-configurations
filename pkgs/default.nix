@@ -154,6 +154,8 @@ in {
       sha256 = "000000000000000000000000000000000000000000000000000";
     };
 
+    buildInputs = old.buildInputs
+      ++ [ super.mesa.dev super.vulkan-validation-layers ];
     patches = [ ../patches/wlroots-workaround.patch ];
 
     postPatch = ''

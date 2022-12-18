@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     bitwarden
     brave
-    firefox
+    firefox-bin
     google-chrome
     keepassxc
     thunderbird-bin

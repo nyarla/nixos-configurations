@@ -51,10 +51,10 @@ in ''
     (makeExecute "Google Chrome" "google-chrome-stable")
     "${sep}"
     (makeExecute "Trickle" (scriptsCmd "trickle"))
-    (makeExecute "Whalebird" "whalebird --no-sandbox")
+    (makeExecute "Whalebird" "whalebird --disable-gpu")
     "${sep}"
     (makeExecute "KeePassXC" "keepassxc")
-    (makeExecute "Bitwarden" "bitwarden --no-sandbox")
+    (makeExecute "Bitwarden" "bitwarden --disable-gpu")
   ]}
 
   ${makeMenu "applications-file" "Files" [
@@ -65,7 +65,7 @@ in ''
   ]}
 
   ${makeMenu "applications-multimedia" "Multimedia" [
-    (makeExecute "Calibre" "calibre")
+    (makeExecute "Calibre" "env QT_QPA_PLATFORM=xcb calibre")
     (makeExecute "QuodLibet" "quodlibet")
     (makeExecute "Picard" "picard")
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))
@@ -80,7 +80,7 @@ in ''
   ${makeMenu "applications-chat" "Chat" [
     (makeExecute "Droidcam" "droidcam")
     (makeExecute "Slack" "slack --disable-gpu")
-    (makeExecute "Discord" "discord --no-sandbox")
+    (makeExecute "Discord" "discord --disable-gpu")
     (makeExecute "Telegram" "telegram-desktop")
   ]}
 
@@ -106,7 +106,7 @@ in ''
       (makeExecute "Helio.fm" "helio")
       (makeExecute "MuseScore" "musescore")
       "${sep}"
-      (makeExecute "Sononym" "sononym --no-sandbox")
+      (makeExecute "Sononym" "sononym --disable-gpu")
       "${sep}"
       (makeExecute "FL Studio" (wineCmd "FLStudio"))
       (makeExecute "deCoda" (wineCmd "deCoda"))

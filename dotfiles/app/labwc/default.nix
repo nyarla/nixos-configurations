@@ -105,7 +105,6 @@
       export __GL_GSYNC_ALLOWED=0
       export __GL_VRR_ALLOWED=0
       export __GLX_VENDOR_LIBRARY_NAME=nvidia
-      export __GL_MaxFramesAllowed=1
       export LIBSEAT_BACKEND=logind
 
       export WLR_NO_HARDWARE_CURSORS=1
@@ -113,7 +112,7 @@
 
       dbus-update-activation-environment --systemd --all
 
-      labwc &
+      labwc -V &
       waitPID=$!
 
       systemctl --user start graphical-session.target

@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+let
+  nvidia = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
+  nvidia32 = nvidia.lib32;
+in {
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -13,14 +17,15 @@
   '';
 
   hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.package =
-    config.boot.kernelPackages.nvidiaPackages.production;
+  hardware.nvidia.package = nvidia;
   hardware.nvidia.open = true;
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
     setLdLibraryPath = true;
+    package = nvidia;
+    package32 = nvidia32;
   };
 
   environment.etc."glvnd/egl_vendor.d".source =

@@ -392,9 +392,9 @@ in ''
         (props "menu" [
           (prop "file" "menu.xml")
           (prop "hideDelay" "200")
-          (prop "submenuShowDelay" "100")
-          (prop "submenuHideDelay" "400")
-          (prop "showIcon" "yes")
+          (prop "submenuShowDelay" "0")
+          (prop "submenuHideDelay" "0")
+          (prop "showIcon" "no")
           (prop "manageDesktops" "yes")
         ])
 

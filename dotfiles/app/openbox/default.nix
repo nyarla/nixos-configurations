@@ -42,33 +42,33 @@ in {
   home.packages = with pkgs;
     [
       # icon and themes
-      arc-theme
       arc-openbox
+      arc-theme
       capitaine-cursors
-      hicolor-icon-theme
       flat-remix-icon-theme
+      hicolor-icon-theme
 
       # fallback
       gnome.adwaita-icon-theme
       gnome.gnome-themes-extra
 
-      # theme engine
-      gtk-engine-murrine
-      gtk_engines
-      qgnomeplatform
-
+      # credential
       libsecret
       pinentry-gnome
 
+      # clipboard
       clipit
-      gnome-usage
-      gyazo-diy
+
+      # utility
       hsetroot
-      i3lock-fancy
-      jq
       lxappearance
+
+      # panel
       lxqt.lxqt-config
       lxqt.lxqt-panel
+
+      i3lock-fancy
+      jq
       maim
       mate.mate-system-monitor
       obconf
@@ -98,7 +98,7 @@ in {
     "openbox/rc.xml".text = (import ./rc.nix) { inherit lib; };
 
     # sx
-    "sx/sxrc".source = "${sxrc}";
+    "sx/sxrc".source = toString sxrc;
 
   };
 }

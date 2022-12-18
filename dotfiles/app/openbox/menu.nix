@@ -30,15 +30,11 @@ let
 
   scripts = "/etc/nixos/dotfiles/files/scripts";
   scriptsCmd = cmd: "${scripts}/${cmd}";
-  activateCmd = cmd: class:
-    "${scripts}/window-activate ${cmd} &#39;${class}&#39;";
 
   wine = "/etc/nixos/dotfiles/files/wine";
   wineCmd = app: "${wine}/${app}";
-  iLokCmd = prefix: ''
-    bash -c &#34;cd &#39;/run/media/nyarla/src/local/daw/plugins/${prefix}&#39; &amp;&amp; wine-run wine explorer &#39;C:\Program Files (x86)\iLok License Manager\iLok License Manager.exe&#39;&#34;
-  '';
 
+  iLokCmd = prefix: "${wine}/iLok ${prefix}";
 in ''
   <?xml version="1.0" encoding="UTF-8"?>
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
@@ -49,11 +45,14 @@ in ''
   ]}
 
   ${makeMenu "applications-web" "Web" [
-    (makeExecute "Firefox" (activateCmd "firefox" "firefox"))
-    (makeExecute "Thunderbird" (activateCmd "thunderbird" "thunderbird"))
-    (makeExecute "Google Chrome"
-      (activateCmd "google-chrome-stable" "^google-chrome"))
-    (makeExecute "Brave" (activateCmd "brave" "^brave-browser"))
+    (makeExecute "Firefox" "firefox")
+    (makeExecute "Thunderbird" "thunderbird")
+    (makeExecute "Google Chrome" "google-chrome-stable")
+    "${sep}"
+    (makeExecute "Trickle" (scriptsCmd "trickle"))
+    (makeExecute "Whalebird" "whalebird")
+    "${sep}"
+    (makeExecute "KeePassXC" "keepassxc")
     (makeExecute "Bitwarden" "bitwarden")
   ]}
 
@@ -106,6 +105,8 @@ in ''
       (makeExecute "Helio.fm" "helio")
       (makeExecute "MuseScore" "musescore")
       "${sep}"
+      (makeExecute "Sononym" "sononym")
+      "${sep}"
       (makeExecute "FL Studio" (wineCmd "FLStudio"))
       (makeExecute "deCoda" (wineCmd "deCoda"))
     ])
@@ -143,7 +144,7 @@ in ''
     (makeExecute "Reboot" "systemctl reboot")
   ]}
 
-  ${makeMenu "root-menu" "Openbox" [
+  ${makeMenu "root-menu" "Labwc" [
     (makeMenuItem "applications-main")
     (makeMenuItem "applications-file")
     "${sep}"

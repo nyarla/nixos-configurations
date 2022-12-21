@@ -79,6 +79,7 @@ in {
     ../config/graphic/fonts.nix
     ../config/graphic/labwc.nix
     ../config/graphic/lodpi.nix
+    ../config/graphic/xorg.nix
     ../config/i18n/en.nix
     ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix
@@ -266,6 +267,21 @@ in {
     DefaultTimeoutStartSec=90s
     DefaultTimeoutStopSec=90s
   '';
+
+  # Xorg
+  services.picom.backend = "glx";
+  services.xserver.serverLayoutSection = ''
+    Option "BlankTime"    "0"
+    Option "StandbyTime"  "1"
+    Option "SuspendTime"  "1"
+    Option "OffTime"      "1"
+  '';
+  services.xserver.xrandrHeads = [{
+    output = "HDMI-0";
+    monitorConfig = ''
+      Option "DPMS" "true"
+    '';
+  }];
 
   # backup
   systemd.user.services.backup = {

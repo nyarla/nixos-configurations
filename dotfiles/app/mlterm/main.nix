@@ -19,7 +19,7 @@ in {
   line_space = 2;
   use_anti_alias = true;
   box_drawing_font = "unicode";
-  type_engine = "cairo";
+  type_engine = "xft";
   unicode_full_width_areas = "U+E000-FD46,U+1F000-1FFFF";
 
   # appearance

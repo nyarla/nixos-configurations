@@ -1,6 +1,6 @@
 {
   "x86_64-linux" = let
-    Monospace = "monospace 15";
+    Monospace = "HackGen Console NFJ 15";
     Fallback = "DejaVu Sans Mono";
     Emoji = "Noto Color Emoji 15";
   in {

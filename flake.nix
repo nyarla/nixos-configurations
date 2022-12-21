@@ -3,16 +3,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
 
-    nix-ld.url = "github:Mic92/nix-ld/main";
-    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     wayland.url = "github:nix-community/nixpkgs-wayland";
     wayland.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { nix-ld, home-manager, wayland, ... }@inputs: {
+  outputs = { home-manager, wayland, ... }@inputs: {
     nixosConfigurations = let
       applyPatch = args:
         inputs.nixpkgs.legacyPackages.${args.system}.applyPatches {
@@ -32,7 +29,6 @@
         modules = [
           ./system/profile/NyZen9.nix
 
-          nix-ld.nixosModules.nix-ld
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

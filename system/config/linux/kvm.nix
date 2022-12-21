@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   gui = if config.services.xserver.enable then
-    (with pkgs; [ virt-manager remmina ])
+    (with pkgs; [ virt-manager ])
   else
     [ ];
 

@@ -11,8 +11,6 @@
     };
   };
 
-  services.gnome.gnome-remote-desktop.enable = true;
-
   qt.enable = true;
   qt.platformTheme = "gnome";
   qt.style = "adwaita";

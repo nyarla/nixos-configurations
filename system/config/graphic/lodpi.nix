@@ -1,1 +1,4 @@
-_: { fonts.fontconfig.subpixel.lcdfilter = "light"; }
+_: {
+  fonts.fontconfig.hinting.style = "hintfull";
+  fonts.fontconfig.subpixel.lcdfilter = "default";
+}

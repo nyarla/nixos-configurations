@@ -18,10 +18,9 @@
       enable = true;
 
       defaultFonts = {
-        sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" "Noto Color Emoji" ];
-        serif = [ "Noto Serif JP" "DejaVu Serif" "Noto Color Emoji" ];
-        monospace =
-          [ "HackGen Console NF" "DejaVu Sans Mono" "Noto Color Emoji" ];
+        sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
+        serif = [ "Noto Serif JP" "DejaVu Serif" ];
+        monospace = [ "HackGen Console NFJ" "DejaVu Sans Mono" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };

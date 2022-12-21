@@ -71,14 +71,14 @@ in {
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  labwc = (super.labwc.override { inherit (self) wlroots; }).overrideAttrs
+  labwc = (super.labwc.override { inherit (self) wlroots_0_16; }).overrideAttrs
     (old: rec {
-      version = "2022-12-08";
+      version = "2022-12-20";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "1ebf5bce9020de974c481cb0c68d7a65d53298ef";
-        sha256 = "sha256-+XxRVBdVOjPpmA7Y7UMM0Vu4azm1/feytoVzdTF25eM=";
+        rev = "1b30edc778d597e06d74c7fbec62c7a8b13fab4e";
+        sha256 = "sha256-3n+nZeH/uruD3vrN+XgnEgyNjgc2g8Og/p1hwskbrd4=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -116,11 +116,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (old: rec {
     pname = "tt-rss";
-    version = "2022-11-29";
+    version = "2022-12-20";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "292ca86665d13582028d32d6d40bbb6f4d8f5cc1";
-      sha256 = "sha256-ZlwwgW6VCkdpE0lP5RfAc2ofHhs9qLN6I0+AjROH2/0=";
+      rev = "c6d21b31965b28e2b3b86f42a97289c3ee95fa28";
+      sha256 = "1m1k7k5n6bh66a44v3h61cy2g9iyj9ykzb5ahlzds25nm9mh8c0g";
     };
 
     installPhase = ''
@@ -144,24 +144,17 @@ in {
     };
   });
 
-  wlroots = super.wlroots.overrideAttrs (old: rec {
-    version = "2022-11-15";
-    src = super.fetchFromGitLab {
-      domain = "gitlab.freedesktop.org";
-      owner = "wlroots";
-      repo = "wlroots";
-      rev = "f84f7c771061696b52e39b2d3d994de9db1dbd65";
-      sha256 = "000000000000000000000000000000000000000000000000000";
-    };
-
+  wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
+    version = "0_16_0_mod";
     buildInputs = old.buildInputs
       ++ [ super.mesa.dev super.vulkan-validation-layers ];
+
+    nativeBuildInputs = old.nativeBuildInputs ++ [ super.cmake super.hwdata ];
+
     patches = [ ../patches/wlroots-workaround.patch ];
 
     postPatch = ''
       substituteInPlace render/gles2/renderer.c --replace "glFlush();" "glFinish();"
-
-      sed -i 's/0.17.0-dev/0.16.0/' meson.build
     '';
   });
 

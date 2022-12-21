@@ -2,10 +2,10 @@
 let
   pkg = stdenv.mkDerivation rec {
     pname = "sononym";
-    version = "1.3.1";
+    version = "1.4.2";
     src = fetchurl {
       url = "https://www.sononym.net/download/sononym-1.4.2.tar.bz2";
-      sha256 = "sha256-CPCEM8G9LSa+FfzV0xp7rAbgX1ii88b4hHsTVTe9vCM=";
+      sha256 = "08xwplvma4vvhkwcdwx2b1gy01mcgcdd7mgw2nz2cbdxq4rq9w08";
     };
 
     phases = [ "unpackPhase" "installPhase" ];

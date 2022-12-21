@@ -42,6 +42,7 @@ in ''
   ${makeMenu "applications-main" "Main" [
     (makeExecute "mlterm" "mlterm")
     (makeExecute "virt-manager" "virt-manager")
+    (makeExecute "waydroid" (scriptsCmd "waydroid-on-weston"))
   ]}
 
   ${makeMenu "applications-web" "Web" [

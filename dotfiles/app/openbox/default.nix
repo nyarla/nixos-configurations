@@ -67,7 +67,10 @@ in {
       lxqt.lxqt-config
       lxqt.lxqt-panel
 
+      # screen lock
       i3lock-fancy
+      xss-lock
+
       jq
       maim
       mate.mate-system-monitor
@@ -90,8 +93,12 @@ in {
 
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
       export GTK2_RC_FILES=$HOME/.gtkrc-2.0
+
       export LANG=ja_JP.UTF_8
       export LC_ALL=ja_JP.UTF-8
+
+      export MOZ_GTK_TITLEBAR_DECORATION=client
+
       export QT_QPA_PLATFORMTHEME=gnome
     '');
 

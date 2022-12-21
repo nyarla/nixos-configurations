@@ -23,19 +23,16 @@ in writeShellScript "autostart" ''
 
   systemctl --user import-environment DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID
 
-  systemctl --user start gnome-keyring-pkcs11
-  systemctl --user start gnome-keyring-secrets
-  systemctl --user start gnome-keyring-ssh
-
-  systemctl --user start polkit-mate-authentication-agent-1 
-
-  systemctl --user start nm-applet
-  systemctl --user start blueman-applet
-
   hsetroot -fill ${wallpaper} &
   ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE LXQt &
+  xss-lock -- i3lock-fancy &
 
   if test "$(hostname)" == "nixos"; then
-    calibre --start-in-tray &
+    while true; do
+      if test -d /run/media/nyarla/data/local/calibre ; then
+        calibre --start-in-tray &
+        break
+      fi
+    done &
   fi
 ''

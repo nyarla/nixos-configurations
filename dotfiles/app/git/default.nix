@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ git-credential-keepassxc lefthook ];
+  home.packages = with pkgs; [ git-credential-1password lefthook ];
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -7,6 +7,7 @@
     aliases = {
       co = "checkout";
       ci = "commit";
+      force-push = "push -f --force-with-lease --force-if-includes";
       st = "status";
       purge =
         "!git branch -r --merged | grep -v main | grep -v master | cut -d/ -f2 | xargs -I{} git push --delete origin {}";
@@ -23,7 +24,7 @@
         preloadindex = true;
         quotepath = false;
       };
-      credential.helper = "keepassxc";
+      credential.helper = "1password -v Development";
     };
     ignores = import ./gitignore.nix;
   };

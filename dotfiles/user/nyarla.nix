@@ -10,8 +10,8 @@ _: {
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
     ../config/services/dunst.nix
+    ../config/services/gnome-keyring.nix
     ../config/services/keychain.nix
-    ../config/services/sfwbar.nix
     ../config/services/syncthing.nix
     ../config/shell/fbterm.nix
     ../config/shell/starship.nix
@@ -20,7 +20,6 @@ _: {
     ../config/tools/development.nix
 
     ../app/git
-    ../app/labwc
     ../app/mlterm
     ../app/openbox
   ];

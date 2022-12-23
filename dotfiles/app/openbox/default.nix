@@ -29,7 +29,6 @@ let
     openbox-session &
     waitPID=$!
 
-    dbus-update-activation-environment --systemd --all
 
     test -n "$waitPID" && wait "$waitPID"
 

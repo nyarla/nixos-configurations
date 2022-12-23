@@ -16,12 +16,13 @@ let
 in writeShellScript "autostart" ''
   export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
 
+  dbus-update-activation-environment --systemd --all
+  systemctl --user start gnome-keyring
+
   if test "$(hostname)" == "nixos"; then
     ${automount "05b4746c-9eed-4228-b306-922a9ef6ac4e" "/run/media/nyarla/dev"}
     ${automount "470d2a2f-bdea-49a2-8e9b-242e4f3e1381" "/run/media/nyarla/data"}
   fi
-
-  systemctl --user import-environment DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS XDG_SESSION_ID
 
   hsetroot -fill ${wallpaper} &
   ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE LXQt &
@@ -33,6 +34,7 @@ in writeShellScript "autostart" ''
         calibre --start-in-tray &
         break
       fi
+      sleep 1
     done &
   fi
 ''

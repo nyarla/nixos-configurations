@@ -3,4 +3,4 @@
 set -euo pipefail
 
 cd $HOME
-nix run nixpkgs#electron_20 -- --disable-gpu --no-sandbox  ~/.local/share/trickle/app.asar
+nix run nixpkgs#electron_20 -- ~/.local/share/trickle/app.asar

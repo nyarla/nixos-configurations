@@ -42,7 +42,8 @@ in ''
   ${makeMenu "applications-main" "Main" [
     (makeExecute "mlterm" "mlterm")
     (makeExecute "virt-manager" "virt-manager")
-    (makeExecute "waydroid" (scriptsCmd "waydroid-on-weston"))
+    (makeExecute "weston" (scriptsCmd "waydroid-on-weston"))
+    (makeExecute "waydroid" "waydroid show-full-ui")
   ]}
 
   ${makeMenu "applications-web" "Web" [
@@ -53,8 +54,7 @@ in ''
     (makeExecute "Trickle" (scriptsCmd "trickle"))
     (makeExecute "Whalebird" "whalebird")
     "${sep}"
-    (makeExecute "KeePassXC" "keepassxc")
-    (makeExecute "Bitwarden" "bitwarden")
+    (makeExecute "1password" "1password")
   ]}
 
   ${makeMenu "applications-file" "Files" [
@@ -141,7 +141,7 @@ in ''
   ${makeMenu "system-actions" "System" [
     (makeAction "Reconfigure" "Reconfigure")
     (makeExecute "Lock" "i3lock-fancy")
-    (makeAction "Logout" "Exit")
+    (makeExecute "Logout" "loginctl terminate-user nyarla")
     (makeExecute "Reboot" "systemctl reboot")
   ]}
 

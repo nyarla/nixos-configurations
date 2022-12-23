@@ -106,9 +106,11 @@ in {
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
     ../config/nixos/nixpkgs.nix
+    ../config/security/1password.nix
     ../config/security/clamav.nix
     ../config/security/firewall-home.nix
     ../config/security/gnupg.nix
+    ../config/security/yubikey.nix
     ../config/tools/editors.nix
     ../config/tools/git.nix
     ../config/user/nyarla.nix

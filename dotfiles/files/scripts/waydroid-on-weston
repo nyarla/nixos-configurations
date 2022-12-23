@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+env SHELL=/bin/sh pkexec sh -c 'sudo systemctl restart waydroid-container' 
+
+weston &
+westonPID=$!
+
+export XDG_SESSION_TYPE=wayland
+export WAYLAND_DISPLAY=wayland-1
+
+waydroid session stop || true
+waydroid session start &
+
+
+wait $westonPID
+
+waydroid session stop

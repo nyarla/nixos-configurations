@@ -53,7 +53,7 @@
     defaults = {
       email = "nyarla@kalaclista.com";
       reloadServices = [ "nginx" ];
-      renewInterval = "2weeks";
+      renewInterval = "*-*-14,28 00:00:00";
     };
     certs."home.thotep.net" = {
       server = "https://acme-v02.api.letsencrypt.org/directory";

@@ -1,4 +1,4 @@
-_:
+{ isMe, ... }:
 let
   makeExecute = label: command: ''
     <item label="${label}">
@@ -41,9 +41,11 @@ in ''
 
   ${makeMenu "applications-main" "Main" [
     (makeExecute "mlterm" "mlterm")
-    (makeExecute "virt-manager" "virt-manager")
-    (makeExecute "weston" (scriptsCmd "waydroid-on-weston"))
-    (makeExecute "waydroid" "waydroid show-full-ui")
+    (isMe ''
+      ${makeExecute "virt-manager" "virt-manager"}
+      ${makeExecute "weston" (scriptsCmd "waydroid-on-weston")}
+      ${makeExecute "waydroid" "waydroid show-full-ui"}
+    '')
   ]}
 
   ${makeMenu "applications-web" "Web" [
@@ -51,7 +53,7 @@ in ''
     (makeExecute "Thunderbird" "thunderbird")
     (makeExecute "Google Chrome" "google-chrome-stable")
     "${sep}"
-    (makeExecute "Trickle" (scriptsCmd "trickle"))
+    (isMe "${makeExecute "Trickle" (scriptsCmd "trickle")}")
     (makeExecute "Whalebird" "whalebird")
     "${sep}"
     (makeExecute "1password" "1password")
@@ -145,13 +147,15 @@ in ''
     (makeExecute "Reboot" "systemctl reboot")
   ]}
 
-  ${makeMenu "root-menu" "Labwc" [
+  ${makeMenu "root-menu" "Openbox" [
     (makeMenuItem "applications-main")
     (makeMenuItem "applications-file")
     "${sep}"
     (makeMenuItem "applications-web")
-    (makeMenuItem "applications-multimedia")
-    (makeMenuItem "applications-daw")
+    (isMe ''
+      ${makeMenuItem "applications-multimedia"}
+      ${makeMenuItem "applications-daw"}
+    '')
     "${sep}"
     (makeMenuItem "applications-office")
     (makeMenuItem "applications-chat")

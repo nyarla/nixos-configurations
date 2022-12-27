@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
   sxhkdrc = pkgs.writeText "sxhkdrc" ''
     super + l
@@ -37,6 +37,8 @@ let
     exit 0
   '';
 
+  isMe = src: if (config.home.username == "nyarla") then src else "";
+  isNotMe = src: if (config.home.username != "nyarla") then src else "";
 in {
   home.packages = with pkgs;
     [
@@ -86,9 +88,11 @@ in {
   xdg.configFile = {
     # openbox
     "openbox/autostart".source = toString (with pkgs;
-      (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
+      (import ./autostart.nix) {
+        inherit fetchurl writeShellScript pkgs isMe isNotMe;
+      });
 
-    "openbox/menu.xml".text = (import ./menu.nix) { };
+    "openbox/menu.xml".text = (import ./menu.nix { inherit lib isMe isNotMe; });
 
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
       export GTK2_RC_FILES=$HOME/.gtkrc-2.0
@@ -101,7 +105,7 @@ in {
       export QT_QPA_PLATFORMTHEME=gnome
     '');
 
-    "openbox/rc.xml".text = (import ./rc.nix) { inherit lib; };
+    "openbox/rc.xml".text = (import ./rc.nix) { inherit isMe isNotMe; };
 
     # sx
     "sx/sxrc".source = toString sxrc;

@@ -155,10 +155,6 @@ in {
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_10;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
   boot.kernelParams = [
-    # WiFi
-    "iwlwifi.power_save=0"
-    "iwlmvm.power_scheme=1"
-
     # CPU
     "noibrs"
     "pti=off"

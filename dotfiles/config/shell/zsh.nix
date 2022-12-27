@@ -4,19 +4,20 @@
     autocd = true;
     shellAliases = {
       "cd" = "__cd";
+      "edit" = "make -f ~/.config/nvim/Makefile edit";
       "fbterm" = "fcitx5 -rd >/dev/null 2>&1 ; fbterm -i fcitx5-fbterm";
-      "ls" = "ls --color -F";
       "l" = "ls --color -F -la";
       "lefthook-install" =
         "cp $HOME/local/githooks/lefthook.yml . && cp -R $HOME/local/githooks/.lefthook . && lefthook install -f";
-      "nvim-resume" = "pkill -SIGCONT nvim";
-      "rm" = "trash";
-      "nixos-upgrade" =
-        ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
+      "ls" = "ls --color -F";
       "nixos-apply" =
         ''sudo nixos-rebuild switch --flake "/etc/nixos#$(hostname)"'';
       "nixos-build" =
         ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
+      "nixos-upgrade" =
+        ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
+      "nvim-resume" = "pkill -SIGCONT nvim";
+      "rm" = "trash";
     };
     sessionVariables = {
       FAKE_RELEASE = 1;

@@ -17,6 +17,40 @@
           src = inputs.nixpkgs;
         };
     in {
+      # nixos custom recovery
+      nixos-recovery = let
+        name = "nixpkgs-custom-recovery";
+        system = "x86_64-linux";
+        patches = [ ./patches/qgnomeplatform-qt6.patch ];
+        nixpkgs = applyPatch { inherit name system patches; };
+        nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
+      in nixosSystem {
+        inherit system;
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix"
+          ./system/profile/Recovery.nix
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.nixos = import ./dotfiles/user/nixos.nix;
+          }
+
+          (_: {
+            nix.nixPath = [
+              "nixpkgs=${nixpkgs}"
+              "nixos-config=/etc/nixos/configuration.nix"
+              "/nix/var/nix/profiles/per-user/root/channels"
+            ];
+            nixpkgs.overlays =
+              [ (import ./pkgs) (import ./pkgs/temporary.nix) ];
+            system.stateVersion =
+              (import ./system/config/nixos/version.nix).stateVersion;
+          })
+        ];
+      };
+
       # NyZen9
       nixos = let
         name = "nixpkgs-custom-NyZen9";

@@ -66,6 +66,8 @@ let
     modprobe nvidia
   '';
 
+  btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" ];
+  btrfsRWOnly = [ "noexec" "nosuid" "nodev" ];
 in {
   imports = [
     ../config/audio/daw.nix
@@ -87,7 +89,7 @@ in {
     ../config/keyboard/zinc.nix
     ../config/linux/console.nix
     ../config/linux/dbus.nix
-    ../config/linux/docker.nix
+    #../config/linux/docker.nix
     ../config/linux/filesystem.nix
     ../config/linux/hardware.nix
     ../config/linux/kvm.nix
@@ -133,10 +135,15 @@ in {
   boot.loader.systemd-boot.consoleMode = "max";
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.postBootCommands = ''
+    mkdir -p /usr
+    ln -sf /etc/persist/usr/share /usr/share
+  '';
+
   # initrd
   boot.initrd.luks.devices = {
     nixos = {
-      device = "/dev/disk/by-uuid/81494384-9f87-4e1c-917a-b5741306fd99";
+      device = "/dev/disk/by-uuid/c79e2e2d-5411-4af3-8951-549c70f922cb";
       preLVM = true;
       allowDiscards = true;
       bypassWorkqueues = true;
@@ -144,7 +151,7 @@ in {
   };
 
   boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+    [ "xhci_pci" "ahci" "nvme" "usb_storage" "uas" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
 
   # tmpfs
@@ -152,7 +159,7 @@ in {
   boot.tmpOnTmpfs = true;
 
   # kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_10;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
   boot.kernelParams = [
     # CPU
@@ -167,24 +174,61 @@ in {
 
   # filesystem
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/84841e74-8b46-4b56-9375-1792eefff803";
-    fsType = "ext4";
+    device = "none";
+    fsType = "tmpfs";
+    options = [ "defaults" "size=8G" "mode=755" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/B0F5-8B2B";
+    device = "/dev/disk/by-uuid/709E-6BDD";
     fsType = "vfat";
   };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/165fa545-d372-4799-b9f5-ffb71f34def6";
-    fsType = "ext4";
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
+    fsType = "btrfs";
+    options = [ "subvol=nix" "noatime" ] ++ btrfsOptions;
   };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/3a0ce4be-abf2-4c3e-9aa1-0845c8d4a114";
-    fsType = "ext4";
+  fileSystems."/etc" = {
+    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
+    fsType = "btrfs";
+    options = [ "subvol=etc" ] ++ btrfsOptions ++ btrfsRWOnly;
   };
+
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
+    fsType = "btrfs";
+    options = [ "subvol=log" ] ++ btrfsOptions ++ btrfsRWOnly;
+  };
+
+  fileSystems."/var/lib" = {
+    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
+    fsType = "btrfs";
+    options = [ "subvol=lib" ] ++ btrfsOptions ++ btrfsRWOnly;
+  };
+
+  fileSystems."/root" = {
+    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
+    fsType = "btrfs";
+    options = [ "subvol=root" ] ++ btrfsOptions ++ btrfsRWOnly;
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
+    fsType = "btrfs";
+    options = [ "subvol=home" ] ++ btrfsOptions ++ btrfsRWOnly;
+  };
+
+  fileSystems."/etc/executable" = {
+    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
+    fsType = "btrfs";
+    options = [ "subvol=executable" ] ++ btrfsOptions;
+  };
+
+  services.btrfs.autoScrub.enable = true;
+  services.btrfs.autoScrub.fileSystems =
+    [ "/nix" "/etc" "/etc/executable" "/var/log" "/var/lib" "/root" "/home" ];
 
   swapDevices = [ ];
 

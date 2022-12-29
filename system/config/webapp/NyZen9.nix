@@ -7,7 +7,6 @@
 
   # postgresql
   services.postgresql.enable = true;
-  services.postgresql.dataDir = "/home/postgres/14";
 
   # TT-RSS
   services.tt-rss = {

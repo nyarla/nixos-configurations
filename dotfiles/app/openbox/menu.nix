@@ -28,11 +28,11 @@ let
     <separator />
   '';
 
-  scripts = "/etc/nixos/dotfiles/files/scripts";
+  scripts = "bash /etc/nixos/dotfiles/files/scripts";
   scriptsCmd = cmd: "${scripts}/${cmd}";
 
   wine = "/etc/nixos/dotfiles/files/wine";
-  wineCmd = app: "${wine}/${app}";
+  wineCmd = app: "bash ${wine}/${app}";
 
   iLokCmd = prefix: "${wine}/iLok ${prefix}";
 in ''

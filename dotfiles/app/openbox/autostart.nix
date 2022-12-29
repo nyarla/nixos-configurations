@@ -26,7 +26,10 @@ in writeShellScript "autostart" ''
 
   hsetroot -fill ${wallpaper} &
   ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE LXQt &
-  xss-lock -- i3lock-fancy &
+
+  ${isMe ''
+    xss-lock -- i3lock-fancy &
+  ''}
 
   ${isMe ''
     if test "$(hostname)" == "nixos"; then

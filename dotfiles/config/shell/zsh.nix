@@ -149,6 +149,8 @@
 
   home.packages = with pkgs; [
     fzy
+    platinum-searcher
+    mmv-go
 
     file
     gawk

@@ -148,6 +148,13 @@ in {
       allowDiscards = true;
       bypassWorkqueues = true;
     };
+
+    dev = {
+      device = "/dev/disk/by-uuid/8590c1c4-daf4-441e-a076-8c9376e4cda8";
+      preLVM = true;
+      allowDiscards = true;
+      bypassWorkqueues = true;
+    };
   };
 
   boot.initrd.availableKernelModules =
@@ -229,6 +236,21 @@ in {
   fileSystems."/etc/nixos" = {
     device = "/etc/executable/etc/nixos";
     options = [ "bind" ];
+  };
+
+  fileSystems."/media/dev/containers" = {
+    device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
+    options = [ "subvol=containers" ] ++ btrfsOptions;
+  };
+
+  fileSystems."/media/dev/executable" = {
+    device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
+    options = [ "subvol=executable" ] ++ btrfsOptions;
+  };
+
+  fileSystems."/media/dev/tmp" = {
+    device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
+    options = [ "subvol=temporary" ] ++ btrfsOptions ++ btrfsRWOnly;
   };
 
   services.btrfs.autoScrub.enable = true;

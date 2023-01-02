@@ -226,6 +226,11 @@ in {
     options = [ "subvol=executable" ] ++ btrfsOptions;
   };
 
+  fileSystems."/etc/nixos" = {
+    device = "/etc/executable/etc/nixos";
+    options = [ "bind" ];
+  };
+
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems =
     [ "/nix" "/etc" "/etc/executable" "/var/log" "/var/lib" "/root" "/home" ];

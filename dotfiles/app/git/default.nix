@@ -23,6 +23,7 @@
         fscache = true;
         preloadindex = true;
         quotepath = false;
+        hooksPath = "/media/env/executable/githooks-v2/hooks";
       };
       credential.helper = "1password -v Development";
     };

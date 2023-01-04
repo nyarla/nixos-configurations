@@ -1,5 +1,5 @@
 # from https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/182580.patch
-From aa7c7bd9e4dc8630d719c3fe741d4c46c20a4cb6 Mon Sep 17 00:00:00 2001
+From 3068cd8b3210c9a4228efd5557ea6ef8ea2bbe24 Mon Sep 17 00:00:00 2001
 From: linsui <linsui555@gmail.com>
 Date: Sun, 23 Oct 2022 21:46:02 +0800
 Subject: [PATCH 1/2] Add gnome theme for qt6
@@ -150,10 +150,10 @@ index cc8ddf43c021b..e8071fad6132c 100644
  
    passthru = {
 diff --git a/pkgs/top-level/all-packages.nix b/pkgs/top-level/all-packages.nix
-index d29ed9613cdda..ffa394892a764 100644
+index bdbc3f6410eb6..d5a8e7a984e51 100644
 --- a/pkgs/top-level/all-packages.nix
 +++ b/pkgs/top-level/all-packages.nix
-@@ -21902,6 +21902,10 @@ with pkgs;
+@@ -22469,6 +22469,10 @@ with pkgs;
  
    qgnomeplatform = libsForQt5.callPackage ../development/libraries/qgnomeplatform { };
  
@@ -164,7 +164,7 @@ index d29ed9613cdda..ffa394892a764 100644
    randomx = darwin.apple_sdk_11_0.callPackage ../development/libraries/randomx { };
  
    remodel = callPackage ../development/tools/remodel {
-@@ -25827,6 +25831,10 @@ with pkgs;
+@@ -26374,6 +26378,10 @@ with pkgs;
  
    adwaita-qt = libsForQt5.callPackage ../data/themes/adwaita-qt { };
  
@@ -176,9 +176,9 @@ index d29ed9613cdda..ffa394892a764 100644
  
    agave = callPackage ../data/fonts/agave { };
 
-From 0027b2777c844bc9d5bcfb3e27c9f0ba7fab2b2c Mon Sep 17 00:00:00 2001
+From b938029cbb0c6afcb22ad1b9b0c440c287d8cd3e Mon Sep 17 00:00:00 2001
 From: linsui <linsui555@gmail.com>
-Date: Sun, 23 Oct 2022 21:46:07 +0800
+Date: Sat, 24 Dec 2022 17:59:15 +0800
 Subject: [PATCH 2/2] rename config.qt5 -> config.qt
 
 ---
@@ -211,28 +211,6 @@ index 27d117238807b..825bf5ba232e2 100644
  ```
  
  ## Custom XKB layouts {#custom-xkb-layouts .unnumbered}
-diff --git a/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml b/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml
-index c17e98983b27d..cf77210916b9e 100644
---- a/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml
-+++ b/nixos/doc/manual/from_md/configuration/x-windows.chapter.xml
-@@ -223,9 +223,9 @@ services.xserver.libinput.touchpad.tapping = false;
-       configuration:
-     </para>
-     <programlisting language="bash">
--qt5.enable = true;
--qt5.platformTheme = &quot;gtk2&quot;;
--qt5.style = &quot;gtk2&quot;;
-+qt.enable = true;
-+qt.platformTheme = &quot;gtk2&quot;;
-+qt.style = &quot;gtk2&quot;;
- </programlisting>
-   </section>
-   <section xml:id="custom-xkb-layouts">
-diff --git a/nixos/modules/config/qt5.nix b/nixos/modules/config/qt.nix
-similarity index 83%
-rename from nixos/modules/config/qt5.nix
-rename to nixos/modules/config/qt.nix
-index 7225388f99d2f..35defb8fbd990 100644
 --- a/nixos/modules/config/qt5.nix
 +++ b/nixos/modules/config/qt.nix
 @@ -4,7 +4,7 @@ with lib;
@@ -302,19 +280,25 @@ index d015e10c11d81..12feb2d96eccb 100644
      enable = true;
      platformTheme = "gnome";
    };
-diff --git a/nixos/modules/module-list.nix b/nixos/modules/module-list.nix
-index 5c59e41bbc087..27ca0a96f8408 100644
---- a/nixos/modules/module-list.nix
-+++ b/nixos/modules/module-list.nix
-@@ -28,7 +28,7 @@
-   ./config/nsswitch.nix
-   ./config/power-management.nix
-   ./config/pulseaudio.nix
--  ./config/qt5.nix
-+  ./config/qt.nix
-   ./config/resolvconf.nix
-   ./config/shells-environment.nix
-   ./config/swap.nix
+diff --git a/nixos/modules/services/x11/desktop-managers/cinnamon.nix b/nixos/modules/services/x11/desktop-managers/cinnamon.nix
+index 08c5625fc7ddd..64c353be772b8 100644
+--- a/nixos/modules/services/x11/desktop-managers/cinnamon.nix
++++ b/nixos/modules/services/x11/desktop-managers/cinnamon.nix
+@@ -197,10 +197,10 @@ in
+       programs.bash.vteIntegration = mkDefault true;
+       programs.zsh.vteIntegration = mkDefault true;
+ 
+-      # Harmonize Qt5 applications under Cinnamon
+-      qt5.enable = true;
+-      qt5.platformTheme = "gnome";
+-      qt5.style = "adwaita";
++      # Harmonize Qt applications under Cinnamon
++      qt.enable = true;
++      qt.platformTheme = "gnome";
++      qt.style = "adwaita";
+ 
+       # Default Fonts
+       fonts.fonts = with pkgs; [
 diff --git a/nixos/modules/services/x11/desktop-managers/gnome.nix b/nixos/modules/services/x11/desktop-managers/gnome.nix
 index 9c1978e362bc7..dadfb421d3a87 100644
 --- a/nixos/modules/services/x11/desktop-managers/gnome.nix

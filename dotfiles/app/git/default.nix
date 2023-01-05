@@ -25,7 +25,7 @@
         quotepath = false;
         hooksPath = "/media/data/executable/githooks-v2/hooks";
       };
-      credential.helper = "1password -v Development";
+      credential.helper = "libsecret";
     };
     ignores = import ./gitignore.nix;
   };

@@ -303,6 +303,11 @@ in {
     options = [ "bind" ];
   };
 
+  fileSystems."/backup/Executable" = {
+    device = "/media/data/executable";
+    options = [ "bind" ];
+  };
+
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
     "/etc/executable"

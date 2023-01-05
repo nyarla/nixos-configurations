@@ -111,6 +111,15 @@ in {
     '';
   });
 
+  platinum-searcher = super.platinum-searcher.overrideAttrs (old: rec {
+    src = super.fetchFromGitHub {
+      owner = "monochromegane";
+      repo = "the_platinum_searcher";
+      rev = "ad20073a3cb5bb354a1fde44ffe5aa331982cbd1";
+      sha256 = "sha256-FNHlALFwMbajaHWOehdSFeQmvZSuCZLdqGqLZ7DF+pI=";
+    };
+  });
+
   thunderbird-bin-unwrapped =
     super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 

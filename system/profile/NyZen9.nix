@@ -149,7 +149,7 @@ in {
       bypassWorkqueues = true;
     };
 
-    dev = {
+    data = {
       device = "/dev/disk/by-uuid/8590c1c4-daf4-441e-a076-8c9376e4cda8";
       preLVM = true;
       allowDiscards = true;
@@ -180,17 +180,21 @@ in {
   ];
 
   # filesystem
+
+  ## root
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
     options = [ "defaults" "size=8G" "mode=755" ];
   };
 
+  ## boot
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/709E-6BDD";
     fsType = "vfat";
   };
 
+  ## persist
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
     fsType = "btrfs";
@@ -215,6 +219,7 @@ in {
     options = [ "subvol=lib" ] ++ btrfsOptions ++ btrfsRWOnly;
   };
 
+  ## home
   fileSystems."/root" = {
     device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
     fsType = "btrfs";
@@ -227,6 +232,7 @@ in {
     options = [ "subvol=home" ] ++ btrfsOptions ++ btrfsRWOnly;
   };
 
+  ## workaround (TODO)
   fileSystems."/etc/executable" = {
     device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
     fsType = "btrfs";
@@ -238,24 +244,102 @@ in {
     options = [ "bind" ];
   };
 
-  fileSystems."/media/dev/containers" = {
+  ## waydroid
+  fileSystems."/home/nyarla/.local/share/waydroid" = {
+    device = "/etc/executable/local/share/waydroid";
+    options = [ "bind" ];
+  };
+
+  ## podman
+  fileSystems."/media/data/containers" = {
     device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
     options = [ "subvol=containers" ] ++ btrfsOptions;
   };
 
-  fileSystems."/media/dev/executable" = {
+  ## env
+  fileSystems."/media/data/executable" = {
     device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
     options = [ "subvol=executable" ] ++ btrfsOptions;
   };
 
-  fileSystems."/media/dev/tmp" = {
+  fileSystems."/media/data/sources" = {
     device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
-    options = [ "subvol=temporary" ] ++ btrfsOptions ++ btrfsRWOnly;
+    options = [ "subvol=sources" ] ++ btrfsOptions ++ btrfsRWOnly;
+  };
+
+  ## backup
+  fileSystems."/backup/Archives" = {
+    device = "/home/nyarla/Archives";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/backup/Calibre" = {
+    device = "/home/nyarla/Calibre";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/backup/Development" = {
+    device = "/home/nyarla/Development";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/backup/Music" = {
+    device = "/home/nyarla/Music";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/backup/Photo" = {
+    device = "/home/nyarla/Photo";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/backup/Documents" = {
+    device = "/home/nyarla/Documents";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/backup/NixOS" = {
+    device = "/etc/executable/etc/nixos";
+    options = [ "bind" ];
   };
 
   services.btrfs.autoScrub.enable = true;
-  services.btrfs.autoScrub.fileSystems =
-    [ "/nix" "/etc" "/etc/executable" "/var/log" "/var/lib" "/root" "/home" ];
+  services.btrfs.autoScrub.fileSystems = [
+    "/etc/executable"
+    "/home"
+    "/media/data/containers"
+    "/media/data/executable"
+    "/media/data/sources"
+    "/nix"
+    "/root"
+    "/var/lib"
+    "/var/log"
+  ];
+
+  services.snapper.configs = let
+    snap = subvolume: {
+      inherit subvolume;
+      extraConfig = ''
+        ALLOW_USERS="nyarla"
+        TIMELINE_CREATE=yes
+        TIMELINE_MIN_AGE="1800"
+        TIMELINE_LIMIT_HOURLY="12"
+        TIMELINE_LIMIT_DAILY="7"
+        TIMELINE_LIMIT_WEEKLY="0"
+        TIMELINE_LIMIT_MONTHLY="0"
+        TIMELINE_LIMIT_YEARLY="0"
+      '';
+    };
+  in {
+    etc = snap "/etc";
+    exe = snap "/etc/executable";
+    home = snap "/home";
+    lib = snap "/var/lib";
+    root = snap "/root";
+
+    e_exec = snap "/media/data/executable";
+    e_srcs = snap "/media/data/sources";
+  };
 
   swapDevices = [ ];
 
@@ -305,7 +389,7 @@ in {
       };
 
       Music = {
-        "path" = "/run/media/nyarla/data/Music";
+        "path" = "/home/nyarla/Music";
         "browseable" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";
@@ -316,7 +400,7 @@ in {
       };
 
       eBooks = {
-        "path" = "/run/media/nyarla/data/local/calibre";
+        "path" = "/home/nyarla/Calibre";
         "browseable" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";
@@ -362,16 +446,9 @@ in {
         set -euo pipefail
 
         export PATH=${lib.makeBinPath (with pkgs; [ restic-run ])}:$PATH
-        export HOME=/home/nyarla
-        export DATA=/run/media/nyarla/data
 
-        cd $DATA
-        for dir in Downloads Music Photo local ; do
-          restic-backup $dir
-        done
-
-        cd $HOME
-        restic-backup Documents
+        cd /backup
+        restic-backup .
 
         exit 0
       '');
@@ -395,7 +472,6 @@ in {
       "^/boot"
       "^/dev"
       "^/home/nyarla/ClamAV"
-      "^/home/postgres"
       "^/lost+found"
       "^/nix"
       "^/proc"

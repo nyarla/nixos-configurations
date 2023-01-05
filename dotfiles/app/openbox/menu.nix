@@ -142,9 +142,8 @@ in ''
 
   ${makeMenu "system-actions" "System" [
     (makeAction "Reconfigure" "Reconfigure")
-    (makeExecute "Lock" "i3lock-fancy")
+    (makeExecute "Lock" "xset dpms force off")
     (makeExecute "Logout" "loginctl terminate-user nyarla")
-    (makeExecute "Reboot" "systemctl reboot")
   ]}
 
   ${makeMenu "root-menu" "Openbox" [

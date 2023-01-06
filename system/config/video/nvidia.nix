@@ -34,4 +34,6 @@ in {
 
   environment.systemPackages = with pkgs;
     [ (cuda-shell.override { linuxPackages = config.boot.kernelPackages; }) ];
+
+  virtualisation.podman.enableNvidia = true;
 }

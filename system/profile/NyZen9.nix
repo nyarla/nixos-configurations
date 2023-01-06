@@ -95,6 +95,7 @@ in {
     ../config/linux/kvm.nix
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
+    ../config/linux/podman.nix
     ../config/linux/process.nix
     ../config/linux/waydroid.nix
     ../config/linux/wine.nix

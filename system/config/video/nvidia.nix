@@ -25,6 +25,8 @@ in {
     setLdLibraryPath = true;
     package = nvidia;
     package32 = nvidia32;
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [ nvidia-vaapi-driver ];
   };
 
   environment.etc."glvnd/egl_vendor.d".source =

@@ -101,6 +101,8 @@ in {
       export LC_ALL=ja_JP.UTF-8
 
       export MOZ_GTK_TITLEBAR_DECORATION=client
+      export MOZ_DISABLE_RDD_SANDBOX=1
+      export NVD_BACKEND=direct
 
       export QT_QPA_PLATFORMTHEME=gnome
     '');

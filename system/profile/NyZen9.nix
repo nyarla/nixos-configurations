@@ -354,6 +354,7 @@ in {
 
   # cpu
   powerManagement.cpuFreqGovernor = "performance";
+  boot.blacklistedKernelModules = [ "acpi-cpufreq" ];
 
   # firmware
   hardware.enableRedistributableFirmware = true;

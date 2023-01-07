@@ -483,6 +483,7 @@ in {
       "^/nix"
       "^/proc"
       "^/sys"
+      ".*?/.snapshots/.*"
     ];
     MaxThreads = 30;
   };

@@ -309,6 +309,11 @@ in {
     options = [ "bind" ];
   };
 
+  fileSystems."/backup/Sources" = {
+    device = "/media/data/sources";
+    options = [ "bind" ];
+  };
+
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
     "/etc/executable"
@@ -515,4 +520,7 @@ in {
       Persistent = true;
     };
   };
+
+  # workaround
+  nixpkgs.config.permittedInsecurePackages = [ "python-2.7.18.6" ];
 }

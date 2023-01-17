@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-export WINEPREFIX=/run/media/nyarla/data/local/wine/Kindle
+export WINEPREFIX=/media/data/executable/wine/Kindle
 export LD_PRELOAD=
 
 wine 'C:\Program Files (x86)\Amazon\Kindle\Kindle.exe' &

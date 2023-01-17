@@ -316,6 +316,7 @@ in {
 
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
+    "/etc"
     "/etc/executable"
     "/home"
     "/media/data/containers"
@@ -336,9 +337,9 @@ in {
         TIMELINE_MIN_AGE="1800"
         TIMELINE_LIMIT_HOURLY="12"
         TIMELINE_LIMIT_DAILY="7"
-        TIMELINE_LIMIT_WEEKLY="0"
-        TIMELINE_LIMIT_MONTHLY="0"
-        TIMELINE_LIMIT_YEARLY="0"
+        TIMELINE_LIMIT_WEEKLY="2"
+        TIMELINE_LIMIT_MONTHLY="1"
+        TIMELINE_LIMIT_YEARLY="1"
       '';
     };
   in {
@@ -420,6 +421,17 @@ in {
         "force user" = "nyarla";
         "guest ok" = "no";
         "read only" = "yes";
+      };
+
+      DAW = {
+        "path" = "/media/data/sources/DAW";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "no";
       };
     };
   };

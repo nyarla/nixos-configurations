@@ -35,7 +35,7 @@
       # nixos custom recovery
       nixos-recovery = nixosSystem {
         arch = "x86_64";
-        patches = [ ./patches/qgnomeplatform-qt6.patch ];
+        patches = [ ];
       } (pkg: {
         modules = [
           "${pkg}/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix"
@@ -65,7 +65,7 @@
       # NyZen9
       nixos = nixosSystem {
         arch = "x86_64";
-        patches = [ ./patches/qgnomeplatform-qt6.patch ];
+        patches = [ ];
       } (pkg: {
         modules = [
           ./system/profile/NyZen9.nix

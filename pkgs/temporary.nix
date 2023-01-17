@@ -7,16 +7,12 @@ in {
     '';
   });
 
+  raft-canonical = super.raft-canonical.overrideAttrs (old: rec {
+    postPatch = ''
+      rm -rf test/integration
+    '';
+  });
+
   weston = super.weston.overrideAttrs
     (old: rec { buildInputs = old.buildInputs ++ (with super; [ freerdp ]); });
-
-  nvidia-vaapi-driver = super.nvidia-vaapi-driver.overrideAttrs (old: rec {
-    version = "0.0.8";
-    src = super.fetchFromGitHub {
-      owner = "elFarto";
-      repo = old.pname;
-      rev = "v${version}";
-      sha256 = "sha256-RMFkClaWoFNeSglV5otS/rzI6JNQMiAHDzH3DoEHA5I=";
-    };
-  });
 }

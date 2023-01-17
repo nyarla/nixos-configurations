@@ -5,9 +5,11 @@
     (deadbeef-with-plugins.override {
       plugins = with pkgs; [ deadbeefPlugins.lyricbar deadbeef-fb ];
     })
-    glib.out
-    picard
-    quodlibet-full
     foliate
+    glib.out
+    jack2
+    picard
+    qjackctl
+    quodlibet-full
   ];
 }

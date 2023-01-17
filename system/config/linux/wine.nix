@@ -6,7 +6,7 @@ let
     wineasio = pkgs.wineasio.override { inherit wine; };
     yabridge = pkgs.yabridge.override { inherit wine; };
     yabridgectl = pkgs.yabridgectl.override { inherit yabridge; };
-  in [ jackass-bin wine pkgs.winetricks wineasio yabridge yabridgectl ];
+  in [ wine ];
 in {
   environment.systemPackages = wineApps ++ (with pkgs; [ wine-run ]);
   # workaround for kindle 1.16

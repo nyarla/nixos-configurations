@@ -14,6 +14,14 @@ let
     sha256 = "0cqjkgp30428c1yy8s4418k4qz0ycr6fzcg4rdi41wkh5g1hzjnl";
   };
 in writeShellScript "autostart" ''
+  for rc in $(ls /etc/profile.d); do
+    . /etc/profile.d/$rc
+  done
+
+  for rc in $(ls $HOME/.config/profile.d); do
+    . $HOME/.config/profile.d/$rc
+  done
+
   export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
 
   dbus-update-activation-environment --systemd --all

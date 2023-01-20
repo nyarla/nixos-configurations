@@ -164,6 +164,8 @@ in ''
           (keybind "F7" [ (exec "gyazo capture") ])
           (keybind "F10" [ (exec "gyazo screenshot") ])
 
+          (keybind "C-W-q" [ (exec "xset dpms force off") ])
+
           (keybind "A-Left" [
             (action "UnmaximizeFull" [ ])
             (action "MoveResizeTo" [

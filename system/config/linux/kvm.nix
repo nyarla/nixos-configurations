@@ -29,10 +29,10 @@ in {
   boot.kernelParams = [ "iommu=pt" "kvm.ignore_msrs=1" "pcie_aspm=off" ];
 
   system.activationScripts.libvirt-hooks.text = ''
-    ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks
+    ln -Tfs /etc/executable/etc/libvirt/hooks /var/lib/libvirt/hooks
   '';
 
-  environment.etc."libvirt/hooks/qemu" = {
+  environment.etc."executable/etc/libvirt/hooks/qemu" = {
     source = "${qemu_hook}/bin/qemu";
     mode = "0755";
   };

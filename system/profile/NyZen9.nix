@@ -2,10 +2,10 @@
 let
   # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/prepare/begin/hugepage.sh"
   kvmHugePageSetupScript = pkgs.writeShellScript "hugepage-setup.sh" ''
-    set -xeuo pipefail
+    set -x
 
-    echo 35200 > /proc/sys/vm/nr_hugepages
-    if test 35200 != $(cat /proc/sys/vm/nr_hugepages); then
+    echo 32800 > /proc/sys/vm/nr_hugepages
+    if test 32800 != $(cat /proc/sys/vm/nr_hugepages); then
       echo "failed to enable hugepage"
       echo 0 > /proc/sys/vm/nr_hugepages
       exit 1
@@ -19,51 +19,71 @@ let
 
   # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/prepare/begin/vfio.sh"
   kvmVFIOSetupScript = pkgs.writeShellScript "vfio-setup.sh" ''
-    set -xeuo pipefail
+    set -x
     export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
 
-    modprobe -r nvidia_drm nvidia_modeset nvidia_uvm nvidia
+    # shutdown display manager
+    if systemctl is-active display-manager ; then
+      systemctl stop display-manager
+    fi
 
-    echo 0 > /sys/class/vtconsole/vtcon0/bind
-    echo 0 > /sys/class/vtconsole/vtcon1/bind
+    while systemctl is-active --quiet display-manager; do
+      sleep 1
+    done
 
-    echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/unbind
+    # unbind vtcon
+    for i in $(seq 0 16); do
+      if test "$(grep -c 'frame buffer' "/sys/class/vtconsole/vtcon''${i}/name")" == 1; then
+        echo 0 > /sys/class/vtconsole/vtcon''${i}/bind
+        echo "''${i}" >> /tmp/vfio-bound-consoles
+      fi
+    done
 
-    sleep 2
+    # unload gpu drivers
+    echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
+    modprobe -r nvidia_uvm
+    modprobe -r nvidia_drm
+    modprobe -r nvidia_modeset
+    modprobe -r nvidia
+    modprobe -r drm_kms_helper
+    modprobe -r drm
 
+    # load vfio drivers
     modprobe vfio
-    modprobe vfio_iommnu_type1
     modprobe vfio_pci
-
-    virsh nodedev-detach pci_0000_07_00_0
-    virsh nodedev-detach pci_0000_07_00_1
-    virsh nodedev-detach pci_0000_07_00_2
-    virsh nodedev-detach pci_0000_07_00_3
+    modprobe vfio_iommu_type1
   '';
 
   # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/release/end/vfio.sh"
   kvmVFIOShutdownScript = pkgs.writeShellScript "vfio-shutdown.sh" ''
-    set -xeuo pipefail
+    set -x
     export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
 
-    virsh nodedev-reattach pci_0000_07_00_3
-    virsh nodedev-reattach pci_0000_07_00_2
-    virsh nodedev-reattach pci_0000_07_00_1
-    virsh nodedev-reattach pci_0000_07_00_0
-
+    # unload vfio kernel modules
     modprobe -r vfio_pci
-    modprobe -r vfio_iommnu_type1
+    modprobe -r vfio_iommu_type1
     modprobe -r vfio
 
-    echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/bind
-
-    echo 1 > /sys/class/vtconsole/vtcon0/bind
-    echo 1 > /sys/class/vtconsole/vtcon1/bind
-
-    modprobe nvidia_drm
-    modprobe nvidia_modeset
-    modprobe nvidia_uvm
+    # load gpu drivers
+    modprobe drm
+    modprobe drm_kms_helper
     modprobe nvidia
+    modprobe nvidia_modeset
+    modprobe nvidia_drm
+    modprobe nvidia_uvm
+
+    # start display manager
+    systemctl start display-manager
+
+    # attach vtcon
+    input="/tmp/vfio-bound-consoles"
+    while read -r idx ; do
+      if -x "/sys/class/vtconsole/vtcon''${idx}"; then
+        if test "$(grep -c 'frame buffer' "/sys/class/vtconsole/vtcon''${idx}/name")" == 1; then
+          echo 1 > /sys/class/vtconsole/vtcon''${idx}/bind
+        fi
+      fi
+    done < $input
   '';
 
   btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" ];
@@ -176,8 +196,8 @@ in {
     "kpti=off"
 
     # KVM
-    "amd_iommu=on"
     "vfio-pci.ids=1022:149c,10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
+    "efifb:off"
   ];
 
   # filesystem
@@ -334,6 +354,7 @@ in {
       extraConfig = ''
         ALLOW_USERS="nyarla"
         TIMELINE_CREATE=yes
+        TIMELINE_CLEANUP=yes
         TIMELINE_MIN_AGE="1800"
         TIMELINE_LIMIT_HOURLY="12"
         TIMELINE_LIMIT_DAILY="7"
@@ -384,7 +405,7 @@ in {
       netbios name = nixos
       security = user
       use sendfile = yes
-      hosts allow = 192.168.240.0/24 localhost
+      hosts allow = 192.168.240.0/24 192.168.122.0/24 localhost
       hosts deny = 0.0.0.0/0
       guest account = nobody
       map to guest = bad user
@@ -532,6 +553,19 @@ in {
       Persistent = true;
     };
   };
+
+  # VM
+
+  ## Win10
+  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/prepare/begin/hugepage.sh".source =
+    (toString kvmHugePageSetupScript);
+  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/hugepage.sh".source =
+    (toString kvmHugePageShutdownScript);
+
+  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/prepare/begin/vfio.sh".source =
+    (toString kvmVFIOSetupScript);
+  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/vfio.sh".source =
+    (toString kvmVFIOShutdownScript);
 
   # workaround
   nixpkgs.config.permittedInsecurePackages = [ "python-2.7.18.6" ];

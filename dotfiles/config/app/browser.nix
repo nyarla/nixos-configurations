@@ -1,11 +1,6 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    bitwarden
-    brave
-    firefox-bin
-    google-chrome
-    keepassxc
-    thunderbird-bin
-    whalebird
-  ];
+  programs.firefox.enable = true;
+  programs.firefox.package = pkgs.firefox-bin;
+
+  home.packages = with pkgs; [ brave google-chrome thunderbird-bin whalebird ];
 }

@@ -71,11 +71,11 @@ in {
 
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
       export GTK2_RC_FILES=$HOME/.gtkrc-2.0
+      export GTK_THEME=Arc
 
       export LANG=ja_JP.UTF_8
       export LC_ALL=ja_JP.UTF-8
 
-      export MOZ_GTK_TITLEBAR_DECORATION=client
       export MOZ_DISABLE_RDD_SANDBOX=1
       export NVD_BACKEND=direct
 

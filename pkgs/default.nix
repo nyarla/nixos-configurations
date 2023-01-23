@@ -28,6 +28,7 @@ in {
   sononym-bin = require ./sononym-bin { };
   sysmontask = require ./sysmontask { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
+  tooth = require ./tooth { };
   wayout = require ./wayout { };
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };

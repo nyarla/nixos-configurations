@@ -55,6 +55,7 @@ in ''
     "${sep}"
     (isMe "${makeExecute "Trickle" (scriptsCmd "trickle")}")
     (makeExecute "Whalebird" "whalebird")
+    (makeExecute "Tooth" "dev.geopjr.tooth")
     "${sep}"
     (makeExecute "1password" "1password")
   ]}

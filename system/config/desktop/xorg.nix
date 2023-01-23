@@ -41,6 +41,7 @@ in {
       "class_g = 'Thunderbird' && argb"
       "class_g %= '*.exe' && argb"
       "class_g %= '*.exe.*' && argb"
+      "override_redirect = true"
     ];
 
     fade = true;

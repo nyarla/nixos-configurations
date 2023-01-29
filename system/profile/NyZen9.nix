@@ -186,6 +186,9 @@ in {
   boot.cleanTmpDir = true;
   boot.tmpOnTmpfs = true;
 
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 40;
+
   # kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];

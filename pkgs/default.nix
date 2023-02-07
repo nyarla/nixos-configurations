@@ -21,6 +21,7 @@ in {
   locale-eaw = require ./locale-eaw { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   noto-fonts-jp = require ./noto-fonts-jp { };
+  novelai-manager = require ./novelai-manager { };
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
   sfwbar = require ./sfwbar { };

@@ -1,0 +1,26 @@
+diff --git a/lib/page/main_gallery_page.dart b/lib/page/main_gallery_page.dart
+index 46ca692..387d69e 100644
+--- a/lib/page/main_gallery_page.dart
++++ b/lib/page/main_gallery_page.dart
+@@ -95,6 +95,8 @@ class _MainGalleryPageState extends State<MainGalleryPage> {
+                 launchUrlString(url);
+               } else if (Platform.isMacOS) {
+                 launchUrl(Uri.parse(url));
++              } else if (Platform.isLinux) {
++                launchUrlString(url);
+               }
+             },
+             icon: const Icon(Icons.folder),
+diff --git a/lib/util/db_util.dart b/lib/util/db_util.dart
+index a8bbbb2..84c0ac1 100644
+--- a/lib/util/db_util.dart
++++ b/lib/util/db_util.dart
+@@ -12,7 +12,7 @@ class DBUtil {
+     /// macOS向けは.app単体で配布する形式なのとファイルアクセス権限周りの関係で
+     /// Application Supportのディレクトリにデータベースを保存するようにする
+     /// 「~/Library/Application Support/com.riku1227.novelaiManager」
+-    if (Platform.isMacOS) {
++    if (Platform.isMacOS || Platform.isLinux) {
+       exeFolderPath = await getApplicationSupportDirectory();
+     }
+ 

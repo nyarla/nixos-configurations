@@ -3,19 +3,14 @@ let
   wine-run = writeShellScript "wine-run" ''
     export LD_PRELOAD=
 
-    case "$(pwd)/" in
-      /run/media/nyarla/data/local/daw/daw/*/*/)
-        export WINEPREFIX=$(pwd)
-        ;;
-      /run/media/nyarla/data/local/wine/*/)
-        export WINEPREFIX=$(pwd)
-        ;;
-      *)
-        echo 'This path does not contain wine prefix'
-        exit 1
-    esac
+    if ! test -e $(pwd)/drive_c ; then
+      echo 'This path is not wine prefix' >&2
+      exit 1
+    fi
 
-    exec $@
+    export WINEPREFIX=$(pwd)
+
+    exec "''${@:-}"
   '';
 
   wine-setup = writeShellScript "wine-setup" ''

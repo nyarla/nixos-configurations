@@ -53,6 +53,7 @@ in {
       obconf
       openbox
       perl
+      s5cmd
       sxhkd
       sysmontask
       wmctrl

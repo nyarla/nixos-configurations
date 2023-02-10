@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+exec 2>&1 >$HOME/.cache/r2yazo.log
+
+export S3_ENDPOINT_URL="op://Application/R2Yazo/S3_ENDPOINT_URL" 
+export AWS_ACCESS_KEY_ID="op://Application/R2Yazo/AWS_ACCESS_KEY_ID"
+export AWS_SECRET_ACCESS_KEY="op://Application/R2Yazo/AWS_SECRET_ACCESS_KEY"
+
+export R2YAZO_URL="https://zo.kalaclista.com"
+export R2YAZO_DIR="${HOME}/Pictures/R2Yazo"
+
+filename() {
+  echo $(date +%Y/%m/%d/%H-%M-%S).webp
+  return 0
+}
+
+push-to-r2() {
+  op run -- bash -c 'env s5cmd --endpoint-url $S3_ENDPOINT_URL sync --delete ${R2YAZO_DIR}/* s3://kalaclista-r2yazo/'
+}
+
+crop() {
+  maim -u -s -f webp "${1}"
+}
+
+capture() {
+  local wid="$(xdotool selectwindow)"
+  maim -u -f webp -i $wid "${1}"
+}
+
+screenshot() {
+  maim -u -f webp "${1}"
+}
+
+main() {
+  local action=$1 fn="$(filename)"
+  local fp="${R2YAZO_DIR}/${fn}"
+
+  mkdir -p "$(dirname "${fp}")"
+
+  case $action in
+    capture) capture "${fp}" ;;
+    crop) crop "${fp}" ;;
+    screenshot) screenshot "${fp}" ;;
+    push) push-to-r2 ; exit 0 ;;
+    *) exit 1 ;;
+  esac
+
+  push-to-r2 && xdg-open "${R2YAZO_URL}/${fn}"
+}
+
+main "${@:-}"

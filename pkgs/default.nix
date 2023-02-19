@@ -10,6 +10,7 @@ in {
   dexed = require ./dexed { };
   fcitx5-fbterm = require ./fcitx5-fbterm { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
+  fedistar = require ./fedistar { };
   flatery-icon-theme = require ./flatery-icon-theme { };
   galendae = require ./galendae { };
   git-credential-keepassxc = require ./git-credential-keepassxc { };

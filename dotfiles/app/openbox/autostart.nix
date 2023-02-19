@@ -40,5 +40,6 @@ in writeShellScript "autostart" ''
 
   ${isMe ''
     calibre --start-in-tray &
+    1password --silent &
   ''}
 ''

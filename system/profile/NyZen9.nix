@@ -393,7 +393,7 @@ in {
   # -------
 
   # avahi
-  services.avahi.interfaces = [ "wlan0" ];
+  services.avahi.interfaces = [ "wlp5s0" ];
 
   # samba
   services.samba = {
@@ -524,7 +524,7 @@ in {
       "^/nix"
       "^/proc"
       "^/sys"
-      ".*?/.snapshots/.*"
+      ".snapshots/[0-9]+"
     ];
     MaxThreads = 30;
   };
@@ -571,5 +571,5 @@ in {
     (toString kvmVFIOShutdownScript);
 
   # workaround
-  nixpkgs.config.permittedInsecurePackages = [ "python-2.7.18.6" ];
+  nixpkgs.config.permittedInsecurePackages = [ "electron-19.0.7" ];
 }

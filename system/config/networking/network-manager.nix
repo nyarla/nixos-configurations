@@ -7,9 +7,11 @@
     enable = true;
     plugins = with pkgs; [ networkmanager-openvpn ];
     wifi = {
-      backend = "iwd";
+      backend = "wpa_supplicant";
       powersave = false;
     };
     unmanaged = [ "docker0" "virbr0" "tailscale0" "waydroid0" ];
   };
+
+  networking.enableIPv6 = false;
 }

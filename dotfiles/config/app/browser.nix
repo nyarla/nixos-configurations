@@ -4,6 +4,7 @@
 
   home.packages = with pkgs; [
     brave
+    fedistar
     google-chrome
     thunderbird-bin
     tooth

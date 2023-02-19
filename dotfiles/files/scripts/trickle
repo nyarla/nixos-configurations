@@ -3,4 +3,5 @@
 set -euo pipefail
 
 cd $HOME
-nix run nixpkgs#electron_20 -- ~/.local/share/trickle/app.asar
+export NIXPKGS_ALLOW_INSECURE=1
+nix run nixpkgs#electron_20 --impure -- ~/.local/share/trickle/app.asar

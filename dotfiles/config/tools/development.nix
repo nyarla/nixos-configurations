@@ -3,8 +3,6 @@
     # cloud toolchain
     google-cloud-sdk
     awscli
-    goaccess
-    gh
     flyctl
 
     # container toolchain
@@ -63,9 +61,6 @@
     mercurial
     subversion
     cvs
-
-    # website
-    hugo
 
     # misc
     mecab

@@ -4,6 +4,7 @@
     cpio
     dmg2img
     gnutar
+    lzip
     nodePackages.asar
     p7zip
     pbzx

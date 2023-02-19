@@ -50,34 +50,35 @@ in ''
 
   ${makeMenu "applications-web" "Web" [
     (makeExecute "Firefox" "firefox")
-    (makeExecute "Thunderbird" "thunderbird")
-    (makeExecute "Google Chrome" "google-chrome-stable")
-    "${sep}"
-    (isMe "${makeExecute "Trickle" (scriptsCmd "trickle")}")
-    (makeExecute "Whalebird" "whalebird")
-    (makeExecute "Tooth" "dev.geopjr.tooth")
+    (isMe ''
+      ${(makeExecute "Thunderbird" "thunderbird")}
+      ${(makeExecute "Google Chrome" "google-chrome-stable")}
+    '')
     "${sep}"
     (makeExecute "1password" "1password")
+    (isMe ''
+      ${sep}
+      ${makeExecute "Trickle" (scriptsCmd "trickle")}
+      ${(makeExecute "Fedistar"
+        "env WEBKIT_DISABLE_COMPOSITING_MODE=1 fedistar")}
+      ${(makeExecute "Whalebird" "whalebird")}
+      ${(makeExecute "Tooth" "dev.geopjr.tooth")}
+    '')
+
   ]}
 
   ${makeMenu "applications-file" "Files" [
     (makeExecute "Thunar" "thunar")
     (makeExecute "Atril" "atril")
     (makeExecute "Pluma" "pluma")
-    (makeExecute "GHex" "ghex")
   ]}
 
   ${makeMenu "applications-multimedia" "Multimedia" [
     (makeExecute "Calibre" "calibre")
-    (makeExecute "QuodLibet" "quodlibet")
     (makeExecute "Picard" "picard")
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))
     "${sep}"
-    (makeExecute "Audacity" "audacity")
-    (makeExecute "DeaDBeeF" "deadbeef")
-    "${sep}"
-    (makeExecute "Kindle" (wineCmd "Kindle"))
-    (makeExecute "Amazon Music" (wineCmd "AmazonMusic"))
+    (makeExecute "Tenacity" "tenacity")
   ]}
 
   ${makeMenu "applications-chat" "Chat" [
@@ -126,10 +127,10 @@ in ''
     (makeMenuItem "applications-web")
     (isMe ''
       ${makeMenuItem "applications-multimedia"}
+      ${sep}
+      ${(makeMenuItem "applications-office")}
+      ${(makeMenuItem "applications-chat")}
     '')
-    "${sep}"
-    (makeMenuItem "applications-office")
-    (makeMenuItem "applications-chat")
     "${sep}"
     (makeMenuItem "system-utils")
     (makeMenuItem "system-actions")

@@ -13,7 +13,6 @@ export WAYLAND_DISPLAY=wayland-1
 waydroid session stop || true
 waydroid session start &
 
-
 wait $westonPID
 
 waydroid session stop

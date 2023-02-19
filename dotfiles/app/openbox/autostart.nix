@@ -36,9 +36,9 @@ in writeShellScript "autostart" ''
 
   ${isMe ''
     xss-lock -- i3lock-fancy &
-  ''}
 
-  ${isMe ''
+    kdeconnect-indicator &
+
     calibre --start-in-tray &
     1password --silent &
   ''}

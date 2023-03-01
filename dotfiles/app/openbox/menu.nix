@@ -62,7 +62,7 @@ in ''
       ${(makeExecute "Fedistar"
         "env WEBKIT_DISABLE_COMPOSITING_MODE=1 fedistar")}
       ${(makeExecute "Whalebird" "whalebird")}
-      ${(makeExecute "Tooth" "dev.geopjr.tooth")}
+      ${(makeExecute "Tooth" "dev.geopjr.Tooth")}
     '')
 
   ]}

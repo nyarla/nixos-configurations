@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "GeopJr";
     repo = "Tooth";
-    rev = "ea4f976cf0bb194bb046df99a4200d0ca65e49c4";
-    sha256 = "sha256-owUbCKZAThOSK2c0dfqApfOslcKX+zcx3yGvQmoVp3o=";
+    rev = "b7155df0ce7ea245fb443ee0a0946b9051987241";
+    sha256 = "sha256-XlgNAkCyvCTQjZwskvEAHRw9eADRM2WpJ4eeOHFBtzA=";
   };
 
   buildInputs = [

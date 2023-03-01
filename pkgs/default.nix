@@ -8,6 +8,7 @@ in {
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
+  elk-native = require ./elk-native { };
   fcitx5-fbterm = require ./fcitx5-fbterm { };
   fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   fedistar = require ./fedistar { };

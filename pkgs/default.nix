@@ -156,6 +156,22 @@ in {
     };
   });
 
+  whalebird = super.whalebird.overrideAttrs (old: rec {
+    version = "5.0.0-rc3";
+    src = super.fetchurl {
+      url =
+        "https://github.com/h3poteto/whalebird-desktop/releases/download/v5.0.0-rc.3/Whalebird-5.0.0-rc.3-linux-x64.tar.bz2";
+      sha256 = "0md0ip50333nhavz6pg0981ng8rhnf383wyjzf071m4xcg71zp27";
+    };
+
+    unpackPhase = ''
+      mkdir -p opt
+      tar -xf ${src} -C opt
+      # remove the version/target suffix from the untar'd directory
+      mv opt/Whalebird-* opt/Whalebird
+    '';
+  });
+
   wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
     version = "0_16_0_mod";
     buildInputs = old.buildInputs

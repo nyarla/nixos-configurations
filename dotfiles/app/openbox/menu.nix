@@ -61,6 +61,7 @@ in ''
       ${makeExecute "Trickle" (scriptsCmd "trickle")}
       ${(makeExecute "Fedistar"
         "env WEBKIT_DISABLE_COMPOSITING_MODE=1 fedistar")}
+              ${(makeExecute "Elk" "env WEBKIT_DISABLE_COMPOSITING_MODE=1 elk")}
       ${(makeExecute "Whalebird" "whalebird")}
       ${(makeExecute "Tooth" "dev.geopjr.Tooth")}
     '')

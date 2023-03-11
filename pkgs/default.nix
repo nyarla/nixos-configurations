@@ -157,21 +157,23 @@ in {
     };
   });
 
-  whalebird = super.whalebird.overrideAttrs (old: rec {
-    version = "5.0.0-rc3";
-    src = super.fetchurl {
-      url =
-        "https://github.com/h3poteto/whalebird-desktop/releases/download/v5.0.0-rc.3/Whalebird-5.0.0-rc.3-linux-x64.tar.bz2";
-      sha256 = "0md0ip50333nhavz6pg0981ng8rhnf383wyjzf071m4xcg71zp27";
-    };
+  whalebird =
+    (super.whalebird.override { electron = super.electron_20; }).overrideAttrs
+    (old: rec {
+      version = "5.0.2-beta1";
+      src = super.fetchurl {
+        url =
+          "https://github.com/h3poteto/whalebird-desktop/releases/download/v5.0.2-beta.1/Whalebird-5.0.2-beta.1-linux-x64.tar.bz2";
+        sha256 = "1q0r976ivdsm9yyj8z8ans5jfsqzl1p03wp4r6cnghmniz8sism6";
+      };
 
-    unpackPhase = ''
-      mkdir -p opt
-      tar -xf ${src} -C opt
-      # remove the version/target suffix from the untar'd directory
-      mv opt/Whalebird-* opt/Whalebird
-    '';
-  });
+      unpackPhase = ''
+        mkdir -p opt
+        tar -xf ${src} -C opt
+        # remove the version/target suffix from the untar'd directory
+        mv opt/Whalebird-* opt/Whalebird
+      '';
+    });
 
   wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
     version = "0_16_0_mod";

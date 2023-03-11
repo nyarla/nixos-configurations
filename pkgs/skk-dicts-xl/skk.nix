@@ -17,7 +17,7 @@
   {
     name = "SKK-JISYO.L";
     url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L";
-    sha256 = "0kig44qc1nn0kgm07pg0lhwr1ii443pzaz5v9804imlj0963j7qa";
+    sha256 = "0ad0nx80dk3wwmy7iildgvixjb9j8vkgaqqlh6n8dhkkb60hcrd6";
   }
   {
     name = "SKK-JISYO.fullname";

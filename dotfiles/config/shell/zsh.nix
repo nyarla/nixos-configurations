@@ -60,9 +60,6 @@
         source /etc/profile.d/nix-ld
       fi
 
-      # change cursor to underline
-      echo -en '\033[3 q'
-
       # utility function
       function has() {
         type "''${1:-}" >/dev/null 2>&1

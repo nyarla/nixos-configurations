@@ -20,7 +20,6 @@ _: {
     ../config/tools/development.nix
 
     ../app/git
-    ../app/mlterm
     ../app/openbox
   ];
 

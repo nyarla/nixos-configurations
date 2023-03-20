@@ -40,7 +40,7 @@ in ''
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
 
   ${makeMenu "applications-main" "Main" [
-    (makeExecute "mlterm" "mlterm")
+    (makeExecute "terminal" "xfce4-terminal")
     (isMe ''
       ${makeExecute "virt-manager" "virt-manager"}
       ${makeExecute "weston" (scriptsCmd "waydroid-on-weston")}

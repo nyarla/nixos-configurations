@@ -17,7 +17,7 @@
       default-channel-map = "front-left,front-right";
       default-fragments = 2;
       default-sample-channels = 2;
-      default-sample-format = "s32le";
+      default-sample-format = "s24le";
       default-sample-rate = 192000;
       flat-volumes = "no";
       high-priority = "yes";
@@ -35,8 +35,4 @@
   };
 
   # ignore midi devices
-  services.udev.extraRules = ''
-    ATTRS{idVendor}=="1acc", ATTRS{idProduct}=="1a0f", ENV{PULSE_IGNORE}="1"
-    ATTRS{idVendor}=="1235", ATTRS{idProduct}=="8205", ENV{PULSE_IGNORE}="1"
-  '';
 }

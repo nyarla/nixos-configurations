@@ -11,8 +11,8 @@
     actionlint
 
     # compiler
-    binutils
     clang-tools
+    binutils
     gdb
     pkg-config
     stdenv.cc
@@ -52,9 +52,20 @@
     deadnix
     statix
 
+    # lua
+    luajitPackages.luacheck
+
     # editor
     neovim
     editorconfig-core-c
+    editorconfig-checker
+
+    # setting files
+    hadolint
+    yamllint
+    cmake-format
+    taplo
+    shellcheck
 
     # vcs
     git-lfs

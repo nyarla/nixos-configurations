@@ -90,7 +90,6 @@ let
   btrfsRWOnly = [ "noexec" "nosuid" "nodev" ];
 in {
   imports = [
-    ../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
@@ -265,6 +264,17 @@ in {
 
   fileSystems."/etc/nixos" = {
     device = "/etc/executable/etc/nixos";
+    options = [ "bind" ];
+  };
+
+  ## npm
+  fileSystems."/home/nyarla/.npm" = {
+    device = "/etc/executable/npm";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/home/nyarla/.local/share/npm" = {
+    device = "/etc/executable/local/share/npm";
     options = [ "bind" ];
   };
 
@@ -570,6 +580,6 @@ in {
   environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/vfio.sh".source =
     (toString kvmVFIOShutdownScript);
 
-  # workaround
-  nixpkgs.config.permittedInsecurePackages = [ "electron-19.0.7" ];
+  nixpkgs.config.permittedInsecurePackages = [ "electron-20.3.11" ];
+
 }

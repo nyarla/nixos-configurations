@@ -68,7 +68,7 @@ in {
         inherit fetchurl writeShellScript pkgs isMe isNotMe;
       });
 
-    "openbox/menu.xml".text = (import ./menu.nix { inherit lib isMe isNotMe; });
+    "openbox/menu.xml".text = import ./menu.nix { inherit lib isMe isNotMe; };
 
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
       export GTK2_RC_FILES=$HOME/.gtkrc-2.0
@@ -86,5 +86,5 @@ in {
     "openbox/rc.xml".text = (import ./rc.nix) { inherit isMe isNotMe; };
   };
 
-  home.file.".xprofile".source = (toString xprofile);
+  home.file.".xprofile".source = toString xprofile;
 }

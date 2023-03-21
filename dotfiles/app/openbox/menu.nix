@@ -58,7 +58,6 @@ in ''
     (makeExecute "1password" "1password")
     (isMe ''
       ${sep}
-      ${makeExecute "Trickle" (scriptsCmd "trickle")}
       ${(makeExecute "Fedistar"
         "env WEBKIT_DISABLE_COMPOSITING_MODE=1 fedistar")}
               ${(makeExecute "Elk" "env WEBKIT_DISABLE_COMPOSITING_MODE=1 elk")}
@@ -80,6 +79,9 @@ in ''
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))
     "${sep}"
     (makeExecute "Tenacity" "tenacity")
+    "${sep}"
+    (makeExecute "DeaDBeeF" "deadbeef")
+    (makeExecute "Amazon Music" (wineCmd "AmazonMusic"))
   ]}
 
   ${makeMenu "applications-chat" "Chat" [
@@ -102,7 +104,6 @@ in ''
   ]}
 
   ${makeMenu "system-utils" "Utilities" [
-    (makeExecute "QJackCtl" "qjackctl")
     (makeExecute "Audio" "pavucontrol")
     (makeExecute "Bluetooth" "blueman-manager")
     "${sep}"

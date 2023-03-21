@@ -4,6 +4,7 @@
 
   home.packages = with pkgs; [
     brave
+    elk-native
     fedistar
     google-chrome
     thunderbird-bin

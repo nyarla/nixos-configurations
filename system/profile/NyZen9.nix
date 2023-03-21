@@ -571,14 +571,14 @@ in {
 
   ## Win10
   environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/prepare/begin/hugepage.sh".source =
-    (toString kvmHugePageSetupScript);
+    toString kvmHugePageSetupScript;
   environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/hugepage.sh".source =
-    (toString kvmHugePageShutdownScript);
+    toString kvmHugePageShutdownScript;
 
   environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/prepare/begin/vfio.sh".source =
-    (toString kvmVFIOSetupScript);
+    toString kvmVFIOSetupScript;
   environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/vfio.sh".source =
-    (toString kvmVFIOShutdownScript);
+    toString kvmVFIOShutdownScript;
 
   nixpkgs.config.permittedInsecurePackages = [ "electron-20.3.11" ];
 

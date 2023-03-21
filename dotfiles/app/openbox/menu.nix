@@ -33,8 +33,6 @@ let
 
   wine = "/etc/nixos/dotfiles/files/wine";
   wineCmd = app: "bash ${wine}/${app}";
-
-  iLokCmd = prefix: "${wine}/iLok ${prefix}";
 in ''
   <?xml version="1.0" encoding="UTF-8"?>
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
@@ -50,9 +48,10 @@ in ''
 
   ${makeMenu "applications-web" "Web" [
     (makeExecute "Firefox" "firefox")
+    (makeExecute "Thunderbird" "thunderbird")
     (isMe ''
-      ${(makeExecute "Thunderbird" "thunderbird")}
       ${(makeExecute "Google Chrome" "google-chrome-stable")}
+      ${(makeExecute "Brave" "brave")}
     '')
     "${sep}"
     (makeExecute "1password" "1password")
@@ -64,7 +63,6 @@ in ''
       ${(makeExecute "Whalebird" "whalebird")}
       ${(makeExecute "Tooth" "dev.geopjr.Tooth")}
     '')
-
   ]}
 
   ${makeMenu "applications-file" "Files" [
@@ -84,13 +82,6 @@ in ''
     (makeExecute "Amazon Music" (wineCmd "AmazonMusic"))
   ]}
 
-  ${makeMenu "applications-chat" "Chat" [
-    (makeExecute "Droidcam" "droidcam")
-    (makeExecute "Slack" "slack")
-    (makeExecute "Discord" "discord")
-    (makeExecute "Telegram" "telegram-desktop")
-  ]}
-
   ${makeMenu "applications-office" "Office" [
     (makeExecute "Calc" "mate-calc")
     (makeExecute "Char Maps" "gucharmap")
@@ -106,13 +97,13 @@ in ''
   ${makeMenu "system-utils" "Utilities" [
     (makeExecute "Audio" "pavucontrol")
     (makeExecute "Bluetooth" "blueman-manager")
+    (makeExecute "Droidcam" "droidcam")
     "${sep}"
     (makeExecute "Seahorse" "seahorse")
     "${sep}"
     (makeExecute "Disk Utility" "gnome-disks")
     (makeExecute "Usage" "gnome-usage")
     "${sep}"
-    (makeExecute "Task manager" "sysmontask")
     (makeExecute "System monitor" "mate-system-monitor")
   ]}
 
@@ -120,6 +111,9 @@ in ''
     (makeAction "Reconfigure" "Reconfigure")
     (makeExecute "Lock" "xset dpms force off")
     (makeExecute "Logout" "loginctl terminate-user nyarla")
+    "${sep}"
+    (makeExecute "Reboot" "systemctl reboot")
+    (makeExecute "Shutdown" "systemctl poweroff")
   ]}
 
   ${makeMenu "root-menu" "Openbox" [
@@ -131,7 +125,6 @@ in ''
       ${makeMenuItem "applications-multimedia"}
       ${sep}
       ${(makeMenuItem "applications-office")}
-      ${(makeMenuItem "applications-chat")}
     '')
     "${sep}"
     (makeMenuItem "system-utils")

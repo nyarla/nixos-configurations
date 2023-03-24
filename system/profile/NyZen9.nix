@@ -189,6 +189,13 @@ in {
   zramSwap.memoryPercent = 40;
 
   # kernel
+  boot.kernelPatches = [{
+    name = "without-btf";
+    patch = null;
+    extraConfig = ''
+      DEBUG_INFO_BTF n
+    '';
+  }];
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
   boot.kernelParams = [
@@ -403,7 +410,7 @@ in {
   # -------
 
   # avahi
-  services.avahi.interfaces = [ "wlp5s0" ];
+  services.avahi.allowInterfaces = [ "wlp5s0" ];
 
   # samba
   services.samba = {

@@ -4,9 +4,7 @@
     deadbeef
     foliate
     glib.out
-    jack2
     picard
-    qjackctl
     tenacity
   ];
 }

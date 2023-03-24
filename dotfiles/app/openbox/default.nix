@@ -55,7 +55,6 @@ in {
       perl
       s5cmd
       sxhkd
-      sysmontask
       wmctrl
       xdotool
       xsettingsd

@@ -5,12 +5,14 @@ _: {
     ../config/app/multimedia.nix
     ../config/app/office.nix
     ../config/app/weston.nix
+    ../config/files/alsa.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
     ../config/services/dunst.nix
     ../config/services/gnome-keyring.nix
     ../config/services/keychain.nix
     ../config/services/podman.nix
+    ../config/services/polkit.nix
     ../config/services/syncthing.nix
     ../config/shell/starship.nix
     ../config/shell/zsh.nix
@@ -19,6 +21,7 @@ _: {
 
     ../app/git
     ../app/openbox
+    ../app/mlterm
   ];
 
   # More customizations

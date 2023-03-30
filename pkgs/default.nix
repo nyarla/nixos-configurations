@@ -32,6 +32,7 @@ in {
   sysmontask = require ./sysmontask { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
   tooth = require ./tooth { };
+  vgpu_unlock-rs = require ./vgpu_unlock-rs { };
   wayout = require ./wayout { };
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };

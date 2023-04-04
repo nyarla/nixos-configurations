@@ -25,9 +25,6 @@
     nim
     nimlsp
 
-    # rust
-    rustup
-
     # node.js
     nodejs_latest
     yarn

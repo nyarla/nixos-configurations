@@ -1,4 +1,4 @@
-{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages_11_3, linuxPackages, libGL }:
+{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages_12_0, linuxPackages, libGL }:
 let
   libPath = lib.makeLibraryPath [
     linuxPackages.nvidia_x11
@@ -11,7 +11,7 @@ in buildFHSUserEnv rec {
     with p; [
       autoconf
       binutils
-      cudaPackages_11_6.cudatoolkit
+      cudaPackages_12_0.cudatoolkit
       curl
       freeglut
       git
@@ -39,7 +39,7 @@ in buildFHSUserEnv rec {
   multiPkgs = pkgs: with pkgs; [ zlib ];
   runScript = "bash";
   profile = ''
-    export CUDA_PATH=${cudaPackages_11_3.cudatoolkit}
+    export CUDA_PATH=${cudaPackages_12_0.cudatoolkit}
     export CUDA_LD_LIBRARY_PATH=${libPath}
     export EXTRA_LDFLAGS="-L/lib -L${linuxPackages.nvidia_x11}/lib"
     export EXTRA_CCFLAGS="-I/usr/include"

@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs;
     [ glib udisks2 ]
     ++ (with pkgs.gnome; [ gvfs gnome-disk-utility gnome-font-viewer ])
-    ++ (with pkgs.xfce; [ exo thunar garcon libxfce4ui xfconf x ])
+    ++ (with pkgs.xfce; [ exo thunar garcon libxfce4ui xfconf ])
     ++ (with pkgs.mate; [ atril engrampa eom mate-polkit pluma ]);
 
   services.gvfs.enable = true;

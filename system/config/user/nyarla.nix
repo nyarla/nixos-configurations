@@ -38,6 +38,9 @@
     createHome = true;
     isNormalUser = true;
     shell = pkgs.zsh;
-    initialHashedPassword = "$6$lABardu7BNX7a5cv$8TIACJK2U.GBjdsSnFpPHEiwkMtPSCZrxQsphf9uadpu3tBqKfgdZCSW.b2PyJXw16dzgvBysUzknPZ99kxec0";
+    initialHashedPassword =
+      "$6$lABardu7BNX7a5cv$8TIACJK2U.GBjdsSnFpPHEiwkMtPSCZrxQsphf9uadpu3tBqKfgdZCSW.b2PyJXw16dzgvBysUzknPZ99kxec0";
   };
+
+  programs.zsh.enable = true;
 }

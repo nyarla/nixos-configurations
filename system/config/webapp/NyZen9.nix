@@ -8,6 +8,15 @@
   # postgresql
   services.postgresql.enable = true;
 
+  # calibre-web
+  services.calibre-web = {
+    enable = true;
+    listen = { ip = "0.0.0.0"; };
+    user = "nyarla";
+    group = "users";
+    options = { calibreLibrary = "/home/nyarla/Calibre"; };
+  };
+
   # TT-RSS
   services.tt-rss = {
     enable = true;

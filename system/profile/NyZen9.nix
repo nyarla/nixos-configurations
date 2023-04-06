@@ -274,6 +274,16 @@ in {
     options = [ "bind" ];
   };
 
+  ## rust
+  fileSystems."/home/nyarla/.cargo" = {
+    device = "/etc/executable/cargo";
+    options = [ "bind" ];
+  };
+  fileSystems."/home/nyarla/.rustup" = {
+    device = "/etc/executable/rustup";
+    options = [ "bind" ];
+  };
+
   ## npm
   fileSystems."/home/nyarla/.npm" = {
     device = "/etc/executable/npm";

@@ -3,7 +3,7 @@
     gimp
     gucharmap
     inkscape
-    libreoffice
+    libreoffice-fresh
     mate.mate-calc
     peek
     simple-scan

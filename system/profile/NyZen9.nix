@@ -186,7 +186,7 @@ in {
   boot.tmpOnTmpfs = true;
 
   zramSwap.enable = true;
-  zramSwap.memoryPercent = 40;
+  zramSwap.memoryPercent = 50;
 
   # kernel
   boot.kernelPatches = [{

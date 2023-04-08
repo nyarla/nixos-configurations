@@ -2,13 +2,5 @@
   programs.firefox.enable = true;
   programs.firefox.package = pkgs.firefox-bin;
 
-  home.packages = with pkgs; [
-    brave
-    elk-native
-    fedistar
-    google-chrome
-    thunderbird-bin
-    tooth
-    whalebird
-  ];
+  home.packages = with pkgs; [ brave google-chrome thunderbird-bin tuba ];
 }

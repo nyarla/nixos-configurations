@@ -31,7 +31,7 @@ in {
   sononym-bin = require ./sononym-bin { };
   sysmontask = require ./sysmontask { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
-  tooth = require ./tooth { };
+  tuba = require ./tuba { };
   vgpu_unlock-rs = require ./vgpu_unlock-rs { };
   wayout = require ./wayout { };
   wcwidth-cjk = require ./wcwidth-cjk { };
@@ -130,11 +130,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (old: rec {
     pname = "tt-rss";
-    version = "2023-02-03";
+    version = "2023-04-06";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "0cd4abe4eb3e1e326a942a2141f118cb3bba9abd";
-      sha256 = "sha256-Wz+tO3AKKSWq1YgoisT/8RGFRmQTG8mR3xQWngH4efs=";
+      rev = "0fcc7150693f88f01d09ee14ddf3c7f8c844eaae";
+      sha256 = "sha256-u0mUuLUS0LapSneG6Hh/O2Cc4hLK13XuIW3EcJV4L8I=";
     };
 
     installPhase = ''
@@ -149,32 +149,13 @@ in {
   });
 
   tt-rss-theme-feedly = super.tt-rss-theme-feedly.overrideAttrs (old: rec {
-    version = "2023-02-06";
-    src = super.fetchFromGitHub {
-      owner = "levito";
-      repo = "tt-rss-feedly-theme";
-      rev = "5c652126649a4054c8992fc9c0e727a2c03b27e3";
-      sha256 = "sha256-z+7pzXRZgMPnE492xFAroeE+vFzDc/4GlkSTMhbq/2I=";
+    version = "2023-04-06";
+    src = super.fetchzip {
+      url =
+        "https://github.com/levito/tt-rss-feedly-theme/releases/download/v4.1.0/tt-rss-feedly-theme-dist-4.1.0.zip";
+      sha256 = "sha256-u3w92BMuq85SyO3bWRKuA59EaRtehrt02hZY3NMJEOA=";
     };
   });
-
-  whalebird =
-    (super.whalebird.override { electron = super.electron_20; }).overrideAttrs
-    (old: rec {
-      version = "5.0.2-beta1";
-      src = super.fetchurl {
-        url =
-          "https://github.com/h3poteto/whalebird-desktop/releases/download/v5.0.2-beta.1/Whalebird-5.0.2-beta.1-linux-x64.tar.bz2";
-        sha256 = "1q0r976ivdsm9yyj8z8ans5jfsqzl1p03wp4r6cnghmniz8sism6";
-      };
-
-      unpackPhase = ''
-        mkdir -p opt
-        tar -xf ${src} -C opt
-        # remove the version/target suffix from the untar'd directory
-        mv opt/Whalebird-* opt/Whalebird
-      '';
-    });
 
   wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
     version = "0_16_0_mod";

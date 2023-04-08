@@ -1,24 +1,26 @@
 { stdenv, lib, fetchFromGitHub, wrapGAppsHook, meson, ninja, vala, pkg-config
-, glib, json-glib, libgee, gnome3, gtk4, libadwaita, libsecret
-, desktop-file-utils }:
+, glib, json-glib, libgee, gnome3, gtk4, libadwaita, libsecret, gtksourceview5
+, desktop-file-utils, libsoup_3 }:
 stdenv.mkDerivation rec {
-  pname = "tooth";
-  version = "2023-01-20";
+  pname = "Tuba";
+  version = "2023-04-06";
   src = fetchFromGitHub {
     owner = "GeopJr";
-    repo = "Tooth";
-    rev = "b7155df0ce7ea245fb443ee0a0946b9051987241";
-    sha256 = "sha256-XlgNAkCyvCTQjZwskvEAHRw9eADRM2WpJ4eeOHFBtzA=";
+    repo = "Tuba";
+    rev = "85e8c02b387a30f0d3627cb7d95def456f64d796";
+    sha256 = "sha256-LPhGGIHvN/hc71PL50TBw1Q0ysubdtJaEiUEI29HRrE=";
   };
 
   buildInputs = [
     glib.dev
     gnome3.libsoup
     gtk4.dev
+    gtksourceview5
     json-glib
     libadwaita
     libgee
     libsecret.dev
+    libsoup_3.dev
   ];
 
   nativeBuildInputs =

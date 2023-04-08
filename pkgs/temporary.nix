@@ -7,12 +7,6 @@ in {
     '';
   });
 
-  raft-canonical = super.raft-canonical.overrideAttrs (old: rec {
-    postPatch = ''
-      rm -rf test/integration
-    '';
-  });
-
   weston = super.weston.overrideAttrs
     (old: rec { buildInputs = old.buildInputs ++ (with super; [ freerdp ]); });
 }

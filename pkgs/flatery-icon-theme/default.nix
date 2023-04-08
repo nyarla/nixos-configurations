@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
     owner = "cbrnix";
     repo = "Flatery";
     rev = "30bef81ba98ac4c4f764e9fc1b705a86e0d27e2c";
-    sha256 = "0vv507v0ijjdpbfy57b9skyp4qql5f5pdd9ja0bcbc0l2gmp7pma";
+    sha256 = "sha256-qt5z6xMUsMUWUDK1dosrFGNy/dRpneLduk3KCPYBZW8=";
   };
 
   dontFixup = true;

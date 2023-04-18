@@ -284,6 +284,12 @@ in {
     options = [ "bind" ];
   };
 
+  ## perl
+  fileSystems."/home/nyarla/.local/share/perl" = {
+    device = "/etc/executable/local/share/perl";
+    options = [ "bind" ];
+  };
+
   ## npm
   fileSystems."/home/nyarla/.npm" = {
     device = "/etc/executable/npm";

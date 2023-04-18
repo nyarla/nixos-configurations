@@ -123,17 +123,13 @@
       }
 
       function minil-release() {
-        if type lefthook >/dev/null 2>&1 ; then
-          lefthook uninstall
-        fi
+        touch .git/hooks/.disable-commitlint
+        touch .git/hooks/.disable-textlint
 
         FAKE_RELEASE= minil release
 
-        if type lefthook >/dev/null 2>&1 ; then
-          cp $HOME/local/githooks/lefthook.yml . \
-          && cp -R $HOME/local/githooks/.lethook . \
-          && lefthook install
-        fi
+        rm .git/hooks/.disable-commitlint
+        rm .git/hooks/.disable-textlint
       }
 
       compdef __cd=cd

@@ -20,7 +20,7 @@ in {
   use_anti_alias = true;
   box_drawing_font = "unicode";
   type_engine = "xft";
-  unicode_full_width_areas = "U+E000-F8FF,U+1F000-1FFFF";
+  unicode_full_width_areas = "U+E000-F8FF";
 
   # appearance
   scrollbar_mode = false;

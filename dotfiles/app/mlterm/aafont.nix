@@ -10,6 +10,8 @@
     "U+2700-27BF" = Fallback;
     "U+2800-28FF" = "Noto Sans Symbols2 15";
 
+    "U+1FB00-1FBFF" = "Noto Sans Symbols2 15";
+
     "U+A9" = Emoji;
     "U+AE" = Emoji;
     "U+200D" = Emoji;

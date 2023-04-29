@@ -3,6 +3,7 @@ let require = path: super.callPackage (import path);
 in {
   # additional packages
   arc-openbox = require ./arc-openbox { };
+  audiogridder = require ./audiogridder { };
   clipboard-sync = require ./clipboard-sync { };
   cuda-shell = require ./cuda-shell { };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };

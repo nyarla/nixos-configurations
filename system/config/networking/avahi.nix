@@ -2,7 +2,7 @@ _: {
   services.avahi = {
     enable = true;
     ipv4 = true;
-    ipv6 = false;
+    ipv6 = true;
     reflector = true;
     nssmdns = true;
     publish = {

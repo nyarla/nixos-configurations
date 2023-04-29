@@ -13,5 +13,5 @@
     unmanaged = [ "docker0" "virbr0" "tailscale0" "waydroid0" ];
   };
 
-  networking.enableIPv6 = false;
+  networking.enableIPv6 = true;
 }

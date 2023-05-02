@@ -182,20 +182,13 @@ in {
   boot.initrd.kernelModules = [ "dm-snapshot" ];
 
   # tmpfs
-  boot.cleanTmpDir = true;
-  boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
+  boot.tmp.cleanOnBoot = true;
 
   zramSwap.enable = true;
   zramSwap.memoryPercent = 50;
 
   # kernel
-  boot.kernelPatches = [{
-    name = "without-btf";
-    patch = null;
-    extraConfig = ''
-      DEBUG_INFO_BTF n
-    '';
-  }];
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
   boot.kernelParams = [

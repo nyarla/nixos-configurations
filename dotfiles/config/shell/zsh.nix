@@ -5,7 +5,6 @@
     shellAliases = {
       "cd" = "__cd";
       "edit" = "make -f ~/.config/nvim/Makefile edit";
-      "fbterm" = "fcitx5 -rd >/dev/null 2>&1 ; fbterm -i fcitx5-fbterm";
       "l" = "ls --color -F -la";
       "ls" = "ls --color -F";
       "nixos-apply" =

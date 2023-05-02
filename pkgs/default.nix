@@ -51,29 +51,6 @@ in {
     inherit (super.cudaPackages) cudatoolkit;
   };
 
-  fbterm = super.fbterm.overrideAttrs (old: rec {
-    patches = old.patches ++ (with super; [
-      (fetchpatch {
-        url =
-          "https://aur.archlinux.org/cgit/aur.git/plain/color_palette.patch?h=fbterm";
-        name = "color_palette.patch";
-        sha256 = "sha256-SkWxzfapyBTtMpTXkiFHRAw8/uXw7cAWwg5Q3TqWlk8=";
-      })
-      (fetchpatch {
-        url =
-          "https://aur.archlinux.org/cgit/aur.git/plain/fbconfig.patch?h=fbterm";
-        name = "fbconfig.patch";
-        sha256 = "sha256-skCdUqyMkkqxS1YUI7cofsfnNNo3SL/qe4WEIXlhm/s=";
-      })
-      (fetchpatch {
-        url =
-          "https://aur.archlinux.org/cgit/aur.git/plain/fbterm.patch?h=fbterm";
-        name = "fbterm.patch";
-        sha256 = "sha256-XNHBTGQGeaQPip2XgcKlr123VDwils2pnyiGqkBGhzU=";
-      })
-    ]);
-  });
-
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 

@@ -25,7 +25,7 @@
         quotepath = false;
         hooksPath = "/media/data/executable/githooks-v2/hooks";
       };
-      credential.helper = "libsecret";
+      credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
     };
     ignores = import ./gitignore.nix;
   };

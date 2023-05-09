@@ -66,13 +66,6 @@ in {
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
 
-  libskk = super.libskk.overrideAttrs (old: rec {
-    postPatch = ''
-      sed -i 's|"C-j": "set-input-mode-hiragana"|"C-j": "set-input-mode-hiragana", "C-;": "set-input-mode-hiragana"|' rules/default/keymap/latin.json
-      sed -i 's|"C-j": "set-input-mode-hiragana"|"C-j": "set-input-mode-hiragana", "C-;": "set-input-mode-hiragana"|' rules/default/keymap/wide-latin.json
-    '';
-  });
-
   nsfminer = (require ./nsfminer {
     inherit (super.llvmPackages_14) stdenv;
     inherit (super.cudaPackages) cudatoolkit;
@@ -83,7 +76,7 @@ in {
     '';
   });
 
-  platinum-searcher = super.platinum-searcher.overrideAttrs (old: rec {
+  platinum-searcher = super.platinum-searcher.overrideAttrs (_: rec {
     src = super.fetchFromGitHub {
       owner = "monochromegane";
       repo = "the_platinum_searcher";
@@ -95,13 +88,13 @@ in {
   thunderbird-bin-unwrapped =
     super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  tt-rss = super.tt-rss.overrideAttrs (old: rec {
+  tt-rss = super.tt-rss.overrideAttrs (_: rec {
     pname = "tt-rss";
     version = "2023-04-06";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "0fcc7150693f88f01d09ee14ddf3c7f8c844eaae";
-      sha256 = "sha256-u0mUuLUS0LapSneG6Hh/O2Cc4hLK13XuIW3EcJV4L8I=";
+      rev = "0578bf802571781a0a7e3debbbec66437a7d28b4";
+      sha256 = "sha256-j6R1QoH8SzUtyI3rGE6rHriboAfApAo/Guw8WbJ7LqU=";
     };
 
     installPhase = ''
@@ -115,7 +108,7 @@ in {
     '';
   });
 
-  tt-rss-theme-feedly = super.tt-rss-theme-feedly.overrideAttrs (old: rec {
+  tt-rss-theme-feedly = super.tt-rss-theme-feedly.overrideAttrs (_: rec {
     version = "2023-04-06";
     src = super.fetchzip {
       url =

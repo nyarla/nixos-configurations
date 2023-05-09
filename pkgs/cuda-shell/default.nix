@@ -1,5 +1,5 @@
-{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages_12_0, linuxPackages, libGL
-, libibumad, ucx, xorg, qt6, rdma-core, libtiff }:
+{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages_12_1, linuxPackages, curl
+, libGL, libibumad, ucx, xorg, qt6, rdma-core, libtiff, gst_all_1 }:
 let
   libPath = lib.makeLibraryPath [
     linuxPackages.nvidia_x11
@@ -14,8 +14,11 @@ let
     '';
   });
 
-  cuda-fix = cudaPackages_12_0.cudatoolkit.overrideAttrs (old: rec {
+  cuda-fix = cudaPackages_12_1.cudatoolkit.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [
+      curl
+      gst_all_1.gst-plugins-base
+      gst_all_1.gstreamer.out
       libibumad
       libtiff5.out
       qt6.qtwayland

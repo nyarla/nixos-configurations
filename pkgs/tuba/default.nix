@@ -1,5 +1,5 @@
-{ stdenv, lib, fetchFromGitHub, wrapGAppsHook, meson, ninja, vala, pkg-config
-, glib, json-glib, libgee, gnome3, gtk4, libadwaita, libsecret, gtksourceview5
+{ stdenv, fetchFromGitHub, wrapGAppsHook, meson, ninja, vala, pkg-config, glib
+, json-glib, libgee, gnome3, gtk4, libadwaita, libsecret, gtksourceview5
 , desktop-file-utils, libsoup_3 }:
 stdenv.mkDerivation rec {
   pname = "Tuba";
@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "GeopJr";
     repo = "Tuba";
-    rev = "85e8c02b387a30f0d3627cb7d95def456f64d796";
-    sha256 = "sha256-LPhGGIHvN/hc71PL50TBw1Q0ysubdtJaEiUEI29HRrE=";
+    rev = "283ea9b15f8ad7f36faf4fcbc7a15dcb28a12c2f";
+    sha256 = "sha256-36OvbK8CdnFH+MpuMC+XID2XRxFWtHDWEhwq2Gt60z4=";
   };
 
   buildInputs = [

@@ -17,6 +17,9 @@ let
 in {
   home.packages = with pkgs;
     [
+      # terminal
+      wezterm
+
       # icon and themes
       arc-openbox
       arc-theme
@@ -70,6 +73,9 @@ in {
     "openbox/menu.xml".text = import ./menu.nix { inherit lib isMe isNotMe; };
 
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
+      export XCURSOR_PATH=/run/current-system/etc/profiles/per-user/nyarla/share/icons:$HOME/.icons/default
+      export XCURSOR_THEME=capitaine-cursors-white
+
       export GTK2_RC_FILES=$HOME/.gtkrc-2.0
       export GTK_THEME=Arc
 

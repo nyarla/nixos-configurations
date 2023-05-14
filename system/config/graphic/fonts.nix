@@ -20,7 +20,7 @@
       defaultFonts = {
         sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
         serif = [ "Noto Serif JP" "DejaVu Serif" ];
-        monospace = [ "HackGen Console NFJ" "DejaVu Sans Mono" ];
+        monospace = [ "HackGen Console NF" "DejaVu Sans Mono" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };

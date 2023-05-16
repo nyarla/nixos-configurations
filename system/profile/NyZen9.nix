@@ -108,13 +108,12 @@ in {
     ../config/keyboard/zinc.nix
     ../config/linux/console.nix
     ../config/linux/dbus.nix
-    #../config/linux/docker.nix
+    ../config/linux/docker.nix
     ../config/linux/filesystem.nix
     ../config/linux/hardware.nix
     ../config/linux/kvm.nix
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
-    ../config/linux/podman.nix
     ../config/linux/process.nix
     ../config/linux/waydroid.nix
     ../config/linux/wine.nix
@@ -239,7 +238,7 @@ in {
   fileSystems."/var/lib" = {
     device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
     fsType = "btrfs";
-    options = [ "subvol=lib" ] ++ btrfsOptions ++ btrfsRWOnly;
+    options = [ "subvol=lib" ] ++ btrfsOptions;
   };
 
   ## home
@@ -298,12 +297,6 @@ in {
   fileSystems."/home/nyarla/.local/share/waydroid" = {
     device = "/etc/executable/local/share/waydroid";
     options = [ "bind" ];
-  };
-
-  ## podman
-  fileSystems."/media/data/containers" = {
-    device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
-    options = [ "subvol=containers" ] ++ btrfsOptions;
   };
 
   ## env
@@ -368,7 +361,6 @@ in {
     "/etc"
     "/etc/executable"
     "/home"
-    "/media/data/containers"
     "/media/data/executable"
     "/media/data/sources"
     "/nix"

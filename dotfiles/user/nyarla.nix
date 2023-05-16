@@ -11,7 +11,6 @@ _: {
     ../config/services/dunst.nix
     ../config/services/gnome-keyring.nix
     ../config/services/keychain.nix
-    ../config/services/podman.nix
     ../config/services/polkit.nix
     ../config/services/syncthing.nix
     ../config/shell/starship.nix

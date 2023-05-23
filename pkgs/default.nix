@@ -46,6 +46,22 @@ in {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
   });
 
+  cudatoolkit_latest = super.cudaPackages_12_1.cudatoolkit.overrideAttrs
+    (old: rec {
+      buildInputs = old.buildInputs ++ (with super; [
+        curl
+        gst_all_1.gst-plugins-base
+        gst_all_1.gstreamer.out
+        libibumad
+        libtiff.out
+        qt6.qtwayland
+        rdma-core
+        ucx
+        xorg.libxkbfile
+        xorg.libxshmfence
+      ]);
+    });
+
   ethminer = super.ethminer.override {
     inherit (super.llvmPackages_14) stdenv;
     inherit (super.cudaPackages) cudatoolkit;

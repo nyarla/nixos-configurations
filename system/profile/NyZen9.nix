@@ -370,29 +370,26 @@ in {
   ];
 
   services.snapper.configs = let
-    snap = subvolume: {
-      inherit subvolume;
-      extraConfig = ''
-        ALLOW_USERS="nyarla"
-        TIMELINE_CREATE=yes
-        TIMELINE_CLEANUP=yes
-        TIMELINE_MIN_AGE="1800"
-        TIMELINE_LIMIT_HOURLY="12"
-        TIMELINE_LIMIT_DAILY="7"
-        TIMELINE_LIMIT_WEEKLY="2"
-        TIMELINE_LIMIT_MONTHLY="1"
-        TIMELINE_LIMIT_YEARLY="1"
-      '';
+    snap = path: {
+      SUBVOLUME = path;
+      ALLOW_USERS = [ "nyarla" ];
+      TIMELINE_CREATE = true;
+      TIMELINE_CLEANUP = true;
+      TIMETINE_MIN_AGE = 1800;
+      TIMELINE_LIMIT_HOURLY = 6;
+      TIMELIME_DAILY = 7;
+      TIMELINE_WEEKLY = 2;
+      TIMELINE_MONTHLY = 1;
+      TIMELINE_YEARLY = 1;
     };
   in {
     etc = snap "/etc";
     exe = snap "/etc/executable";
     home = snap "/home";
-    lib = snap "/var/lib";
+    varlib = snap "/var/lib";
     root = snap "/root";
-
-    e_exec = snap "/media/data/executable";
-    e_srcs = snap "/media/data/sources";
+    executable = snap "/media/data/executable";
+    sources = snap "/media/data/sources";
   };
 
   swapDevices = [ ];

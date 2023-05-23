@@ -4,7 +4,6 @@
     acl
     attr
     bzip2
-    cudaPackages.cudatoolkit
     curl
     libsodium
     libssh

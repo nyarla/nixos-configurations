@@ -1,0 +1,65 @@
+diff --git a/.github/workflows/periodic-merge-24h.yml b/.github/workflows/periodic-merge-24h.yml
+index dd0c1a23..ae39d6cf 100644
+--- a/.github/workflows/periodic-merge-24h.yml
++++ b/.github/workflows/periodic-merge-24h.yml
+@@ -38,10 +38,6 @@ jobs:
+             into: staging-next-22.11
+           - from: staging-next-22.11
+             into: staging-22.11
+-          - from: release-23.05
+-            into: staging-next-23.05
+-          - from: staging-next-23.05
+-            into: staging-23.05
+     name: ${{ matrix.pairs.from }} → ${{ matrix.pairs.into }}
+     steps:
+       - uses: actions/checkout@v3
+diff --git a/.version b/.version
+index 38549cd8..f8c86096 100644
+--- a/.version
++++ b/.version
+@@ -1 +1 @@
+-23.11
++23.05
+diff --git a/lib/trivial.nix b/lib/trivial.nix
+index 26e4b324..17e83d58 100644
+--- a/lib/trivial.nix
++++ b/lib/trivial.nix
+@@ -195,7 +195,7 @@ rec {
+      On each release the first letter is bumped and a new animal is chosen
+      starting with that new letter.
+   */
+-  codeName = "Tapir";
++  codeName = "Stoat";
+ 
+   /* Returns the current nixpkgs version suffix as string. */
+   versionSuffix =
+diff --git a/nixos/doc/manual/release-notes/release-notes.md b/nixos/doc/manual/release-notes/release-notes.md
+index 3f926fb2..ac61de37 100644
+--- a/nixos/doc/manual/release-notes/release-notes.md
++++ b/nixos/doc/manual/release-notes/release-notes.md
+@@ -3,7 +3,6 @@
+ This section lists the release notes for each stable version of NixOS and current unstable revision.
+ 
+ ```{=include=} sections
+-rl-2311.section.md
+ rl-2305.section.md
+ rl-2211.section.md
+ rl-2205.section.md
+diff --git a/nixos/doc/manual/release-notes/rl-2311.section.md b/nixos/doc/manual/release-notes/rl-2311.section.md
+deleted file mode 100644
+index b5531584..00000000
+--- a/nixos/doc/manual/release-notes/rl-2311.section.md
++++ /dev/null
+@@ -1,12 +0,0 @@
+-# Release 23.11 (“Tapir”, 2023.11/??) {#sec-release-23.11}
+-
+-## Highlights {#sec-release-23.11-highlights}
+-
+-## New Services {#sec-release-23.11-new-services}
+-
+-<!-- To avoid merge conflicts, consider adding your item at an arbitrary place in the list instead. -->
+-
+-## Backward Incompatibilities {#sec-release-23.11-incompatibilities}
+-
+-## Other Notable Changes {#sec-release-23.11-notable-changes}
+-

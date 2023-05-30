@@ -21,22 +21,6 @@
   };
   services.phpfpm.phpPackage = pkgs.php80;
 
-  # nitter
-  services.nitter = {
-    enable = true;
-    server = {
-      address = "127.0.0.1";
-      port = 8079;
-      hostname = "nitter.home.thotep.net";
-    };
-    config = { tokenCount = 1; };
-  };
-  systemd.services.nitter.environment = {
-    LD_LIBRARY_PATH = "${lib.makeLibraryPath (with pkgs; [ openssl ])}";
-  };
-  systemd.services.nitter.serviceConfig.ExecStart = lib.mkForce
-    "${pkgs.coreutils}/bin/env -i NITTER_CONF_FILE=/var/lib/nitter/nitter.conf ${pkgs.nitter}/bin/nitter";
-
   services.n8n = {
     enable = true;
     settings = {
@@ -66,15 +50,6 @@
   };
 
   services.nginx.virtualHosts = {
-    "nitter.home.thotep.net" = {
-      onlySSL = true;
-      sslCertificate = "/var/lib/acme/home.thotep.net/fullchain.pem";
-      sslCertificateKey = "/var/lib/acme/home.thotep.net/key.pem";
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8079";
-        proxyWebsockets = true;
-      };
-    };
     "n8n.home.thotep.net" = {
       onlySSL = true;
       sslCertificate = "/var/lib/acme/home.thotep.net/fullchain.pem";

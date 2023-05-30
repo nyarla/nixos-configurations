@@ -4,9 +4,9 @@
   services.openssh = {
     enable = true;
     openFirewall = false;
-    settings.kbdInteractiveAuthentication = false;
-    settings.passwordAuthentication = true;
-    settings.permitRootLogin = "no";
+    settings.KbdInteractiveAuthentication = false;
+    settings.PasswordAuthentication = true;
+    settings.PermitRootLogin = "no";
     startWhenNeeded = true;
     listenAddresses = [{
       addr = "0.0.0.0";

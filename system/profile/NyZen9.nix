@@ -503,6 +503,8 @@ in {
   systemd.user.services.backup = {
     enable = true;
     description = "Automatic backup by restic and rclone";
+    wants = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
@@ -520,7 +522,8 @@ in {
   systemd.user.timers.backup = {
     enable = true;
     description = "Timer for automatic backup by restic and rclone";
-    wantedBy = [ "timers.target" ];
+    wants = [ "timers.target" "network.target" ];
+    wantedBy = [ "multi-user.target" ];
     timerConfig = {
       OnCalendar = "*-*-* 01:00:00";
       RandomizedDelaySec = "5m";
@@ -585,6 +588,5 @@ in {
   environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/vfio.sh".source =
     toString kvmVFIOShutdownScript;
 
-  nixpkgs.config.permittedInsecurePackages = [ "electron-20.3.11" ];
-
+  nixpkgs.config.permittedInsecurePackages = [ "electron-19.0.7" ];
 }

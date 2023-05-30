@@ -1,13 +1,13 @@
-{ stdenv, lib, dpkg, fetchurl, autoPatchelfHook, glib-networking, openssl
-, webkitgtk, wrapGAppsHook }:
+{ stdenv, dpkg, fetchurl, autoPatchelfHook, glib-networking, openssl, webkitgtk
+, wrapGAppsHook }:
 stdenv.mkDerivation rec {
   name = "fedistar";
-  version = "1.0.0-beta1";
+  version = "1.3.4";
 
   src = fetchurl {
     url =
-      "https://github.com/h3poteto/fedistar/releases/download/v1.0.0-beta.1/fedistar_1.0.0_amd64.deb";
-    sha256 = "1bfsj95d0bdvkz8ckdbzfng84x4lrf0d66mnfs9v3bx1kfgndvf2";
+      "https://github.com/h3poteto/fedistar/releases/download/v${version}/fedistar_${version}_amd64.deb";
+    sha256 = "sha256-93lpSoSIZyQrbi9DqI599Us8AKAs6tBAix6buMt65eA=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook dpkg ];

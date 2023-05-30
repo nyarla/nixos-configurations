@@ -53,6 +53,7 @@
         ]
       }
       export EDITOR=nvim
+      export NVIM_USE_TABNINE=1
 
       # import nix-ld
       if test -e /etc/profile.d/nix-ld ; then

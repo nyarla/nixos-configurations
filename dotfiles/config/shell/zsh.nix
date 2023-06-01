@@ -66,9 +66,9 @@
       }
     '';
     initExtraBeforeCompInit = ''
-      if has perl && test -d $HOME/.local/share/perl ; then
-        eval "$(perl -I"$HOME"/.local/share/perl/lib/perl5 -Mlocal::lib="$HOME"/.local/share/perl)"
-        export PERL_CPANM_OPT="--local-lib-contained $HOME/.local/share/perl"
+      if has perl ; then
+        eval "$(perl -I${pkgs.perlPackages.locallib}/lib/perl5/site_perl/${pkgs.perl.version} -Mlocal::lib=$HOME/.local/share/perl/global)"
+        export PERL_CPANM_OPT="--local-lib-contained $HOME/.local/share/perl/global"
       fi
 
       if test -e $HOME/.cargo/env ; then

@@ -503,8 +503,6 @@ in {
   systemd.user.services.backup = {
     enable = true;
     description = "Automatic backup by restic and rclone";
-    wants = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
@@ -522,12 +520,12 @@ in {
   systemd.user.timers.backup = {
     enable = true;
     description = "Timer for automatic backup by restic and rclone";
-    wants = [ "timers.target" "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "*-*-* 01:00:00";
       RandomizedDelaySec = "5m";
       Persistent = true;
+      Unit = "backup.service";
     };
   };
 

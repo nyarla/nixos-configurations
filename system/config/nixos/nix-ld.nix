@@ -7,9 +7,10 @@
     curl
     libsodium
     libssh
+    libxcrypt
     libxml2
     openssl
-    stdenv.cc.cc
+    pkgconfig
     stdenv.cc.cc.lib
     stdenv.cc.libc
     systemd

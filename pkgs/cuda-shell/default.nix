@@ -1,18 +1,15 @@
-{ gcc9Stdenv, lib, buildFHSUserEnv, cudatoolkit_latest, linuxPackages, curl
-, libGL, xorg, }:
+{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages, linuxPackages, python3Packages
+, curl, libGL, xorg, }:
 let
-  libPath = lib.makeLibraryPath [
-    linuxPackages.nvidia_x11
-    gcc9Stdenv.cc.cc
-    gcc9Stdenv.cc.libc
-  ];
+  libPath = lib.makeLibraryPath
+    ([ linuxPackages.nvidia_x11 gcc9Stdenv.cc.cc gcc9Stdenv.cc.libc ]
+      ++ (with cudaPackages; [ cudatoolkit cudnn ]));
 in buildFHSUserEnv rec {
   name = "cuda-shell";
   targetPkgs = p:
     (with p; [
       autoconf
       binutils
-      cudatoolkit_latest
       curl
       freeglut
       gcc9Stdenv.cc
@@ -35,14 +32,14 @@ in buildFHSUserEnv rec {
       xorg.libXrandr
       xorg.libXv
       zlib
-    ]) ++ [ cudatoolkit_latest ];
+    ]) ++ (with cudaPackages; [ cudatoolkit cudnn ]);
 
   multiPkgs = pkgs: with pkgs; [ zlib ];
   runScript = "bash";
   profile = ''
-    export CUDA_PATH=${cudatoolkit_latest}
+    export CUDA_PATH=${cudaPackages.cudatoolkit}
     export CUDA_LD_LIBRARY_PATH=${libPath}
-    export EXTRA_LDFLAGS="-L/lib -L${linuxPackages.nvidia_x11}/lib"
-    export EXTRA_CCFLAGS="-I/usr/include"
+    export LDFLAGS="-L${linuxPackages.nvidia_x11}/lib -L${cudaPackages.cudatoolkit}/lib -L${cudaPackages.cudnn}/lib"
+    export CFLAGS="-I${cudaPackages.cudatoolkit}/include -I${cudaPackages.cudnn}/include"
   '';
 }

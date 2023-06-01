@@ -5,7 +5,7 @@ in {
   arc-openbox = require ./arc-openbox { };
   audiogridder = require ./audiogridder { };
   clipboard-sync = require ./clipboard-sync { };
-  cuda-shell = require ./cuda-shell { };
+  cuda-shell = require ./cuda-shell { cudaPackages = super.cudaPackages_11_8; };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };
@@ -45,22 +45,6 @@ in {
   calibre = super.calibre.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
   });
-
-  cudatoolkit_latest = super.cudaPackages_12_1.cudatoolkit.overrideAttrs
-    (old: rec {
-      buildInputs = old.buildInputs ++ (with super; [
-        curl
-        gst_all_1.gst-plugins-base
-        gst_all_1.gstreamer.out
-        libibumad
-        libtiff.out
-        qt6.qtwayland
-        rdma-core
-        ucx
-        xorg.libxkbfile
-        xorg.libxshmfence
-      ]);
-    });
 
   ethminer = super.ethminer.override {
     inherit (super.llvmPackages_14) stdenv;

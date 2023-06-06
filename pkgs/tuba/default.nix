@@ -7,8 +7,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "GeopJr";
     repo = "Tuba";
-    rev = "283ea9b15f8ad7f36faf4fcbc7a15dcb28a12c2f";
-    sha256 = "sha256-36OvbK8CdnFH+MpuMC+XID2XRxFWtHDWEhwq2Gt60z4=";
+    rev = "b06835af3ca883e407a88cd47e79e9c78bbe0168";
+    sha256 = "sha256-egVnbvAN7/On7FNKbx1ace/an4MvF+5YMgj4WAvUR+w=";
   };
 
   buildInputs = [

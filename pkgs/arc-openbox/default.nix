@@ -1,10 +1,10 @@
 { runCommand, fetchFromGitHub }:
 let
   src = fetchFromGitHub {
-    owner = "dglava";
+    owner = "atkij";
     repo = "arc-openbox";
-    rev = "5ebdb7f54271b0bf0714bc3bae46b4ea90bb29c3";
-    sha256 = "0jwimfcpp5rv094z727wnbsa7p5w29g8hm9p15dlmizaifz2vknc";
+    rev = "1455709b619939d249ae69be78710ca575681281";
+    sha256 = "sha256-dmx8HGxUCx69ZJIffrfLsOvT8S6nwF+vLyDiNI5ojks=";
   };
 in runCommand "arc-openbox" { } ''
   mkdir -p $out/share/themes/

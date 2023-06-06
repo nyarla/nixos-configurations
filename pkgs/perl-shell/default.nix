@@ -7,7 +7,7 @@ buildFHSUserEnv rec {
       libxcrypt
       openssl.dev
       perl
-      perlPackageg.Carton
+      perlPackages.Carton
       perlPackages.Appcpanminus
       perlPackages.Appcpm
       perlPackages.PerlTidy

@@ -79,11 +79,11 @@ let
     input="/tmp/vfio-bound-consoles"
     while read -r idx ; do
       if -x "/sys/class/vtconsole/vtcon''${idx}"; then
-        if test "$(grep -c 'frame buffer' "/sys/class/vtconsole/vtcon''${idx}/name")" == 1; then
+        if test "$(grep -c 'frame buffer' "/sys/class/vtconsole/vtcon''${idx}/name")" = 1; then
           echo 1 > /sys/class/vtconsole/vtcon''${idx}/bind
         fi
       fi
-    done < $input
+    done < "$input"
   '';
 
   btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" ];

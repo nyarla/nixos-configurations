@@ -1,5 +1,5 @@
-{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages, linuxPackages, python3Packages
-, curl, libGL, xorg, }:
+{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages, linuxPackages, curl, libGL
+, xorg, }:
 let
   libPath = lib.makeLibraryPath
     ([ linuxPackages.nvidia_x11 gcc9Stdenv.cc.cc gcc9Stdenv.cc.libc ]

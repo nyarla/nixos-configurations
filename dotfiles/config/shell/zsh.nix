@@ -69,6 +69,7 @@
       if has perl ; then
         eval "$(perl -I${pkgs.perlPackages.locallib}/lib/perl5/site_perl/${pkgs.perl.version} -Mlocal::lib=$HOME/.local/share/perl/global)"
         export PERL_CPANM_OPT="--local-lib-contained $HOME/.local/share/perl/global"
+        export PERL_CPANM_HOME=$HOME/.local/share/perl/cpanm
       fi
 
       if test -e $HOME/.cargo/env ; then

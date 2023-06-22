@@ -5,7 +5,10 @@ in {
   arc-openbox = require ./arc-openbox { };
   audiogridder = require ./audiogridder { };
   clipboard-sync = require ./clipboard-sync { };
-  cuda-shell = require ./cuda-shell { cudaPackages = super.cudaPackages_11_8; };
+  cuda-shell = require ./cuda-shell {
+    cudaPackages = super.cudaPackages_11_8;
+    nvidia_x11 = null;
+  };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
   dexed = require ./dexed { };

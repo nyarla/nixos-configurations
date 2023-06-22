@@ -1,0 +1,35 @@
+# Revert this commit patch; modified from https://github.com/NixOS/nixpkgs/commit/b518881d73cc11c5898e226408009bd14bb80115.patch
+From b518881d73cc11c5898e226408009bd14bb80115 Mon Sep 17 00:00:00 2001
+From: Kiskae <Kiskae@users.noreply.github.com>
+Date: Wed, 14 Jun 2023 22:05:12 +0200
+Subject: [PATCH] linuxPackages.nvidia_x11_production: 525.116.04 -> 535.54.03
+
+---
+ pkgs/os-specific/linux/nvidia-x11/default.nix | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/pkgs/os-specific/linux/nvidia-x11/default.nix b/pkgs/os-specific/linux/nvidia-x11/default.nix
+index 1b47c400395fe..f7d0e36b14ece 100644
+--- a/pkgs/os-specific/linux/nvidia-x11/default.nix
++++ b/pkgs/os-specific/linux/nvidia-x11/default.nix
+@@ -25,12 +25,14 @@ rec {
+   stable = if stdenv.hostPlatform.system == "i686-linux" then legacy_390 else latest;
+ 
+   production = generic {
+-    version = "535.54.03";
+-    sha256_64bit = "sha256-RUdk9X6hueGRZqNw94vhDnHwYmQ4+xl/cm3DyvBbQII=";
+-    sha256_aarch64 = "sha256-SUxW/Z8sJJ7bc/yhozTh8Wd2gKLsniJwKmXh1tJwUm8=";
+-    openSha256 = "sha256-dp74UiiZfsQbZbAKHgFkLdRNyYbRlVMF3tIXcxok7FU";
+-    settingsSha256 = "sha256-5yIdOAaYQCQ2CmCayD/a5opoQppjK56s9cDqLmm17ww=";
+-    persistencedSha256 = "sha256-R5WCh09BSPjfifui0ODkCsdIXTowceNjLDq5XHwda08=";
++    version = "525.116.04";
++    sha256_64bit = "sha256-hhDsgkR8/3LLXxizZX7ppjSlFRZiuK2QHrgfTE+2F/4=";
++    sha256_aarch64 = "sha256-k7k22z5PYZdBVfuYXVcl9SFUMqZmK4qyxoRwlYyRdgU=";
++    openSha256 = "sha256-dktHCoESqoNfu5M73aY5MQGROlZawZwzBqs3RkOyfoQ=";
++    settingsSha256 = "sha256-qNjfsT9NGV151EHnG4fgBonVFSKc4yFEVomtXg9uYD4=";
++    persistencedSha256 = "sha256-ci86XGlno6DbHw6rkVSzBpopaapfJvk0+lHcR4LDq50=";
++
++    ibtSupport = true;
+   };
+ 
+   latest = selectHighestVersion production (generic {

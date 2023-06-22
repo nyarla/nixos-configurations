@@ -35,7 +35,7 @@ in {
     "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
 
   environment.systemPackages = with pkgs;
-    [ (cuda-shell.override { linuxPackages = config.boot.kernelPackages; }) ];
+    [ (cuda-shell.override { nvidia_x11 = nvidia; }) ];
 
   virtualisation.docker.enableNvidia = true;
 }

@@ -38,7 +38,7 @@
         patches = [ ];
       } (pkg: {
         modules = [
-          "${pkg}/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix"
+          "${pkg}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ./system/profile/Recovery.nix
 
           home-manager.nixosModules.home-manager
@@ -65,7 +65,7 @@
       # NyZen9
       nixos = nixosSystem {
         arch = "x86_64";
-        patches = [ ];
+        patches = [ ./patches/nvidia-525.116.04.patch ];
       } (pkg: {
         modules = [
           ./system/profile/NyZen9.nix

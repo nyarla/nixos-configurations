@@ -1,8 +1,8 @@
-{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages, linuxPackages, curl, libGL
-, xorg, }:
+{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages, nvidia_x11, curl, libGL, xorg,
+}:
 let
   libPath = lib.makeLibraryPath
-    ([ linuxPackages.nvidia_x11 gcc9Stdenv.cc.cc gcc9Stdenv.cc.libc ]
+    ([ nvidia_x11 gcc9Stdenv.cc.cc gcc9Stdenv.cc.libc ]
       ++ (with cudaPackages; [ cudatoolkit cudnn ]));
 in buildFHSUserEnv rec {
   name = "cuda-shell";
@@ -39,7 +39,7 @@ in buildFHSUserEnv rec {
   profile = ''
     export CUDA_PATH=${cudaPackages.cudatoolkit}
     export CUDA_LD_LIBRARY_PATH=${libPath}
-    export LDFLAGS="-L${linuxPackages.nvidia_x11}/lib -L${cudaPackages.cudatoolkit}/lib -L${cudaPackages.cudnn}/lib"
+    export LDFLAGS="-L${nvidia_x11}/lib -L${cudaPackages.cudatoolkit}/lib -L${cudaPackages.cudnn}/lib"
     export CFLAGS="-I${cudaPackages.cudatoolkit}/include -I${cudaPackages.cudnn}/include"
   '';
 }

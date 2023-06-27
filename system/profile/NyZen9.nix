@@ -4,8 +4,20 @@ let
   kvmHugePageSetupScript = pkgs.writeShellScript "hugepage-setup.sh" ''
     set -x
 
-    echo 32800 > /proc/sys/vm/nr_hugepages
-    if test 32800 != $(cat /proc/sys/vm/nr_hugepages); then
+    HUGEPAGE=32800
+    echo $HUGEPAGE > /proc/sys/vm/nr_hugepages
+    ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
+
+    TRIES=0
+    while (( $ALLOC_PAGES != $HUGEPAGE && $TRIES < 1000 )); do
+      echo 1 > /proc/sys/vm/compact_memory
+      echo $HUGEPAGE > /proc/sys/vm/nr_hugepages
+      ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
+
+      let TRIES+=1
+    done
+
+    if test $HUGEPAGE != $ALLOC_PAGES ; then
       echo "failed to enable hugepage"
       echo 0 > /proc/sys/vm/nr_hugepages
       exit 1

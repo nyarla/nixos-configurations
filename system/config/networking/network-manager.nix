@@ -7,7 +7,7 @@ _: {
     enable = true;
     dhcp = "dhcpcd";
     wifi = {
-      backend = "wpa_supplicant";
+      backend = "iwd";
       powersave = false;
     };
     unmanaged = [ "docker0" "virbr0" "tailscale0" "waydroid0" ];

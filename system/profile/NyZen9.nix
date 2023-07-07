@@ -420,7 +420,7 @@ in {
   # -------
 
   # avahi
-  services.avahi.allowInterfaces = [ "wlp5s0" ];
+  services.avahi.allowInterfaces = [ "wlan0" ];
 
   # samba
   services.samba = {

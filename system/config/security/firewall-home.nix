@@ -29,7 +29,7 @@ _: {
         }];
       };
 
-      "wlp5s0" = {
+      "wlan0" = {
         allowedTCPPorts = [
           # syncthing
           22000

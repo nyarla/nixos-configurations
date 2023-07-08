@@ -17,8 +17,9 @@ let
 in {
   home.packages = with pkgs;
     [
-      # terminal
+      # terminal and development
       wezterm
+      gitg
 
       # icon and themes
       arc-openbox

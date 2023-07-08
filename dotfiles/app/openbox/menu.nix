@@ -39,6 +39,7 @@ in ''
 
   ${makeMenu "applications-main" "Main" [
     (makeExecute "terminal" "wezterm")
+    (makeExecute "git gui" "gitg")
     (isMe ''
       ${makeExecute "virt-manager" "virt-manager"}
       ${makeExecute "weston" (scriptsCmd "waydroid-on-weston")}

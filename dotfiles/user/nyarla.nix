@@ -20,7 +20,6 @@ _: {
 
     ../app/git
     ../app/openbox
-    ../app/mlterm
   ];
 
   # More customizations

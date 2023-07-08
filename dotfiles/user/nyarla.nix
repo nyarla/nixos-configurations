@@ -40,6 +40,7 @@ _: {
 
   # home-manager
   # -------------
+  programs.home-manager.enable = true;
 
   # stateVersion (same as NixOS)
   home.stateVersion =

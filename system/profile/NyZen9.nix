@@ -1,103 +1,5 @@
 { pkgs, lib, ... }:
 let
-  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/prepare/begin/hugepage.sh"
-  kvmHugePageSetupScript = pkgs.writeShellScript "hugepage-setup.sh" ''
-    set -x
-
-    HUGEPAGE=32800
-    echo $HUGEPAGE > /proc/sys/vm/nr_hugepages
-    ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
-
-    TRIES=0
-    while (( $ALLOC_PAGES != $HUGEPAGE && $TRIES < 1000 )); do
-      echo 1 > /proc/sys/vm/compact_memory
-      echo $HUGEPAGE > /proc/sys/vm/nr_hugepages
-      ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
-
-      let TRIES+=1
-    done
-
-    if test $HUGEPAGE != $ALLOC_PAGES ; then
-      echo "failed to enable hugepage"
-      echo 0 > /proc/sys/vm/nr_hugepages
-      exit 1
-    fi
-  '';
-
-  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/release/end/hugepage.sh"
-  kvmHugePageShutdownScript = pkgs.writeShellScript "hugepage-shutdown.sh" ''
-    echo 0 > /proc/sys/vm/nr_hugepages
-  '';
-
-  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/prepare/begin/vfio.sh"
-  kvmVFIOSetupScript = pkgs.writeShellScript "vfio-setup.sh" ''
-    set -x
-    export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
-
-    # shutdown display manager
-    if systemctl is-active display-manager ; then
-      systemctl stop display-manager
-    fi
-
-    while systemctl is-active --quiet display-manager; do
-      sleep 1
-    done
-
-    # unbind vtcon
-    for i in $(seq 0 16); do
-      if test "$(grep -c 'frame buffer' "/sys/class/vtconsole/vtcon''${i}/name")" == 1; then
-        echo 0 > /sys/class/vtconsole/vtcon''${i}/bind
-        echo "''${i}" >> /tmp/vfio-bound-consoles
-      fi
-    done
-
-    # unload gpu drivers
-    echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
-    modprobe -r nvidia_uvm
-    modprobe -r nvidia_drm
-    modprobe -r nvidia_modeset
-    modprobe -r nvidia
-    modprobe -r drm_kms_helper
-    modprobe -r drm
-
-    # load vfio drivers
-    modprobe vfio
-    modprobe vfio_pci
-    modprobe vfio_iommu_type1
-  '';
-
-  # usage: environment.etc."libvirt/hooks/qemu.d/${vmane}/release/end/vfio.sh"
-  kvmVFIOShutdownScript = pkgs.writeShellScript "vfio-shutdown.sh" ''
-    set -x
-    export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
-
-    # unload vfio kernel modules
-    modprobe -r vfio_pci
-    modprobe -r vfio_iommu_type1
-    modprobe -r vfio
-
-    # load gpu drivers
-    modprobe drm
-    modprobe drm_kms_helper
-    modprobe nvidia
-    modprobe nvidia_modeset
-    modprobe nvidia_drm
-    modprobe nvidia_uvm
-
-    # start display manager
-    systemctl start display-manager
-
-    # attach vtcon
-    input="/tmp/vfio-bound-consoles"
-    while read -r idx ; do
-      if -x "/sys/class/vtconsole/vtcon''${idx}"; then
-        if test "$(grep -c 'frame buffer' "/sys/class/vtconsole/vtcon''${idx}/name")" = 1; then
-          echo 1 > /sys/class/vtconsole/vtcon''${idx}/bind
-        fi
-      fi
-    done < "$input"
-  '';
-
   btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" ];
   btrfsRWOnly = [ "noexec" "nosuid" "nodev" ];
 in {
@@ -584,19 +486,6 @@ in {
       Persistent = true;
     };
   };
-
-  # VM
-
-  ## Win10
-  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/prepare/begin/hugepage.sh".source =
-    toString kvmHugePageSetupScript;
-  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/hugepage.sh".source =
-    toString kvmHugePageShutdownScript;
-
-  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/prepare/begin/vfio.sh".source =
-    toString kvmVFIOSetupScript;
-  environment.etc."executable/etc/libvirt/hooks/qemu.d/Win10/release/end/vfio.sh".source =
-    toString kvmVFIOShutdownScript;
 
   nixpkgs.config.permittedInsecurePackages = [ "electron-19.0.7" ];
 }

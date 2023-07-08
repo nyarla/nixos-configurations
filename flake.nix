@@ -49,11 +49,9 @@
           }
 
           (_: {
-            nix.nixPath = [
-              "nixpkgs=${pkg}"
-              "nixos-config=/etc/nixos/configuration.nix"
-              "/nix/var/nix/profiles/per-user/root/channels"
-            ];
+            nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
+            systemd.tmpfiles.rules = [ "L+ /etc/nixpkgs - - - - ${pkg}" ];
+
             nixpkgs.overlays =
               [ (import ./pkgs) (import ./pkgs/temporary.nix) ];
             system.stateVersion =
@@ -78,16 +76,28 @@
           }
 
           (_: {
-            nix.nixPath = [
-              "nixpkgs=${pkg}"
-              "nixos-config=/etc/nixos/configuration.nix"
-              "/nix/var/nix/profiles/per-user/root/channels"
-            ];
+            nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
+            systemd.tmpfiles.rules = [ "L+ /etc/nixpkgs - - - - ${pkg}" ];
             nixpkgs.overlays =
               [ (import ./pkgs) (import ./pkgs/temporary.nix) wayland.overlay ];
             system.stateVersion =
               (import ./system/config/nixos/version.nix).stateVersion;
           })
+
+          # for Win10 VM
+          ({ pkgs, lib, ... }:
+            (import ./system/config/kvm/hugepage.nix) {
+              inherit pkgs lib;
+              vm = "Win10";
+              name = "hugepage";
+              allocationSize = 32800;
+            })
+          ({ pkgs, lib, ... }:
+            (import ./system/config/kvm/vfio-nvidia.nix) {
+              inherit pkgs lib;
+              vm = "Win10";
+              name = "vfio-nvidia";
+            })
         ];
       });
     };

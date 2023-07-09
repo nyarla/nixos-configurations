@@ -16,10 +16,6 @@ _: {
 
           # ssh
           2222
-
-          # mpd
-          6600
-          9999
         ];
 
         allowedUDPPortRanges = [{

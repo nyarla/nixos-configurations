@@ -21,15 +21,6 @@
   };
   services.phpfpm.phpPackage = pkgs.php80;
 
-  services.n8n = {
-    enable = true;
-    settings = {
-      executions = { saveDataOnSuccess = "none"; };
-      generic = { timezone = "Asia/Tokyo"; };
-    };
-  };
-  systemd.services.n8n.environment = { DB_SQLITE_VACUUM_ON_STARTUP = "true"; };
-
   # nginx
   security.acme = {
     acceptTerms = true;
@@ -50,15 +41,6 @@
   };
 
   services.nginx.virtualHosts = {
-    "n8n.home.thotep.net" = {
-      onlySSL = true;
-      sslCertificate = "/var/lib/acme/home.thotep.net/fullchain.pem";
-      sslCertificateKey = "/var/lib/acme/home.thotep.net/key.pem";
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:5678";
-        proxyWebsockets = true;
-      };
-    };
     "reader.home.thotep.net" = {
       onlySSL = true;
       sslCertificate = "/var/lib/acme/home.thotep.net/fullchain.pem";

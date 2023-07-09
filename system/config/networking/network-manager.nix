@@ -10,7 +10,13 @@ _: {
       backend = "iwd";
       powersave = false;
     };
-    unmanaged = [ "docker0" "virbr0" "tailscale0" "waydroid0" ];
+    unmanaged = [
+      "interface-name:br-*"
+      "interface-name:docker*"
+      "interface-name:tailscale*"
+      "interface-name:virbr*"
+      "interface-name:waydroid*"
+    ];
   };
 
   networking.enableIPv6 = true;

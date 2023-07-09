@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [ tailscale ];
   services.tailscale.enable = true;
 
@@ -9,14 +9,13 @@
     wantedBy = [ "multi-user.target" ];
     serviceConfig = { Type = "oneshot"; };
     script = with pkgs; ''
-      sleep 2
+      TRIES=0
+      until ${tailscale}/bin/tailscale up ; do
+        sleep 0.1
+        let TRIES+=1
 
-      status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
-      if test $status = "Running" ; then
-        exit 0
-      fi
-
-      ${tailscale}/bin/tailscale up 
+        test $TRIES = 20 && break
+      done
     '';
   };
 }

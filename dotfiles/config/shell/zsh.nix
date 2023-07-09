@@ -22,7 +22,7 @@
       NIXPKGS_ALLOW_UNFREE = 1;
     };
     enableCompletion = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     history = {
       size = 10000;
       path = "$HOME/.zsh_history";

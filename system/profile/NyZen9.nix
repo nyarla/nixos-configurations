@@ -297,7 +297,6 @@ in {
       TIMELINE_YEARLY = 1;
     };
   in {
-    etc = snap "/etc";
     exe = snap "/etc/executable";
     home = snap "/home";
     varlib = snap "/var/lib";

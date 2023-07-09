@@ -2,5 +2,8 @@
   programs.firefox.enable = true;
   programs.firefox.package = pkgs.firefox-bin;
 
-  home.packages = with pkgs; [ brave google-chrome thunderbird-bin ];
+  programs.google-chrome.enable = true;
+  programs.brave.enable = true;
+
+  home.packages = with pkgs; [ thunderbird-bin ];
 }

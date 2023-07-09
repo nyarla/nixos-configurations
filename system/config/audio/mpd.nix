@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+_: {
   boot.kernelParams = [
     "snd_usb_audio.index=11"
     "snd_usb_audio.vid=0x1235"

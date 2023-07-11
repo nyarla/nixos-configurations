@@ -31,36 +31,7 @@
           pkgs = nixpkgs { inherit system patches; };
         in (import "${pkgs}/nixos/lib/eval-config.nix")
         ((config pkgs) // { inherit system; });
-    in {
-      # nixos custom recovery
-      nixos-recovery = nixosSystem {
-        arch = "x86_64";
-        patches = [ ];
-      } (pkg: {
-        modules = [
-          "${pkg}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          ./system/profile/Recovery.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.nixos = import ./dotfiles/user/nixos.nix;
-          }
-
-          (_: {
-            nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
-            systemd.tmpfiles.rules = [ "L+ /etc/nixpkgs - - - - ${pkg}" ];
-
-            nixpkgs.overlays =
-              [ (import ./pkgs) (import ./pkgs/temporary.nix) ];
-            system.stateVersion =
-              (import ./system/config/nixos/version.nix).stateVersion;
-          })
-        ];
-      });
-
-      # NyZen9
+    in { # NyZen9
       nixos = nixosSystem {
         arch = "x86_64";
         patches = [ ./patches/nvidia-525.116.04.patch ];

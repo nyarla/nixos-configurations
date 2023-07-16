@@ -8,6 +8,7 @@ _: {
     ../config/files/alsa.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
+    ../config/services/backup.nix
     ../config/services/dunst.nix
     ../config/services/gnome-keyring.nix
     ../config/services/keychain.nix
@@ -43,6 +44,5 @@ _: {
   programs.home-manager.enable = true;
 
   # stateVersion (same as NixOS)
-  home.stateVersion =
-    (import ../../system/config/nixos/version.nix).stateVersion;
+  home.stateVersion = "23.05";
 }

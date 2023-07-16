@@ -1,18 +1,12 @@
-{ pkgs, lib, ... }:
-let
-  btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" ];
-  btrfsRWOnly = [ "noexec" "nosuid" "nodev" ];
-in {
+{ pkgs, lib, ... }: {
   imports = [
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
-    ../config/desktop/wayland.nix
     ../config/desktop/xorg.nix
     ../config/gadgets/android.nix
     ../config/graphic/fonts.nix
-    ../config/graphic/labwc.nix
     ../config/graphic/lodpi.nix
     ../config/graphic/xorg.nix
     ../config/i18n/en.nix
@@ -29,12 +23,12 @@ in {
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
-    ../config/linux/waydroid.nix
-    ../config/linux/wine.nix
+    #../config/linux/waydroid.nix
+    #../config/linux/wine.nix
     ../config/networking/agent.nix
-    ../config/networking/avahi.nix
+    #../config/networking/avahi.nix
     ../config/networking/network-manager.nix
-    ../config/networking/openssh.nix
+    #../config/networking/openssh.nix
     ../config/networking/printer.nix
     ../config/networking/tailscale.nix
     ../config/networking/tcp-bbr.nix
@@ -68,22 +62,10 @@ in {
   boot.loader.systemd-boot.consoleMode = "max";
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.postBootCommands = ''
-    mkdir -p /usr
-    ln -sf /etc/persist/usr/share /usr/share
-  '';
-
   # initrd
   boot.initrd.luks.devices = {
     nixos = {
-      device = "/dev/disk/by-uuid/c79e2e2d-5411-4af3-8951-549c70f922cb";
-      preLVM = true;
-      allowDiscards = true;
-      bypassWorkqueues = true;
-    };
-
-    data = {
-      device = "/dev/disk/by-uuid/8590c1c4-daf4-441e-a076-8c9376e4cda8";
+      device = "/dev/disk/by-uuid/71779cc6-0484-4dac-9cb9-6f10f10e6a2d";
       preLVM = true;
       allowDiscards = true;
       bypassWorkqueues = true;
@@ -91,7 +73,7 @@ in {
   };
 
   boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "nvme" "usb_storage" "uas" "usbhid" "sd_mod" "sr_mod" ];
+    [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
 
   # tmpfs
@@ -116,196 +98,207 @@ in {
   ];
 
   # filesystem
+  fileSystems = let
+    device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
 
-  ## root
-  fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [ "defaults" "size=8G" "mode=755" ];
-  };
+    btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" ];
+    btrfsNoExec = [ "noexec" "nosuid" "nodev" ];
+    btrfsRWOnly = btrfsOptions ++ btrfsNoExec;
 
-  ## boot
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/709E-6BDD";
-    fsType = "vfat";
-  };
+    subvolRW = path: {
+      "/persist/${path}" = {
+        inherit device;
+        fsType = "btrfs";
+        options = btrfsRWOnly ++ [ "subvol=/persist/${path}" ];
+        neededForBoot = true;
+      };
+    };
 
-  ## persist
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
-    fsType = "btrfs";
-    options = [ "subvol=nix" "noatime" ] ++ btrfsOptions;
-  };
+    subvolEx = path: {
+      "/persist/${path}" = {
+        inherit device;
+        fsType = "btrfs";
+        options = btrfsOptions ++ [ "subvol=/persist/${path}" ];
+        neededForBoot = true;
+      };
+    };
 
-  fileSystems."/etc" = {
-    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
-    fsType = "btrfs";
-    options = [ "subvol=etc" ] ++ btrfsOptions ++ btrfsRWOnly;
-  };
+    backup = path: dest: {
+      "/backup/${path}" = {
+        device = dest;
+        options = [ "bind" ];
+      };
+    };
+  in {
+    # for boot
+    "/" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "defaults" "size=8G" "mode=755" ];
+    };
 
-  fileSystems."/var/log" = {
-    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
-    fsType = "btrfs";
-    options = [ "subvol=log" ] ++ btrfsOptions ++ btrfsRWOnly;
-  };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/709E-6BDD";
+      fsType = "vfat";
+    };
 
-  fileSystems."/var/lib" = {
-    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
-    fsType = "btrfs";
-    options = [ "subvol=lib" ] ++ btrfsOptions;
-  };
+    "/nix" = {
+      device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
+      fsType = "btrfs";
+      options = btrfsOptions ++ [ "subvol=/nix" "noatime" ];
+      neededForBoot = true;
+    };
+  }
+  # for boot
+  // (subvolRW "etc") // (subvolRW "etc/nixos")
 
-  ## home
-  fileSystems."/root" = {
-    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
-    fsType = "btrfs";
-    options = [ "subvol=root" ] ++ btrfsOptions ++ btrfsRWOnly;
-  };
+  // (subvolRW "var/db") // (subvolRW "var/lib") // (subvolEx "var/lib/docker")
+  // (subvolRW "var/log")
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
-    fsType = "btrfs";
-    options = [ "subvol=home" ] ++ btrfsOptions ++ btrfsRWOnly;
-  };
+  // (subvolRW "usr/share")
 
-  ## workaround (TODO)
-  fileSystems."/etc/executable" = {
-    device = "/dev/disk/by-uuid/d4787e30-13de-4d09-98a2-291d79b9dd02";
-    fsType = "btrfs";
-    options = [ "subvol=executable" ] ++ btrfsOptions;
-  };
+  # for account
+  // (subvolRW "home/nyarla") // (subvolEx "home/nyarla/Applications")
+  // (subvolEx "home/nyarla/Programming")
+  // (subvolEx "home/nyarla/.local/share/npm")
+  // (subvolEx "home/nyarla/.local/share/nvim")
+  // (subvolEx "home/nyarla/.local/share/perl")
+  // (subvolEx "home/nyarla/.local/share/vim-lsp-settings")
+  // (subvolEx "home/nyarla/.local/share/waydroid")
 
-  fileSystems."/etc/nixos" = {
-    device = "/etc/executable/etc/nixos";
-    options = [ "bind" ];
-  };
+  # for backup
+  // (backup "Applications" "/persist/home/nyarla/Applications")
+  // (backup "Archives" "/persist/home/nyarla/Archives")
+  // (backup "Calibre" "/persist/home/nyarla/Calibre")
+  // (backup "Development" "/persist/home/nyarla/Development")
+  // (backup "Documents" "/persist/home/nyarla/Documents")
+  // (backup "Music" "/persist/home/nyarla/Music")
+  // (backup "NixOS" "/persist/etc/nixos")
+  // (backup "Programming" "/persist/home/nyarla/Programming")
 
-  ## rust
-  fileSystems."/home/nyarla/.cargo" = {
-    device = "/etc/executable/cargo";
-    options = [ "bind" ];
-  };
-  fileSystems."/home/nyarla/.rustup" = {
-    device = "/etc/executable/rustup";
-    options = [ "bind" ];
-  };
-
-  ## perl
-  fileSystems."/home/nyarla/.local/share/perl" = {
-    device = "/etc/executable/local/share/perl";
-    options = [ "bind" ];
-  };
-
-  ## npm
-  fileSystems."/home/nyarla/.npm" = {
-    device = "/etc/executable/npm";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/home/nyarla/.local/share/npm" = {
-    device = "/etc/executable/local/share/npm";
-    options = [ "bind" ];
-  };
-
-  ## waydroid
-  fileSystems."/home/nyarla/.local/share/waydroid" = {
-    device = "/etc/executable/local/share/waydroid";
-    options = [ "bind" ];
-  };
-
-  ## env
-  fileSystems."/media/data/executable" = {
-    device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
-    options = [ "subvol=executable" ] ++ btrfsOptions;
-  };
-
-  fileSystems."/media/data/sources" = {
-    device = "/dev/disk/by-uuid/f2b34caa-5fe5-4cdb-9f13-5c20706c9d04";
-    options = [ "subvol=sources" ] ++ btrfsOptions ++ btrfsRWOnly;
-  };
-
-  ## backup
-  fileSystems."/backup/Archives" = {
-    device = "/home/nyarla/Archives";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/Calibre" = {
-    device = "/home/nyarla/Calibre";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/Development" = {
-    device = "/home/nyarla/Development";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/Music" = {
-    device = "/home/nyarla/Music";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/Photo" = {
-    device = "/home/nyarla/Photo";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/Documents" = {
-    device = "/home/nyarla/Documents";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/NixOS" = {
-    device = "/etc/executable/etc/nixos";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/Executable" = {
-    device = "/media/data/executable";
-    options = [ "bind" ];
-  };
-
-  fileSystems."/backup/Sources" = {
-    device = "/media/data/sources";
-    options = [ "bind" ];
-  };
+  ;
 
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
-    "/etc"
-    "/etc/executable"
-    "/home"
-    "/media/data/executable"
-    "/media/data/sources"
-    "/nix"
-    "/root"
-    "/var/lib"
-    "/var/log"
+    "/persist/nix"
+
+    "/persist/etc"
+    "/persist/etc/nixos"
+    "/persist/etc/sane-libs"
+    "/persist/etc/sane-config"
+
+    "/persist/var/db"
+    "/persist/var/lib"
+    "/persist/var/lib/docker"
+    "/persist/var/log"
+
+    "/persist/home/nyarla"
+    "/persist/home/nyarla/Applications"
+    "/persist/home/nyarla/Programming"
+    "/persist/home/nyarla/.local/share/npm"
+    "/persist/home/nyarla/.local/share/nvim"
+    "/persist/home/nyarla/.local/share/perl"
+    "/persist/home/nyarla/.local/share/vim-lsp-settings"
+    "/persist/home/nyarla/.local/share/waydroid"
   ];
 
-  services.snapper.configs = let
-    snap = path: {
-      SUBVOLUME = path;
-      ALLOW_USERS = [ "nyarla" ];
-      TIMELINE_CREATE = true;
-      TIMELINE_CLEANUP = true;
-      TIMETINE_MIN_AGE = 1800;
-      TIMELINE_LIMIT_HOURLY = 6;
-      TIMELIME_DAILY = 7;
-      TIMELINE_WEEKLY = 2;
-      TIMELINE_MONTHLY = 1;
-      TIMELINE_YEARLY = 1;
-    };
-  in {
-    exe = snap "/etc/executable";
-    home = snap "/home";
-    varlib = snap "/var/lib";
-    root = snap "/root";
-    executable = snap "/media/data/executable";
-    sources = snap "/media/data/sources";
-  };
-
   swapDevices = [ ];
+
+  # Impermanence
+  # ------------
+  environment.persistence."/persist" = {
+    enable = true;
+    hideMounts = true;
+    directories = [
+      "/etc/NetworkManager"
+      "/etc/nixos"
+      "/etc/ssh"
+      "/etc/wpa_supplicant"
+
+      "/var/db"
+      "/var/lib"
+      "/var/log"
+
+      "/usr/share/waydroid-extra/images"
+    ];
+    files = [ "/etc/machine-id" ];
+
+    users.nyarla = {
+      directories = let
+        secure = directory: {
+          inherit directory;
+          mode = "0700";
+        };
+      in [
+        # data
+        "Applications"
+        "Archives"
+        "Calibre"
+        "Development"
+        "Documents"
+        "Downloads"
+        "Music"
+        "Programming"
+        "Reports"
+        "Sync"
+
+        # .config
+        ".config/1Password"
+        ".config/BraveSoftware"
+        ".config/MusicBrainz"
+        ".config/TabNine"
+        ".config/Thunar"
+        ".config/Yubico"
+        ".config/calibre"
+        ".config/dconf"
+        ".config/fcitx5"
+        ".config/gcloud"
+        ".config/google-chrome"
+        ".config/gtk-2.0"
+        ".config/gtk-3.0"
+        ".config/gtk-4.0"
+        ".config/lxqt"
+        ".config/nvim"
+        ".config/pulse"
+        ".config/rclone"
+        ".config/simple-scan"
+        ".config/syncthing"
+        ".config/wezterm"
+        ".config/whipper"
+        ".config/xfce4"
+
+        # .local
+        ".local/share/TabNine"
+        ".local/share/Trash"
+        ".local/share/applications"
+        ".local/share/fcitx5"
+        ".local/share/fonts"
+        ".local/share/mime"
+        ".local/share/npm"
+        ".local/share/nvim"
+        ".local/share/perl"
+        ".local/share/vim-lsp-settings"
+        ".local/share/waydroid"
+
+        # application
+        ".1password"
+        ".android"
+        ".mozilla"
+        ".pki"
+        ".thunderbird"
+
+        # credentials
+        (secure ".aws")
+        (secure ".fly")
+        (secure ".gnupg")
+        (secure ".gsutil")
+        (secure ".local/share/keyrings")
+        (secure ".ssh")
+        (secure ".wrangler")
+      ];
+      files = [ ".config/mimeapps.list" ".gtkrc-2.0" ".npmrc" ".zsh_history" ];
+    };
+  };
 
   # Hardware
   # --------
@@ -320,76 +313,34 @@ in {
   # Network
   # -------
 
-  # avahi
-  services.avahi.allowInterfaces = [ "wlan0" ];
-
-  # samba
-  services.samba = {
-    enable = true;
-    enableNmbd = true;
-    enableWinbindd = true;
-    securityType = "user";
-    # package = pkgs.samba4Full;
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = nixos
-      netbios name = nixos
-      security = user
-      use sendfile = yes
-      hosts allow = 192.168.240.0/24 192.168.122.0/24 localhost
-      hosts deny = 0.0.0.0/0
-      guest account = nobody
-      map to guest = bad user
-    '';
-    shares = {
-      Downloads = {
-        "path" = "/home/nyarla/Downloads/KVM";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force group" = "users";
-        "force user" = "nyarla";
-        "guest ok" = "no";
-        "read only" = "no";
-      };
-
-      Music = {
-        "path" = "/home/nyarla/Music";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force group" = "users";
-        "force user" = "nyarla";
-        "guest ok" = "no";
-        "read only" = "yes";
-      };
-
-      eBooks = {
-        "path" = "/home/nyarla/Calibre";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force group" = "users";
-        "force user" = "nyarla";
-        "guest ok" = "no";
-        "read only" = "yes";
-      };
-
-      DAW = {
-        "path" = "/media/data/sources/DAW";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force group" = "users";
-        "force user" = "nyarla";
-        "guest ok" = "no";
-        "read only" = "no";
-      };
-    };
-  };
-
   # Services
   # --------
+
+  # snapper
+  services.snapper.configs = let
+    snapshot = path: {
+      SUBVOLUME = "/persist/${path}";
+      ALLOW_USERS = [ "nyarla" ];
+      ALLOW_GROUP = [ "users" ];
+      TIMELINE_CREATE = true;
+      TIMELINE_CLEANUP = true;
+      TIMETINE_MIN_AGE = 1800;
+      TIMELINE_LIMIT_HOURLY = 6;
+      TIMELIME_DAILY = 7;
+      TIMELINE_WEEKLY = 2;
+      TIMELINE_MONTHLY = 1;
+      TIMELINE_YEARLY = 1;
+    };
+  in {
+    nixos = snapshot "etc/nixos";
+
+    varlib = snapshot "var/lib";
+    usrshare = snapshot "usr/share";
+
+    nyarla = snapshot "home/nyarla";
+    apps = snapshot "home/nyarla/Applications";
+    program = snapshot "home/nyarla/Programming";
+  };
 
   # systemd
   systemd.extraConfig = ''
@@ -412,45 +363,14 @@ in {
     '';
   }];
 
-  # backup
-  systemd.user.services.backup = {
-    enable = true;
-    description = "Automatic backup by restic and rclone";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
-        set -euo pipefail
-
-        export PATH=${lib.makeBinPath (with pkgs; [ restic-run ])}:$PATH
-
-        cd /backup
-        restic-backup .
-
-        exit 0
-      '');
-    };
-  };
-  systemd.user.timers.backup = {
-    enable = true;
-    description = "Timer for automatic backup by restic and rclone";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*-*-* 01:00:00";
-      RandomizedDelaySec = "5m";
-      Persistent = true;
-      Unit = "backup.service";
-    };
-  };
-
-  # ClamAV
+  # clamav
   services.clamav.daemon.settings = {
     ExcludePath = [
-      "^/bin"
-      "^/boot"
+      "^/backup"
       "^/dev"
-      "^/home/nyarla/ClamAV"
-      "^/lost+found"
+      "^/home/nyarla/Reports"
       "^/nix"
+      "^/persist/home/nyarla/Reports"
       "^/proc"
       "^/sys"
       ".snapshots/[0-9]+"
@@ -468,7 +388,7 @@ in {
 
         export PATH=${lib.makeBinPath (with pkgs; [ clamav ])}:$PATH
 
-        clamdscan -l /home/nyarla/ClamAV/scan.log -i -m --fdpass / || true
+        clamdscan -l /home/nyarla/Reports/clamav.log -i -m --fdpass / || true
 
         exit 0
       '');
@@ -487,4 +407,9 @@ in {
   };
 
   nixpkgs.config.permittedInsecurePackages = [ "electron-19.0.7" ];
+
+  system.stateVersion = "23.05";
+
+  environment.systemPackages = with pkgs; [ wpa_supplicant ];
+
 }

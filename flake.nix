@@ -8,8 +8,10 @@
 
     wayland.url = "github:nix-community/nixpkgs-wayland";
     wayland.inputs.nixpkgs.follows = "nixpkgs";
+
+    impermanence.url = "github:nix-community/impermanence";
   };
-  outputs = { home-manager, wayland, ... }@inputs: {
+  outputs = { home-manager, wayland, impermanence, ... }@inputs: {
     nixosConfigurations = let
       applyPatch = args:
         inputs.nixpkgs.legacyPackages.${args.system}.applyPatches {
@@ -37,8 +39,7 @@
         patches = [ ./patches/nvidia-525.116.04.patch ];
       } (pkg: {
         modules = [
-          ./system/profile/NyZen9.nix
-
+          impermanence.nixosModules.impermanence
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -51,24 +52,9 @@
             systemd.tmpfiles.rules = [ "L+ /etc/nixpkgs - - - - ${pkg}" ];
             nixpkgs.overlays =
               [ (import ./pkgs) (import ./pkgs/temporary.nix) wayland.overlay ];
-            system.stateVersion =
-              (import ./system/config/nixos/version.nix).stateVersion;
           })
 
-          # for Win10 VM
-          ({ pkgs, lib, ... }:
-            (import ./system/config/kvm/hugepage.nix) {
-              inherit pkgs lib;
-              vm = "Win10";
-              name = "hugepage";
-              allocationSize = 32800;
-            })
-          ({ pkgs, lib, ... }:
-            (import ./system/config/kvm/vfio-nvidia.nix) {
-              inherit pkgs lib;
-              vm = "Win10";
-              name = "vfio-nvidia";
-            })
+          ./system/profile/NyZen9.nix
         ];
       });
     };

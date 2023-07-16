@@ -13,7 +13,7 @@
     enable = true;
     virtualHost = "reader.home.thotep.net";
     selfUrlPath = "https://reader.home.thotep.net";
-    database.passwordFile = "/etc/home-hosted/tt-rss/dbpassword";
+    database.passwordFile = "/var/lib/tt-rss/tt-rss-db-password";
     database.type = "pgsql";
     database.createLocally = true;
     auth.autoLogin = false;
@@ -31,7 +31,7 @@
     };
     certs."home.thotep.net" = {
       server = "https://acme-v02.api.letsencrypt.org/directory";
-      credentialsFile = "/etc/home-hosted/acme/cloudflare";
+      credentialsFile = "/var/lib/acme/cloudflare";
       dnsPropagationCheck = true;
       dnsProvider = "cloudflare";
       domain = "home.thotep.net";

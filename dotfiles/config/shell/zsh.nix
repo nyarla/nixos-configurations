@@ -15,6 +15,8 @@
         ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
       "nvim-resume" = "pkill -SIGCONT nvim";
       "rm" = "trash";
+      "waydroid" =
+        "env XDG_DATA_HOME=/persist/home/nyarla/.local/share waydroid";
     };
     sessionVariables = {
       FAKE_RELEASE = 1;

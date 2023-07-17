@@ -23,7 +23,7 @@
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
-    #../config/linux/waydroid.nix
+    ../config/linux/waydroid.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
     #../config/networking/avahi.nix
@@ -316,6 +316,38 @@
   # Network
   # -------
 
+  # samba
+  services.samba = {
+    enable = true;
+    enableNmbd = true;
+    enableWinbindd = true;
+    securityType = "user";
+    # package = pkgs.samba4Full;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = nixos
+      netbios name = nixos
+      security = user
+      use sendfile = yes
+      hosts allow = 192.168.240.0/24 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+    '';
+    shares = {
+      Music = {
+        "path" = "/home/nyarla/Music";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "yes";
+      };
+    };
+  };
+
   # Services
   # --------
 
@@ -350,6 +382,11 @@
     DefaultTimeoutStartSec=90s
     DefaultTimeoutStopSec=90s
   '';
+
+  # waydroid
+  systemd.services.waydroid-container.environment = {
+    XDG_DATA_HOME = "/persist/home/nyarla/.local/share";
+  };
 
   # Xorg
   services.picom.backend = "glx";

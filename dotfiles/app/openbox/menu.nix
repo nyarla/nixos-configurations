@@ -42,8 +42,7 @@ in ''
     (makeExecute "git gui" "gitg")
     (isMe ''
       ${makeExecute "virt-manager" "virt-manager"}
-      ${makeExecute "weston" (scriptsCmd "waydroid-on-weston")}
-      ${makeExecute "waydroid" "waydroid show-full-ui"}
+      ${makeExecute "waydroid" (scriptsCmd "waydroid-on-weston")}
     '')
   ]}
 

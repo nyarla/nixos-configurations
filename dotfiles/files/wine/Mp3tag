@@ -1,11 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -euo pipefail
 
-export WINEPREFIX=/media/data/executable/wine/MP3Tag
+export WINEPREFIX=/home/nyarla/Applications/Wine/Mp3tag
 export LD_PRELOAD=
 
-wine 'C:\Program Files (x86)\Mp3tag\Mp3tag.exe' &
+wine 'C:\Program Files\Mp3tag\Mp3tag.exe' &
 waitPID=$!
 
 test -n "$waitPID" && wait $waitPID

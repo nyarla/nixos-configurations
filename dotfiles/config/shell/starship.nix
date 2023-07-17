@@ -41,12 +41,12 @@ _: {
 
       env_var = {
         IN_NIX_SHELL = {
-          format = "[](bold gray)[](cyan)";
+          format = "[󱒫 ](bold gray)[](cyan)";
           variable = "IN_NIX_SHELL";
         };
 
         IN_PERL_SHELL = {
-          format = "[](bold gray)[](purple)";
+          format = "[󱒫 ](bold gray)[](purple)";
           variable = "IN_PERL_SHELL";
         };
       };

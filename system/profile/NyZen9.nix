@@ -242,6 +242,9 @@
         "Reports"
         "Sync"
 
+        # cache
+        ".cache/winetricks"
+
         # .config
         ".config/1Password"
         ".config/BraveSoftware"

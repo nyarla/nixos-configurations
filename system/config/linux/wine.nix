@@ -1,11 +1,12 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   wineApps = let
-    wine = pkgs.wineWowPackages.stagingFull;
-    winetricks = pkgs.winetricks;
+    wine = pkgs.wineWowProtonFull;
     jackass-bin = pkgs.jackass-bin.override { inherit wine; };
     wineasio = pkgs.wineasio.override { inherit wine; };
     yabridge = pkgs.yabridge.override { inherit wine; };
     yabridgectl = pkgs.yabridgectl.override { inherit yabridge; };
-  in [ wine winetricks ];
-in { environment.systemPackages = wineApps ++ (with pkgs; [ wine-run ]); }
+  in [ wine jackass-bin wineasio yabridge yabridgectl ];
+in {
+  environment.systemPackages = wineApps ++ (with pkgs; [ winetricks wine-run ]);
+}

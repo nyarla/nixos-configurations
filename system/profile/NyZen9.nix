@@ -24,7 +24,7 @@
     ../config/linux/optical.nix
     ../config/linux/process.nix
     #../config/linux/waydroid.nix
-    #../config/linux/wine.nix
+    ../config/linux/wine.nix
     ../config/networking/agent.nix
     #../config/networking/avahi.nix
     ../config/networking/network-manager.nix

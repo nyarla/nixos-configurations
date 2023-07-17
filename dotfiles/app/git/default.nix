@@ -23,7 +23,7 @@
         fscache = true;
         preloadindex = true;
         quotepath = false;
-        hooksPath = "/media/data/executable/githooks-v2/hooks";
+        hooksPath = "/home/nyarla/Applications/Development/githooks/hooks";
       };
       credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
     };

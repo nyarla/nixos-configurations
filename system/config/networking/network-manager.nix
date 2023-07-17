@@ -5,7 +5,7 @@ _: {
   };
   networking.networkmanager = {
     enable = true;
-    dhcp = "dhcpcd";
+    dhcp = "internal";
     wifi = {
       backend = "iwd";
       powersave = false;

@@ -26,9 +26,9 @@
     ../config/linux/waydroid.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
-    #../config/networking/avahi.nix
+    ../config/networking/avahi.nix
     ../config/networking/network-manager.nix
-    #../config/networking/openssh.nix
+    ../config/networking/openssh.nix
     ../config/networking/printer.nix
     ../config/networking/tailscale.nix
     ../config/networking/tcp-bbr.nix
@@ -160,8 +160,23 @@
     "/media/data" = {
       device = "/dev/mapper/data";
       fsType = "btrfs";
-      options = btrfsOptions ++ [ "noauto" "x-systemd.automount" ];
-      neededForBoot = false;
+      options = btrfsOptions ++ [
+        "noauto"
+        "x-systemd.automount"
+        "x-systemd.after=multi-user.target"
+      ];
+    };
+
+    # for back with media
+    "/backup/DAW" = {
+      device = "/media/data/DAW";
+      options =
+        [ "bind" "x-systemd.automount" "x-systemd.after=multi-user.target" ];
+    };
+    "/backup/Sources" = {
+      device = "/media/data/Sources";
+      options =
+        [ "bind" "x-systemd.automount" "x-systemd.after=multi-user.target" ];
     };
   }
   # for boot
@@ -189,12 +204,7 @@
   // (backup "Documents" "/persist/home/nyarla/Documents")
   // (backup "Music" "/persist/home/nyarla/Music")
   // (backup "NixOS" "/persist/etc/nixos")
-  // (backup "Programming" "/persist/home/nyarla/Programming")
-  # for backup with data
-  // (backup "DAW" "/media/data/DAW")
-  // (backup "Sources" "/media/data/Sources")
-
-  ;
+  // (backup "Programming" "/persist/home/nyarla/Programming");
 
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
@@ -333,6 +343,9 @@
 
   # Network
   # -------
+
+  # avahi
+  services.avahi.allowInterfaces = [ "wlan0" ];
 
   # samba
   services.samba = {

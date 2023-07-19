@@ -98,6 +98,13 @@
   ];
 
   # filesystem
+  environment.etc."crypttab" = {
+    enable = true;
+    text = ''
+      data UUID=470d2a2f-bdea-49a2-8e9b-242e4f3e1381 /boot/keys/470d2a2f-bdea-49a2-8e9b-242e4f3e1381 nofail,x-systemd.device-timeout=5s
+    '';
+  };
+
   fileSystems = let
     device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
 
@@ -148,6 +155,14 @@
       options = btrfsOptions ++ [ "subvol=/nix" "noatime" ];
       neededForBoot = true;
     };
+
+    # for media
+    "/media/data" = {
+      device = "/dev/mapper/data";
+      fsType = "btrfs";
+      options = btrfsOptions ++ [ "noauto" "x-systemd.automount" ];
+      neededForBoot = false;
+    };
   }
   # for boot
   // (subvolRW "etc") // (subvolRW "etc/nixos")
@@ -175,6 +190,9 @@
   // (backup "Music" "/persist/home/nyarla/Music")
   // (backup "NixOS" "/persist/etc/nixos")
   // (backup "Programming" "/persist/home/nyarla/Programming")
+  # for backup with data
+  // (backup "DAW" "/media/data/DAW")
+  // (backup "Sources" "/media/data/Sources")
 
   ;
 
@@ -299,7 +317,7 @@
         (secure ".ssh")
         (secure ".wrangler")
       ];
-      files = [ ".config/mimeapps.list" ".gtkrc-2.0" ".npmrc" ".zsh_history" ];
+      files = [ ".config/mimeapps.list" ".gtkrc-2.0" ".npmrc" ];
     };
   };
 

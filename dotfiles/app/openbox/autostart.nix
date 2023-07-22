@@ -41,5 +41,6 @@ in writeShellScript "autostart" ''
 
     calibre --start-in-tray &
     1password --silent &
+    connman-gtk --tray &
   ''}
 ''

@@ -27,7 +27,7 @@
     ../config/linux/wine.nix
     ../config/networking/agent.nix
     ../config/networking/avahi.nix
-    ../config/networking/network-manager.nix
+    ../config/networking/connman.nix
     ../config/networking/openssh.nix
     ../config/networking/printer.nix
     ../config/networking/tailscale.nix
@@ -346,6 +346,8 @@
 
   # avahi
   services.avahi.allowInterfaces = [ "wlan0" ];
+
+  networking.interfaces."wlan0".mtu = 1472;
 
   # samba
   services.samba = {

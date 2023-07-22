@@ -5,5 +5,5 @@
   services.connman.networkInterfaceBlacklist =
     [ "tailscale" "docker" "veth" "virbr" ];
 
-  environmemt.systemPacckages = with pkgs; [ connman-gtk ];
+  environment.systemPackages = with pkgs; [ connman-gtk ];
 }

@@ -108,7 +108,7 @@
   fileSystems = let
     device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
 
-    btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" ];
+    btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" "x-gvfs-hide" ];
     btrfsNoExec = [ "noexec" "nosuid" "nodev" ];
     btrfsRWOnly = btrfsOptions ++ btrfsNoExec;
 
@@ -170,13 +170,21 @@
     # for back with media
     "/backup/DAW" = {
       device = "/media/data/DAW";
-      options =
-        [ "bind" "x-systemd.automount" "x-systemd.after=multi-user.target" ];
+      options = [
+        "bind"
+        "x-systemd.automount"
+        "x-systemd.after=multi-user.target"
+        "x-gvfs-hide"
+      ];
     };
     "/backup/Sources" = {
       device = "/media/data/Sources";
-      options =
-        [ "bind" "x-systemd.automount" "x-systemd.after=multi-user.target" ];
+      options = [
+        "bind"
+        "x-systemd.automount"
+        "x-systemd.after=multi-user.target"
+        "x-gvfs-hide"
+      ];
     };
   }
   # for boot
@@ -195,6 +203,7 @@
   // (subvolEx "home/nyarla/.local/share/perl")
   // (subvolEx "home/nyarla/.local/share/vim-lsp-settings")
   // (subvolEx "home/nyarla/.local/share/waydroid")
+  // (subvolEx "home/nyarla/.fly") // (subvolEx "home/nyarla/.wrangler")
 
   # for backup
   // (backup "Applications" "/persist/home/nyarla/Applications")
@@ -221,13 +230,15 @@
     "/persist/var/log"
 
     "/persist/home/nyarla"
-    "/persist/home/nyarla/Applications"
-    "/persist/home/nyarla/Programming"
+    "/persist/home/nyarla/.fly"
     "/persist/home/nyarla/.local/share/npm"
     "/persist/home/nyarla/.local/share/nvim"
     "/persist/home/nyarla/.local/share/perl"
     "/persist/home/nyarla/.local/share/vim-lsp-settings"
     "/persist/home/nyarla/.local/share/waydroid"
+    "/persist/home/nyarla/.wrangler"
+    "/persist/home/nyarla/Applications"
+    "/persist/home/nyarla/Programming"
   ];
 
   swapDevices = [ ];
@@ -246,6 +257,7 @@
       "/var/db"
       "/var/lib"
       "/var/log"
+      "/var/lib/docker"
 
       "/usr/share/waydroid-extra/images"
     ];
@@ -347,7 +359,9 @@
   # avahi
   services.avahi.allowInterfaces = [ "wlan0" ];
 
+  # tcp optimize
   networking.interfaces."wlan0".mtu = 1472;
+  boot.kernel.sysctl = { "net.ipv4.tcp_window_scaling" = 1; };
 
   # samba
   services.samba = {

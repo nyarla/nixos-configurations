@@ -1,12 +1,12 @@
 { fetchurl, writeShellScript, pkgs, isMe, ... }:
 let
-  automount = uuid: path: ''
-    if test -e "/dev/disk/by-uuid/${uuid}" ; then
-      if test ! -d ${path} ; then
-        gio mount -d ${uuid} ${path} &
-      fi
-    fi
-  '';
+  # automount = uuid: path: ''
+  #   if test -e "/dev/disk/by-uuid/${uuid}" ; then
+  #     if test ! -d ${path} ; then
+  #       gio mount -d ${uuid} ${path} &
+  #     fi
+  #   fi
+  # '';
 
   wallpaper = fetchurl {
     url =
@@ -27,11 +27,6 @@ in writeShellScript "autostart" ''
   dbus-update-activation-environment --systemd --all
   systemctl --user start gnome-keyring
 
-  ${isMe ''
-    ${automount "470d2a2f-bdea-49a2-8e9b-242e4f3e1381" "/run/media/nyarla/data"}
-  ''}
-
-  hsetroot -fill ${wallpaper} &
   ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE LXQt &
 
   ${isMe ''
@@ -43,4 +38,6 @@ in writeShellScript "autostart" ''
     1password --silent &
     connman-gtk --tray &
   ''}
+
+  hsetroot -fill ${wallpaper} &
 ''

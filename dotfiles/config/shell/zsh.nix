@@ -46,11 +46,8 @@
       # enable home-manager
       export PATH=${
         lib.strings.concatStringsSep ":" [
-          "$HOME/local/textlintrc/node_modules/.bin"
+          "$HOME/.fly/bin"
           "$HOME/.local/share/npm/bin"
-          "$HOME/.local/bin"
-          "$HOME/dev/bin"
-          "$HOME/local/bin"
           "$PATH"
         ]
       }

@@ -129,19 +129,7 @@ in {
     };
   });
 
-  wineWowProtonFull =
-    super.lib.overrideDerivation super.wineWowPackages.unstableFull (old: {
-      pname = "wine-proton-full";
-      version = "8.8";
-      src = super.fetchFromGitHub {
-        owner = "GloriousEggroll";
-        repo = "proton-wine";
-        rev = "Proton8-8";
-        sha256 = "sha256-VtLO9L0cb4WAqw9QXfttKOVE8cRtXunayYzKWXVIs4o=";
-      };
-      configureFlags = old.configureFlags ++ [ "--disable-tests" ];
-      patches = [ ];
-    });
+  wineUsingFull = super.wineWowPackages.stagingFull;
 
   wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
     version = "0_16_0_mod";

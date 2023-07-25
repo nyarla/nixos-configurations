@@ -292,6 +292,7 @@
         ".config/1Password"
         ".config/BraveSoftware"
         ".config/MusicBrainz"
+        ".config/Sononym"
         ".config/TabNine"
         ".config/Thunar"
         ".config/Yubico"
@@ -329,9 +330,11 @@
 
         # application
         ".1password"
+        ".BitwigStudio"
         ".android"
         ".mozilla"
         ".pki"
+        ".sononym audioserver"
         ".thunderbird"
 
         # credentials
@@ -343,7 +346,8 @@
         (secure ".ssh")
         (secure ".wrangler")
       ];
-      files = [ ".config/mimeapps.list" ".gtkrc-2.0" ".npmrc" ];
+      files =
+        [ ".config/mimeapps.list" ".config/snn.conf" ".gtkrc-2.0" ".npmrc" ];
     };
   };
 

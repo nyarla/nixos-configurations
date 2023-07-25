@@ -1,5 +1,6 @@
 { pkgs, lib, ... }: {
   imports = [
+    ../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
@@ -198,6 +199,7 @@
   # for account
   // (subvolRW "home/nyarla") // (subvolEx "home/nyarla/Applications")
   // (subvolEx "home/nyarla/Programming")
+  // (subvolEx "home/nyarla/.config/audiogridder")
   // (subvolEx "home/nyarla/.local/share/npm")
   // (subvolEx "home/nyarla/.local/share/nvim")
   // (subvolEx "home/nyarla/.local/share/perl")
@@ -230,6 +232,7 @@
     "/persist/var/log"
 
     "/persist/home/nyarla"
+    "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.fly"
     "/persist/home/nyarla/.local/share/npm"
     "/persist/home/nyarla/.local/share/nvim"
@@ -292,6 +295,7 @@
         ".config/TabNine"
         ".config/Thunar"
         ".config/Yubico"
+        ".config/audiogridder"
         ".config/calibre"
         ".config/dconf"
         ".config/fcitx5"

@@ -1,12 +1,10 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ currennt ];
-  boot.kernelModules = [ "snd-seq" "snd-rawmidi" "snd-virmidi" ];
+_: {
+  boot.kernelModules = [ "snd-seq" "snd-rawmidi" ];
   boot.kernel.sysctl = {
     "vm.swapiness" = 10;
     "fs.inotify.max_user_watches" = 524288;
   };
-  boot.kernelParams =
-    [ "threadirq" "snd-virmidi.enable=1,1" "snd-virmidi.midi_devs=4,4" ];
+  boot.kernelParams = [ "threadirq" ];
   security.pam.loginLimits = [
     {
       domain = "@audio";

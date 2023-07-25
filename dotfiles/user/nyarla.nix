@@ -2,6 +2,7 @@ _: {
   imports = [
     ../config/app/appimage.nix
     ../config/app/browser.nix
+    ../config/app/daw.nix
     ../config/app/multimedia.nix
     ../config/app/office.nix
     ../config/app/weston.nix

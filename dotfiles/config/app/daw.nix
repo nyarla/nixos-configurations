@@ -8,8 +8,9 @@
     # samples manager
     sononym-bin
 
-    # jackaudio
+    # utility
     a2jmidid
+    audiogridder
     carla
     jack2
     qjackctl
@@ -41,10 +42,10 @@
     samplv1
     sorcer
     sunvox
-    # surge
+    surge
     surge-XT
     synthv1
-    # vcv-rack
+    vcv-rack
     x42-avldrums
     x42-gmsynth
     yoshimi

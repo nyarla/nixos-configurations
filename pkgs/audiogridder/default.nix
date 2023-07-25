@@ -1,16 +1,10 @@
-{ stdenv, fetchFromGitHub, fetchzip, autoPatchelfHook, cmake, pkgconfig, alsaLib
-, atk, boost173, cairo, curlFull, freetype, glib, graphviz, gdk-pixbuf, gtk3
-, gtkmm3, harfbuzz, ladspa-sdk, libGLU, libappindicator-gtk3, libdbusmenu
-, libjack2, libjpeg_turbo, libpng, pango, pcre, python3, webkitgtk, xorg, zlib
-}:
+{ stdenv, fetchFromGitHub, binutils, cmake, findutils, pkgconfig, python3
+, alsaLib, atk, boost178, cairo, curlFull, freetype, gdk-pixbuf, glib, graphviz
+, gtk3, gtkmm3, harfbuzz, ladspa-sdk, libGLU, libappindicator-gtk3, libdatrie
+, libdbusmenu, libepoxy, libjack2, libjpeg_turbo, libpng, libselinux, libsepol
+, libsysprof-capture, libthai, libxkbcommon, pango, pcre, pcre2, sqlite
+, util-linux, webkitgtk, xorg, zlib }:
 let
-  JUCE = fetchFromGitHub {
-    owner = "apohl79";
-    repo = "JUCE";
-    rev = "05ca58e0c451b858ec0e224ffb1db178f0442b54";
-    sha256 = "sha256-ZSOTncJu0G2HKREL1fafy1p7yPU0A+qIT+LO2pAdY3U=";
-  };
-
   deps = fetchFromGitHub {
     owner = "apohl79";
     repo = "audiogridder-deps";
@@ -23,30 +17,32 @@ let
     sha256 = "sha256-6eDJYGfuVczOTaZNUYa/dLEoCzl6Ysi1I1NrxuN2mPQ=";
   };
 
-  src = fetchFromGitHub {
-    owner = "apohl79";
-    repo = "audiogridder";
-    rev = "4caed8e755d96ceafa655b271094437b62c68879";
-    sha256 = "sha256-S2SuhKBX+b/onb2/jCMBzh37KM0oWTUpJcMjcQHTenE=";
-  };
+  sdks = runCommand "ag-sdks" { } ''
+    mkdir -p $out/vstsdk2.4
+    cp -r ${vst2sdk}/* $out/vstsdk2.4/
+  '';
 
-  boost173Static = boost173.override {
+  boost178Static = boost178.override {
     enableShared = false;
     enableStatic = true;
   };
 in stdenv.mkDerivation rec {
-  pname = "audiogridder";
-  version = "git";
+  pname = "audiogridder-modified";
+  version = "1.2.0-mod";
 
-  inherit src;
+  src = fetchFromGitHub {
+    owner = "nyarla";
+    repo = "audiogridder-modified";
+    rev = "0d90d27023a962fd5cdd1b9788e64ba558337a87";
+    sha256 = "1wazd95csjrcda7i7vgvqwi6qnja7a2xgmldwj1cap797scbspkn";
+    fetchSubmodules = true;
+  };
 
-  dontStrip = true;
-
-  nativeBuildInputs = [ cmake pkgconfig python3 autoPatchelfHook ];
+  nativeBuildInputs = [ cmake pkgconfig python3 findutils binutils ];
   buildInputs = [
     alsaLib
     atk
-    boost173Static
+    boost178Static
     cairo
     curlFull
     curlFull.dev
@@ -64,18 +60,40 @@ in stdenv.mkDerivation rec {
     libGLU
     libappindicator-gtk3
     libappindicator-gtk3.dev
+    libdatrie.dev
+    libdatrie.out
     libdbusmenu
+    libepoxy.dev
+    libepoxy.out
     libjack2
     libjpeg_turbo
     libpng
+    libselinux.dev
+    libselinux.out
+    libsepol.dev
+    libsepol.out
+    libsysprof-capture
+    libthai.dev
+    libthai.out
+    libxkbcommon.dev
+    libxkbcommon.out
     pango
-    pcre
+    pcre.dev
+    pcre.out
+    pcre2.dev
+    pcre2.out
+    sqlite.dev
+    sqlite.out
+    util-linux.dev
+    util-linux.out
     webkitgtk
     zlib
   ] ++ (with xorg; [
     libX11
     libXcomposite
     libXcursor
+    libXdmcp.dev
+    libXdmcp.out
     libXext
     libXinerama
     libXrandr
@@ -84,21 +102,23 @@ in stdenv.mkDerivation rec {
     libxcb
   ]);
 
-  preConfigure = ''
-    rm -rf JUCE
-    ln -sf ${JUCE} JUCE
+  libPath =
+    lib.makeLibraryPath (buildInputs ++ [ stdenv.cc.cc stdenv.cc.libc ]);
 
-    sed -i "s|path << \"/local/share/audiogridder/AudioGridderPluginTray\"|path = \"$out/bin/AudioGridderPluginTray\"|" \
-      Plugin/Source/PluginProcessor.cpp
-    sed -i "s|lhs.getNameAndID().compare(rhs.getNameAndID())|lhs.getHostAndID().compare(rhs.getHostAndID())|" \
-      Common/Source/ServiceReceiver.cpp
-    sed -i "s|/usr/bin/strip|# |g" CMakeLists.txt
+  postPatch = ''
+    export binutils=${binutils}
+
+    substituteAllInPlace CMakeLists.txt
+    substituteAllInPlace Plugin/Source/PluginProcessor.cpp
+    substituteAllInPlace Server/Source/App.cpp
+    substituteAllInPlace Server/Source/ProcessorClient.cpp
+    substituteAllInPlace Server/Source/Server.cpp
   '';
 
   cmakeFlags = [
-    "-DAG_SDKS_ROOT=${deps}/linux-x86_64"
+    "-DAG_DEPS_ROOT=${deps}/linux-x86_64"
+    "-DAG_SDKS_ROOT=${sdks}"
     "-DAG_VST2_PLUGIN_ENABLED=ON"
-    "-DAG_VST2_SDK=${vst2sdk}"
     "-DAG_WITH_PLUGIN=ON"
     "-DAG_WITH_SERVER=ON"
     "-DCMAKE_AR=${stdenv.cc.cc}/bin/gcc-ar"
@@ -125,5 +145,13 @@ in stdenv.mkDerivation rec {
     cp Server/AudioGridderServer_artefacts/Release/AudioGridderServer $out/bin/
 
     chmod +x $out/bin/*
+  '';
+
+  fixupPhase = ''
+    for exe in $(ls $out/bin); do
+      patchelf --set-rpath "${libPath}" $out/bin/$exe
+    done
+
+    find $out/lib -type f -name '*.so' -exec patchelf --set-rpath "${libPath}" {} \;
   '';
 }

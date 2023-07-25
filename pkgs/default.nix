@@ -45,6 +45,15 @@ in {
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
   # modified packages
+  bitwig-sutido3 = super.bitwig-sutido3.overrideAttrs (old: rec {
+    version = "3.3.11";
+    src = super.fetchurl {
+      url =
+        "https://downloads.bitwig.com/stable/${version}/${old.pname}-${version}.deb";
+      sha256 = "137i7zqazc2kj40rg6fl6sbkz7kjbkhzdd7550fabl6cz1a20pvh";
+    };
+  });
+
   calibre = super.calibre.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
   });

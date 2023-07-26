@@ -12,8 +12,6 @@
     a2jmidid
     audiogridder
     carla
-    jack2
-    qjackctl
 
     # plugins
     ChowKick

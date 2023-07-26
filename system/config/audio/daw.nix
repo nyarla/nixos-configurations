@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   boot.kernelModules = [ "snd-seq" "snd-rawmidi" ];
   boot.kernel.sysctl = {
     "vm.swapiness" = 10;
@@ -31,4 +31,6 @@ _: {
       value = "99999";
     }
   ];
+
+  environment.systemPackages = with pkgs; [ jack2Full qjackctl ];
 }

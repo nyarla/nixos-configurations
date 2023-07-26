@@ -1,95 +1,66 @@
-{ stdenv, fetchFromGitHub, gnused, pkg-config, wine, qt5, python3
-, python3Packages, pkgs, pkgsi686Linux }:
-let
-  source = fetchFromGitHub {
-    owner = "wineasio";
-    repo = "wineasio";
+{ multiStdenv, lib, fetchFromGitHub, libjack2, pkg-config, wine, pkgsi686Linux
+, qt5, python3 }:
+
+multiStdenv.mkDerivation rec {
+  pname = "wineasio";
+  version = "1.1.0";
+  src = fetchFromGitHub {
+    owner = pname;
+    repo = pname;
     rev = "56c3e9da95b467f1f64ba069864c35762251a734";
     sha256 = "1skps23przjjfw5j74nkxnrqbixy9z54rh738a6yypczvj7wjj8w";
     fetchSubmodules = true;
   };
 
-  mkWineAsioDerivation = arch: pkgs:
-    pkgs.stdenv.mkDerivation rec {
-      pname = "wineasio-${arch}";
-      version = "git";
-      src = source;
-      nativeBuildInputs = [ gnused pkg-config ];
-
-      buildInputs = [ wine pkgs.libjack2 ];
-
-      postPatch = ''
-        sed -i "s!= /usr!= $out!" Makefile.mk
-        sed -i 's!-I$(PREFIX)/!-I${wine}/!g' Makefile.mk
-      '';
-
-      buildPhase = ''
-        make clean
-        make ${arch}
-      '';
-
-      libPrefix = if arch == "32" then "lib/wine/i386" else "lib/wine/x86_64";
-
-      installPhase = ''
-        mkdir -p $out/${libPrefix}-windows/
-        mkdir -p $out/${libPrefix}-unix/
-
-        cp build${arch}/wineasio.dll $out/${libPrefix}-windows/
-        cp build${arch}/wineasio.dll.so $out/${libPrefix}-unix/
-      '';
-
-      dontFixup = true;
-    };
-
-  wineasio_32bit = mkWineAsioDerivation "32" pkgsi686Linux;
-  wineasio_64bit = mkWineAsioDerivation "64" pkgs;
-in stdenv.mkDerivation rec {
-  pname = "wineasio";
-  version = "git";
-  src = source;
-
-  nativeBuildInputs = [ qt5.wrapQtAppsHook python3.pkgs.wrapPython ];
-
+  nativeBuildInputs =
+    [ pkg-config wine qt5.wrapQtAppsHook python3.pkgs.wrapPython ];
   buildInputs =
-    [ wineasio_32bit wineasio_64bit python3 python3Packages.pyqt5 qt5.qtbase ];
+    [ pkgsi686Linux.libjack2 libjack2 python3.pkgs.pyqt5 qt5.qtbase ];
+  pythonPath = with python3.pkgs; [ pyqt5 ];
 
-  pythonPath = with python3Packages; [ pyqt5 ];
-
-  postPatch = ''
-    sed -i "s!= /usr!= $out!" gui/Makefile
-  '';
+  dontConfigure = true;
+  makeFlags = [ "PREFIX=${wine}" ];
 
   buildPhase = ''
+    runHook preBuild
+
+    make ''${makeFlags[@]} 32
+    make ''${makeFlags[@]} 64
+
     cd gui
-    make
+    make regen
     cd ..
 
-    cat <<EOF >gui/wineasio-settings
-    #!${stdenv.shell}
-    exec $out/share/wineasio/settings.py $@
+    cat <<EOF >wineasio-settings
+    #!${multiStdenv.shell}
+    exec $out/share/wineasio/settings.py "$@"
     EOF
+
+    runHook postBuild
   '';
 
   installPhase = ''
-    for bit in i386 x86_64 ; do
-      mkdir -p $out/lib/wine/''${bit}-unix/
-      mkdir -p $out/lib/wine/''${bit}-windows/
-    done
+    runHook preInstall
+    install -D build32/wineasio.dll     $out/lib/wine/i386-windows/wineasio.dll
+    install -D build32/wineasio.dll.so  $out/lib/wine/i386-unix/wineasio.dll.so
+    install -D build64/wineasio.dll     $out/lib/wine/x86_64-windows/wineasio.dll
+    install -D build64/wineasio.dll.so  $out/lib/wine/x86_64-unix/wineasio.dll.so
 
-    cp ${wineasio_32bit}/lib/wine/i386-windows/wineasio.dll $out/lib/wine/i386-windows/
-    cp ${wineasio_32bit}/lib/wine/i386-unix/wineasio.dll.so $out/lib/wine/i386-unix/
-    cp ${wineasio_64bit}/lib/wine/x86_64-windows/wineasio.dll $out/lib/wine/x86_64-windows/
-    cp ${wineasio_64bit}/lib/wine/x86_64-unix/wineasio.dll.so $out/lib/wine/x86_64-unix/
-
-    mkdir -p $out/bin
     cd gui
-    make install
+    mkdir -p $out/share/wineasio
+    install -m 644 -D *.py $out/share/wineasio/
     cd ..
+
+    install -D wineasio-settings -m 755 $out/bin/wineasio-settings
+
+    runHook postInstall
   '';
 
   fixupPhase = ''
+    sed -i "s#/usr/bin/python3#${python3}/bin/python3#" $out/bin/wineasio-settings
+    sed -i "s#X-PREFIX-X#$out#" $out/bin/wineasio-settings
+
     chmod +x $out/share/wineasio/settings.py
-    sed -i 's|#!/usr/bin/env python3|#!${python3}/bin/python3|' $out/share/wineasio/settings.py
     wrapProgram $out/share/wineasio/settings.py \
       ''${qtWrapperArgs[@]} \
       --prefix PYTHONPATH : $PYTHONPATH 

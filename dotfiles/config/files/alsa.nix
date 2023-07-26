@@ -21,7 +21,7 @@
       rate 96000
     }
 
-    pcm.hifi {
+    pcm.ultra {
       type hw
       card 23
       format S24_LE 

@@ -299,6 +299,7 @@
         ".config/audiogridder"
         ".config/calibre"
         ".config/dconf"
+        ".config/falkTX"
         ".config/fcitx5"
         ".config/gcloud"
         ".config/google-chrome"

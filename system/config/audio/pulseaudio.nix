@@ -5,9 +5,9 @@
     "snd_usb_audio.index=11"
     "snd_usb_audio.vid=0x1235"
     "snd_usb_audio.pid=0x8205"
-    "snd_aloop.index=10,20,21,22,23"
-    "snd_aloop.id=DroidCam,CD,DVD,HiFi,Ultra"
-    "snd_aloop.enable=1,1,1,1,1"
+    "snd_aloop.index=10"
+    "snd_aloop.id=DroidCam"
+    "snd_aloop.enable=1"
   ];
 
   # packages
@@ -32,6 +32,16 @@
     };
     extraConfig = ''
       load-module module-device-manager
+
+      load-module module-null-sink sink_name=44100Hz sink_properties=device.description=44100Hz format=s16le rate=44100 channels=2 formats=pcm
+      load-module module-null-sink sink_name=48000Hz sink_properties=device.description=48000Hz format=s24le rate=48000 channels=2 formats=pcm
+      load-module module-null-sink sink_name=96000Hz sink_properties=device.description=96000Hz format=s24le rate=96000 channels=2 formats=pcm
+      load-module module-null-sink sink_name=192000Hz sink_properties=device.description=192000Hz format=s24le rate=192000 channels=2 formats=pcm
+
+      load-module module-loopback source=44100Hz.monitor source_dont_move=true adjust_time=0 remix=false format=s16le rate=44100 channels=2
+      load-module module-loopback source=48000Hz.monitor source_dont_move=true adjust_time=0 remix=false format=s24le rate=48000 channels=2
+      load-module module-loopback source=96000Hz.monitor source_dont_move=true adjust_time=0 remix=false format=s24le rate=96000 channels=2
+      load-module module-loopback source=192000Hz.monitor source_dont_move=true adjust_time=0 remix=false format=s24le rate=192000 channels=2
     '';
   };
 

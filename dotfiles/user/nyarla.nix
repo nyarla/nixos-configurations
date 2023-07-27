@@ -6,7 +6,6 @@ _: {
     ../config/app/multimedia.nix
     ../config/app/office.nix
     ../config/app/weston.nix
-    ../config/files/alsa.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
     ../config/services/backup.nix

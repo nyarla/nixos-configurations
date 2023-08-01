@@ -9,4 +9,10 @@ let
   in [ wine jackass-bin wineasio yabridge yabridgectl ];
 in {
   environment.systemPackages = wineApps ++ (with pkgs; [ winetricks wine-run ]);
+
+  services.udev.extraRules = ''
+    KERNEL=="winesync", MODE="0644"
+  '';
+
+  boot.kernelModules = [ "winesync" ];
 }

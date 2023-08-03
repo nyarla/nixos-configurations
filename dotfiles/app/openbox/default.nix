@@ -74,7 +74,8 @@ in {
         inherit fetchurl writeShellScript pkgs isMe isNotMe;
       });
 
-    "openbox/menu.xml".text = import ./menu.nix { inherit lib isMe isNotMe; };
+    "openbox/menu.xml".text =
+      import ../../config/vars/appmenu.nix { isXorg = true; };
 
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
       export XCURSOR_PATH=/run/current-system/etc/profiles/per-user/nyarla/share/icons:$HOME/.icons/default

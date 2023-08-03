@@ -15,6 +15,18 @@ let
   isMe = src: if (config.home.username == "nyarla") then src else "";
   isNotMe = src: if (config.home.username != "nyarla") then src else "";
 in {
+  imports = [
+    ../../config/desktop/1password.nix
+    ../../config/desktop/blueman-applet.nix
+    ../../config/desktop/calibre.nix
+    ../../config/desktop/connman-gtk.nix
+    ../../config/desktop/dunst.nix
+    ../../config/desktop/kdeconnect.nix
+    ../../config/desktop/lxqt-panel.nix
+    ../../config/desktop/qt.nix
+    ../../config/desktop/xorg.nix
+  ];
+
   home.packages = with pkgs;
     [
       # terminal and development
@@ -85,8 +97,6 @@ in {
 
       export MOZ_DISABLE_RDD_SANDBOX=1
       export NVD_BACKEND=direct
-
-      export QT_QPA_PLATFORMTHEME=gnome
     '');
 
     "openbox/rc.xml".text = (import ./rc.nix) { inherit isMe isNotMe; };

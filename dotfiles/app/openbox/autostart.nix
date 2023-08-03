@@ -27,17 +27,7 @@ in writeShellScript "autostart" ''
   dbus-update-activation-environment --systemd --all
   systemctl --user start gnome-keyring
 
-  ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE LXQt &
-
-  ${isMe ''
-    xss-lock -- i3lock-fancy &
-
-    kdeconnect-indicator &
-
-    calibre --start-in-tray &
-    1password --silent &
-    connman-gtk --tray &
-  ''}
+  ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE &
 
   hsetroot -fill ${wallpaper} &
 ''

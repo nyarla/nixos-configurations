@@ -2,7 +2,7 @@
   systemd.user.services.blueman-applet = {
     Unit = {
       Description = "launch blueman-applet";
-      After = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" "lxqt-panel.service" ];
       PartOf = [ "graphical-session.target" ];
     };
 
@@ -10,7 +10,8 @@
       Type = "simple";
       Restart = "on-failure";
       ExecStart = "${pkgs.blueman}/bin/blueman-applet";
-      Environment = [ "WAYLAND_DISPLAY=wayland-0" "LANG=ja_JP.UTF-8" ];
+      Environment =
+        [ "WAYLAND_DISPLAY=wayland-0" "LANG=ja_JP.UTF-8" "LC_ALL=ja_JP.UTF-8" ];
     };
 
     Install = { WantedBy = [ "graphical-session.target" ]; };

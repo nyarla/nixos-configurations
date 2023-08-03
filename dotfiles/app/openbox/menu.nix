@@ -108,7 +108,8 @@ in ''
     (makeExecute "Lock" "xset dpms force off")
     (makeExecute "Logout" "loginctl terminate-user nyarla")
     "${sep}"
-    (makeExecute "Reboot" "systemctl reboot")
+    (makeExecute "Reboot"
+      "sh -c 'systemctl --user stop lxqt-panel ; systemctl reboot'")
     (makeExecute "Shutdown" "systemctl poweroff")
   ]}
 

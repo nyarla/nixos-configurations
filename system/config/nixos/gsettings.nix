@@ -38,8 +38,7 @@ let
         find ${p}/share/gsettings-schemas -name '*.xml' \
           -exec cp -rfH {} $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/ \;
       fi
-    '')
-    (config.environment.systemPackages ++ [ config.i18n.inputMethod.package ])}
+    '') (lib.lists.remove null config.environment.systemPackages)}
 
     ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
   '';

@@ -3,8 +3,8 @@
   xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 
   qt.enable = true;
-  qt.platformTheme = "gnome";
-  qt.style = "adwaita";
+  qt.platformTheme = "gtk2";
+  qt.style = "gtk2";
 
   services.pipewire.enable = true;
   environment.systemPackages = with pkgs; [

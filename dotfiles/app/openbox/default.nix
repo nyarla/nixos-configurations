@@ -23,8 +23,10 @@ in {
     ../../config/desktop/dunst.nix
     ../../config/desktop/kdeconnect.nix
     ../../config/desktop/lxqt-panel.nix
+    ../../config/desktop/picom.nix
     ../../config/desktop/qt.nix
     ../../config/desktop/xorg.nix
+
   ];
 
   home.packages = with pkgs;
@@ -88,6 +90,7 @@ in {
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
       export XCURSOR_PATH=/run/current-system/etc/profiles/per-user/nyarla/share/icons:$HOME/.icons/default
       export XCURSOR_THEME=capitaine-cursors-white
+      export XCURSOR_SIZE=24
 
       export GTK2_RC_FILES=$HOME/.gtkrc-2.0
       export GTK_THEME=Arc

@@ -1,4 +1,4 @@
-{ fetchurl, writeShellScript, pkgs, isMe, ... }:
+{ fetchurl, writeShellScript, pkgs, ... }:
 let
   # automount = uuid: path: ''
   #   if test -e "/dev/disk/by-uuid/${uuid}" ; then
@@ -24,10 +24,5 @@ in writeShellScript "autostart" ''
 
   export PATH=/etc/nixos/dotfiles/files/scripts:$PATH
 
-  dbus-update-activation-environment --systemd --all
-  systemctl --user start gnome-keyring
-
-  ${pkgs.openbox}/libexec/openbox-xdg-autostart GNONE MATE &
-
-  hsetroot -fill ${wallpaper} &
+  ${pkgs.hsetroot}/bin/hsetroot -fill ${wallpaper} &
 ''

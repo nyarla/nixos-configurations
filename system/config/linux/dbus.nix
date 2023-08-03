@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  target = config.environment.systemPackages
-    ++ [ config.i18n.inputMethod.package ];
+  target = lib.lists.remove null config.environment.systemPackages;
 
   addDBus = pkg: ns: ''
     if test -d ${pkg}/${ns} ; then

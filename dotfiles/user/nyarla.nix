@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   imports = [
     ../config/app/appimage.nix
     ../config/app/browser.nix
@@ -7,9 +7,9 @@ _: {
     ../config/app/office.nix
     ../config/app/weston.nix
     ../config/files/skk.nix
+    ../config/files/theme.nix
     ../config/nixos/gsettings.nix
     ../config/services/backup.nix
-    ../config/services/dunst.nix
     ../config/services/gnome-keyring.nix
     ../config/services/keychain.nix
     ../config/services/polkit.nix
@@ -21,6 +21,7 @@ _: {
 
     ../app/git
     ../app/openbox
+    #../app/labwc
   ];
 
   # More customizations

@@ -98,13 +98,13 @@ in ''
           })
           (font "MenuHeader" {
             name = "Sans";
-            size = "10";
+            size = "9";
             weight = "Normal";
             slant = "Normal";
           })
           (font "MenuItem" {
             name = "Sans";
-            size = "10";
+            size = "9";
             weight = "Normal";
             slant = "Normal";
           })

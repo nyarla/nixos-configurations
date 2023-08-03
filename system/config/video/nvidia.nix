@@ -18,6 +18,7 @@ in {
 
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.package = nvidia;
+  hardware.nvidia.open = true;
   hardware.opengl = {
     enable = true;
     driSupport = true;

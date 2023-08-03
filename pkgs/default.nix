@@ -58,11 +58,6 @@ in {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
   });
 
-  ethminer = super.ethminer.override {
-    inherit (super.llvmPackages_14) stdenv;
-    inherit (super.cudaPackages) cudatoolkit;
-  };
-
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
@@ -72,21 +67,11 @@ in {
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "1b30edc778d597e06d74c7fbec62c7a8b13fab4e";
-        sha256 = "sha256-3n+nZeH/uruD3vrN+XgnEgyNjgc2g8Og/p1hwskbrd4=";
+        rev = "cb4afadd0143f599f39603d3685723e16c9df401";
+        sha256 = "sha256-Eoc6IwHmJwaSs87L+H1m51YOcQl35n1ZbDxcgP5cwIw=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
-
-  nsfminer = (require ./nsfminer {
-    inherit (super.llvmPackages_14) stdenv;
-    inherit (super.cudaPackages) cudatoolkit;
-  }).overrideAttrs (old: rec {
-    postPatch = old.preConfigure + ''
-      sed -i 's/set(CMAKE_CXX_FLAGS "''${CMAKE_CXX_FLAGS} -stdlib=libstdc++ -fcolor-diagnostics -Qunused-arguments")//' cmake/EthCompilerSettings.cmake
-      sed -i 's|-Wall|-Wall -Ofast -funroll-loops|g' cmake/EthCompilerSettings.cmake
-    '';
-  });
 
   platinum-searcher = super.platinum-searcher.overrideAttrs (_: rec {
     src = super.fetchFromGitHub {
@@ -130,24 +115,4 @@ in {
   });
 
   wineUsingFull = super.wineWowPackages.stagingFull;
-
-  wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
-    version = "0_16_0_mod";
-    buildInputs = old.buildInputs
-      ++ [ super.mesa.dev super.vulkan-validation-layers ];
-
-    nativeBuildInputs = old.nativeBuildInputs ++ [ super.cmake super.hwdata ];
-
-    patches = [ ../patches/wlroots-workaround.patch ];
-
-    postPatch = ''
-      substituteInPlace render/gles2/renderer.c --replace "glFlush();" "glFinish();"
-    '';
-  });
-
-  xmrig = super.xmrig.override { inherit (super.llvmPackages_14) stdenv; };
-  xmrig-cuda = require ./xmrig-cuda {
-    inherit (super.llvmPackages_14) stdenv;
-    inherit (super.cudaPackages) cudatoolkit;
-  };
 }

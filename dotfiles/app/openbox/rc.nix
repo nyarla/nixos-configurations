@@ -104,7 +104,7 @@ in ''
           })
           (font "MenuItem" {
             name = "Sans";
-            size = "9";
+            size = "10";
             weight = "Normal";
             slant = "Normal";
           })

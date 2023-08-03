@@ -5,8 +5,6 @@ set -euo pipefail
 export WINEPREFIX=/home/nyarla/Applications/Wine/AmazonMusic
 export LD_PRELOAD=
 
-exec 1>/dev/null 2>/dev/null
-
 wine 'C:\users\nyarla\AppData\Local\Amazon Music\Amazon Music.exe' &
 waitPID=$!
 

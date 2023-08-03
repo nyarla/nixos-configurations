@@ -72,7 +72,7 @@ in ''
     (makeExecute "Picard" "picard")
     (makeExecute "Mp3tag" (wineCmd "Mp3tag"))
     "${sep}"
-    (makeExecute "Tenacity" "tenacity")
+    (makeExecute "Audacity" "Audacity")
     "${sep}"
     (makeExecute "DeaDBeeF" "deadbeef")
     (makeExecute "Amazon Music" (wineCmd "AmazonMusic"))

@@ -39,8 +39,6 @@ in {
 
     screen-rotate = 0;
 
-    input-method = "fcitx5-fbterm";
-
-    ambiguous-wide = "yes";
+    ambiguous-wide = "no";
   };
 }

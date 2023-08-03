@@ -7,7 +7,6 @@
     ../config/app/office.nix
     ../config/app/weston.nix
     ../config/files/skk.nix
-    ../config/files/theme.nix
     ../config/nixos/gsettings.nix
     ../config/services/backup.nix
     ../config/services/gnome-keyring.nix

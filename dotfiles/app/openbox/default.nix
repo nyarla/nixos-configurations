@@ -25,8 +25,8 @@ in {
     ../../config/desktop/lxqt-panel.nix
     ../../config/desktop/picom.nix
     ../../config/desktop/qt.nix
+    ../../config/desktop/theme.nix
     ../../config/desktop/xorg.nix
-
   ];
 
   home.packages = with pkgs;
@@ -34,17 +34,6 @@ in {
       # terminal and development
       wezterm
       gitg
-
-      # icon and themes
-      arc-openbox
-      arc-theme
-      capitaine-cursors
-      flat-remix-icon-theme
-      hicolor-icon-theme
-
-      # fallback
-      gnome.adwaita-icon-theme
-      gnome.gnome-themes-extra
 
       # credential
       libsecret

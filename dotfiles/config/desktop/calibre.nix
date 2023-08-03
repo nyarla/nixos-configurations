@@ -1,4 +1,6 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+let theme = import ../vars/theme.nix;
+in {
   systemd.user.services.calibre = {
     Unit = {
       Description = "Autostart for calibre";
@@ -18,8 +20,8 @@
         "PATH=/run/current-system/sw/bin:${config.home.profileDirectory}/bin"
 
         "XCURSOR_PATH=/run/current-system/etc/profiles/per-user/nyarla/share/icons:${config.home.homeDirectory}/.icons/default"
-        "XCURSOR_THEME=capitaine-cursors-white"
-        "XCURSOR_SIZE=24"
+        "XCURSOR_THEME=${theme.cursor.name}"
+        "XCURSOR_SIZE=${theme.cursor.size}"
 
         "XDG_CONFIG_DIRS=/run/current-system/etc/xdg:/etc/profiles/per-user/nyarla/etc/xdg:/etc/xdg"
         "XDG_DATA_DIRS=/run/current-system/sw/share:/etc/profiles/per-user/nyarla/share"

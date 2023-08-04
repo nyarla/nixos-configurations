@@ -46,6 +46,7 @@
       # enable home-manager
       export PATH=${
         lib.strings.concatStringsSep ":" [
+          "$HOME/.local/bin"
           "$HOME/.fly/bin"
           "$HOME/.local/share/npm/bin"
           "$PATH"
@@ -53,11 +54,6 @@
       }
       export EDITOR=nvim
       export NVIM_USE_TABNINE=1
-
-      # import nix-ld
-      if test -e /etc/profile.d/nix-ld ; then
-        source /etc/profile.d/nix-ld
-      fi
 
       # utility function
       function has() {
@@ -111,6 +107,16 @@
 
       function __cd() {
         local dir=''${1:-}
+
+        if test ! -s ~/.z ; then
+          z --add /etc/nixos
+          z --add $HOME/Development/kalaclista-social
+          z --add $HOME/Programming/the.kalaclista.com
+
+          for d in $(\ls ~/); do
+            z --add "''${HOME}/''${d}"
+          done
+        fi
 
         if test  "x''${dir}" = "x" ; then
           local dir=$(z -l | sed 's/ \+/ /g' | cut -d\   -f2 | fzy | sed "s!~!$HOME!")

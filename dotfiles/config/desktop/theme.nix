@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+_:
 let theme = import ../vars/theme.nix;
 in {
   home.file.".icons/default/index.theme".text = ''

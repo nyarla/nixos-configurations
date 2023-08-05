@@ -100,12 +100,12 @@
   ];
 
   # filesystem
-  environment.etc."crypttab" = {
-    enable = true;
-    text = ''
-      data UUID=470d2a2f-bdea-49a2-8e9b-242e4f3e1381 /boot/keys/470d2a2f-bdea-49a2-8e9b-242e4f3e1381 nofail,x-systemd.device-timeout=5s
-    '';
-  };
+  # environment.etc."crypttab" = {
+  #   enable = true;
+  #   text = ''
+  #     data UUID=470d2a2f-bdea-49a2-8e9b-242e4f3e1381 /boot/keys/470d2a2f-bdea-49a2-8e9b-242e4f3e1381 nofail,x-systemd.device-timeout=5s
+  #   '';
+  # };
 
   fileSystems = let
     device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
@@ -157,37 +157,6 @@
       options = btrfsOptions ++ [ "subvol=/nix" "noatime" ];
       neededForBoot = true;
     };
-
-    # for media
-    "/media/data" = {
-      device = "/dev/mapper/data";
-      fsType = "btrfs";
-      options = btrfsOptions ++ [
-        "noauto"
-        "x-systemd.automount"
-        "x-systemd.after=multi-user.target"
-      ];
-    };
-
-    # for back with media
-    "/backup/DAW" = {
-      device = "/media/data/DAW";
-      options = [
-        "bind"
-        "x-systemd.automount"
-        "x-systemd.after=multi-user.target"
-        "x-gvfs-hide"
-      ];
-    };
-    "/backup/Sources" = {
-      device = "/media/data/Sources";
-      options = [
-        "bind"
-        "x-systemd.automount"
-        "x-systemd.after=multi-user.target"
-        "x-gvfs-hide"
-      ];
-    };
   }
   # for boot
   // (subvolRW "etc") // (subvolRW "etc/nixos")
@@ -217,6 +186,47 @@
   // (backup "Music" "/persist/home/nyarla/Music")
   // (backup "NixOS" "/persist/etc/nixos")
   // (backup "Programming" "/persist/home/nyarla/Programming");
+
+  systemd.services.automount-encrypted-usb-storage = {
+    enable = true;
+    description = "Automount Encrypted USB Device";
+    path = with pkgs; [ coreutils cryptsetup ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+      ExecStart = toString (pkgs.writeShellScript "mount" ''
+        set -xeuo pipefail
+
+        export PATH=/run/wrappers/bin:$PATH
+
+        test -e /media/data     || mkdir -p /media/data
+        test -e /backup/DAW     || mkdir -p /backup/DAW
+        test -e /backup/Sources || mkdir -p /backup/Sources
+
+        device=470d2a2f-bdea-49a2-8e9b-242e4f3e1381
+        if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
+          cryptsetup luksOpen /dev/disk/by-uuid/$device data --key-file /boot/keys/$device;
+          if test $? = 0 && test -e /dev/mapper/data ; then
+            mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
+            mount -o bind /media/data/DAW /backup/DAW
+            mount -o bind /media/data/Sources /backup/Sources
+          fi
+        fi
+      '');
+      ExecStop = toString (pkgs.writeShellScript "unmount" ''
+        set -xeuo pipefail
+
+        export PATH=/run/wrappers/bin:$PATH
+
+        test ! -e /backup/DAW     || umount /backup/DAW
+        test ! -e /backup/Sources || umount /backup/Sources
+        test ! -e /media/data     || umount /media/data
+
+        cryptsetup luksClose /dev/mapper/data
+      '');
+    };
+    wantedBy = [ "local-fs.target" ];
+  };
 
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [

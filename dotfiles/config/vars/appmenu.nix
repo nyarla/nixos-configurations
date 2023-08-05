@@ -88,7 +88,8 @@ let
   systemOperationXorg = menu "system-operation" "System" [
     (action "Reconfigure" "Reconfigure")
     (exec "Lock" "xset dpms force off")
-    (exec "Logout" "loginctl terminate-session self")
+    (exec "Logout"
+      "sh -c 'systemctl --user stop lxqt-panel; loginctl terminate-session self'")
     "${sep}"
     (exec "Reboot" "sh -c 'systemctl --user stop lxqt-panel; systemctl reboot'")
     (exec "Shutdown" "shutdown -h now")

@@ -42,6 +42,7 @@
   # home-manager
   # -------------
   programs.home-manager.enable = true;
+  systemd.user.startServices = true;
 
   # stateVersion (same as NixOS)
   home.stateVersion = "23.05";

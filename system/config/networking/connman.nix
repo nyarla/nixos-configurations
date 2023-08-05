@@ -6,4 +6,5 @@
     [ "tailscale" "docker" "veth" "virbr" ];
 
   environment.systemPackages = with pkgs; [ connman-gtk ];
+  networking.resolvconf.enable = false;
 }

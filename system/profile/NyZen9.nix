@@ -5,11 +5,12 @@
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
+    ../config/desktop/theme.nix
+    ../config/desktop/xdg.nix
     ../config/desktop/xorg.nix
     ../config/gadgets/android.nix
     ../config/graphic/fonts.nix
     ../config/graphic/lodpi.nix
-    ../config/graphic/xorg.nix
     ../config/i18n/en.nix
     ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix
@@ -291,6 +292,7 @@
         # .config
         ".config/1Password"
         ".config/BraveSoftware"
+        ".config/Kvantum"
         ".config/MusicBrainz"
         ".config/Sononym"
         ".config/TabNine"

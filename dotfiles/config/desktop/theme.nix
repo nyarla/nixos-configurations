@@ -12,14 +12,4 @@ in {
     "Xcursor.size" = theme.cursor.size;
     "Xcursor.theme" = theme.cursor.name;
   };
-
-  home.packages = with pkgs; [
-    arc-openbox
-    arc-theme
-    capitaine-cursors
-    flat-remix-icon-theme
-    gnome.adwaita-icon-theme
-    gnome.gnome-themes-extra
-    hicolor-icon-theme
-  ];
 }

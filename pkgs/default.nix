@@ -73,8 +73,9 @@ in {
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
       rev = "5d6957d3da1bf99311a676eab94c69ef4276bedf";
-      sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      sha256 = "sha256-Mzf0533roLSODjMCPKyGSMbP7lIbT+PoLTZfoIBAI6g=";
     };
+    buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });
 
   platinum-searcher = super.platinum-searcher.overrideAttrs (_: rec {

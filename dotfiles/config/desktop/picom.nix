@@ -1,6 +1,7 @@
-_: {
+{ pkgs, ... }: {
   services.picom = {
     enable = true;
+    package = pkgs.picom-next;
 
     shadow = true;
     shadowOffsets = [ (-15) (-15) ];

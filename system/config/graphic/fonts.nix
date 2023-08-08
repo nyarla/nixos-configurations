@@ -8,7 +8,7 @@
       noto-fonts-emoji
 
       # monospace
-      hackgen
+      hackgen-nf-font
 
       # fallback
       dejavu_fonts

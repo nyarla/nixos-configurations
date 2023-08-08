@@ -14,14 +14,12 @@ in {
   dexed = require ./dexed { };
   elk-native = require ./elk-native { };
   fcitx5-fbterm = require ./fcitx5-fbterm { };
-  fcitx5-skk = require ./fcitx5-skk { inherit (super.libsForQt5) fcitx5-qt; };
   fedistar = require ./fedistar { };
   flatery-icon-theme = require ./flatery-icon-theme { };
   galendae = require ./galendae { };
   git-credential-keepassxc = require ./git-credential-keepassxc { };
   gyazo-diy = require ./gyazo-diy { };
   hack-nerdfonts = require ./hack-nerdfonts { };
-  hackgen = require ./hackgen { };
   jackass-bin = require ./jackass-bin { };
   juce-framework = require ./juce-framework { };
   locale-eaw = require ./locale-eaw { };
@@ -30,14 +28,11 @@ in {
   novelai-manager = require ./novelai-manager { };
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
-  sfwbar = require ./sfwbar { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   sononym-bin = require ./sononym-bin { };
   sysmontask = require ./sysmontask { };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
-  tuba = require ./tuba { };
   vgpu_unlock-rs = require ./vgpu_unlock-rs { };
-  wayout = require ./wayout { };
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };
   wine-vst-wrapper = require ./wine-vst-wrapper { };
@@ -67,11 +62,20 @@ in {
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "cb4afadd0143f599f39603d3685723e16c9df401";
+        rev = "1ee8715d57ddb6b444e0b089879db6f837400539";
         sha256 = "sha256-Eoc6IwHmJwaSs87L+H1m51YOcQl35n1ZbDxcgP5cwIw=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
+
+  picom-next = super.picom-next.overrideAttrs (old: rec {
+    version = "2023-08-05";
+    src = super.fetchFromGitHub rec {
+      inherit (old.src) owner repo;
+      rev = "5d6957d3da1bf99311a676eab94c69ef4276bedf";
+      sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    };
+  });
 
   platinum-searcher = super.platinum-searcher.overrideAttrs (_: rec {
     src = super.fetchFromGitHub {
@@ -87,11 +91,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (_: rec {
     pname = "tt-rss";
-    version = "2023-07-08";
+    version = "2023-08-03";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "dc25a9cf6816b756cb38490eab93f02589c44a10";
-      sha256 = "sha256-0zRmNHya3F4Z0YEOD2Q1sp+X2Qj6gYKP+CdUMwyzojM=";
+      rev = "ba6a912abdcc3e324d809cc873923aec2a5982fe";
+      sha256 = "sha256-s/Exi0P0LLm0iR2u1eKPi1ghMnaWHI1eN1yJdC+EmZM=";
     };
 
     installPhase = ''
@@ -106,10 +110,10 @@ in {
   });
 
   tt-rss-theme-feedly = super.tt-rss-theme-feedly.overrideAttrs (_: rec {
-    version = "2023-04-06";
+    version = "4.1.0";
     src = super.fetchzip {
       url =
-        "https://github.com/levito/tt-rss-feedly-theme/releases/download/v4.1.0/tt-rss-feedly-theme-dist-4.1.0.zip";
+        "https://github.com/levito/tt-rss-feedly-theme/releases/download/v${version}/tt-rss-feedly-theme-dist-${version}.zip";
       sha256 = "sha256-u3w92BMuq85SyO3bWRKuA59EaRtehrt02hZY3NMJEOA=";
     };
   });

@@ -514,6 +514,38 @@
     };
   };
 
+  # backup by restic
+  systemd.services.backup = {
+    enable = true;
+    path = with pkgs; [ restic-run rclone ];
+    description = "Automatic backup by restic and rclone";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
+        set -euo pipefail
+        export HOME=/home/nyarla
+
+        if test -d /backup ; then
+          cd /backup
+          restic-backup .
+        fi
+
+        exit 0
+      '');
+    };
+  };
+
+  systemd.timers.backup = {
+    enable = true;
+    description = "Automatic backup by restic and rclone";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 01:00:00";
+      RandomizedDelaySec = "10m";
+      Persistent = true;
+    };
+  };
+
   nixpkgs.config.permittedInsecurePackages = [ "electron-19.0.7" ];
 
   system.stateVersion = "23.05";

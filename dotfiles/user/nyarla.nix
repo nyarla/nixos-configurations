@@ -8,7 +8,6 @@
     ../config/app/weston.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
-    ../config/services/backup.nix
     ../config/services/gnome-keyring.nix
     ../config/services/keychain.nix
     ../config/services/polkit.nix

@@ -9,9 +9,14 @@ export XDG_SESSION_TYPE=wayland
 export XDG_DATA_HOME=/persist/home/nyarla/.local/share
 export WAYLAND_DISPLAY=wayland-1
 
-env SHELL=/bin/sh pkexec sh -c 'sudo systemctl restart waydroid-container'
+while test ! -e /run/user/$(id -u)/wayland-1 ; do
+  sleep 1
+done
 
-waydroid -w show-full-ui &
+grep -qF 'Established ADB connection to Waydroid device' <(waydroid -w show-full-ui 2>&1) \
+  && env SHELL=/bin/sh pkexec sh -c '
+    sudo mount --bind /persist/home/nyarla/Music /persist/home/nyarla/.local/share/waydroid/data/media/0/Music
+  '
 
 wait $westonPID
 

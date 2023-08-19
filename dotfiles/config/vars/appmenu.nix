@@ -35,7 +35,8 @@ let
   applicationsMain = menu "applications-main" "Main"
     ([ (exec "wezterm" "wezterm") ]
       ++ (onlyWayland [ (exec "wterm" "weston-terminal") ])
-      ++ (onlyXorg [ (exec "waydroid" (script "waydroid-on-weston")) ]));
+      ++ (onlyXorg [ (exec "waydroid" (script "waydroid-on-weston")) ]
+        ++ [ "${sep}" (exec "Vial" "Vial") ]));
 
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")

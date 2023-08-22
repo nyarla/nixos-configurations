@@ -161,13 +161,6 @@ in ''
 
           (keybind "A-F1" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
 
-          (keybind "C-Print"
-            [ (exec "/etc/nixos/dotfiles/files/scripts/r2yazo capture") ])
-          (keybind "S-Print"
-            [ (exec "/etc/nixos/dotfiles/files/scripts/r2yazo screenshot") ])
-          (keybind "A-Print"
-            [ (exec "/etc/nixos/dotfiles/files/scripts/r2yazo crop") ])
-
           (keybind "C-W-q" [ (exec "xset dpms force off") ])
 
           (keybind "A-Left" [

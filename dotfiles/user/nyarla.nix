@@ -19,7 +19,7 @@
 
     ../app/git
     ../app/openbox
-    #../app/labwc
+    ../app/labwc
   ];
 
   # More customizations
@@ -41,7 +41,7 @@
   # home-manager
   # -------------
   programs.home-manager.enable = true;
-  systemd.user.startServices = true;
+  systemd.user.startServices = "sd-switch";
 
   # stateVersion (same as NixOS)
   home.stateVersion = "23.05";

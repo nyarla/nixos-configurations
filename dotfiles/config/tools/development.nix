@@ -58,7 +58,7 @@
     editorconfig-checker
 
     # setting files
-    hadolint
+    # hadolint
     yamllint
     cmake-format
     taplo

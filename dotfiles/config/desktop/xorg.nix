@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   services.screen-locker = let
     wallpaper = pkgs.fetchurl {
       url =
@@ -6,7 +6,7 @@
       sha256 = "116337wv81xfg0g0bsylzzq2b7nbj6hjyh795jfc9mvzarnalwd3";
     };
 
-    script = pkgs.writeShellScript "lock" ''
+    i3lock = pkgs.writeShellScript "lock" ''
       ${pkgs.i3lock-color}/bin/i3lock-color \
       -k \
       -i ${wallpaper} -L \
@@ -27,12 +27,13 @@
     '';
   in {
     enable = true;
-    lockCmd = toString script;
+    lockCmd = toString i3lock;
     inactiveInterval = 1;
     xss-lock.screensaverCycle = 60;
     xautolock.enable = false;
   };
 
+  systemd.user.services.xss-lock.Install.WantedBy = lib.mkForce [ ];
   systemd.user.services.xss-lock.Service.Environment =
     [ "LANG=ja_JP.UTF-8" "LC_ALL=ja_JP.UTF-8" ];
 }

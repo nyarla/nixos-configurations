@@ -1,19 +1,37 @@
-{ pkgs, ... }: {
-  systemd.user.services.sfwbar = {
+{ pkgs, config, ... }:
+let fmt = pkgs.formats.json { };
+in {
+  systemd.user.services.desktop-panel = {
     Unit = {
-      Description = "wayland bar services by sfwbar";
+      Description = "Autostart for Desktop Panel";
       After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
 
-    Service = {
-      Type = "simple";
-      Restart = "on-failure";
-      ExecStart = "${pkgs.sfwbar}/bin/sfwbar";
-      Environment = [ "WAYLAND_DISPLAY=wayland-0" "LANG=ja_JP.UTF-8" ];
-    };
-
     Install = { WantedBy = [ "graphical-session.target" ]; };
+
+    Service = {
+      Environment = [
+        "HOME=${config.home.homeDirectory}"
+        "LANG=ja_JP.UTF-8"
+        "LC_ALL=ja_JP.UTF-8"
+        "QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt5.qtbase.qtPluginPrefix}"
+        "XDG_DATA_DIRS=/run/current-system/sw/share"
+      ];
+      ExecStart = toString (pkgs.writeShellScript "panel" ''
+        if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+          export DISPLAY=:0
+          ${pkgs.sfwbar}/bin/sfwbar &
+          export waidPID=$!
+        else
+          ${pkgs.lxqt.lxqt-panel}/bin/lxqt-panel &
+          export waitPID=$!
+        fi
+
+        test -n $waitPID && wait $waitPID
+      '');
+      Restart = "always";
+    };
   };
 
   xdg.configFile."sfwbar/sfwbar.config".text = ''
@@ -71,7 +89,7 @@
         style = "datetime"
         interval = 1000
         value = Time("%Y-%m-%d %H:%M:%S（%a）")
-        action[1] = Exec "galendae -c /home/nyarla/.config/galendae/config"
+        action[1] = Exec "env GDK_BACKEND=x11 galendae -c /home/nyarla/.config/galendae/config"
       }
     }
 
@@ -158,5 +176,25 @@
       min-width: 160px;
       padding-left: 4px;
     }
+  '';
+
+  xdg.configFile."galendae/config".text = ''
+    stick=0
+    undecorated=1
+    close_on_unfocus=0
+    position=none
+
+    background_color=#F5F6F7
+    foreground_color=#5C616C
+    fringe_date_color=#000000
+    highlight_color=#000000
+
+    month_font_size=100%
+    month_font_weight=normal
+
+    week_start=0
+
+    y_offset=24
+    x_offset=1648
   '';
 }

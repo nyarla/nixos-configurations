@@ -11,6 +11,10 @@ let
     </item>
   '';
 
+  stop = label: command:
+    exec label
+    "sh -c 'systemctl --user stop graphical-session.target ; ${command}'";
+
   menu = id: label: contains: ''
     <menu id="${id}" label="${label}">
       ${builtins.concatStringsSep "\n" contains}
@@ -32,11 +36,14 @@ let
 
   sep = "<separator/>";
 
-  applicationsMain = menu "applications-main" "Main"
-    ([ (exec "wezterm" "wezterm") ]
-      ++ (onlyWayland [ (exec "wterm" "weston-terminal") ])
-      ++ (onlyXorg [ (exec "waydroid" (script "waydroid-on-weston")) ]
-        ++ [ "${sep}" (exec "Vial" "Vial") ]));
+  applicationsMain = menu "applications-main" "Main" ((onlyWayland [
+    (exec "wezterm"
+      "env __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json wezterm --config enable_wayland=false")
+    (exec "wterm" "weston-terminal")
+  ]) ++ (onlyXorg [
+    (exec "wezterm" "wezterm")
+    (exec "waydroid" (script "waydroid-on-weston"))
+  ] ++ [ "${sep}" (exec "Vial" "Vial") ]));
 
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")
@@ -88,15 +95,25 @@ let
 
   systemOperationXorg = menu "system-operation" "System" [
     (action "Reconfigure" "Reconfigure")
-    (exec "Lock" "xset dpms force off")
-    (exec "Logout"
-      "sh -c 'systemctl --user stop lxqt-panel; loginctl terminate-session self'")
+    (stop "Exit" "openbox --exit")
     "${sep}"
-    (exec "Reboot" "sh -c 'systemctl --user stop lxqt-panel; systemctl reboot'")
-    (exec "Shutdown" "shutdown -h now")
+    (exec "Lock" "xset dpms force off")
+    (stop "Logout" "loginctl terminate-session self")
+    "${sep}"
+    (stop "Reboot" "systemctl reboot")
+    (stop "Shutdown" "shutdown -h now")
   ];
 
-  systemOperationWayland = menu "system-operation" "System" [ ];
+  systemOperationWayland = menu "system-operation" "System" [
+    (action "Reconfigure" "Reconfigure")
+    (stop "Exit" "labwc --exit")
+    "${sep}"
+    (exec "Lock" "swaylock -C ~/.config/swaylock/config -f")
+    (stop "Logout" "loginctl terminate-session self")
+    "${sep}"
+    (stop "Reboot" "systemctl reboot")
+    (stop "Shutdown" "shutdown -h now")
+  ];
 
   systemOperation =
     if isXorg then systemOperationXorg else systemOperationWayland;

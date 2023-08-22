@@ -1,8 +1,8 @@
-{ pkgs, config, ... }: {
-  systemd.user.services.lxqt-panel = {
+{ config, pkgs, ... }: {
+  systemd.user.services.cmst = {
     Unit = {
-      Description = "Autostart for LXQt-Panel";
-      After = [ "graphical-session.target" ];
+      Description = "Autostart for connman-gtk";
+      After = [ "graphical-session.target" "desktop-panel.service" ];
       PartOf = [ "graphical-session.target" ];
     };
 
@@ -15,7 +15,7 @@
         "LC_ALL=ja_JP.UTF-8"
         "QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt5.qtbase.qtPluginPrefix}"
       ];
-      ExecStart = "${pkgs.lxqt.lxqt-panel}/bin/lxqt-panel";
+      ExecStart = "${pkgs.cmst}/bin/cmst -m";
       Restart = "always";
     };
   };

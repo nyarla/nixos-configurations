@@ -1,80 +1,78 @@
 { pkgs, ... }: {
   imports = [
-    ../../config/services/blueman-applet.nix
-    ../../config/services/gnome-keyring.nix
-    ../../config/services/polkit.nix
-    ../../config/services/sfwbar.nix
-    ../../config/services/swaylock.nix
+    ../../config/desktop/1password.nix
+    ../../config/desktop/blueman-applet.nix
+    ../../config/desktop/calibre.nix
+    ../../config/desktop/cmst.nix
+    ../../config/desktop/desktop-panel.nix
+    ../../config/desktop/desktop-session.nix
+    ../../config/desktop/dunst.nix
+    ../../config/desktop/kdeconnect.nix
+    ../../config/desktop/swaylock.nix
+    ../../config/desktop/theme.nix
+    ../../config/desktop/ydotoold.nix
   ];
 
   home.packages = with pkgs; [
-    # icon and themes
-    arc-openbox
-    arc-theme
-    capitaine-cursors
-    flat-remix-icon-theme
-    hicolor-icon-theme
+    # terminal
+    wezterm
 
-    # fallback
-    gnome.adwaita-icon-theme
-    gnome.gnome-themes-extra
+    # credential
+    libsecret
+    pinentry-gnome
 
     # wayland
     grim
     slurp
     wl-clipboard
-    xclip
 
     labwc
     swaybg
     swayidle
     swaylock-effects
-    xembed-sni-proxy
 
     wayout
     wev
     wlr-randr
     wmname
     ydotool
+
+    xembed-sni-proxy
+    galendae
   ];
 
-  xdg.configFile."labwc/autostart".source = toString (with pkgs;
-    (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
+  xdg.configFile = {
+    "labwc/autostart".source = toString (with pkgs;
+      (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
 
-  xdg.configFile."labwc/menu.xml".text = (import ./menu.nix) { };
-  xdg.configFile."labwc/rc.xml".text = (import ./rc.nix) { };
+    "labwc/menu.xml".text =
+      import ../../config/vars/appmenu.nix { isWayland = true; };
+    "labwc/rc.xml".text = (import ./rc.nix) { };
 
-  xdg.configFile."labwc/environment".text = ''
-    GTK2_RC_FILES=$HOME/.gtkrc-2.0
+    "labwc/environment".text = ''
+      GTK2_RC_FILES=$HOME/.gtkrc-2.0
 
-    LANG=ja_JP.UTF_8
-    LC_ALL=ja_JP.UTF-8
+      LANG=ja_JP.UTF_8
+      LC_ALL=ja_JP.UTF-8
 
-    XKB_DEFAULT_LAYOUT=us
+      XKB_DEFAULT_LAYOUT=us
 
-    GDK_BACKEND=wayland
-    GTK_CSD=0
-    GTK_THEME=Arc
+      GDK_BACKEND=wayland
+      CLUTTER_BACKEND=wayland
+      QT_QPA_PLATFORM=wayland
 
-    CLUTTER_BACKEND=wayland
+      MOZ_DISABLE_RDD_SANDBOX=1
+      MOZ_ENABLE_WAYLAND=1
+      MOZ_USE_XINPUT2=1
+      MOZ_WEBRENDER=1
 
-    QT_QPA_PLATFORM=wayland
-    QT_QPA_PLATFORMTHEME=gnome
-    QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      SDL_VIDEODRIVER=wayland
+      _JAVA_AWT_WM_NONREPARENTING=1
+    '';
+  };
 
-    MOZ_ENABLE_WAYLAND=1
-    MOZ_WEBRENDER=1
-    MOZ_USE_XINPUT2=1
-
-    SDL_VIDEODRIVER=wayland
-    _JAVA_AWT_WM_NONREPARENTING=1
-  '';
-
-  home.file.".local/bin/sw" = {
-    executable = true;
-    text = ''
-      #!/usr/bin/env bash
-
+  home.file.".local/bin/sw".source = toString
+    (pkgs.writeShellScript "startlabwc" ''
       for rc in $(ls /etc/profile.d); do
         . /etc/profile.d/$rc
       done
@@ -83,19 +81,20 @@
         . $HOME/.config/profile.d/$rc
       done
 
-      export XCURSOR_PATH=/run/current-system/etc/profiles/per-user/nyarla/share/icons:$HOME/.icons/default
-      export XCURSOR_THEME=capitaine-cursors-white
-
       schema="org.gnome.desktop.interface"
       gsettings set $schema gtk-theme "Arc"
       gsettings set $schema icon-theme "Flat-Remix-Cyan-Light"
       gsettings set $schema cursor-theme $XCURSOR_THEME
       gsettings set $schema font-name "Sans 9"
 
-      export XDG_DATA_DIRS=$HOME/.local/share:/run/current-system/etc/profiles/per-user/nyarla/share:$XDG_DATA_DIRS
+      export DESKTOP_SESSION=wlroots
 
-      export XDG_SESSION_TYPE=wayland
+      export XDG_DATA_DIRS=$HOME/.local/share:/run/current-system/etc/profiles/per-user/nyarla/share:$XDG_DATA_DIRS
+      export XDG_CONFIG_DIRS=/etc/xdg:/home/''${USER}/.nix-profile/etc/xdg:/etc/profiles/per-user/''${USER}/etc/xdg:/nix/var/nix/profiles/default/etc/xdg:/run/current-system/sw/etc/xdg
       export XDG_CURRENT_DESKTOP=wlroots
+      export XDG_SESSION_CLASS=user
+      export XDG_SESSION_DESKTOP=wlroots
+      export XDG_SESSION_TYPE=wayland
 
       export GBM_BACKEND=nvidia-drm
       export GBM_BACKENDS_PATH=/etc/gbm
@@ -108,20 +107,32 @@
       export LIBSEAT_BACKEND=logind
 
       export WLR_NO_HARDWARE_CURSORS=1
-      # export WLR_RENDERER=vulkan
+      export WLR_RENDERER=pixman
 
-      dbus-update-activation-environment --systemd --all
+      if systemctl --user -q is-active desktop-session.target ; then
+        echo "Desktop session already exists." >&2
+        exit 1
+      fi
 
-      labwc -V &
-      waitPID=$!
+      if hash dbus-update-activation-environment 2>/dev/null; then
+        dbus-update-activation-environment --systemd --all
+      fi
 
-      systemctl --user start graphical-session.target
+      systemctl --user reset-failed
 
-      test -n "$waitPID" && wait "$waitPID"
+      cleanup() {
+        if systemctl --user -q is-active desktop-session.target ; then
+          systemctl --user stop desktop-session.target
+        fi
+      }
 
-      systemctl --user stop graphical-session.target
+      trap cleanup INT TERM
 
-      exit 0
-    '';
-  };
+      ${pkgs.labwc}/bin/labwc -V &
+      waidPID=$!
+
+      test -n $waidPID && wait $waidPID
+
+      cleanup
+    '');
 }

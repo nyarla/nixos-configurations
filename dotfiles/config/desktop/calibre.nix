@@ -2,7 +2,7 @@
   systemd.user.services.calibre = {
     Unit = {
       Description = "Autostart for calibre";
-      After = [ "graphical-session.target" "lxqt-panel.service" ];
+      After = [ "graphical-session.target" "desktop-panel.service" ];
       PartOf = [ "graphical-session.target" ];
     };
 
@@ -16,7 +16,7 @@
         "QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt6.qtbase.qtPluginPrefix}"
       ];
       ExecStart = "${pkgs.calibre}/bin/calibre --start-in-tray";
-      Restart = "on-failure";
+      Restart = "always";
     };
   };
 }

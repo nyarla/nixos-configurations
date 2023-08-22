@@ -15,5 +15,10 @@ let
   };
 
 in writeShellScript "autostart" ''
+  systemctl --user unset-environment WAYLAND_DISPLAY
+  systemctl --user start desktop-session.target
+  systemctl --user restart picom
+  systemctl --user restart xss-lock
+
   ${pkgs.hsetroot}/bin/hsetroot -fill ${wallpaper} &
 ''

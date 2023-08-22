@@ -1,8 +1,8 @@
-{ config, ... }: {
-  systemd.user.services.connmam-gtk = {
+{ pkgs, config, ... }: {
+  systemd.user.services.ydotoold = {
     Unit = {
-      Description = "Autostart for connman-gtk";
-      After = [ "graphical-session.target" "lxqt-panel.service" ];
+      Description = "Autostart for ydotoold";
+      After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
 
@@ -14,7 +14,7 @@
         "LANG=ja_JP.UTF-8"
         "LC_ALL=ja_JP.UTF-8"
       ];
-      ExecStart = "/run/current-system/sw/bin/connman-gtk --tray";
+      ExecStart = "${pkgs.ydotool}/bin/ydotoold";
       Restart = "always";
     };
   };

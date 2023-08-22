@@ -7,5 +7,5 @@
     "QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt5.qtbase.qtPluginPrefix}"
   ];
   systemd.user.services.kdeconnect-indicator.Unit.After =
-    [ "graphical-session.target" "lxqt-panel.service" ];
+    [ "graphical-session.target" "desktop-panel.service" ];
 }

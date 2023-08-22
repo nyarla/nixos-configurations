@@ -3,6 +3,6 @@
 Type=Application
 Version=1.0
 Name=OpenBox Menu
-Exec=xdotool key alt+F1
+Exec=ydotool key 56:1 59:1 59:0 56:0
 Icon=Terminal
 Terminal=false

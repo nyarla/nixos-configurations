@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   services.picom = {
     enable = true;
     package = pkgs.picom-next;
@@ -25,4 +25,6 @@
       unredir-if-possible = false;
     };
   };
+
+  systemd.user.services.picom.Install.WantedBy = lib.mkForce [ ];
 }

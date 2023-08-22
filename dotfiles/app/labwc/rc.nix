@@ -48,9 +48,10 @@ in ''
     (prop "decoration" "server")
     (prop "gap" "0")
     (prop "adaptiveSync" "no")
+    (prop "reuseOutputMode" "no")
   ])
 
-  (props "focus" [ (prop "followMouse" "yes") (prop "raiseOnFocus" "no") ])
+  (props "focus" [ (prop "followMouse" "no") (prop "raiseOnFocus" "no") ])
 
   (props "theme" [
     (prop "name" "Arc-Dark")
@@ -61,7 +62,7 @@ in ''
     })
     (font "MenuItem" {
       name = "sans";
-      size = "9";
+      size = "10";
     })
     (font "OSD" {
       name = "sans";
@@ -69,8 +70,13 @@ in ''
     })
   ])
 
-  (props "snapping" [ (prop "range" "1") (prop "topMaximize" "yes") ])
+  ''
+    <regions>
+      <region name="center" x="25%" y="25%" width="50%" height="50%" />
+    </regions>
+  ''
 
+  (props "snapping" [ (prop "range" "1") (prop "topMaximize" "yes") ])
   (props "resistance" [ (prop "screenEdgeStrength" "20") ])
 
   (props "keyboard" [
@@ -79,9 +85,9 @@ in ''
     (keybind "A-Up" [ (action "SnapToEdge" [ (prop "direction" "up") ]) ])
     (keybind "A-Down" [ (action "SnapToEdge" [ (prop "direction" "down") ]) ])
 
-    (keybind "A-m" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
-    (keybind "C-W-q" [ (exec "swaylock -f") ])
+    (keybind "A-o" [ (action "SnapToRegion" [ (prop "region" "center") ]) ])
 
-    (keybind "XF86_AudioPlay" [ (exec "mpc toggle") ])
+    (keybind "A-F1" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
+    (keybind "C-W-q" [ (exec "swaylock -C ~/.config/swaylock/config -f") ])
   ])
 ])

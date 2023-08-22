@@ -2,7 +2,7 @@
   systemd.user.services.blueman-applet = {
     Unit = {
       Description = "launch blueman-applet";
-      After = [ "graphical-session.target" "lxqt-panel.service" ];
+      After = [ "graphical-session.target" "desktop-panel.service" ];
       PartOf = [ "graphical-session.target" ];
     };
 

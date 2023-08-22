@@ -2,7 +2,7 @@
   systemd.user.services._1password = {
     Unit = {
       Description = "Autostart for 1password";
-      After = [ "graphical-session.target" "lxqt-panel.service" ];
+      After = [ "graphical-session.target" "desktop-panel.service" ];
       PartOf = [ "graphical-session.target" ];
     };
 
@@ -15,7 +15,7 @@
         "LC_ALL=ja_JP.UTF-8"
       ];
       ExecStart = "/run/current-system/sw/bin/1password --silent";
-      Restart = "on-failure";
+      Restart = "always";
     };
   };
 }

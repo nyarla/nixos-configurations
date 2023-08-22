@@ -3,21 +3,21 @@
     ../../config/desktop/1password.nix
     ../../config/desktop/blueman-applet.nix
     ../../config/desktop/calibre.nix
-    ../../config/desktop/connman-gtk.nix
+    ../../config/desktop/cmst.nix
+    ../../config/desktop/desktop-panel.nix
     ../../config/desktop/desktop-session.nix
     ../../config/desktop/dunst.nix
     ../../config/desktop/kdeconnect.nix
-    ../../config/desktop/lxqt-panel.nix
     ../../config/desktop/picom.nix
     ../../config/desktop/theme.nix
     ../../config/desktop/xorg.nix
+    ../../config/desktop/ydotoold.nix
   ];
 
   home.packages = with pkgs;
     [
-      # terminal and development
+      # terminal
       wezterm
-      gitg
 
       # credential
       libsecret
@@ -45,8 +45,8 @@
       s5cmd
       sxhkd
       wmctrl
-      xdotool
       xsettingsd
+      ydotool
     ] ++ lxqt.preRequisitePackages;
 
   xdg.configFile = {
@@ -102,15 +102,15 @@
       systemctl --user reset-failed
 
       cleanup() {
-        systemctl --user start --job-mode=replace-irreversibly desktop-session-shutdown.target
+        if systemctl --user -q is-active desktop-session.target ; then
+          systemctl --user stop desktop-session.target
+        fi
       }
 
       trap cleanup INT TERM
 
       ${pkgs.openbox}/bin/openbox-session &
       waidPID=$!
-
-      systemctl --user start desktop-session.target
 
       test -n $waidPID && wait $waidPID
 

@@ -58,12 +58,12 @@ in {
 
   labwc = (super.labwc.override { inherit (self) wlroots_0_16; }).overrideAttrs
     (old: rec {
-      version = "2022-12-20";
+      version = "2023-08-17";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "1ee8715d57ddb6b444e0b089879db6f837400539";
-        sha256 = "sha256-Eoc6IwHmJwaSs87L+H1m51YOcQl35n1ZbDxcgP5cwIw=";
+        rev = "a89bcc3c60a148590cf58c7fc522c435a65ccffa";
+        sha256 = "sha256-FN8ayCGFC22VaweX/CsW4wyo/gS5xdYpNGtMOFcQYQg=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -85,6 +85,10 @@ in {
       rev = "ad20073a3cb5bb354a1fde44ffe5aa331982cbd1";
       sha256 = "sha256-FNHlALFwMbajaHWOehdSFeQmvZSuCZLdqGqLZ7DF+pI=";
     };
+  });
+
+  sfwbar = super.sfwbar.overrideAttrs (old: rec {
+    nativeBuildInputs = old.nativeBuildInputs ++ [ super.wrapGAppsHook ];
   });
 
   thunderbird-bin-unwrapped =
@@ -118,6 +122,9 @@ in {
       sha256 = "sha256-u3w92BMuq85SyO3bWRKuA59EaRtehrt02hZY3NMJEOA=";
     };
   });
+
+  wlroots_0_16 = super.wlroots_0_16.overrideAttrs
+    (_: rec { patches = [ ../patches/wlroots-workaround.patch ]; });
 
   wineUsingFull = super.wineWowPackages.stagingFull;
 }

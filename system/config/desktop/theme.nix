@@ -1,8 +1,9 @@
 { pkgs, config, ... }: {
+  xdg.icons.enable = true;
+
   environment.sessionVariables = {
     GTK_THEME = "Arc";
     QT_STYLE_OVERRIDE = "kvantum";
-    XCURSOR_PATH = [ "${pkgs.capitaine-cursors}/share/icons" ];
     XCURSOR_SIZE = "24";
     XCURSOR_THEME = "capitaine-cursors-white";
   };

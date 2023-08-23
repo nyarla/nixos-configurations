@@ -6,6 +6,7 @@
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
     ../config/desktop/theme.nix
+    ../config/desktop/wayland.nix
     ../config/desktop/xdg.nix
     ../config/desktop/xorg.nix
     ../config/gadgets/android.nix
@@ -200,6 +201,7 @@
         export PATH=/run/wrappers/bin:$PATH
 
         test -e /media/data     || mkdir -p /media/data
+        test -e /media/files    || mkdir -p /media/files
         test -e /backup/DAW     || mkdir -p /backup/DAW
         test -e /backup/Sources || mkdir -p /backup/Sources
 
@@ -210,6 +212,14 @@
             mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
             mount -o bind /media/data/DAW /backup/DAW
             mount -o bind /media/data/Sources /backup/Sources
+          fi
+        fi
+
+        device=7150cfa7-099e-4b02-ba1a-9a45b726bfde
+        if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device ; then
+          cryptsetup luksOpen /dev/disk/by-uuid/$device files --key-file /boot/keys/$device
+          if test $? = 0 && test -e /dev/mapper/files ; then
+            mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/files /media/files
           fi
         fi
       '');

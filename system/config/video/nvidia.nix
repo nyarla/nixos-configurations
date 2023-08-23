@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  nvidia = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
+  nvidia = config.boot.kernelPackages.nvidiaPackages.production;
   nvidia32 = nvidia.lib32;
 in {
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];

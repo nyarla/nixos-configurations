@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   virtualisation.docker = {
     enable = true;
-    storageDriver = "btrfs";
+    storageDriver = "overlay2";
   };
   environment.systemPackages = with pkgs; [ docker ];
 }

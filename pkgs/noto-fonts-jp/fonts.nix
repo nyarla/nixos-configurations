@@ -39,42 +39,42 @@
     name = "NotoSerifCJKjp-Black.otf";
     url =
       "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Black.otf";
-    sha256 = "0rsivnk79r066ldhbf69xsp8azpzg9j5af7vdi25jkj0cn4j9yd8";
+    sha256 = "0dmmaqm70sqgygp35k9fw912ycccia7a4fbdhr67884aky3lgh47";
   }
   {
     name = "NotoSerifCJKjp-Bold.otf";
     url =
       "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Bold.otf";
-    sha256 = "0p4w50x5kbb6dx5vvkiaf73wd8145lisg5vh4fmiayyhzaigb6gb";
+    sha256 = "1ih4rprgjf1q0j3i84ipkrpifmw2wa6acirc9m7a28g8mwb9dbzy";
   }
   {
     name = "NotoSerifCJKjp-ExtraLight.otf";
     url =
       "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-ExtraLight.otf";
-    sha256 = "19scn94ba9m7sh5nq4ijid1bw222f2ib6cyyzp147k89bx2cf62w";
+    sha256 = "0d07pmf7pqnryk95fkcw2n0zpagz7f64iq8k1j3qr2qrdf3kw24w";
   }
   {
     name = "NotoSerifCJKjp-Light.otf";
     url =
       "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Light.otf";
-    sha256 = "08aygdqp97a5pwb33vgjhd8jdgbjf4qsyiiivjw2pvi8dls9q27v";
+    sha256 = "00mm73iis5ahfny3vsz9q881llrpiwxkn8s6nilb1lsh9qf01i9a";
   }
   {
     name = "NotoSerifCJKjp-Medium.otf";
     url =
       "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Medium.otf";
-    sha256 = "1fvg6vhib4s8f8hccw72gih3c9divgkls162h6fxcqrnp0g05g02";
+    sha256 = "0w63n95xqhfjlf6bag3w183sbk25h6jk6z5v829ldnz00vm48ygf";
   }
   {
     name = "NotoSerifCJKjp-Regular.otf";
     url =
       "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Regular.otf";
-    sha256 = "0nlfx4qsy5rab9lyh153h7bazpi35w8y7qwg2r27lg9q975gmrzp";
+    sha256 = "1mlf2xcd39k83lrsnjyqnhq2psbdkjgzwdn81glfa0f16piar2sn";
   }
   {
     name = "NotoSerifCJKjp-SemiBold.otf";
     url =
       "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-SemiBold.otf";
-    sha256 = "0irhfrqpln5h17mlmc77m0l7p9blvjnhcka8kjq18m0cwmmzsnjb";
+    sha256 = "0k7749vrlcq90pxq93sc93ygjzzzpw2y090m3a0vny923pmxzhx2";
   }
 ]

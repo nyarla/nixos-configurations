@@ -1,4 +1,4 @@
-{ isXorg ? false, isWayland ? false, ... }:
+{ isXorg ? false, isWayland ? false, pkgs, ... }:
 let
   onlyWayland = contains: if isWayland then contains else [ ];
   onlyXorg = contains: if isXorg then contains else [ ];
@@ -56,6 +56,10 @@ let
     (exec "Brave" "brave")
     "${sep}"
     (exec "1password" "1password")
+    (exec "Telegram"
+      "env QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt6.qtbase.qtPluginPrefix} telegram-desktop")
+    (exec "Discord" (if isWayland then "discord --no-sandbox" else "discord"))
+    (exec "Slack" (if isWayland then "slack --disable-gpu" else "slack"))
   ];
 
   applicationsFiles = menu "applications-files" "Files" [

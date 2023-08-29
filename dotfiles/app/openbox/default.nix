@@ -54,8 +54,10 @@
     "openbox/autostart".source = toString (with pkgs;
       (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
 
-    "openbox/menu.xml".text =
-      import ../../config/vars/appmenu.nix { isXorg = true; };
+    "openbox/menu.xml".text = import ../../config/vars/appmenu.nix {
+      inherit pkgs;
+      isXorg = true;
+    };
 
     "openbox/environment".source = toString (pkgs.writeScript "environment" ''
       export GTK2_RC_FILES=$HOME/.gtkrc-2.0

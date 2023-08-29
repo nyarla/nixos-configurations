@@ -45,8 +45,10 @@
     "labwc/autostart".source = toString (with pkgs;
       (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; });
 
-    "labwc/menu.xml".text =
-      import ../../config/vars/appmenu.nix { isWayland = true; };
+    "labwc/menu.xml".text = import ../../config/vars/appmenu.nix {
+      inherit pkgs;
+      isWayland = true;
+    };
     "labwc/rc.xml".text = (import ./rc.nix) { };
 
     "labwc/environment".text = ''
@@ -107,6 +109,7 @@
       export LIBSEAT_BACKEND=logind
 
       export WLR_NO_HARDWARE_CURSORS=1
+      export WLR_RENDERER_ALLOW_SOFTWARE=1
       export WLR_RENDERER=pixman
 
       if systemctl --user -q is-active desktop-session.target ; then

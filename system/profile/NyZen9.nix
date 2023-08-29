@@ -314,6 +314,7 @@
         ".config/BraveSoftware"
         ".config/Kvantum"
         ".config/MusicBrainz"
+        ".config/Slack"
         ".config/Sononym"
         ".config/TabNine"
         ".config/Thunar"
@@ -321,6 +322,7 @@
         ".config/audiogridder"
         ".config/calibre"
         ".config/dconf"
+        ".config/discord"
         ".config/falkTX"
         ".config/fcitx5"
         ".config/gcloud"
@@ -341,6 +343,7 @@
 
         # .local
         ".local/share/TabNine"
+        ".local/share/TelegramDesktop"
         ".local/share/Trash"
         ".local/share/applications"
         ".local/share/fcitx5"

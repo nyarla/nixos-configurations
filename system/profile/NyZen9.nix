@@ -370,8 +370,13 @@
         (secure ".ssh")
         (secure ".wrangler")
       ];
-      files =
-        [ ".config/mimeapps.list" ".config/snn.conf" ".gtkrc-2.0" ".npmrc" ];
+      files = [
+        ".clasprc.json"
+        ".config/mimeapps.list"
+        ".config/snn.conf"
+        ".gtkrc-2.0"
+        ".npmrc"
+      ];
     };
   };
 

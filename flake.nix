@@ -36,7 +36,7 @@
     in { # NyZen9
       nixos = nixosSystem {
         arch = "x86_64";
-        patches = [ ./patches/vial.patch ];
+        patches = [ ./patches/vial.patch ./patches/wine-8.14.patch ];
       } (pkg: {
         modules = [
           impermanence.nixosModules.impermanence

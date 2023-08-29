@@ -11,9 +11,10 @@ cp /run/current-system/sw/lib/wine/x86_64-unix/wineasio.dll.so \
 
 wine64 regsvr32 wineasio.dll
 
+pkill -9 jackd || true
 pasuspender -- jackd -R -dalsa -dplughw:USB -r96000 -p512 -n3 &
 
-"$(readlink "$(readlink "$(which AudioGridderServer)")")" &
+AudioGridderServer &
 
 sleep 3
 
@@ -23,7 +24,7 @@ flPID=$!
 wait $flPID
 
 pgrep AudioGridder | xargs -I{} kill {}
-pgrep jackd | xargs -I{} kill {}
+pgrep jackd | xargs -I{} kill -9 {}
 
 wineserver -k || true
 

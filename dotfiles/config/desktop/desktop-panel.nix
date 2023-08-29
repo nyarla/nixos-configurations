@@ -104,9 +104,9 @@ in {
     #sfwbar box,
     #sfwbar widget,
     #sfwbar button {
-        padding-top: 0px;
-        padding-bottom: 0px;
         outline-width: 0px;
+        padding-bottom: 0px;
+        padding-top: 0px;
     }
 
     #sfwbar grid{
@@ -172,8 +172,9 @@ in {
     label#datetime {
       font-size: 12px;
       font-weight: bold;
-      min-height: 16px;
+      min-height: 24px;
       min-width: 160px;
+      padding-bottom; 4px;
       padding-left: 4px;
     }
   '';

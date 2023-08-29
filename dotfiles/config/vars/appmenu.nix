@@ -40,6 +40,10 @@ let
     (exec "wezterm"
       "env __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json wezterm --config enable_wayland=false")
     (exec "wterm" "weston-terminal")
+    (menu "applications-waydroid" "Waydroid" [
+      (exec "Start" (script "waydroid-start"))
+      (exec "Stop" (script "waydroid-start"))
+    ])
   ]) ++ (onlyXorg [
     (exec "wezterm" "wezterm")
     (exec "waydroid" (script "waydroid-on-weston"))

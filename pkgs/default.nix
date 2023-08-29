@@ -123,8 +123,20 @@ in {
     };
   });
 
-  wlroots_0_16 = super.wlroots_0_16.overrideAttrs
-    (_: rec { patches = [ ../patches/wlroots-workaround.patch ]; });
+  wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
+    buildInputs = old.buildInputs ++ (with super; [
+      glslang
+      libdrm.dev
+      mesa.dev
+      vulkan-validation-layers.headers
+    ]);
+
+    nativeBuildInputs = old.nativeBuildInputs ++ (with super; [ hwdata ]);
+    postPatch = ''
+      sed -i 's/glFlush/glFinish/' render/gles2/renderer.c
+    '';
+    patches = [ ../patches/wlroots-workaround.patch ];
+  });
 
   wineUsingFull = super.wineWowPackages.stagingFull;
 }

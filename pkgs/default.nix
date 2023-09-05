@@ -56,24 +56,24 @@ in {
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  labwc = (super.labwc.override { inherit (self) wlroots_0_16; }).overrideAttrs
+  labwc = (super.labwc.override { wlroots = self.wlroots_0_16; }).overrideAttrs
     (old: rec {
-      version = "2023-08-17";
+      version = "2023-09-05";
       src = super.fetchFromGitHub {
         owner = "labwc";
         repo = "labwc";
-        rev = "a89bcc3c60a148590cf58c7fc522c435a65ccffa";
-        sha256 = "sha256-FN8ayCGFC22VaweX/CsW4wyo/gS5xdYpNGtMOFcQYQg=";
+        rev = "a49e12e11238771ab9b7195cfa5f4ce03ec10742";
+        hash = "sha256-9aTU8o3l4hNGne08sKOS+7mpntX3dOe4IGh/oLHwcak=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
-    version = "2023-08-05";
+    version = "2023-09-05";
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
-      rev = "5d6957d3da1bf99311a676eab94c69ef4276bedf";
-      sha256 = "sha256-Mzf0533roLSODjMCPKyGSMbP7lIbT+PoLTZfoIBAI6g=";
+      rev = "8cc5090a6c3b04db74f41d1108bd19d2592fa9ad";
+      hash = "sha256-Alri5KQ1ps5ZUN1lwGisDkZjU4v6u2yD2jgpZAY047Q=";
     };
     buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });
@@ -99,8 +99,8 @@ in {
     version = "2023-08-03";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "ba6a912abdcc3e324d809cc873923aec2a5982fe";
-      sha256 = "sha256-s/Exi0P0LLm0iR2u1eKPi1ghMnaWHI1eN1yJdC+EmZM=";
+      rev = "03526d8151552e751b24b599fabdd399c6e27ef3";
+      hash = "sha256-R5HCMY4t8wFwgSiHy9In/eSJPkCoNwEx4g78A2PPXks=";
     };
 
     installPhase = ''

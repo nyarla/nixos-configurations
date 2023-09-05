@@ -44,9 +44,10 @@
     openjdk
 
     # nix
-    nixfmt
-    rnix-lsp
     deadnix
+    nixfmt
+    nixpkgs-lint-community
+    nurl
     statix
 
     # lua

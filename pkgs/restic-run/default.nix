@@ -1,4 +1,4 @@
-{ runCommand, writeShellScript, proot, restic, rclone, lib }:
+{ runCommand, writeShellScript, restic, rclone, lib }:
 let
   restic-run = writeShellScript "restic-run.sh" ''
     set -euo pipefail

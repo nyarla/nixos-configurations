@@ -42,7 +42,7 @@ let
     (exec "wterm" "weston-terminal")
     (menu "applications-waydroid" "Waydroid" [
       (exec "Start" (script "waydroid-start"))
-      (exec "Stop" (script "waydroid-start"))
+      (exec "Stop" (script "waydroid-stop"))
     ])
   ]) ++ (onlyXorg [
     (exec "wezterm" "wezterm")
@@ -56,10 +56,9 @@ let
     (exec "Brave" "brave")
     "${sep}"
     (exec "1password" "1password")
+    "${sep}"
     (exec "Telegram"
       "env QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt6.qtbase.qtPluginPrefix} telegram-desktop")
-    (exec "Discord" (if isWayland then "discord --no-sandbox" else "discord"))
-    (exec "Slack" (if isWayland then "slack --disable-gpu" else "slack"))
   ];
 
   applicationsFiles = menu "applications-files" "Files" [

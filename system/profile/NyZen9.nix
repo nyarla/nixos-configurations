@@ -322,7 +322,6 @@
         ".config/audiogridder"
         ".config/calibre"
         ".config/dconf"
-        ".config/discord"
         ".config/falkTX"
         ".config/fcitx5"
         ".config/gcloud"

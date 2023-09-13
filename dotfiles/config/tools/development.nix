@@ -47,6 +47,7 @@
     deadnix
     nixfmt
     nixpkgs-lint-community
+    nixd
     nurl
     statix
 

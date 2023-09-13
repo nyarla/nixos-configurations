@@ -13,11 +13,8 @@ while test ! -e /run/user/$(id -u)/wayland-1 ; do
   sleep 1
 done
 
-grep -qF 'Established ADB connection to Waydroid device' <(waydroid -w show-full-ui 2>&1) \
-  && env SHELL=/bin/sh pkexec sh -c '
-    sudo mount --bind /persist/home/nyarla/Music /persist/home/nyarla/.local/share/waydroid/data/media/0/Music
-  '
+bash "$(dirname "$0")/waydroid-start"
 
 wait $westonPID
 
-waydroid session stop
+bash "$(dirname "$0")/waydroid-stop"

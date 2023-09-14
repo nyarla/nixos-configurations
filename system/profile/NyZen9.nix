@@ -314,7 +314,6 @@
         ".config/BraveSoftware"
         ".config/Kvantum"
         ".config/MusicBrainz"
-        ".config/Slack"
         ".config/Sononym"
         ".config/TabNine"
         ".config/Thunar"
@@ -361,10 +360,10 @@
         ".mozilla"
         ".pki"
         ".sononym audioserver"
+        ".tabby"
         ".thunderbird"
 
         # credentials
-        (secure ".aws")
         (secure ".fly")
         (secure ".gnupg")
         (secure ".gsutil")

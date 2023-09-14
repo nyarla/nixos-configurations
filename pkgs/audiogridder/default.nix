@@ -1,5 +1,5 @@
 { stdenv, fetchFromGitHub, fetchzip, lib, runCommand, binutils, cmake, findutils
-, pkgconfig, python3, alsaLib, atk, boost178, cairo, curlFull, freetype
+, pkg-config, python3, alsaLib, atk, boost178, cairo, curlFull, freetype
 , gdk-pixbuf, glib, graphviz, gtk3, gtkmm3, harfbuzz, ladspa-sdk, libGLU
 , libappindicator-gtk3, libdatrie, libdbusmenu, libepoxy, libjack2
 , libjpeg_turbo, libpng, libselinux, libsepol, libsysprof-capture, libthai
@@ -38,7 +38,7 @@ in stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake pkgconfig python3 findutils binutils ];
+  nativeBuildInputs = [ cmake pkg-config python3 findutils binutils ];
   buildInputs = [
     alsaLib
     atk

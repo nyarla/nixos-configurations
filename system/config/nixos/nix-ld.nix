@@ -10,7 +10,7 @@
     libxcrypt
     libxml2
     openssl
-    pkgconfig
+    pkg-config
     stdenv.cc.cc.lib
     stdenv.cc.libc
     systemd

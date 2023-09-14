@@ -12,7 +12,7 @@ buildFHSUserEnv rec {
       perlPackages.Appcpm
       perlPackages.PerlTidy
       perlPackages.locallib
-      pkgconfig
+      pkg-config
       stdenv.cc.cc
       stdenv.cc.libc
     ];

@@ -31,7 +31,9 @@ in {
   skk-dicts-xl = require ./skk-dicts-xl { };
   sononym-bin = require ./sononym-bin { };
   sysmontask = require ./sysmontask { };
+  tabby = require ./tabby { nvidia_x11 = null; };
   terminfo-mlterm-256color = require ./terminfo-mlterm-256color { };
+  turbopilot = require ./turbopilot { nvidia_x11 = null; };
   vgpu_unlock-rs = require ./vgpu_unlock-rs { };
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };

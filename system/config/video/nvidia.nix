@@ -52,8 +52,11 @@ in {
   environment.etc."gbm/nvidia-drm_gbm.so".source =
     "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
 
-  environment.systemPackages = with pkgs;
-    [ (cuda-shell.override { nvidia_x11 = nvidia; }) ];
+  environment.systemPackages = with pkgs; [
+    (cuda-shell.override { nvidia_x11 = nvidia; })
+    (tabby.override { nvidia_x11 = nvidia; })
+    (turbopilot.override { nvidia_x11 = nvidia; })
+  ];
 
   virtualisation.docker.enableNvidia = true;
 }

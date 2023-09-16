@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [ ./gnome-compatible.nix ];
   environment.systemPackages = with pkgs; [ xclip ];
 

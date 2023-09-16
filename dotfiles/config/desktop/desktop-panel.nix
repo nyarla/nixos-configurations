@@ -1,6 +1,4 @@
-{ pkgs, config, ... }:
-let fmt = pkgs.formats.json { };
-in {
+{ pkgs, config, ... }: {
   systemd.user.services.desktop-panel = {
     Unit = {
       Description = "Autostart for Desktop Panel";
@@ -24,7 +22,7 @@ in {
           ${pkgs.sfwbar}/bin/sfwbar &
           export waidPID=$!
         else
-          ${pkgs.lxqt.lxqt-panel}/bin/lxqt-panel &
+          ${pkgs.lxqt.lxqt-panel}/bin/lxqt-panel 2>/dev/null &
           export waitPID=$!
         fi
 

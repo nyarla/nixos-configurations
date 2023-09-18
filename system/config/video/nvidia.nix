@@ -25,14 +25,13 @@ in {
     Option "AllowEmptyInitialConfiguration"
   '';
   services.xserver.screenSection = ''
-    Option "MetaModes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-    Option "AllowIndirectGLXProtocol" "off"
     Option "TripleBuffer" "on"
+    Option "MetaModes" "1920x1080 { ForceFullCompositionPipeline=On }"
   '';
 
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.package = nvidia;
-  hardware.nvidia.open = true;
+  hardware.nvidia.open = false;
   hardware.opengl = {
     enable = true;
     driSupport = true;

@@ -96,8 +96,8 @@
     "kpti=off"
 
     # KVM
-    "vfio-pci.ids=1022:149c,10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
-    "efifb:off"
+    #"vfio-pci.ids=1022:149c,10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
+    #"efifb:off"
   ];
 
   # filesystem
@@ -307,6 +307,7 @@
         "Sync"
 
         # cache
+        ".cache/wine"
         ".cache/winetricks"
 
         # .config

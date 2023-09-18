@@ -26,5 +26,5 @@
     };
   };
 
-  systemd.user.services.picom.Install.WantedBy = lib.mkForce [ ];
+  systemd.user.services.picom.Install = lib.mkForce { };
 }

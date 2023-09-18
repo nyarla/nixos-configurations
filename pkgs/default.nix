@@ -62,16 +62,15 @@ in {
     (old: rec {
       version = "2023-09-05";
       src = super.fetchFromGitHub {
-        owner = "labwc";
-        repo = "labwc";
-        rev = "a49e12e11238771ab9b7195cfa5f4ce03ec10742";
-        hash = "sha256-9aTU8o3l4hNGne08sKOS+7mpntX3dOe4IGh/oLHwcak=";
+        inherit (old.src) owner repo;
+        rev = "143714f1c9c2821ca70ef26949395557b15e2171";
+        hash = "sha256-hUi5mKDLU7L33h4BMyOuzSbFVOhySKzWooPQet31fm0=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
-    version = "2023-09-05";
+    version = "2023-09-16";
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
       rev = "8cc5090a6c3b04db74f41d1108bd19d2592fa9ad";
@@ -80,10 +79,9 @@ in {
     buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });
 
-  platinum-searcher = super.platinum-searcher.overrideAttrs (_: rec {
+  platinum-searcher = super.platinum-searcher.overrideAttrs (old: rec {
     src = super.fetchFromGitHub {
-      owner = "monochromegane";
-      repo = "the_platinum_searcher";
+      inherit (old.src) owner repo;
       rev = "ad20073a3cb5bb354a1fde44ffe5aa331982cbd1";
       sha256 = "sha256-FNHlALFwMbajaHWOehdSFeQmvZSuCZLdqGqLZ7DF+pI=";
     };
@@ -140,5 +138,20 @@ in {
     patches = [ ../patches/wlroots-workaround.patch ];
   });
 
-  wineUsingFull = super.wineWowPackages.stagingFull;
+  wineUsingFull =
+    super.lib.overrideDerivation super.wineWowPackages.unstableFull (old: rec {
+      pname = "proton-wine";
+      version = "GE-Proton8-15";
+
+      name = "${pname}-${version}";
+
+      src = super.fetchFromGitHub {
+        owner = "GloriousEggroll";
+        repo = pname;
+        rev = version;
+        hash = "sha256-a8KPtrRttiSLB9Q31GBdCcYW0xxEzjteOlXpv7OECuo=";
+      };
+      configureFlags = old.configureFlags ++ [ "--disable-tests" ];
+      patches = [ ];
+    });
 }

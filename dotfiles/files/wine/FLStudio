@@ -5,7 +5,8 @@ set -euo pipefail
 export WINEPREFIX=/media/data/DAW/DAW/FLStudio
 export LD_PRELOAD=
 
-chmod +w $WINEPREFIX/drive_c/windows/system32/wineasio.dll
+test ! -e $WINEPREFIX/drive_c/windows/system32/wineasio.dll \
+  || chmod +w $WINEPREFIX/drive_c/windows/system32/wineasio.dll
 cp /run/current-system/sw/lib/wine/x86_64-unix/wineasio.dll.so \
   $WINEPREFIX/drive_c/windows/system32/wineasio.dll
 

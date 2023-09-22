@@ -79,7 +79,7 @@ in ''
         ])
 
         (props "theme" [
-          (prop "name" "Arc-Dark")
+          (prop "name" "Kaunas")
           (prop "titleLayout" "NLIMC")
           (prop "keepBorder" "yes")
           (prop "animateIconify" "yes")

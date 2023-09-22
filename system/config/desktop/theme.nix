@@ -2,7 +2,7 @@
   xdg.icons.enable = true;
 
   environment.sessionVariables = {
-    GTK_THEME = "Arc";
+    GTK_THEME = "Fluent-Light-compact";
     QT_STYLE_OVERRIDE = "kvantum";
     XCURSOR_SIZE = "24";
     XCURSOR_THEME = "capitaine-cursors-white";
@@ -11,16 +11,15 @@
   environment.systemPackages = with pkgs; [
     adwaita-qt
     adwaita-qt6
-    arc-kde-theme
-    arc-openbox
-    arc-theme
     capitaine-cursors
-    flat-remix-icon-theme
+    fluent-gtk-theme
+    fluent-icon-theme
     gnome.adwaita-icon-theme
     gnome.gnome-themes-extra
     gtk-engine-murrine
     gtk_engines
     hicolor-icon-theme
+    kaunas
     libsForQt5.qtstyleplugin-kvantum
     (libsForQt5.qtstyleplugin-kvantum.overrideAttrs (_: rec {
       pname = "qtstyleplugin-kvantum-qt6";

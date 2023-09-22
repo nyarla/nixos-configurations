@@ -84,8 +84,8 @@
       done
 
       schema="org.gnome.desktop.interface"
-      gsettings set $schema gtk-theme "Arc"
-      gsettings set $schema icon-theme "Flat-Remix-Cyan-Light"
+      gsettings set $schema gtk-theme "Fluent-Light-compact"
+      gsettings set $schema icon-theme "Fluent"
       gsettings set $schema cursor-theme $XCURSOR_THEME
       gsettings set $schema font-name "Sans 9"
 

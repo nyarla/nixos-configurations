@@ -22,6 +22,7 @@ in {
   hack-nerdfonts = require ./hack-nerdfonts { };
   jackass-bin = require ./jackass-bin { };
   juce-framework = require ./juce-framework { };
+  kaunas = require ./kaunas { };
   locale-eaw = require ./locale-eaw { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   noto-fonts-jp = require ./noto-fonts-jp { };

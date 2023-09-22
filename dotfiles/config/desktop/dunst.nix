@@ -3,7 +3,7 @@
     enable = true;
     package = pkgs.dunst;
     iconTheme = {
-      name = "Flatty-Sky";
+      name = "Fluent";
       package = pkgs.flatery-icon-theme;
       size = "16x16";
     };

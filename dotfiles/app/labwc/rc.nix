@@ -54,7 +54,7 @@ in ''
   (props "focus" [ (prop "followMouse" "no") (prop "raiseOnFocus" "no") ])
 
   (props "theme" [
-    (prop "name" "Arc-Dark")
+    (prop "name" "Kaunas")
     (prop "cornerRadius" "0")
     (font "ActiveWindow" {
       name = "sans";

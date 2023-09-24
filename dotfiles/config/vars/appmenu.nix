@@ -56,6 +56,7 @@ let
     (exec "Brave" "brave")
     "${sep}"
     (exec "1password" "1password")
+    (exec "Bitwarden" "bitwarden")
     "${sep}"
     (exec "Telegram"
       "env QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt6.qtbase.qtPluginPrefix} telegram-desktop")
@@ -72,10 +73,7 @@ let
     (exec "Picard" "picard")
     (exec "Mp3tag" (wine "Mp3tag"))
     "${sep}"
-    (exec "Audaticy" "audacity")
-    "${sep}"
     (exec "DeaDBeef" "deadbeef")
-    (exec "Amazon Music" (wine "AmazonMusic"))
   ];
 
   applicationsOffice = menu "applications-office" "Office" [

@@ -52,7 +52,10 @@ in {
     "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
 
   environment.systemPackages = with pkgs; [
-    (cuda-shell.override { nvidia_x11 = nvidia; })
+    (cuda-shell.override {
+      nvidia_x11 = nvidia;
+      cudaPackages = pkgs.cudaPackages_12_1;
+    })
     (tabby.override { nvidia_x11 = nvidia; })
     (turbopilot.override { nvidia_x11 = nvidia; })
   ];

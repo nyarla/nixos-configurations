@@ -31,6 +31,7 @@
     gnaural
     helm
     hydrogen
+    ildaeil
     industrializer
     linuxsampler
     opnplug

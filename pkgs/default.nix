@@ -56,6 +56,11 @@ in {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
   });
 
+  carla = require ./carla {
+    inherit (super) carla;
+    wine = self.wineUsingFull;
+  };
+
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 

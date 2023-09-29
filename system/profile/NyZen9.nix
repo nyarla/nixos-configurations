@@ -168,15 +168,15 @@
   // (subvolRW "usr/share")
 
   # for account
-  // (subvolRW "home/nyarla") // (subvolEx "home/nyarla/Applications")
-  // (subvolEx "home/nyarla/Programming")
   // (subvolEx "home/nyarla/.config/audiogridder")
-  // (subvolEx "home/nyarla/.local/share/npm")
+  // (subvolEx "home/nyarla/.fly") // (subvolEx "home/nyarla/.local/share/npm")
   // (subvolEx "home/nyarla/.local/share/nvim")
   // (subvolEx "home/nyarla/.local/share/perl")
   // (subvolEx "home/nyarla/.local/share/vim-lsp-settings")
   // (subvolEx "home/nyarla/.local/share/waydroid")
-  // (subvolEx "home/nyarla/.fly") // (subvolEx "home/nyarla/.wrangler")
+  // (subvolEx "home/nyarla/.vst") // (subvolEx "home/nyarla/.vst3")
+  // (subvolEx "home/nyarla/.wrangler") // (subvolEx "home/nyarla/Applications")
+  // (subvolEx "home/nyarla/Programming") // (subvolRW "home/nyarla")
 
   # for backup
   // (backup "Applications" "/persist/home/nyarla/Applications")
@@ -260,6 +260,8 @@
     "/persist/home/nyarla/.local/share/perl"
     "/persist/home/nyarla/.local/share/vim-lsp-settings"
     "/persist/home/nyarla/.local/share/waydroid"
+    "/persist/home/nyarla/.vst"
+    "/persist/home/nyarla/.vst3"
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
@@ -340,6 +342,7 @@
         ".config/wezterm"
         ".config/whipper"
         ".config/xfce4"
+        ".config/yabridgectl"
 
         # .local
         ".local/share/TabNine"
@@ -364,6 +367,8 @@
         ".sononym audioserver"
         ".tabby"
         ".thunderbird"
+        ".vst"
+        ".vst3"
 
         # credentials
         (secure ".fly")

@@ -316,7 +316,6 @@
         # .config
         ".config/1Password"
         ".config/Bitwarden"
-        ".config/BraveSoftware"
         ".config/Kvantum"
         ".config/MusicBrainz"
         ".config/Sononym"

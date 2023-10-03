@@ -186,7 +186,8 @@
   // (backup "Documents" "/persist/home/nyarla/Documents")
   // (backup "Music" "/persist/home/nyarla/Music")
   // (backup "NixOS" "/persist/etc/nixos")
-  // (backup "Programming" "/persist/home/nyarla/Programming");
+  // (backup "Programming" "/persist/home/nyarla/Programming")
+  // (backup "Thunderbird" "/persist/home/nyarla/.thunderbird");
 
   systemd.services.automount-encrypted-usb-storage = {
     enable = true;

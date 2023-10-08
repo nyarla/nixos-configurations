@@ -46,6 +46,7 @@ let
     ])
   ]) ++ (onlyXorg [
     (exec "wezterm" "wezterm")
+    "${sep}"
     (exec "waydroid" (script "waydroid-on-weston"))
   ] ++ [ "${sep}" (exec "Vial" "Vial") ]));
 
@@ -53,7 +54,8 @@ let
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
     (exec "Google Chrome" "google-chrome-stable")
-    (exec "Brave" "brave")
+    "${sep}"
+    (exec "Scrapbox" "google-chrome-stable --app=https://scrapbox.io/")
     "${sep}"
     (exec "1password" "1password")
     (exec "Bitwarden" "bitwarden")

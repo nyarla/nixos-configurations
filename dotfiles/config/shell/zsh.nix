@@ -20,7 +20,7 @@
     };
     sessionVariables = {
       FAKE_RELEASE = 1;
-      GOPATH = "$HOME/dev";
+      GOPATH = "$HOME/Applications/Development/go";
       NIXPKGS_ALLOW_UNFREE = 1;
     };
     enableCompletion = true;
@@ -49,6 +49,7 @@
           "$HOME/.local/bin"
           "$HOME/.fly/bin"
           "$HOME/.local/share/npm/bin"
+          "$GOPATH/bin"
           "$PATH"
         ]
       }

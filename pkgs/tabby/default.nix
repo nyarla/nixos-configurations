@@ -7,8 +7,8 @@ let
     src = fetchFromGitHub {
       owner = "OpenNMT";
       repo = "CTranslate2";
-      rev = "4978339f304035b1f86bcf59cd19aa7e79831744";
-      sha256 = "sha256-aSYE8+vhCsgZf1gBqJFRK8cn91AxrRutJc3LzHQQHVc=";
+      rev = "8bcbeb6ff95b6906c9d5f7740fa9491431fa3e30";
+      hash = "sha256-OtUwJ+hvlGQw129PQetGjZKOF4Wvqs+5gSHFk/skShY=";
       fetchSubmodules = true;
     };
 
@@ -29,8 +29,8 @@ let
     src = fetchFromGitHub {
       owner = "TabbyML";
       repo = "llama.cpp";
-      rev = "06fc4020de0b92ee13407fdabca7870f53c75de5";
-      sha256 = "sha256-HzluwwhoFsspta0RXEf0g3FWjSKK0P2lSN/9kA+wbFk=";
+      rev = "6ed7dce31afdf4d5a11ed8bfd0f993dcb8df39c0";
+      hash = "sha256-CEFQgdDmtMTM721FJ18dsBt+7cjWYwMX3V5NNfkIz5Q=";
     };
 
     cmakeFlags = [
@@ -51,15 +51,16 @@ let
   };
 in rustPlatform.buildRustPackage rec {
   pname = "tabby";
-  version = "12a37e2";
+  version = "76c2cd2";
 
   src = fetchFromGitHub {
     owner = "TabbyML";
     repo = "tabby";
-    rev = "3d00cc5e87bb5b6b36a936638700c81962fc89eb";
-    sha256 = "sha256-CowmEdKoZAIp1f9yD/yUxKhPE6ap6qXtn0OUUf8bFCw=";
+    rev = "76c2cd25a4c1229c47dcf118a25f07d167dc47e7";
+    hash = "sha256-5C6N7CZQCIhP/8XrdhrhOALKBzYHyV45RHMOwEIJlO0=";
   };
-  cargoSha256 = "sha256-rNN69r/YUTBoplkkjrI5zdZZa5U7d/YiV1ibAIopP4w=";
+
+  cargoHash = "sha256-fdX3A4Xg3tNQie8K/WwsnK0i1SID6Fd+a1YAQ1mxEKc=";
 
   CTRANSLATE2_ROOT = "${CTranslate2}";
   buildFeatures = [ "link_shared" ];

@@ -67,11 +67,12 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_16; }).overrideAttrs
     (old: rec {
-      version = "2023-09-05";
+      version = "2023-10-08";
       src = super.fetchFromGitHub {
-        inherit (old.src) owner repo;
-        rev = "143714f1c9c2821ca70ef26949395557b15e2171";
-        hash = "sha256-hUi5mKDLU7L33h4BMyOuzSbFVOhySKzWooPQet31fm0=";
+        owner = "labwc";
+        repo = "labwc";
+        rev = "47a80fc4f286f1ce2d5ad75d9b6dcef4dc8a95b1";
+        hash = "sha256-YFBdlN7PJ9fC/b5ToCKwAy3EBVXstqo4B+9yhhvola4=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -80,8 +81,8 @@ in {
     version = "2023-09-16";
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
-      rev = "8cc5090a6c3b04db74f41d1108bd19d2592fa9ad";
-      hash = "sha256-Alri5KQ1ps5ZUN1lwGisDkZjU4v6u2yD2jgpZAY047Q=";
+      rev = "751f30578e352f6cd37fc63cbf4643e47ab3587a";
+      hash = "sha256-HdsDGc5bxslP048YLv7p6RMB3kG57b4TxlzhM5IarVs=";
     };
     buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });
@@ -103,11 +104,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (_: rec {
     pname = "tt-rss";
-    version = "2023-08-03";
+    version = "2023-10-08";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "03526d8151552e751b24b599fabdd399c6e27ef3";
-      hash = "sha256-R5HCMY4t8wFwgSiHy9In/eSJPkCoNwEx4g78A2PPXks=";
+      rev = "c779e2ba0d71942579dd27ccdcad0295bd06e45f";
+      hash = "sha256-H9fFd/fr3OmesV8MNlgnAGv/8sF2tZFK6m0DPzJDq0A=";
     };
 
     installPhase = ''
@@ -148,7 +149,7 @@ in {
   wineUsingFull =
     super.lib.overrideDerivation super.wineWowPackages.unstableFull (old: rec {
       pname = "proton-wine";
-      version = "GE-Proton8-15";
+      version = "GE-Proton8-17";
 
       name = "${pname}-${version}";
 
@@ -156,7 +157,7 @@ in {
         owner = "GloriousEggroll";
         repo = pname;
         rev = version;
-        hash = "sha256-a8KPtrRttiSLB9Q31GBdCcYW0xxEzjteOlXpv7OECuo=";
+        hash = "sha256-2STzdJN2CezSZdSWwJr9Y+XGWKuHjKL65yYHKvc5+kY=";
       };
       configureFlags = old.configureFlags ++ [ "--disable-tests" ];
       patches = [ ];

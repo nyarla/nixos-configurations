@@ -33,8 +33,8 @@ in stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "nyarla";
     repo = "audiogridder-modified";
-    rev = "16703a5a13c1e8a77bfbad2377c1df5503095d54";
-    sha256 = "sha256-YrHxDVjry9kqdOU+pUbUq8Gpy0CHZces/jkcA/ezYWk=";
+    rev = "069c230669aa8739375c75aa3f80c2b3851118c3";
+    hash = "sha256-tbpWneHYcpjE/8V6ezmcGvgtALMShi8Z6L//lS1DrXo=";
     fetchSubmodules = true;
   };
 

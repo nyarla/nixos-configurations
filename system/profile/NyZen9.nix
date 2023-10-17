@@ -316,6 +316,7 @@
         # .config
         ".config/1Password"
         ".config/Bitwarden"
+        ".config/GIMP"
         ".config/Kvantum"
         ".config/MusicBrainz"
         ".config/Sononym"
@@ -332,6 +333,7 @@
         ".config/gtk-2.0"
         ".config/gtk-3.0"
         ".config/gtk-4.0"
+        ".config/inkscape"
         ".config/kdeconnect"
         ".config/lxqt"
         ".config/nvim"

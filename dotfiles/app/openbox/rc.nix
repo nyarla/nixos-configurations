@@ -256,8 +256,10 @@ in ''
                 (action "ShowMenu" [ (prop "menu" "client-menu") ])
               ])
             ])
-          (context "Frame"
-            [ (mousebind "Alt-Left" "Drag" [ (action "Move" [ ]) ]) ])
+          (context "Frame" [
+            (mousebind "Alt-Left" "Drag" [ (action "Move" [ ]) ])
+            (mousebind "Alt-Right" "Drag" [ (action "Resize" [ ]) ])
+          ])
 
           (context "Top" [
             (mousebind "Left" "Drag"

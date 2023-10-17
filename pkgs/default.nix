@@ -146,20 +146,5 @@ in {
     patches = [ ../patches/wlroots-workaround.patch ];
   });
 
-  wineUsingFull =
-    super.lib.overrideDerivation super.wineWowPackages.unstableFull (old: rec {
-      pname = "proton-wine";
-      version = "GE-Proton8-17";
-
-      name = "${pname}-${version}";
-
-      src = super.fetchFromGitHub {
-        owner = "GloriousEggroll";
-        repo = pname;
-        rev = version;
-        hash = "sha256-2STzdJN2CezSZdSWwJr9Y+XGWKuHjKL65yYHKvc5+kY=";
-      };
-      configureFlags = old.configureFlags ++ [ "--disable-tests" ];
-      patches = [ ];
-    });
+  wineUsingFull = super.wineWowPackages.stagingFull;
 }

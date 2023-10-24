@@ -39,7 +39,7 @@ in {
 
   virtualisation.libvirtd = {
     enable = true;
-    qemu.package = pkgs.qemu_full;
+    qemu.package = pkgs.qemu;
     qemu.runAsRoot = true;
     extraConfig = ''
       unix_sock_group = "libvirtd"

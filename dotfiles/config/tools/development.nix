@@ -18,7 +18,7 @@
     stdenv.cc
 
     # go
-    go
+    go_1_21
     gotools
 
     # nim

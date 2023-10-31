@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cleanup-snapshot() {
+  local config=$1 path=$2
+
+  cd $path && \ls | xargs -I{} snapper -c $config delete {}
+}
+
+cleanup-snapshot nixos /persist/etc/nixos/.snapshots
+cleanup-snapshot varlib /persist/var/lib/.snapshots
+cleanup-snapshot usrshare /persist/usr/share/.snapshots
+cleanup-snapshot nyarla /persist/home/nyarla/.snapshots
+cleanup-snapshot apps /persist/home/nyarla/Applications/.snapshots
+cleanup-snapshot program /persist/home/nyarla/Programming/.snapshots
+
+sudo mkdir -p /tmp/btrfs
+sudo mount /dev/mapper/nixos /tmp/btrfs
+
+cd /tmp/btrfs
+sudo btrfs scrub start .

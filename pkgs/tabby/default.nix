@@ -25,12 +25,12 @@ let
 
   llamacpp = gcc9Stdenv.mkDerivation rec {
     pname = "llamacpp";
-    version = "06fc40";
+    version = "f858db";
     src = fetchFromGitHub {
       owner = "TabbyML";
       repo = "llama.cpp";
-      rev = "6ed7dce31afdf4d5a11ed8bfd0f993dcb8df39c0";
-      hash = "sha256-CEFQgdDmtMTM721FJ18dsBt+7cjWYwMX3V5NNfkIz5Q=";
+      rev = "f858db8db3a98968ad3764c409e43e44c443079b";
+      hash = "sha256-y6ns1vwqDfEb/S1wMit0wY+hLOW543ClRU9QTkyd0uc=";
     };
 
     cmakeFlags = [

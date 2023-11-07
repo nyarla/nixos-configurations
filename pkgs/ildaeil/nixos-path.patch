@@ -1,0 +1,15 @@
+diff --git a/plugins/Common/IldaeilPlugin.cpp b/plugins/Common/IldaeilPlugin.cpp
+index e10861c..59a27e6 100644
+--- a/plugins/Common/IldaeilPlugin.cpp
++++ b/plugins/Common/IldaeilPlugin.cpp
+@@ -425,8 +425,8 @@ public:
+             carla_set_engine_option(fCarlaHostHandle, ENGINE_OPTION_PATH_RESOURCES, 0, "/Applications/Carla.app/Contents/MacOS/resources");
+            #else
+             fBinaryPath = "/usr/lib/carla";
+-            carla_set_engine_option(fCarlaHostHandle, ENGINE_OPTION_PATH_BINARIES, 0, "/usr/lib/carla");
+-            carla_set_engine_option(fCarlaHostHandle, ENGINE_OPTION_PATH_RESOURCES, 0, "/usr/share/carla/resources");
++            carla_set_engine_option(fCarlaHostHandle, ENGINE_OPTION_PATH_BINARIES, 0, "@carla@/lib/carla");
++            carla_set_engine_option(fCarlaHostHandle, ENGINE_OPTION_PATH_RESOURCES, 0, "@carla@/lib/carla/resources");
+            #endif
+         }
+ 

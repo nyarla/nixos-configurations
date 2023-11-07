@@ -3,12 +3,12 @@
 , libopus, libsndfile, libvorbis, xorg, zstd }:
 stdenv.mkDerivation rec {
   pname = "ildaeil";
-  version = "v1.3";
+  version = "2023-10-07";
   src = fetchFromGitHub {
     owner = "DISTRHO";
     repo = "Ildaeil";
-    rev = "v1.3";
-    hash = "sha256-Jm886EWWv0/BOC2f0S+U7wurpaBunThcUk3YdPa+k/4=";
+    rev = "0044a9cca7435953d746ccbfaad27aa98e590d96";
+    hash = "sha256-A+2qLqGST/ZSll6Y5GTIj7dLNGQ4/966/5kiNJyi9uY=";
     fetchSubmodules = true;
   };
 
@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
     patchShebangs --build dpf/utils
   '';
 
-  patches = [ ./nixos-path-with-nyarla.patch ];
+  patches = [ ./nixos-path.patch ];
 
   postPatch = ''
     cd carla

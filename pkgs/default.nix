@@ -11,7 +11,6 @@ in {
   };
   currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
-  dexed = require ./dexed { };
   elk-native = require ./elk-native { };
   fcitx5-fbterm = require ./fcitx5-fbterm { };
   fedistar = require ./fedistar { };
@@ -67,22 +66,21 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_16; }).overrideAttrs
     (old: rec {
-      version = "2023-10-08";
+      version = "2023-10-31";
       src = super.fetchFromGitHub {
-        owner = "labwc";
-        repo = "labwc";
-        rev = "47a80fc4f286f1ce2d5ad75d9b6dcef4dc8a95b1";
-        hash = "sha256-YFBdlN7PJ9fC/b5ToCKwAy3EBVXstqo4B+9yhhvola4=";
+        inherit (old.src) owner repo;
+        rev = "797e743c8ac5e74f2c5ff41ceff0f056f25617ab";
+        hash = "sha256-SXZ+X6jgibVwosAfSrHfsp9KdsAX/5PgxgY49kTAl3o=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
-    version = "2023-09-16";
+    version = "2023-10-17";
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
-      rev = "751f30578e352f6cd37fc63cbf4643e47ab3587a";
-      hash = "sha256-HdsDGc5bxslP048YLv7p6RMB3kG57b4TxlzhM5IarVs=";
+      rev = "a6b4e285f833c13b217c0e30ca71a903ec2464b5";
+      hash = "sha256-l76TyxuBjHhIHG1FWzgdAy2obELdVdgtCkdGrfXTK44=";
     };
     buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });
@@ -107,8 +105,8 @@ in {
     version = "2023-10-08";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "c779e2ba0d71942579dd27ccdcad0295bd06e45f";
-      hash = "sha256-H9fFd/fr3OmesV8MNlgnAGv/8sF2tZFK6m0DPzJDq0A=";
+      rev = "1be156408af4f9291790dbda7131fd99369ca48f";
+      hash = "sha256-rAc4L9LXqkhK3XaWZ99r+x7f0pYiARxromRbj/OkVAY=";
     };
 
     installPhase = ''

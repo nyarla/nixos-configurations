@@ -4,9 +4,8 @@
     fcitx5.addons = with pkgs; [
       fcitx5-gtk
       fcitx5-skk
+      fcitx5-skk-qt
       libsForQt5.fcitx5-qt
-      ((libsForQt5.fcitx5-qt.override { inherit (qt6) qtbase; }).overrideAttrs
-        (old: rec { cmakeFlags = old.cmakeFlags ++ [ "-DENABLE_QT6=1" ]; }))
     ];
   };
 

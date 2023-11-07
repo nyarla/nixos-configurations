@@ -1,4 +1,1 @@
-_: {
-  programs.adb.enable = true;
-  programs.kdeconnect.enable = true;
-}
+_: { programs.adb.enable = true; }

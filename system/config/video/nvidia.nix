@@ -25,14 +25,14 @@ in {
     Option "Coolbits" "28"
     Option "AllowEmptyInitialConfiguration"
   '';
-  services.xserver.screenSection = ''
-    Option "TripleBuffer" "on"
-    Option "MetaModes" "1920x1080 { ForceFullCompositionPipeline=On }"
-  '';
 
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.package = nvidia;
-  hardware.nvidia.open = false;
+  hardware.nvidia = {
+    modesetting.enable = true;
+    package = nvidia;
+    open = false;
+    forceFullCompositionPipeline = true;
+  };
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -40,25 +40,25 @@ in {
     setLdLibraryPath = true;
     package = nvidia;
     package32 = nvidia32;
-    extraPackages = with pkgs; [ nvidia-vaapi-driver mesa.drivers ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [
-      nvidia-vaapi-driver
-      mesa.drivers
-    ];
   };
 
-  environment.etc."glvnd/egl_vendor.d".source =
-    "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
-  environment.etc."gbm/nvidia-drm_gbm.so".source =
-    "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
+  environment = {
+    etc = {
+      "glvnd/egl_vendor.d".source =
+        "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
+      "gbm/nvidia-drm_gbm.so".source =
+        "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
+    };
 
-  environment.systemPackages = with pkgs; [
-    (cuda-shell.override {
-      nvidia_x11 = nvidia;
-      cudaPackages = pkgs.cudaPackages_12_1;
-    })
-    (tabby.override { nvidia_x11 = nvidia; })
-  ];
+    systemPackages = with pkgs;
+      [
+        (cuda-shell.override {
+          nvidia_x11 = nvidia;
+          cudaPackages = pkgs.cudaPackages_12_1;
+        })
+        #(tabby.override { nvidia_x11 = nvidia; })
+      ];
+  };
 
   virtualisation.docker.enableNvidia = true;
 }

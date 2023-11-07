@@ -7,7 +7,6 @@
     ../../config/desktop/desktop-panel.nix
     ../../config/desktop/desktop-session.nix
     ../../config/desktop/dunst.nix
-    ../../config/desktop/kdeconnect.nix
     ../../config/desktop/picom.nix
     ../../config/desktop/theme.nix
     ../../config/desktop/xorg.nix

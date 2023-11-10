@@ -144,5 +144,13 @@ in {
     patches = [ ../patches/wlroots-workaround.patch ];
   });
 
-  wineUsingFull = super.wineWowPackages.stagingFull;
+  wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull
+    (old: rec {
+      buildInputs = old.buildInputs ++ (with super; [ libgcrypt.dev libva.dev ])
+        ++ (with super.pkgsi686Linux; [ libgcrypt.dev libva.dev ]);
+
+      configureFlags = old.configureFlags
+        ++ [ "--with-va" "--with-gcrypt" "--disable-test" ];
+    });
+  #wineUsingFull = super.wineWowPackages.stagingFull;
 }

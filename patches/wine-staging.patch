@@ -6,10 +6,10 @@
  
 -    disabledPatchsets = [ ];
 +    disabledPatchsets = [
++      "eventfd_synchronization"
 +      "ntdll-Junction_Points"
 +      "server-File_Permissions"
 +      "server-Stored_ACLs"
-+      "eventfd_synchronization"
 +    ];
    };
  

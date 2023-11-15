@@ -1,7 +1,13 @@
 { config, pkgs, lib, ... }:
 let
   gui = if config.services.xserver.enable then
-    (with pkgs; [ virt-manager ])
+    (with pkgs; [
+      looking-glass-client
+      spice
+      spice-gtk
+      virt-manager
+      virt-viewer
+    ])
   else
     [ ];
 
@@ -39,8 +45,10 @@ in {
 
   virtualisation.libvirtd = {
     enable = true;
-    qemu.package = pkgs.qemu;
+    qemu.package = pkgs.qemu_full;
     qemu.runAsRoot = true;
+    qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
+    qemu.swtpm.enable = true;
     extraConfig = ''
       unix_sock_group = "libvirtd"
       unix_sock_ro_perms = "0770"

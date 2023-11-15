@@ -1,15 +1,29 @@
 { config, pkgs, lib, ... }:
 let
-  patched-nvidia = let vgpuVersion = "525.85.07";
-  in config.boot.kernelPackages.nvidiaPackages.production.overrideAttrs
-  (old: rec {
-    name = "NVIDIA-Linux-x86_64-5.25.85-vgpu-kvm-patched";
+  inherit (config.boot.kernelPackages.nvidiaPackages) mkDriver;
+  vgpuVersion = "525.125.03";
+
+  nvidia = mkDriver {
+    version = "525.125.06";
+    sha256_64bit = "sha256-tSdWifSoM8N6UHcXrI8O4vH1zSt+I2/6cKrY37dFW50=";
+    sha256_aarch64 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    openSha256 = "sha256-exFI3jzs5r+vXGd5adDqJuntONMmRUvMegPydPz5IJE=";
+
+    settingsVersion = "525.116.04";
+    settingsSha256 = "sha256-qNjfsT9NGV151EHnG4fgBonVFSKc4yFEVomtXg9uYD4=";
+
+    persistencedVersion = "525.116.04";
+    persistencedSha256 = "sha256-ci86XGlno6DbHw6rkVSzBpopaapfJvk0+lHcR4LDq50=";
+  };
+
+  patched-nvidia = nvidia.overrideAttrs (old: rec {
+    name = "NVIDIA-Linux-x86_64-525.125.06-merged-vgpu-kvm-patched";
     version = vgpuVersion;
 
-    src = pkgs.requireFile {
-      name = "NVIDIA-Linux-x86_64-525.85.05-merged-vgpu-kvm-patched.run";
-      message = "this config requires patched nvidia driver";
-      sha256 = "0lksankwl13x4bc25iyh9znpr14y0jk763pzab0s12sz6yndzhqr";
+    src = pkgs.fetchurl {
+      url =
+        "file:///home/nyarla/Applications/Environment/vGPU/NVIDIA-Linux-x86_64-525.125.06-merged-vgpu-kvm-patched.run";
+      sha256 = "1mgk3g4bad5wn8vyxlpf7im24mal2nwvk8hwwn311qjd46sadcji";
     };
 
     postPatch = ''
@@ -23,8 +37,10 @@ let
       for i in libnvidia-vgpu.so.${vgpuVersion} libnvidia-vgxcfg.so.${vgpuVersion}; do
         install -Dm755 "$i" "$out/lib/$i"
       done
+
       patchelf --set-rpath ${pkgs.stdenv.cc.cc.lib}/lib $out/lib/libnvidia-vgpu.so.${vgpuVersion}
       install -Dm644 vgpuConfig.xml $out/vgpuConfig.xml
+
       for i in nvidia-vgpud nvidia-vgpu-mgr; do
         install -Dm755 "$i" "$bin/bin/$i"
         # stdenv.cc.cc.lib is for libstdc++.so needed by nvidia-vgpud
@@ -36,45 +52,31 @@ let
 
     nativeBuildInputs = (with pkgs; [ coreutils ]) ++ old.nativeBuildInputs;
   });
+
+  patched-nvidia-32 = patched-nvidia.lib32;
 in {
-  boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
-  boot.kernelModules = [ "nvidia-vgpu-vfio" ];
-  boot.kernelParams = [ "nvidia.cudahost=1" "nvidia.kmalimit=6144" ];
+  boot = {
+    blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
+    kernelModules = [ "nvidia-vgpu-vfio" ];
+    kernelParams =
+      [ "nvidia.vgpukvm=1" "nvidia.cudahost=1" "nvidia.kmalimit=6144" ];
+  };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-  # services.xserver.deviceSection = ''
-  #   Option "Coolbits" "28"
-  #   Option "AllowEmptyInitialConfiguration"
-  # '';
-  # services.xserver.screenSection = ''
-  #   Option "MetaModes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-  #   Option "AllowIndirectGLXProtocol" "off"
-  #   Option "TripleBuffer" "on"
-  # '';
+  hardware.nvidia = {
+    modesetting.enable = true;
+    package = patched-nvidia;
+    open = false;
+    forceFullCompositionPipeline = true;
+  };
 
-  hardware.nvidia.modesetting.enable = false;
-  hardware.nvidia.package = patched-nvidia;
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
     setLdLibraryPath = true;
     package = patched-nvidia;
-    package32 = patched-nvidia.lib32;
-    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ nvidia-vaapi-driver ];
+    package32 = patched-nvidia-32;
   };
-
-  environment.etc."glvnd/egl_vendor.d".source =
-    "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
-  environment.etc."gbm/nvidia-drm_gbm.so".source =
-    "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
-
-  environment.systemPackages = with pkgs; [
-    (cuda-shell.override { linuxPackages = config.boot.kernelPackages; })
-    mdevctl
-    looking-glass-client
-  ];
 
   services.udev.extraRules = ''
     ACTION=="change", ENV{MDEV_STATE}=="registered", TEST=="/etc/mdevctl.d/$kernel", RUN+="${pkgs.stdenv.shell} -c '{ ${pkgs.mdevctl}/bin/mdevctl start-parent-mdevs %k 2>&3 | logger -t mdevctl; } 3>&1 1>&2 | logger -t mdevctl -p 2'"
@@ -82,9 +84,6 @@ in {
   '';
 
   systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0600 nyarla kvm -" ];
-
-  virtualisation.podman.enableNvidia = true;
-
   systemd.services.nvidia-vgpud = {
     description = "NVIDIA vGPU Daemon";
     wants = [ "syslog.target" ];
@@ -120,15 +119,42 @@ in {
     };
   };
 
-  environment.etc."nvidia-vgpu-xxxxx/vgpuConfig.xml".source =
-    config.hardware.nvidia.package + /vgpuConfig.xml;
-
-  environment.etc."vgpu_unlock/profile_override.toml".text = ''
-    [profile.nvidia-257]
-    num_displays = 1
-    display_width = 1920
-    display_height = 1080
-    max_pixels = 2073600
-    cuda_enabled = 1
+  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.deviceSection = ''
+    Option "Coolbits" "28"
+    Option "AllowEmptyInitialConfiguration"
   '';
+
+  environment = {
+    etc = {
+      "glvnd/egl_vendor.d".source =
+        "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
+      "gbm/nvidia-drm_gbm.so".source =
+        "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
+      "nvidia-vgpu-xxxxx/vgpuConfig.xml".source =
+        "${config.hardware.nvidia.package}/vgpuConfig.xml";
+
+      "vgpu_unlock/profile_override.toml".text = ''
+        [profile.nvidia-256]
+        num_displays = 1
+        display_width = 1920
+        display_height = 1080
+        max_pixels = 2073600
+        cuda_enabled = 1
+      '';
+    };
+
+    systemPackages = with pkgs; [
+      mdevctl
+      (cuda-shell.override {
+        nvidia_x11 = patched-nvidia;
+        cudaPackages = pkgs.cudaPackages_12_1;
+      })
+      #(tabby.override { nvidia_x11 = nvidia; })
+    ];
+  };
+
+  programs.nix-ld.libraries = [ patched-nvidia.out patched-nvidia.bin ];
+
+  virtualisation.docker.enableNvidia = true;
 }

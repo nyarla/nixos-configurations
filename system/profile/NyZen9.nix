@@ -47,7 +47,7 @@
     ../config/tools/git.nix
     ../config/user/nyarla.nix
     ../config/video/droidcam.nix
-    ../config/video/nvidia.nix
+    ../config/video/nvidia-vgpu.nix
     ../config/webapp/NyZen9.nix
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix
@@ -88,7 +88,17 @@
 
   # kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
-  boot.kernelModules = [ "kvm-amd" "k10temp" "nct6775" "kvm" "kvm-amd" ];
+  boot.kernelModules = [
+    "k10temp"
+    "kvm-amd"
+    "nct6775"
+
+    "kvm"
+    "vfio"
+    "vfio_iommu_type1"
+    "vfio_pci"
+    "vfio_virqfd"
+  ];
   boot.kernelParams = [
     # CPU
     "noibrs"
@@ -96,7 +106,10 @@
     "kpti=off"
 
     # KVM
-    #"vfio-pci.ids=1022:149c,10de:1e89,10de:10f8,10de:1ad8,10de:1ad9"
+    "amd_iommu=force_enable"
+    "kvm.ignore_msrs=1"
+    "vfio_iommu_type1.allow_unsafe_interrupts=1"
+    "vfio-pci.ids=1022:149c"
     #"efifb:off"
   ];
 
@@ -202,7 +215,6 @@
         export PATH=/run/wrappers/bin:$PATH
 
         test -e /media/data     || mkdir -p /media/data
-        test -e /media/files    || mkdir -p /media/files
         test -e /backup/DAW     || mkdir -p /backup/DAW
         test -e /backup/Sources || mkdir -p /backup/Sources
 
@@ -213,14 +225,6 @@
             mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
             mount -o bind /media/data/DAW /backup/DAW
             mount -o bind /media/data/Sources /backup/Sources
-          fi
-        fi
-
-        device=7150cfa7-099e-4b02-ba1a-9a45b726bfde
-        if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device ; then
-          cryptsetup luksOpen /dev/disk/by-uuid/$device files --key-file /boot/keys/$device
-          if test $? = 0 && test -e /dev/mapper/files ; then
-            mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/files /media/files
           fi
         fi
       '');
@@ -277,6 +281,7 @@
     hideMounts = true;
     directories = [
       "/etc/NetworkManager"
+      "/etc/mdevctl.d"
       "/etc/nixos"
       "/etc/ssh"
       "/etc/wpa_supplicant"
@@ -423,14 +428,25 @@
       netbios name = nixos
       security = user
       use sendfile = yes
-      hosts allow = 192.168.240.0/24 localhost
+      hosts allow = 192.168.122.0/24 localhost
       hosts deny = 0.0.0.0/0
       guest account = nobody
       map to guest = bad user
     '';
     shares = {
-      Music = {
-        "path" = "/home/nyarla/Music";
+      Downloads = {
+        "path" = "/home/nyarla/Downloads/KVM";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "no";
+        "read only" = "yes";
+      };
+
+      DAW = {
+        "path" = "/media/data/Sources/DAW";
         "browseable" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";

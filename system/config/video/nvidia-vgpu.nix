@@ -23,7 +23,7 @@ let
     src = pkgs.fetchurl {
       url =
         "file:///home/nyarla/Applications/Environment/vGPU/NVIDIA-Linux-x86_64-525.125.06-merged-vgpu-kvm-patched.run";
-      sha256 = "1mgk3g4bad5wn8vyxlpf7im24mal2nwvk8hwwn311qjd46sadcji";
+      sha256 = "1a7dlniimkkbjwzc9bjm6gk2wh42nbgfdnncjgnxxvarf56p1q97";
     };
 
     postPatch = ''

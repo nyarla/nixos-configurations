@@ -130,12 +130,8 @@ in {
   });
 
   wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
-    buildInputs = old.buildInputs ++ (with super; [
-      glslang
-      libdrm.dev
-      mesa.dev
-      vulkan-validation-layers.headers
-    ]);
+    buildInputs = old.buildInputs
+      ++ (with super; [ glslang libdrm.dev mesa.dev ]);
 
     nativeBuildInputs = old.nativeBuildInputs ++ (with super; [ hwdata ]);
     postPatch = ''

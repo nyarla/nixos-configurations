@@ -50,6 +50,13 @@ let
     (exec "waydroid" (script "waydroid-on-weston"))
   ] ++ [ "${sep}" (exec "Vial" "Vial") ]));
 
+  applicationsVM = menu "applications-vm" "VM" [
+    (exec "Virt Manager" "virt-manager")
+    (exec "Virt Viewer" "virt-viewer -c qemu:///system -a")
+    "${sep}"
+    (exec "Looking Glass" "looking-glass-client")
+  ];
+
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
@@ -127,6 +134,7 @@ let
 
   systemContextMenu = menu "root-menu" "Menu" [
     (item "applications-main")
+    (item "applications-vm")
     (item "applications-web")
     (item "applications-files")
     (item "applications-multimedia")
@@ -138,6 +146,7 @@ in ''
   <?xml version="1.0" encoding="UTF-8"?>
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
     ${applicationsMain}
+    ${applicationsVM}
     ${applicationsWeb}
     ${applicationsFiles}
     ${applicationsMultimedia}

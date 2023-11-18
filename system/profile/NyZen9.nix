@@ -1,6 +1,6 @@
 { pkgs, lib, ... }: {
   imports = [
-    ../config/audio/daw.nix
+    #../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
@@ -187,7 +187,6 @@
   // (subvolEx "home/nyarla/.local/share/perl")
   // (subvolEx "home/nyarla/.local/share/vim-lsp-settings")
   // (subvolEx "home/nyarla/.local/share/waydroid")
-  // (subvolEx "home/nyarla/.vst") // (subvolEx "home/nyarla/.vst3")
   // (subvolEx "home/nyarla/.wrangler") // (subvolEx "home/nyarla/Applications")
   // (subvolEx "home/nyarla/Programming") // (subvolRW "home/nyarla")
 
@@ -265,8 +264,6 @@
     "/persist/home/nyarla/.local/share/perl"
     "/persist/home/nyarla/.local/share/vim-lsp-settings"
     "/persist/home/nyarla/.local/share/waydroid"
-    "/persist/home/nyarla/.vst"
-    "/persist/home/nyarla/.vst3"
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
@@ -328,10 +325,8 @@
         ".config/TabNine"
         ".config/Thunar"
         ".config/Yubico"
-        ".config/audiogridder"
         ".config/calibre"
         ".config/dconf"
-        ".config/falkTX"
         ".config/fcitx5"
         ".config/gcloud"
         ".config/google-chrome"
@@ -349,7 +344,6 @@
         ".config/wezterm"
         ".config/whipper"
         ".config/xfce4"
-        ".config/yabridgectl"
 
         # .local
         ".local/share/TabNine"
@@ -367,12 +361,9 @@
 
         # application
         ".1password"
-        ".BitwigStudio"
         ".android"
         ".mozilla"
         ".pki"
-        ".sononym audioserver"
-        ".tabby"
         ".thunderbird"
         ".vst"
         ".vst3"
@@ -385,13 +376,7 @@
         (secure ".ssh")
         (secure ".wrangler")
       ];
-      files = [
-        ".clasprc.json"
-        ".config/mimeapps.list"
-        ".config/snn.conf"
-        ".gtkrc-2.0"
-        ".npmrc"
-      ];
+      files = [ ".clasprc.json" ".config/mimeapps.list" ".gtkrc-2.0" ".npmrc" ];
     };
   };
 

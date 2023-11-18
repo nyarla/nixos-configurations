@@ -181,13 +181,13 @@
   // (subvolRW "usr/share")
 
   # for account
-  // (subvolEx "home/nyarla/.config/audiogridder")
   // (subvolEx "home/nyarla/.fly") // (subvolEx "home/nyarla/.local/share/npm")
   // (subvolEx "home/nyarla/.local/share/nvim")
   // (subvolEx "home/nyarla/.local/share/perl")
   // (subvolEx "home/nyarla/.local/share/vim-lsp-settings")
   // (subvolEx "home/nyarla/.local/share/waydroid")
-  // (subvolEx "home/nyarla/.wrangler") // (subvolEx "home/nyarla/Applications")
+  // (subvolEx "home/nyarla/.mozilla") // (subvolEx "home/nyarla/.wrangler")
+  // (subvolEx "home/nyarla/Applications")
   // (subvolEx "home/nyarla/Programming") // (subvolRW "home/nyarla")
 
   # for backup

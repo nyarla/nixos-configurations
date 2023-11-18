@@ -42,7 +42,12 @@
 
   services.nginx.virtualHosts = {
     "reader.home.thotep.net" = {
-      onlySSL = true;
+      listen = [{
+        addr = "100.103.65.77";
+        port = 443;
+        ssl = true;
+      }];
+      addSSL = true;
       sslCertificate = "/var/lib/acme/home.thotep.net/fullchain.pem";
       sslCertificateKey = "/var/lib/acme/home.thotep.net/key.pem";
       locations."/".proxyWebsockets = true;

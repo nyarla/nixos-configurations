@@ -10,7 +10,7 @@
     serviceConfig = { Type = "oneshot"; };
     script = with pkgs; ''
       TRIES=0
-      until ${tailscale}/bin/tailscale up ; do
+      until ${tailscale}/bin/tailscale up -ssh ; do
         sleep 0.1
         let TRIES+=1
 

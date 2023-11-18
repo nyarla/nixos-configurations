@@ -15,7 +15,7 @@ _: {
           1313 # for development
 
           # ssh
-          2222
+          22
         ];
 
         allowedUDPPortRanges = [{

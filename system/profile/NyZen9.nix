@@ -31,7 +31,7 @@
     ../config/networking/agent.nix
     ../config/networking/avahi.nix
     ../config/networking/connman.nix
-    ../config/networking/openssh.nix
+    #../config/networking/openssh.nix
     ../config/networking/printer.nix
     ../config/networking/tailscale.nix
     ../config/networking/tcp-bbr.nix

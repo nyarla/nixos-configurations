@@ -101,9 +101,6 @@
   ];
   boot.kernelParams = [
     # CPU
-    "noibrs"
-    "pti=off"
-    "kpti=off"
 
     # KVM
     "amd_iommu=force_enable"

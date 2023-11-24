@@ -91,6 +91,7 @@ let
     "${sep}"
     (exec "Gimp" "gimp")
     (exec "Inkscape" "inkscape")
+    (exec "Pixelorama" "pixelorama")
     "${sep}"
     (exec "Spice up" "com.github.philip-scott.spice-up")
     (exec "Simple Scan" "simple-scan")

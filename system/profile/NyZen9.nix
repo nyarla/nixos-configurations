@@ -353,6 +353,7 @@
         ".local/share/npm"
         ".local/share/nvim"
         ".local/share/perl"
+        ".local/share/pixelorama"
         ".local/share/vim-lsp-settings"
         ".local/share/waydroid"
 

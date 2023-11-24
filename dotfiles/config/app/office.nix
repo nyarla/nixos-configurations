@@ -6,6 +6,7 @@
     libreoffice-fresh
     mate.mate-calc
     peek
+    pixelorama
     simple-scan
     spice-up
   ];

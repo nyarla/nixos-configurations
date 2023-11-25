@@ -13,7 +13,6 @@
         "HOME=${config.home.homeDirectory}"
         "LANG=ja_JP.UTF-8"
         "LC_ALL=ja_JP.UTF-8"
-        "QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt5.qtbase.qtPluginPrefix}"
         "XDG_DATA_DIRS=/run/current-system/sw/share"
       ];
       ExecStart = toString (pkgs.writeShellScript "panel" ''

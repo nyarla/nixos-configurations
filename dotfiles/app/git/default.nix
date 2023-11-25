@@ -1,5 +1,4 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ git-credential-1password lefthook ];
   programs.git = {
     enable = true;
     lfs.enable = true;

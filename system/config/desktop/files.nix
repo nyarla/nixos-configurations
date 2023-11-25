@@ -1,12 +1,24 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs;
-    [ glib udisks2 ]
-    ++ (with pkgs.gnome; [ gvfs gnome-disk-utility gnome-font-viewer ])
-    ++ (with pkgs.xfce; [ exo thunar garcon libxfce4ui xfconf ])
-    ++ (with pkgs.mate; [ atril engrampa eom mate-polkit pluma ]);
+  environment.systemPackages = with pkgs.mate; [
+    atril
+    engrampa
+    eom
+    mate-polkit
+    pluma
+  ];
 
-  services.gvfs.enable = true;
-  services.tumbler.enable = true;
+  services = {
+    udisks2.enable = true;
+    gvfs.enable = true;
+    tumbler.enable = true;
+  };
+
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-archive-plugin ];
+  };
+
+  programs.xfconf.enable = true;
 
   users.groups.storage = { };
 

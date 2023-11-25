@@ -104,8 +104,6 @@
 
     # KVM
     "amd_iommu=force_enable"
-    "kvm.ignore_msrs=1"
-    "vfio_iommu_type1.allow_unsafe_interrupts=1"
     "vfio-pci.ids=1022:149c"
     #"efifb:off"
   ];

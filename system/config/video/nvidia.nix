@@ -15,7 +15,7 @@ let
   #   persistencedSha256 = "sha256-ci86XGlno6DbHw6rkVSzBpopaapfJvk0+lHcR4LDq50=";
   # };
 
-  nvidia = config.boot.kernelPackages.nvidiaPackages.beta;
+  nvidia = config.boot.kernelPackages.nvidiaPackages.latest;
   nvidia32 = nvidia.lib32;
 in {
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];

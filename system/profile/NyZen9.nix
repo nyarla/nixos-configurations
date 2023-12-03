@@ -47,7 +47,7 @@
     ../config/tools/git.nix
     ../config/user/nyarla.nix
     ../config/video/droidcam.nix
-    ../config/video/nvidia-vgpu.nix
+    ../config/video/nvidia.nix
     ../config/webapp/NyZen9.nix
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix

@@ -51,7 +51,7 @@
             nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
             systemd.tmpfiles.rules = [ "L+ /etc/nixpkgs - - - - ${pkg}" ];
             nixpkgs.overlays =
-              [ (import ./pkgs) (import ./pkgs/temporary.nix) wayland.overlay ];
+              [ wayland.overlay (import ./pkgs) (import ./pkgs/temporary.nix) ];
           })
 
           ./system/profile/NyZen9.nix

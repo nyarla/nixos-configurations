@@ -1,7 +1,10 @@
 self: super:
 let require = path: super.callPackage (import path);
 in {
-  weston = super.weston.override { vncSupport = false; };
+  xdg-desktop-portal = super.xdg-desktop-portal.overrideAttrs (old: {
+    doCheck = false;
+    mesonFlags = old.mesonFlags ++ [ "-Dpytest=disabled" ];
+  });
 
   whipper = super.whipper.overrideAttrs (old: rec {
     postPatch = ''

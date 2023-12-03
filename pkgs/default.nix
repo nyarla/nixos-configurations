@@ -64,13 +64,13 @@ in {
   firefox-bin-unwrapped =
     super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  labwc = (super.labwc.override { wlroots = self.wlroots_0_16; }).overrideAttrs
+  labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2023-10-31";
+      version = "2023-12-03";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
-        rev = "797e743c8ac5e74f2c5ff41ceff0f056f25617ab";
-        hash = "sha256-SXZ+X6jgibVwosAfSrHfsp9KdsAX/5PgxgY49kTAl3o=";
+        rev = "e841d44b6f8b1d199d78e674d7a380ee2168f2b5";
+        hash = "sha256-abQV34EeGPmy2dd6MZ3xSktDssx/j1Dhgs+SF3P5MSM=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -102,11 +102,11 @@ in {
 
   tt-rss = super.tt-rss.overrideAttrs (_: rec {
     pname = "tt-rss";
-    version = "2023-10-08";
+    version = "2023-12-03";
     src = super.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "1be156408af4f9291790dbda7131fd99369ca48f";
-      hash = "sha256-rAc4L9LXqkhK3XaWZ99r+x7f0pYiARxromRbj/OkVAY=";
+      rev = "2b8e34453234b8b31ebc9e7020f8677bf3889898";
+      hash = "sha256-PLifYhmR8dn+GHc71lrB3asg9nBWJq51/Ap2HlOblYc=";
     };
 
     installPhase = ''
@@ -129,15 +129,21 @@ in {
     };
   });
 
-  wlroots_0_16 = super.wlroots_0_16.overrideAttrs (old: rec {
+  wlroots_0_17 = super.wlroots.overrideAttrs (old: rec {
+    src = super.fetchFromGitLab {
+      domain = "gitlab.freedesktop.org";
+      owner = "wlroots";
+      repo = "wlroots";
+      rev = "0.17";
+      hash = "sha256-ah8TRZemPDT3NlPAHcW0+kUIZojEGkXZ53I/cNeCcpA=";
+    };
+
     buildInputs = old.buildInputs
       ++ (with super; [ glslang libdrm.dev mesa.dev ]);
 
-    nativeBuildInputs = old.nativeBuildInputs ++ (with super; [ hwdata ]);
     postPatch = ''
       sed -i 's/glFlush/glFinish/' render/gles2/renderer.c
     '';
-    patches = [ ../patches/wlroots-workaround.patch ];
   });
 
   wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull

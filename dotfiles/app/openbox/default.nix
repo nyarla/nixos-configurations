@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ../../config/desktop/1password.nix
+    ../../config/desktop/bitwarden.nix
     ../../config/desktop/blueman-applet.nix
     ../../config/desktop/calibre.nix
     ../../config/desktop/cmst.nix

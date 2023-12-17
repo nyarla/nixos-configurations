@@ -29,9 +29,12 @@
       "docker"
       "plugdev"
 
+      # virtualbox
+      "vboxusers"
+
       # vmm
-      "kvm"
-      "libvirtd"
+      # "kvm"
+      # "libvirtd"
     ];
 
     description = "OKAMURA Naoki";

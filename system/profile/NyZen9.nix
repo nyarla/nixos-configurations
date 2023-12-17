@@ -22,10 +22,11 @@
     ../config/linux/docker.nix
     ../config/linux/filesystem.nix
     ../config/linux/hardware.nix
-    ../config/linux/kvm.nix
+    #../config/linux/kvm.nix
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
+    ../config/linux/virtualbox.nix
     ../config/linux/waydroid.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
@@ -90,21 +91,21 @@
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
   boot.kernelModules = [
     "k10temp"
-    "kvm-amd"
+    # "kvm-amd"
     "nct6775"
 
-    "kvm"
-    "vfio"
-    "vfio_iommu_type1"
-    "vfio_pci"
-    "vfio_virqfd"
+    # "kvm"
+    # "vfio"
+    # "vfio_iommu_type1"
+    # "vfio_pci"
+    # "vfio_virqfd"
   ];
   boot.kernelParams = [
     # CPU
 
     # KVM
-    "amd_iommu=force_enable"
-    "vfio-pci.ids=1022:149c"
+    # "amd_iommu=force_enable"
+    # "vfio-pci.ids=1022:149c"
     #"efifb:off"
   ];
 
@@ -319,6 +320,7 @@
         ".config/Sononym"
         ".config/TabNine"
         ".config/Thunar"
+        ".config/VirtualBox"
         ".config/Yubico"
         ".config/calibre"
         ".config/dconf"

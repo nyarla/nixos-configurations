@@ -1,8 +1,5 @@
 { isXorg ? false, isWayland ? false, pkgs, ... }:
 let
-  onlyWayland = contains: if isWayland then contains else [ ];
-  onlyXorg = contains: if isXorg then contains else [ ];
-
   exec = label: command: ''
     <item label="${label}">
       <action name="Execute">
@@ -36,26 +33,31 @@ let
 
   sep = "<separator/>";
 
-  applicationsMain = menu "applications-main" "Main" ((onlyWayland [
+  applicationMenuOnXorg = menu "applications-main" "Main" [
+    (exec "wezterm" "wezterm")
+    (exec "virtualbox" "VirtualBox")
+    "${sep}"
+    (exec "waydroid" (script "waydroid-on-weston"))
+    "${sep}"
+    (exec "Vial" "Vial")
+  ];
+
+  applicationMenuOnWayland = menu "applications-main" "Main" [
     (exec "wezterm"
       "env __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json wezterm --config enable_wayland=false")
     (exec "wterm" "weston-terminal")
+    "${sep}"
+    (exec "virtualbox" "VirtualBox")
     (menu "applications-waydroid" "Waydroid" [
       (exec "Start" (script "waydroid-start"))
       (exec "Stop" (script "waydroid-stop"))
     ])
-  ]) ++ (onlyXorg [
-    (exec "wezterm" "wezterm")
     "${sep}"
-    (exec "waydroid" (script "waydroid-on-weston"))
-  ] ++ [ "${sep}" (exec "Vial" "Vial") ]));
-
-  applicationsVM = menu "applications-vm" "VM" [
-    (exec "Virt Manager" "virt-manager")
-    (exec "Virt Viewer" "virt-viewer -c qemu:///system -a")
-    "${sep}"
-    (exec "Looking Glass" "looking-glass-client")
+    (exec "Vial" "Vial")
   ];
+
+  applicationsMain =
+    if isXorg then applicationMenuOnXorg else applicationMenuOnWayland;
 
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")
@@ -64,11 +66,9 @@ let
     "${sep}"
     (exec "Scrapbox" "google-chrome-stable --app=https://scrapbox.io/")
     "${sep}"
-    (exec "1password" "1password")
     (exec "Bitwarden" "bitwarden")
     "${sep}"
-    (exec "Telegram"
-      "env QT_PLUGIN_PATH=/run/current-system/sw/${pkgs.qt6.qtbase.qtPluginPrefix} telegram-desktop")
+    (exec "Telegram" "telegram-desktop")
   ];
 
   applicationsFiles = menu "applications-files" "Files" [
@@ -147,7 +147,6 @@ in ''
   <?xml version="1.0" encoding="UTF-8"?>
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
     ${applicationsMain}
-    ${applicationsVM}
     ${applicationsWeb}
     ${applicationsFiles}
     ${applicationsMultimedia}

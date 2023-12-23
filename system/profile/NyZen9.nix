@@ -1,6 +1,6 @@
 { pkgs, lib, ... }: {
   imports = [
-    #../config/audio/daw.nix
+    ../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
@@ -336,6 +336,7 @@
         ".config/nvim"
         ".config/pulse"
         ".config/rclone"
+        ".config/rncbc.org"
         ".config/simple-scan"
         ".config/syncthing"
         ".config/wezterm"

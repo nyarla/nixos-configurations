@@ -7,6 +7,7 @@
     ../config/app/multimedia.nix
     ../config/app/office.nix
     ../config/app/weston.nix
+    ../config/desktop/jackaudio.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
     ../config/services/gnome-keyring.nix

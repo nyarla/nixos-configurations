@@ -31,6 +31,4 @@
       value = "99999";
     }
   ];
-
-  environment.systemPackages = with pkgs; [ jack2Full qjackctl ];
 }

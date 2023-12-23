@@ -38,7 +38,6 @@
     ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
-    ../config/nixos/nixpkgs.nix
     ../config/security/1password.nix
     ../config/security/clamav.nix
     ../config/security/firewall-home.nix
@@ -577,5 +576,4 @@
   system.stateVersion = "23.05";
 
   environment.systemPackages = with pkgs; [ wpa_supplicant ];
-
 }

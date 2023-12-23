@@ -11,52 +11,39 @@
 
     impermanence.url = "github:nix-community/impermanence";
   };
-  outputs = { home-manager, wayland, impermanence, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, wayland, impermanence, ... }: {
+    ## test
     nixosConfigurations = let
-      applyPatch = args:
-        inputs.nixpkgs.legacyPackages.${args.system}.applyPatches {
-          inherit (args) name patches;
-          src = inputs.nixpkgs;
-        };
-
-      nixpkgs = { system, patches, ... }:
-        applyPatch {
-          name = "nixpkgs-custom-${system}";
-          inherit system;
-          inherit patches;
-        };
-
-      nixosSystem = { arch, patches, ... }:
-        config:
-        let
-          system = "${arch}-linux";
-          pkgs = nixpkgs { inherit system patches; };
-        in (import "${pkgs}/nixos/lib/eval-config.nix")
-        ((config pkgs) // { inherit system; });
-    in { # NyZen9
+      nixosSystem = opts:
+        (import ./lib/nixosSystem.nix {
+          inherit nixpkgs;
+          inherit (opts) system patches;
+        }) { inherit (opts) hostname profile overlays modules; };
+    in {
       nixos = nixosSystem {
-        arch = "x86_64";
+        hostname = "nixos";
+        profile = import ./system/profile/NyZen9.nix;
+        system = "x86_64-linux";
+
         patches = [ ./patches/wine-staging.patch ];
-      } (pkg: {
+        overlays = [
+          wayland.overlay
+          (import ./pkgs/default.nix)
+          (import ./pkgs/temporary.nix)
+        ];
+
         modules = [
           impermanence.nixosModules.impermanence
           home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.nyarla = import ./dotfiles/user/nyarla.nix;
-          }
-
           (_: {
-            nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
-            systemd.tmpfiles.rules = [ "L+ /etc/nixpkgs - - - - ${pkg}" ];
-            nixpkgs.overlays =
-              [ wayland.overlay (import ./pkgs) (import ./pkgs/temporary.nix) ];
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = false;
+              users.nyarla = import ./dotfiles/user/nyarla.nix;
+            };
           })
-
-          ./system/profile/NyZen9.nix
         ];
-      });
+      };
     };
   };
 }

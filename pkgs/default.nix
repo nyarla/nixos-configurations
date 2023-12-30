@@ -66,21 +66,21 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2023-12-03";
+      version = "2023-12-23";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
-        rev = "e841d44b6f8b1d199d78e674d7a380ee2168f2b5";
-        hash = "sha256-abQV34EeGPmy2dd6MZ3xSktDssx/j1Dhgs+SF3P5MSM=";
+        rev = "6c287969d3583bb2a3fca444a2abdbb9b5f5a32d";
+        hash = "sha256-U+krRZ/b5LHl8+wL/4FN3hM+i5qqxX+QXUvyMP+/d9I=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
-    version = "2023-10-17";
+    version = "2023-12-23";
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
-      rev = "a6b4e285f833c13b217c0e30ca71a903ec2464b5";
-      hash = "sha256-l76TyxuBjHhIHG1FWzgdAy2obELdVdgtCkdGrfXTK44=";
+      rev = "496452cfce5e002e3795f7b36590af4f10b58798";
+      hash = "sha256-bLZnKgTT/L4tI1Z1aO3V2teYTvAof0ndLd3ZD2IaFV0=";
     };
     buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });
@@ -129,17 +129,36 @@ in {
     };
   });
 
+  tt-rss-theme-feedmei = super.stdenvNoCC.mkDerivation rec {
+    pname = "feedmei";
+    version = "2023-12-23";
+    src = super.fetchFromGitea {
+      domain = "codeberg.org";
+      owner = "ltguillaume";
+      repo = "feedmei";
+      rev = "6f84582b7b0fb3053ce9b8859b36fe157ae13466";
+      hash = "sha256-2YTYN1MQjHIX8+8tegkLgwI6JC0x1qrSrig0UmV9kus=";
+    };
+
+    installPhase = ''
+      mkdir -p $out/
+      cp -R themes.local/* $out/
+    '';
+  };
+
   wlroots_0_17 = super.wlroots.overrideAttrs (old: rec {
     src = super.fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
       rev = "0.17";
-      hash = "sha256-ah8TRZemPDT3NlPAHcW0+kUIZojEGkXZ53I/cNeCcpA=";
+      hash = "sha256-Z0gWM7AQqJOSr2maUtjdgk/MF6pyeyFMMTaivgt+RMI=";
     };
 
     buildInputs = old.buildInputs
       ++ (with super; [ glslang libdrm.dev mesa.dev ]);
+
+    patches = [ ];
 
     postPatch = ''
       sed -i 's/glFlush/glFinish/' render/gles2/renderer.c

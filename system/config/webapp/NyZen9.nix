@@ -17,7 +17,7 @@
     database.type = "pgsql";
     database.createLocally = true;
     auth.autoLogin = false;
-    themePackages = with pkgs; [ tt-rss-theme-feedly ];
+    themePackages = with pkgs; [ tt-rss-theme-feedmei ];
   };
   services.phpfpm.phpPackage = pkgs.php80;
 

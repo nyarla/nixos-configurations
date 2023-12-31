@@ -1,24 +1,23 @@
 --- a/pkgs/applications/emulators/wine/sources.nix	1970-01-01 09:00:01.000000000 +0900
-+++ a/pkgs/applications/emulators/wine/sources.nix	1970-01-01 09:00:01.000000000 +0900
++++ b/pkgs/applications/emulators/wine/sources.nix	1970-01-01 09:00:01.000000000 +0900
 @@ -69,9 +69,9 @@
  
    unstable = fetchurl rec {
      # NOTE: Don't forget to change the hash for staging as well.
--    version = "8.20";
-+    version = "8.21";
-     url = "https://dl.winehq.org/wine/source/8.x/wine-${version}.tar.xz";
--    hash = "sha256-SNa3a9ZDBaICBX+8GdkiwfSWJfbRqYJZJ8ChhXJzmYI=";
-+    hash = "sha256-MWJY3haVgoaLhNrut86KSnBVxzsxyGoTafzSgFMC/+U=";
+-    version = "9.0-rc1";
++    version = "9.0-rc3";
+     url = "https://dl.winehq.org/wine/source/9.0/wine-${version}.tar.xz";
+-    hash = "sha256-GDd3V74ffxeGzopWqET2ZXKIH/z3RcC0yjTwmmDi8zA=";
++    hash = "sha256-cpgB8ckzuqY83OYLd1i24uofLvRqFgu1dHXFkXoGiSE=";    
      inherit (stable) patches;
  
      ## see http://wiki.winehq.org/Gecko
 @@ -117,7 +117,7 @@
    staging = fetchFromGitHub rec {
      # https://github.com/wine-staging/wine-staging/releases
--    version = "8.17.1";
-+    version = "8.21";
--    hash = "sha256-h36NDFYsI0y8TG41IH10IdF4QEuBkBewQ3knZ9iwDpg=";
-+    hash = "sha256-s9c7hcX9qWxw39b/C1AO2wDELqwnFNwwPsKGAYYh0VM=";
+     inherit (unstable) version;
+-    hash = "sha256-jjy4r9VEJsU7FJ7RmE8+cgHTAkZVGruNUD5hzmGSB8c=";
++    hash = "sha256-JlojRBR0Dm9dYpPHeFPLM4maHMS2dQfrmtM9YT3wooE=";    
      owner = "wine-staging";
      repo = "wine-staging";
      rev = "v${version}";

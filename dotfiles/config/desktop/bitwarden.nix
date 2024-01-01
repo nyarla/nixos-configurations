@@ -1,5 +1,5 @@
 { config, ... }: {
-  systemd.user.services._1password = {
+  systemd.user.services.bitwarden = {
     Unit = {
       Description = "Autostart for Bitwarden";
       After = [ "graphical-session.target" "desktop-panel.service" ];

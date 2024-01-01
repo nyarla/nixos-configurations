@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
-
-cd $HOME
-export NIXPKGS_ALLOW_INSECURE=1
-nix run nixpkgs#electron_20 --impure -- ~/.local/share/trickle/app.asar

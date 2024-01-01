@@ -22,7 +22,6 @@
     ../config/linux/docker.nix
     ../config/linux/filesystem.nix
     ../config/linux/hardware.nix
-    #../config/linux/kvm.nix
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
@@ -32,13 +31,11 @@
     ../config/networking/agent.nix
     ../config/networking/avahi.nix
     ../config/networking/connman.nix
-    #../config/networking/openssh.nix
     ../config/networking/printer.nix
     ../config/networking/tailscale.nix
     ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
-    ../config/security/1password.nix
     ../config/security/clamav.nix
     ../config/security/firewall-home.nix
     ../config/security/gnupg.nix
@@ -179,7 +176,6 @@
   // (subvolEx "home/nyarla/.fly") // (subvolEx "home/nyarla/.local/share/npm")
   // (subvolEx "home/nyarla/.local/share/nvim")
   // (subvolEx "home/nyarla/.local/share/perl")
-  // (subvolEx "home/nyarla/.local/share/vim-lsp-settings")
   // (subvolEx "home/nyarla/.local/share/waydroid")
   // (subvolEx "home/nyarla/.mozilla") // (subvolEx "home/nyarla/.wrangler")
   // (subvolEx "home/nyarla/Applications")
@@ -243,22 +239,21 @@
 
     "/persist/etc"
     "/persist/etc/nixos"
-    "/persist/etc/sane-libs"
-    "/persist/etc/sane-config"
 
     "/persist/var/db"
     "/persist/var/lib"
     "/persist/var/lib/docker"
     "/persist/var/log"
 
+    "/persist/usr/share"
+
     "/persist/home/nyarla"
-    "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.fly"
     "/persist/home/nyarla/.local/share/npm"
     "/persist/home/nyarla/.local/share/nvim"
     "/persist/home/nyarla/.local/share/perl"
-    "/persist/home/nyarla/.local/share/vim-lsp-settings"
     "/persist/home/nyarla/.local/share/waydroid"
+    "/persist/home/nyarla/.mozilla"
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
@@ -311,13 +306,10 @@
         ".cache/winetricks"
 
         # .config
-        ".config/1Password"
         ".config/Bitwarden"
         ".config/GIMP"
         ".config/Kvantum"
         ".config/MusicBrainz"
-        ".config/Sononym"
-        ".config/TabNine"
         ".config/Thunar"
         ".config/VirtualBox"
         ".config/Yubico"
@@ -330,12 +322,10 @@
         ".config/gtk-3.0"
         ".config/gtk-4.0"
         ".config/inkscape"
-        ".config/kdeconnect"
         ".config/lxqt"
         ".config/nvim"
         ".config/pulse"
         ".config/rclone"
-        ".config/rncbc.org"
         ".config/simple-scan"
         ".config/syncthing"
         ".config/wezterm"
@@ -343,7 +333,6 @@
         ".config/xfce4"
 
         # .local
-        ".local/share/TabNine"
         ".local/share/TelegramDesktop"
         ".local/share/Trash"
         ".local/share/applications"
@@ -354,17 +343,13 @@
         ".local/share/nvim"
         ".local/share/perl"
         ".local/share/pixelorama"
-        ".local/share/vim-lsp-settings"
         ".local/share/waydroid"
 
         # application
-        ".1password"
         ".android"
         ".mozilla"
         ".pki"
         ".thunderbird"
-        ".vst"
-        ".vst3"
 
         # credentials
         (secure ".fly")

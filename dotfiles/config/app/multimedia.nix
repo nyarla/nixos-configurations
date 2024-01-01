@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ audacity calibre deadbeef glib.out picard ];
+  home.packages = with pkgs; [ calibre deadbeef glib.out picard ];
 }

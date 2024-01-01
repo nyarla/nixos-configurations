@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-cd ~/local/mining
-patchelf --set-interpreter $NIX_LD --set-rpath /run/opengl-driver/lib bin/miner
-
-mlterm -e sh -c "~/local/mining/start"

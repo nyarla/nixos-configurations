@@ -388,6 +388,9 @@
   # firmware
   hardware.enableRedistributableFirmware = true;
 
+  # clock
+  time.hardwareClockInLocalTime = true; # for dualboot windows
+
   # Network
   # -------
 

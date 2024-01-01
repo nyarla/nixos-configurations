@@ -54,7 +54,8 @@
         ]
       }
       export EDITOR=nvim
-      export NVIM_USE_TABNINE=1
+      export NVIM_ENABLE_CODEIUM="1";
+
 
       # utility function
       function has() {

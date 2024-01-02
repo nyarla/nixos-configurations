@@ -8,7 +8,8 @@
       noto-fonts-emoji
 
       # monospace
-      hackgen-nf-font
+      hackgen-font
+      (nerdfonts.override { fonts = [ "Hack" ]; })
 
       # fallback
       dejavu_fonts
@@ -20,7 +21,7 @@
       defaultFonts = {
         sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
         serif = [ "Noto Serif JP" "DejaVu Serif" ];
-        monospace = [ "HackGen Console NF" "DejaVu Sans Mono" ];
+        monospace = [ "HackGen Console" "Hack Nerd Font" "DejaVu Sans Mono" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };

@@ -65,11 +65,11 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2023-12-23";
+      version = "2024-01-13";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
-        rev = "6c287969d3583bb2a3fca444a2abdbb9b5f5a32d";
-        hash = "sha256-U+krRZ/b5LHl8+wL/4FN3hM+i5qqxX+QXUvyMP+/d9I=";
+        rev = "9d63c803d3e7896d7892405aae8f9d4c6130aba9";
+        hash = "sha256-yr9S64OVH8Pu8Y0Wxjkp7d975iFhQI60/Wr6npV1Qjs=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });

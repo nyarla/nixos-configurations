@@ -18,7 +18,6 @@ in {
   galendae = require ./galendae { };
   git-credential-keepassxc = require ./git-credential-keepassxc { };
   gyazo-diy = require ./gyazo-diy { };
-  hack-nerdfonts = require ./hack-nerdfonts { };
   ildaeil = require ./ildaeil { inherit (self) carla; };
   jackass-bin = require ./jackass-bin { };
   juce-framework = require ./juce-framework { };

@@ -205,7 +205,6 @@
         export PATH=/run/wrappers/bin:$PATH
 
         test -e /media/data     || mkdir -p /media/data
-        test -e /backup/DAW     || mkdir -p /backup/DAW
         test -e /backup/Sources || mkdir -p /backup/Sources
 
         device=470d2a2f-bdea-49a2-8e9b-242e4f3e1381
@@ -223,7 +222,6 @@
 
         export PATH=/run/wrappers/bin:$PATH
 
-        test ! -e /backup/DAW     || umount /backup/DAW
         test ! -e /backup/Sources || umount /backup/Sources
         test ! -e /media/data     || umount /media/data
 

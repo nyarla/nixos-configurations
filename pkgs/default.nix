@@ -104,7 +104,7 @@ in {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = "0.17";
+      rev = "3f2aced8c6fd00b0b71da24c790850af2004052b";
       hash = "sha256-Z0gWM7AQqJOSr2maUtjdgk/MF6pyeyFMMTaivgt+RMI=";
     };
 

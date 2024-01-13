@@ -25,7 +25,7 @@
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
-    ../config/linux/virtualbox.nix
+    # ../config/linux/virtualbox.nix
     ../config/linux/waydroid.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
@@ -83,7 +83,7 @@
   zramSwap.memoryPercent = 50;
 
   # kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.kernelModules = [
     "k10temp"
     # "kvm-amd"
@@ -211,7 +211,6 @@
           cryptsetup luksOpen /dev/disk/by-uuid/$device data --key-file /boot/keys/$device;
           if test $? = 0 && test -e /dev/mapper/data ; then
             mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
-            mount -o bind /media/data/DAW /backup/DAW
             mount -o bind /media/data/Sources /backup/Sources
           fi
         fi

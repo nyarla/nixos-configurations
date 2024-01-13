@@ -25,11 +25,8 @@ let
           # nix
           nix = {
             package = pkgs.nixUnstable;
-            extraOptions = ''
-              experimental-features = nix-command flakes
-            '';
             registry = { nixpkgs = { inherit flake; }; };
-
+            settings.experimental-features = [ "nix-command" "flakes" ];
             nixPath = [ "nixpkgs=${flake}" ];
           };
 

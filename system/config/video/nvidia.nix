@@ -40,6 +40,7 @@ in {
     setLdLibraryPath = true;
     package = nvidia;
     package32 = nvidia32;
+    extraPackages = with pkgs; [ pkgs.mesa.drivers libGL ];
   };
 
   environment = {

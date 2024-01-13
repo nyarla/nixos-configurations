@@ -99,52 +99,6 @@ in {
   thunderbird-bin-unwrapped =
     super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  tt-rss = super.tt-rss.overrideAttrs (_: rec {
-    pname = "tt-rss";
-    version = "2023-12-03";
-    src = super.fetchgit {
-      url = "https://git.tt-rss.org/fox/tt-rss.git";
-      rev = "2b8e34453234b8b31ebc9e7020f8677bf3889898";
-      hash = "sha256-PLifYhmR8dn+GHc71lrB3asg9nBWJq51/Ap2HlOblYc=";
-    };
-
-    installPhase = ''
-      runHook preInstall
-      mkdir $out
-      cp -ra * $out/
-      # see the code of Config::get_version(). you can check that the version in
-      # the footer of the preferences pages is not UNKNOWN
-      echo "22.10" > $out/version_static.txt
-      runHook postInstall
-    '';
-  });
-
-  tt-rss-theme-feedly = super.tt-rss-theme-feedly.overrideAttrs (_: rec {
-    version = "4.1.0";
-    src = super.fetchzip {
-      url =
-        "https://github.com/levito/tt-rss-feedly-theme/releases/download/v${version}/tt-rss-feedly-theme-dist-${version}.zip";
-      sha256 = "sha256-u3w92BMuq85SyO3bWRKuA59EaRtehrt02hZY3NMJEOA=";
-    };
-  });
-
-  tt-rss-theme-feedmei = super.stdenvNoCC.mkDerivation rec {
-    pname = "feedmei";
-    version = "2023-12-23";
-    src = super.fetchFromGitea {
-      domain = "codeberg.org";
-      owner = "ltguillaume";
-      repo = "feedmei";
-      rev = "6f84582b7b0fb3053ce9b8859b36fe157ae13466";
-      hash = "sha256-2YTYN1MQjHIX8+8tegkLgwI6JC0x1qrSrig0UmV9kus=";
-    };
-
-    installPhase = ''
-      mkdir -p $out/
-      cp -R themes.local/* $out/
-    '';
-  };
-
   wlroots_0_17 = super.wlroots.overrideAttrs (old: rec {
     src = super.fetchFromGitLab {
       domain = "gitlab.freedesktop.org";

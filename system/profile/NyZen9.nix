@@ -103,14 +103,6 @@
     #"efifb:off"
   ];
 
-  # filesystem
-  # environment.etc."crypttab" = {
-  #   enable = true;
-  #   text = ''
-  #     data UUID=470d2a2f-bdea-49a2-8e9b-242e4f3e1381 /boot/keys/470d2a2f-bdea-49a2-8e9b-242e4f3e1381 nofail,x-systemd.device-timeout=5s
-  #   '';
-  # };
-
   fileSystems = let
     device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
 

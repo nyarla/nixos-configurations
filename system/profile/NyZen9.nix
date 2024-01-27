@@ -1,6 +1,5 @@
 { pkgs, lib, ... }: {
   imports = [
-    ../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix

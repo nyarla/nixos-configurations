@@ -128,12 +128,21 @@
       };
     };
 
+    subvolsEx = paths:
+      lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolEx);
+    subvolsRW = paths:
+      lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolRW);
+
     backup = path: dest: {
       "/backup/${path}" = {
         device = dest;
         options = [ "bind" ];
       };
     };
+
+    backups = paths:
+      lib.attrsets.mergeAttrsList
+      (lib.lists.forEach paths ({ name, dest }: backup name dest));
   in {
     # for boot
     "/" = {
@@ -153,34 +162,73 @@
       options = btrfsOptions ++ [ "subvol=/nix" "noatime" ];
       neededForBoot = true;
     };
-  }
-  # for boot
-  // (subvolRW "etc") // (subvolRW "etc/nixos")
+  } // (subvolsRW [
+    # for boot
+    "etc"
+    "etc/nixos"
+    "usr/share"
+    "var/db"
+    "var/lib"
+    "var/log"
 
-  // (subvolRW "var/db") // (subvolRW "var/lib") // (subvolEx "var/lib/docker")
-  // (subvolRW "var/log")
+    # for accounts
+    "home/nyarla"
+  ]) // (subvolsEx [
+    # for boot
+    "var/lib/docker"
 
-  // (subvolRW "usr/share")
-
-  # for account
-  // (subvolEx "home/nyarla/.fly") // (subvolEx "home/nyarla/.local/share/npm")
-  // (subvolEx "home/nyarla/.local/share/nvim")
-  // (subvolEx "home/nyarla/.local/share/perl")
-  // (subvolEx "home/nyarla/.local/share/waydroid")
-  // (subvolEx "home/nyarla/.mozilla") // (subvolEx "home/nyarla/.wrangler")
-  // (subvolEx "home/nyarla/Applications")
-  // (subvolEx "home/nyarla/Programming") // (subvolRW "home/nyarla")
-
-  # for backup
-  // (backup "Applications" "/persist/home/nyarla/Applications")
-  // (backup "Archives" "/persist/home/nyarla/Archives")
-  // (backup "Calibre" "/persist/home/nyarla/Calibre")
-  // (backup "Development" "/persist/home/nyarla/Development")
-  // (backup "Documents" "/persist/home/nyarla/Documents")
-  // (backup "Music" "/persist/home/nyarla/Music")
-  // (backup "NixOS" "/persist/etc/nixos")
-  // (backup "Programming" "/persist/home/nyarla/Programming")
-  // (backup "Thunderbird" "/persist/home/nyarla/.thunderbird");
+    # for accounts
+    "home/nyarla/.fly"
+    "home/nyarla/.local/share/npm"
+    "home/nyarla/.local/share/nvim"
+    "home/nyarla/.local/share/perl"
+    "home/nyarla/.local/share/waydroid"
+    "home/nyarla/.mozilla"
+    "home/nyarla/.wrangler"
+    "home/nyarla/Applications"
+    "home/nyarla/Programming"
+  ]) // (backups [
+    {
+      name = "Applications";
+      dest = "/persist/home/nyarla/Applications";
+    }
+    {
+      name = "Archives";
+      dest = "/persist/home/nyarla/Archives";
+    }
+    {
+      name = "Calibre";
+      dest = "/persist/home/nyarla/Calibre";
+    }
+    {
+      name = "Development";
+      dest = "/persist/home/nyarla/Development";
+    }
+    {
+      name = "Documents";
+      dest = "/persist/home/nyarla/Documents";
+    }
+    {
+      name = "Music";
+      dest = "/persist/home/nyarla/Music";
+    }
+    {
+      name = "NixOS";
+      dest = "/persist/etc/nixos";
+    }
+    {
+      name = "Programming";
+      dest = "/persist/home/nyarla/Programming";
+    }
+    {
+      name = "Sync";
+      dest = "/persist/home/nyarla/Sync/Backup";
+    }
+    {
+      name = "Thunderbird";
+      dest = "/persist/home/nyarla/.thunderbird";
+    }
+  ]);
 
   systemd.services.automount-encrypted-usb-storage = {
     enable = true;

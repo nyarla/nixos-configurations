@@ -25,7 +25,7 @@
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
-    # ../config/linux/virtualbox.nix
+    ../config/linux/virtualbox.nix
     ../config/linux/waydroid.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix
@@ -528,6 +528,8 @@
     enable = true;
     path = with pkgs; [ restic-run rclone ];
     description = "Automatic backup by restic and rclone";
+    requires = [ "network-online.target" ];
+    after = [ "network-online.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = toString (pkgs.writeShellScript "backup.sh" ''

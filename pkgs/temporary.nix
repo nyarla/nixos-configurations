@@ -6,18 +6,4 @@ in {
       sed -i 's|cd-paranoia|${super.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
     '';
   });
-
-  pythonPackagesExtensions = super.pythonPackagesExtensions ++ [
-    (_: prev: rec {
-      pyopenssl = prev.pyopenssl.overridePythonAttrs (_: rec {
-        version = "23.2.0";
-
-        src = prev.fetchPypi {
-          pname = "pyOpenSSL";
-          inherit version;
-          hash = "sha256-J2+TH1WkUufeppxxc+mE6ypEB85BPJGKo0tV+C+bi6w=";
-        };
-      });
-    })
-  ];
 }

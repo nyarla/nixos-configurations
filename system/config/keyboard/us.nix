@@ -1,6 +1,8 @@
 _: {
   console.useXkbConfig = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbModel = "pc104";
-  services.xserver.xkbOptions = "ctrl:nocaps";
+  services.xserver.xkb = {
+    layout = "us";
+    model = "pc104";
+    options = "ctrl:nocaps";
+  };
 }

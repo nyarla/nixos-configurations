@@ -178,6 +178,7 @@
     "var/lib/docker"
 
     # for accounts
+    "home/nyarla/.config/audiogridder"
     "home/nyarla/.fly"
     "home/nyarla/.local/share/npm"
     "home/nyarla/.local/share/nvim"
@@ -283,6 +284,7 @@
     "/persist/usr/share"
 
     "/persist/home/nyarla"
+    "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.fly"
     "/persist/home/nyarla/.local/share/npm"
     "/persist/home/nyarla/.local/share/nvim"
@@ -348,6 +350,7 @@
         ".config/Thunar"
         ".config/VirtualBox"
         ".config/Yubico"
+        ".config/audiogridder"
         ".config/calibre"
         ".config/dconf"
         ".config/fcitx5"

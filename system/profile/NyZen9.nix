@@ -482,15 +482,16 @@
       TIMELINE_MONTHLY = 1;
       TIMELINE_YEARLY = 1;
     };
-  in {
-    nixos = snapshot "etc/nixos";
 
-    varlib = snapshot "var/lib";
-    usrshare = snapshot "usr/share";
-
-    nyarla = snapshot "home/nyarla";
-    apps = snapshot "home/nyarla/Applications";
-    program = snapshot "home/nyarla/Programming";
+    snapshots = paths:
+      lib.attrsets.concatMapAttrs (n: v: { "${n}" = snapshot v; }) paths;
+  in snapshots {
+    nixos = "etc/nixos";
+    varlib = "var/lib";
+    usrshare = "usr/share";
+    nyarla = "home/nyarla";
+    apps = "home/nyarla/Applications";
+    program = "home/nyarla/Programming";
   };
 
   # systemd

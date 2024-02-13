@@ -27,14 +27,14 @@ let
     enableStatic = true;
   };
 in stdenv.mkDerivation rec {
-  pname = "audiogridder-modified";
+  pname = "audiogridder-modded";
   version = "1.2.0-mod";
 
   src = fetchFromGitHub {
     owner = "nyarla";
-    repo = "audiogridder-modified";
-    rev = "069c230669aa8739375c75aa3f80c2b3851118c3";
-    hash = "sha256-tbpWneHYcpjE/8V6ezmcGvgtALMShi8Z6L//lS1DrXo=";
+    repo = "audiogridder-modded";
+    rev = "0a009cbe36b0e44e03018dd00fb988ff6fcc591d";
+    hash = "sha256-37WpI6tXzjTVaO06YJBpRMd/6ublK0kIU+pfULIyxLI=";
     fetchSubmodules = true;
   };
 

@@ -1,18 +1,19 @@
-{ stdenv, fetchFromGitHub, pkg-config, patchelf, autoPatchelfHook, findutils
-, bzip2, carla, dbus, file, flac, libGL, libcap, libglvnd, libjack2, libogg
-, libopus, libsndfile, libvorbis, xorg, zstd }:
+{ stdenv, fetchFromGitHub, autoPatchelfHook, pkg-config, patchelf, qt5
+, findutils, bzip2, carla, dbus, file, flac, libGL, libcap, libglvnd, libjack2
+, libogg, libopus, libsndfile, libvorbis, xorg, zstd }:
 stdenv.mkDerivation rec {
   pname = "ildaeil";
-  version = "2023-10-07";
+  version = "2024-02-13";
   src = fetchFromGitHub {
     owner = "DISTRHO";
     repo = "Ildaeil";
-    rev = "0044a9cca7435953d746ccbfaad27aa98e590d96";
-    hash = "sha256-A+2qLqGST/ZSll6Y5GTIj7dLNGQ4/966/5kiNJyi9uY=";
+    rev = "8d65bc07b6ba2485eded9bc829650ca03409672a";
+    hash = "sha256-gT5ZhZHHe3eiQtIJ/IJPR9TxmCzt7hqaaWIP/6gTy6A=";
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ findutils pkg-config patchelf autoPatchelfHook ];
+  nativeBuildInputs =
+    [ findutils pkg-config patchelf autoPatchelfHook qt5.wrapQtAppsHook ];
 
   buildInputs = [
     bzip2.dev
@@ -35,19 +36,23 @@ stdenv.mkDerivation rec {
     zstd.dev
   ];
 
-  preBuild = ''
-    patchShebangs --build dpf/utils
+  postUnpack = ''
+    rm carla -rf
+    cp -R ${carla.src} carla
+    chmod +w carla
   '';
 
-  patches = [ ./nixos-path.patch ];
+  patches = [ ./nixos.patch ];
 
   postPatch = ''
     cd carla
-    ${carla.postPatch}
-    cd ../
+    ${carla.postPatch} 
+    cd ..
 
-    export carla=${carla}
-    substituteAllInPlace plugins/Common/IldaeilPlugin.cpp
+    sed 's|/usr/lib/carla|${carla}/lib/carla|g' plugins/Common/IldaeilPlugin.cpp
+    sed 's|/usr/share/carla|${carla}/share/carla|g' plugins/Common/IldaeilPlugin.cpp
+
+    patchShebangs --build dpf/utils
   '';
 
   installFlags = [ "PREFIX=$(out)" ];

@@ -1,6 +1,6 @@
-{ stdenv, fetchFromGitHub, fetchzip, pkg-config, cmake, alsa-lib, curlFull
-, doxygen, freetype, glib, graphviz, gtk3, ladspa-sdk, libjack2, libjpeg_turbo
-, libpng, pcre, python3, webkitgtk, zlib, xorg, libGLU, juce-framework, lib }:
+{ stdenv, fetchFromGitHub, pkg-config, cmake, alsa-lib, curlFull, doxygen
+, freetype, glib, graphviz, gtk3, ladspa-sdk, libjack2, libjpeg_turbo, libpng
+, pcre, python3, webkitgtk, zlib, xorg, libGLU, juce-framework, lib }:
 stdenv.mkDerivation rec {
   pname = "dexed";
   version = "git";
@@ -8,9 +8,9 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "asb2m10";
     repo = "dexed";
-    rev = "9e01c0cbb1ff68297b180ffdeee0b5fb09af7e56";
+    rev = "b6cf2e9190e216387ad96f977284ebbef765b447";
+    hash = "sha256-2h57+T7I+QZuuTJbirvit2za9iEmJPvsdgY2qKOgPzo=";
     fetchSubmodules = true;
-    sha256 = "sha256-4x8lgq0j50DxD1H5TKmnRIFN+Yotlk/f0CurTuShklA=";
   };
 
   postUnpack = ''

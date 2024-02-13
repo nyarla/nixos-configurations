@@ -1,5 +1,6 @@
 { pkgs, lib, ... }: {
   imports = [
+    ../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
@@ -231,9 +232,9 @@
     }
   ]);
 
-  systemd.services.automount-encrypted-usb-storage = {
+  systemd.services.automount-encrypted-storages = {
     enable = true;
-    description = "Automount Encrypted USB Device";
+    description = "Automount Encrypted Storages";
     path = with pkgs; [ coreutils cryptsetup ];
     serviceConfig = {
       Type = "oneshot";
@@ -244,14 +245,25 @@
         export PATH=/run/wrappers/bin:$PATH
 
         test -e /media/data     || mkdir -p /media/data
+        test -e /media/src      || mkdir -p /media/src
+        test -e /backup/DAW     || mkdir -p /backup/DAW
         test -e /backup/Sources || mkdir -p /backup/Sources
 
-        device=470d2a2f-bdea-49a2-8e9b-242e4f3e1381
+        device=0c2fc422-2013-46eb-bc52-e6a4f6f145cb
         if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
           cryptsetup luksOpen /dev/disk/by-uuid/$device data --key-file /boot/keys/$device;
           if test $? = 0 && test -e /dev/mapper/data ; then
             mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
-            mount -o bind /media/data/Sources /backup/Sources
+            mount -o bind /media/data/DAW /backup/DAW
+          fi
+        fi
+
+        device=a3da35b5-35e8-45bb-a4b4-87fbc19ed459
+        if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
+          cryptsetup luksOpen /dev/disk/by-uuid/$device src --key-file /boot/keys/$device;
+          if test $? = 0 && test -e /dev/mapper/src ; then
+            mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/src /media/src
+            mount -o bind /media/src/Sources /backup/Sources
           fi
         fi
       '');
@@ -260,10 +272,13 @@
 
         export PATH=/run/wrappers/bin:$PATH
 
-        test ! -e /backup/Sources || umount /backup/Sources
-        test ! -e /media/data     || umount /media/data
+        test ! -e /backup/DAW       || umount /backup/DAW
+        test ! -e /backup/Sources   || umount /backup/Sources
+        test ! -e /media/data       || umount /media/data
+        test ! -e /media/src        || umount /media/src
 
-        cryptsetup luksClose /dev/mapper/data
+        test ! -e /dev/mapper/data  || ctryptsetup luksClose /dev/mapper/data
+        test ! -e /dev/mapper/src   || ctryptsetup luksClose /dev/mapper/src
       '');
     };
     wantedBy = [ "local-fs.target" ];
@@ -338,6 +353,16 @@
         "Reports"
         "Sync"
 
+        # music
+        ".config/Jean Pierre Cimalando"
+        ".config/Sononym"
+        ".config/audiogridder"
+        ".config/falkTX"
+        ".config/rncbc.org"
+        ".config/yabridgectl"
+        ".helm"
+        ".local/share/DigitalSuburban"
+
         # cache
         ".cache/wine"
         ".cache/winetricks"
@@ -350,7 +375,6 @@
         ".config/Thunar"
         ".config/VirtualBox"
         ".config/Yubico"
-        ".config/audiogridder"
         ".config/calibre"
         ".config/dconf"
         ".config/fcitx5"
@@ -397,7 +421,13 @@
         (secure ".ssh")
         (secure ".wrangler")
       ];
-      files = [ ".clasprc.json" ".config/mimeapps.list" ".gtkrc-2.0" ".npmrc" ];
+      files = [
+        ".clasprc.json"
+        ".config/mimeapps.list"
+        ".config/snn.conf"
+        ".gtkrc-2.0"
+        ".npmrc"
+      ];
     };
   };
 

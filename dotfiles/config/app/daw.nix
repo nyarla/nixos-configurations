@@ -1,19 +1,26 @@
-{ pkgs, lib, ... }: {
-  home.sessionVariables =
-    let prefix = "/run/current-system/etc/profiles/per-user/nyarla";
-    in {
-      CLAP_PATH = "~/.clap:${prefix}/lib/clap";
-      DSSI_PATH = "~/.dssi";
-      LADSPA_PATH = "~/.ladspa";
-      LV2_PATH = "~/.lv2:${prefix}/lv2";
-      VST3_PATH = "~/.vst3:${prefix}/lib/vst3";
-      VST_PATH = "~/.vst:${prefix}/lib/vst:${prefix}/lxvst";
-    };
+{ pkgs, ... }: {
+  home.sessionVariables = let
+    user = "$HOME/.nix-profile";
+    sys = "/run/current-system/sw";
+    mkPath = plugin:
+      "$HOME/.${plugin}:${user}/lib/${plugin}:${sys}/lib/${plugin}";
+  in {
+    CLAP_PATH = mkPath "clap";
+    DSSI_PATH = mkPath "dssi";
+    LADSPA_PATH = mkPath "ladspa";
+    LV2_PATH = mkPath "lv2";
+    VST3_PATH = (mkPath "vst3") + ":" + (mkPath "lxvst3");
+    VST_PATH = (mkPath "vst") + ":" + (mkPath "lxvst");
+  };
   home.packages = with pkgs; [
+    # jackd
+    qjackctl
+    jack2Full
+
     # digital audio workstation
     bitwig-studio3
     musescore
-    zrythm
+    helio-workstation
 
     # samples manager
     sononym-bin
@@ -22,6 +29,10 @@
     a2jmidid
     audiogridder
     carla
+
+    # wine
+    yabridge
+    yabridgectl
 
     # plugins
     ChowKick

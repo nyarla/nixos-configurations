@@ -46,6 +46,7 @@
       # enable home-manager
       export PATH=${
         lib.strings.concatStringsSep ":" [
+          "$HOME/.nix-profile/bin"
           "$HOME/.local/bin"
           "$HOME/.fly/bin"
           "$HOME/.local/share/npm/bin"

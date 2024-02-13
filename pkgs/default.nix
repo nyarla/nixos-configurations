@@ -19,7 +19,7 @@ in {
   git-credential-keepassxc = require ./git-credential-keepassxc { };
   gyazo-diy = require ./gyazo-diy { };
   ildaeil = require ./ildaeil { inherit (self) carla; };
-  jackass-bin = require ./jackass-bin { };
+  jackass-bin = require ./jackass-bin { wine = self.wineUsingFull; };
   juce-framework = require ./juce-framework { };
   kaunas = require ./kaunas { };
   locale-eaw = require ./locale-eaw { };
@@ -38,7 +38,7 @@ in {
   wcwidth-cjk = require ./wcwidth-cjk { };
   wine-run = require ./wine-run { };
   wine-vst-wrapper = require ./wine-vst-wrapper { };
-  wineasio = require ./wineasio { };
+  wineasio = require ./wineasio { wine = self.wineUsingFull; };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
   # modified packages
@@ -127,4 +127,10 @@ in {
         ++ [ "--with-va" "--with-gcrypt" "--disable-test" ];
     });
   # wineUsingFull = super.wineWowPackages.stagingFull;
+
+  yabridge = super.yabridge.override { wine = self.wineUsingFull; };
+  yabridtctl = super.yabridgectl.override {
+    inherit (self) yabridge;
+    wine = self.wineUsingFull;
+  };
 }

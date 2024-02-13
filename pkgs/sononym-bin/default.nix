@@ -5,11 +5,11 @@
 , nspr, nss, pango, systemd, unzip, xorg, zlib }:
 stdenv.mkDerivation rec {
   pname = "sononym";
-  version = "1.4.2";
+  version = "1.5.3";
 
   src = fetchurl {
     url = "https://www.sononym.net/download/sononym-${version}.tar.bz2";
-    sha256 = "08xwplvma4vvhkwcdwx2b1gy01mcgcdd7mgw2nz2cbdxq4rq9w08";
+    hash = "sha256-Oy/d1mmyAc1xbeBldEWvr1w7py8G32MPAnu/hQlp7+0=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook makeWrapper ];

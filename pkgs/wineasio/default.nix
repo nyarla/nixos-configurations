@@ -8,7 +8,7 @@ multiStdenv.mkDerivation rec {
     owner = pname;
     repo = pname;
     rev = "56c3e9da95b467f1f64ba069864c35762251a734";
-    sha256 = "1skps23przjjfw5j74nkxnrqbixy9z54rh738a6yypczvj7wjj8w";
+    hash = "sha256-HEnJj9yfXe+NQuPATMpPvseFs+3TkiMLd1L+fIfQd+o=";
     fetchSubmodules = true;
   };
 

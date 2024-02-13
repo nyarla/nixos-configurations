@@ -1,101 +1,68 @@
-{ carla, glibc, pkgsCross, wine, multiStdenv }:
+{ carla, glibc, pkgsCross, wine, multiStdenv, fetchFromGitHub }:
 let
-  mkCarlaWithWine = { mingw, winecc, bit, arch, src }:
-    (carla.override { stdenv = multiStdenv; }).overrideAttrs (old: rec {
-      inherit src;
+  pkgsMinGW = bit: if bit == 32 then pkgsCross.mingw32 else pkgsCross.mingwW64;
 
-      nativeBuildInputs = old.nativeBuildInputs
-        ++ [ wine mingw.buildPackages.gcc ];
+  mingw32 = pkgsMinGW 32;
+  mingwW64 = pkgsMinGW 64;
 
-      postPatch = ''
-        sed -i 's|/opt/wine-devel|${wine}|g' source/jackbridge/Makefile
-        sed -i 's|/opt/wine-devel|${wine}|g' source/modules/dgl/Makefile
-      '';
+  mcfgthreadsw32 = mingw32.windows.mcfgthreads.overrideAttrs
+    (_: { dontDisableStatic = true; });
+  mcfgthreadsW64 = mingwW64.windows.mcfgthreads.overrideAttrs
+    (_: { dontDisableStatic = true; });
 
-      postBuild = ''
-        make win${bit} \
-          CC=${mingw.buildPackages.gcc}/bin/${arch}-w64-mingw32-gcc \
-          CXX=${mingw.buildPackages.gcc}/bin/${arch}-w64-mingw32-g++ \
-          CFLAGS="-I${mingw.windows.mingw_w64_pthreads}/include" \
-          CXXFLAGS="-I${mingw.windows.mingw_w64_pthreads}/include" \
-          LDFLAGS="-L${mingw.windows.mingw_w64_pthreads}/lib"
+in (carla.override { stdenv = multiStdenv; }).overrideAttrs (old: rec {
+  version = "2024-02-13"; # keep same version of ildaeil
+  src = fetchFromGitHub {
+    inherit (old.src) owner repo;
+    rev = "1e3b910d014f7f7d44e8b3b76eb47efad2121e4f";
+    hash = "sha256-GwClcgn5PiyORTN+8HNI/ep9FzrJXQdngIZYdcs1LF0=";
+    fetchSubmodules = true;
+  };
 
-        make wine${bit} \
-          CC="${winecc}" \
-          CXX="${winecc}" \
-          CFLAGS="-I${glibc.dev}/include" \
-          CXXFLAGS="-I${glibc.dev}/include"
-      '';
+  nativeBuildInputs = old.nativeBuildInputs
+    ++ [ wine mingw32.buildPackages.gcc mingwW64.buildPackages.gcc ];
 
-      postInstall = ''
-        cp ${mingw.windows.mcfgthreads_pre_gcc_13}/bin/mcfgthread-12.dll \
-          $out/lib/carla/
-      '';
-    });
+  buildInputs = old.buildInputs ++ [ mcfgthreadsw32.dev mcfgthreadsW64.dev ];
 
-in carla.overrideAttrs (old:
-  let
-    carla_win32 = mkCarlaWithWine {
-      mingw = pkgsCross.mingw32;
-      winecc = "winegcc -m32";
-      bit = "32";
-      arch = "i686";
-      inherit (old) src;
-    };
+  dontStrip = true;
 
-    carla_win64 = mkCarlaWithWine {
-      mingw = pkgsCross.mingwW64;
-      winecc = "winegcc";
-      bit = "64";
-      arch = "x86_64";
-      inherit (old) src;
-    };
-  in rec {
-    postPatch = ''
-      if test -e source/frontend/carla_database.py ; then
-        sed -i 's|self.fPathBinaries, "carla-discovery-win32.exe"|"${carla_win32}/lib/carla/carla-discovery-win32.exe"|g' \
-          source/frontend/carla_database.py
-        sed -i 's|self.host.pathBinaries, "carla-discovery-win32.exe"|"${carla_win32}/lib/carla/carla-discovery-win32.exe"|g' \
-          source/frontend/carla_database.py
+  postPatch = old.postPatch + ''
+    export carla=$out
+    export wine=${wine}
 
-        sed -i 's|self.fPathBinaries, "carla-discovery-win64.exe"|"${carla_win64}/lib/carla/carla-discovery-win64.exe"|g' \
-          source/frontend/carla_database.py
-        sed -i 's|self.host.pathBinaries, "carla-discovery-win64.exe"|"${carla_win64}/lib/carla/carla-discovery-win64.exe"|g' \
-          source/frontend/carla_database.py
+    patch -p1 ${./nixos.patch}
 
-        substituteAllInPlace source/frontend/carla_database.py
-      fi
+    substituteAllInPlace source/jackbridge/Makefile
+    substituteAllInPlace source/modules/dgl/Makefile
+    substituteAllInPlace source/backend/CarlaStandalone.cpp
+    substituteAllInPlace source/backend/engine/CarlaEngineJack.cpp
+  '';
 
-      if test -e source/frontend/pluginlist/pluginlistdialog.cpp ; then
-        sed -i 's|host.pathBinaries + CARLA_OS_SEP_STR "carla-discovery-win32.exe"|"${carla_win32}/lib/carla/carla-discovery-win32.exe"|g' \
-          source/frontend/pluginlist/pluginlistdialog.cpp
+  postBuild = ''
+    make win32 \
+      CC=i686-w64-mingw32-gcc \
+      CXX=i686-w64-mingw32-g++ \
+      CFLAGS="-I${mingw32.windows.mingw_w64_pthreads}/include -I${mcfgthreadsw32.dev}/include" \
+      CXXFLAGS="-I${mingw32.windows.mingw_w64_pthreads}/include -I${mcfgthreadsw32.dev}/include" \
+      LDFLAGS="-L${mingw32.windows.mingw_w64_pthreads}/lib -L${mcfgthreadsw32}/lib"
 
-        sed -i 's|host.pathBinaries + CARLA_OS_SEP_STR "carla-discovery-win64.exe"|"${carla_win64}/lib/carla/carla-discovery-win64.exe"|g' \
-          source/frontend/pluginlist/pluginlistdialog.cpp
-      fi
+    make wine32 \
+      CC="winegcc -m32" \
+      CXX="winegcc -m32" \
+      CFLAGS="-I${glibc.dev}/include" \
+      CXXFLAGS="-I${glibc.dev}/include" \
 
-      if test -e source/frontend/C++/carla_database.cpp ; then
-        sed -i 's|host.pathBinaries + CARLA_OS_SEP_STR "carla-discovery-win32.exe"|"${carla_win32}/lib/carla/carla-discovery-win32.exe"|g' \
-          source/frontend/C++/carla_database.cpp
+    make win64 \
+      CC=x86_64-w64-mingw32-gcc \
+      CXX=x86_64-w64-mingw32-g++ \
+      CFLAGS="-I${mingwW64.windows.mingw_w64_pthreads}/include -I${mcfgthreadsW64.dev}/include" \
+      CXXFLAGS="-I${mingwW64.windows.mingw_w64_pthreads}/include -I${mcfgthreadsW64.dev}/include" \
+      LDFLAGS="-L${mingwW64.windows.mingw_w64_pthreads}/lib -L${mcfgthreadsW64}/lib"
 
-        sed -i 's|host.pathBinaries + CARLA_OS_SEP_STR "carla-discovery-win64.exe"|"${carla_win64}/lib/carla/carla-discovery-win64.exe"|g' \
-          source/frontend/C++/carla_database.cpp
-      fi
-
-      if test -e source/backend/engine/CarlaEngine.cpp ; then
-        sed -i 's|bridgeBinary += CARLA_OS_SEP_STR "carla-bridge-win32.exe"|bridgeBinary = "${carla_win32}/lib/carla/carla-bridge-win32.exe"|g' \
-          source/backend/engine/CarlaEngine.cpp
-
-        sed -i 's|bridgeBinary += CARLA_OS_SEP_STR "carla-bridge-win64.exe"|bridgeBinary = "${carla_win64}/lib/carla/carla-bridge-win64.exe"|g' \
-          source/backend/engine/CarlaEngine.cpp
-      fi
-    '';
-
-    postInstall = ''
-      ln -sf ${carla_win32}/lib/carla/carla-bridge-win32.exe $out/lib/carla/carla-bridge-win32.exe
-      ln -sf ${carla_win64}/lib/carla/carla-bridge-win64.exe $out/lib/carla/carla-bridge-win64.exe
-
-      ln -sf ${carla_win32}/lib/carla/carla-discovery-win32.exe $out/lib/carla/carla-discovery-win32.exe
-      ln -sf ${carla_win64}/lib/carla/carla-discovery-win64.exe $out/lib/carla/carla-discovery-win64.exe
-    '';
-  })
+    make wine64 \
+      CC="winegcc" \
+      CXX="winegcc" \
+      CFLAGS="-I${glibc.dev}/include" \
+      CXXFLAGS="-I${glibc.dev}/include"
+  '';
+})

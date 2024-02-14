@@ -31,6 +31,7 @@
     carla
 
     # wine
+    wineasio
     yabridge
     yabridgectl
 

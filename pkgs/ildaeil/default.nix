@@ -1,6 +1,6 @@
 { stdenv, fetchFromGitHub, autoPatchelfHook, pkg-config, patchelf, qt5
 , findutils, bzip2, carla, dbus, file, flac, libGL, libcap, libglvnd, libjack2
-, libogg, libopus, libsndfile, libvorbis, xorg, zstd }:
+, libogg, libopus, libsndfile, libvorbis, wine, xorg, zstd }:
 stdenv.mkDerivation rec {
   pname = "ildaeil";
   version = "2024-02-13";
@@ -39,19 +39,23 @@ stdenv.mkDerivation rec {
   postUnpack = ''
     rm carla -rf
     cp -R ${carla.src} carla
-    chmod +w carla
+    chmod -R +w carla
   '';
 
   patches = [ ./nixos.patch ];
 
   postPatch = ''
     cd carla
-    ${carla.postPatch} 
+    export carla=${carla}
+    export wine=${wine}
+
+    substituteAllInPlace source/jackbridge/Makefile
+    substituteAllInPlace source/modules/dgl/Makefile
+    substituteAllInPlace source/backend/CarlaStandalone.cpp
+    substituteAllInPlace source/backend/engine/CarlaEngineJack.cpp
     cd ..
 
-    sed 's|/usr/lib/carla|${carla}/lib/carla|g' plugins/Common/IldaeilPlugin.cpp
-    sed 's|/usr/share/carla|${carla}/share/carla|g' plugins/Common/IldaeilPlugin.cpp
-
+    substituteAllInPlace plugins/Common/IldaeilPlugin.cpp
     patchShebangs --build dpf/utils
   '';
 

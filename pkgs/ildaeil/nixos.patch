@@ -15,3 +15,104 @@ index e10861c..3aa6a13 100644
             #endif
          }
  
+diff --git a/carla/source/backend/CarlaStandalone.cpp b/carla/source/backend/CarlaStandalone.cpp
+index 44a8cdc72..bcf10e301 100644
+--- a/carla/source/backend/CarlaStandalone.cpp
++++ b/carla/source/backend/CarlaStandalone.cpp
+@@ -216,7 +216,7 @@ static void carla_engine_init_common(const CarlaHostStandalone& standalone, Carl
+     engine->setFileCallback(standalone.fileCallback, standalone.fileCallbackPtr);
+ 
+     using water::File;
+-    const File waterBinaryDir(File::getSpecialLocation(File::currentExecutableFile).getParentDirectory());
++    const File waterBinaryDir("@carla@");
+ 
+ #ifdef BUILD_BRIDGE
+     /*
+@@ -278,12 +278,12 @@ static void carla_engine_init_common(const CarlaHostStandalone& standalone, Carl
+     if (const char* const binaryDir = std::getenv("ENGINE_OPTION_PATH_BINARIES"))
+         engine->setOption(CB::ENGINE_OPTION_PATH_BINARIES, 0, binaryDir);
+     else
+-        engine->setOption(CB::ENGINE_OPTION_PATH_BINARIES, 0, waterBinaryDir.getFullPathName().toRawUTF8());
++        engine->setOption(CB::ENGINE_OPTION_PATH_BINARIES, 0, "@carla@/lib/carla");
+ 
+     if (const char* const resourceDir = std::getenv("ENGINE_OPTION_PATH_RESOURCES"))
+         engine->setOption(CB::ENGINE_OPTION_PATH_RESOURCES, 0, resourceDir);
+     else
+-        engine->setOption(CB::ENGINE_OPTION_PATH_RESOURCES, 0, waterBinaryDir.getChildFile("resources").getFullPathName().toRawUTF8());
++        engine->setOption(CB::ENGINE_OPTION_PATH_RESOURCES, 0, "@carla@/share/carla/resources");
+ 
+     if (const char* const preventBadBehaviour = std::getenv("ENGINE_OPTION_PREVENT_BAD_BEHAVIOUR"))
+         engine->setOption(CB::ENGINE_OPTION_PREVENT_BAD_BEHAVIOUR, (std::strcmp(preventBadBehaviour, "true") == 0) ? 1 : 0, nullptr);
+diff --git a/carla/source/backend/engine/CarlaEngineJack.cpp b/carla/source/backend/engine/CarlaEngineJack.cpp
+index df4fffbc1..976e81de4 100644
+--- a/carla/source/backend/engine/CarlaEngineJack.cpp
++++ b/carla/source/backend/engine/CarlaEngineJack.cpp
+@@ -4557,8 +4557,8 @@ int jack_initialize(jack_client_t* const client, const char* const load_init)
+ #endif
+ 
+     // FIXME
+-    engine->setOption(ENGINE_OPTION_PATH_BINARIES, 0, "/usr/lib/carla");
+-    engine->setOption(ENGINE_OPTION_PATH_RESOURCES, 0, "/usr/share/resources");
++    engine->setOption(ENGINE_OPTION_PATH_BINARIES, 0, "@carla@/lib/carla");
++    engine->setOption(ENGINE_OPTION_PATH_RESOURCES, 0, "@carla@/share/resources");
+ 
+     if (engine->initInternal(client))
+         return 0;
+diff --git a/carla/source/jackbridge/Makefile b/carla/source/jackbridge/Makefile
+index 69a30ac0e..1499b97b3 100644
+--- a/carla/source/jackbridge/Makefile
++++ b/carla/source/jackbridge/Makefile
+@@ -36,7 +36,7 @@ WINE_LINK_FLAGS += -lstdc++
+ ifneq ($(MACOS),true)
+ WINE_32BIT_FLAGS += -I/usr/include/wine/wine/windows
+ WINE_32BIT_FLAGS += -I/usr/include/wine-development/windows
+-WINE_32BIT_FLAGS += -I/opt/wine-devel/include/wine/windows
++WINE_32BIT_FLAGS += -I@wine@/include/wine/windows
+ WINE_32BIT_FLAGS += -L/usr/lib32/wine
+ WINE_32BIT_FLAGS += -L/usr/lib/wine
+ WINE_32BIT_FLAGS += -L/usr/lib/i386-linux-gnu/wine
+@@ -45,13 +45,13 @@ WINE_32BIT_FLAGS += -L/usr/lib/i386-linux-gnu/wine-development/i386-unix
+ WINE_32BIT_FLAGS += -L/opt/wine-stable/lib
+ WINE_32BIT_FLAGS += -L/opt/wine-stable/lib/wine
+ WINE_32BIT_FLAGS += -L/opt/wine-stable/lib/wine/i386-unix
+-WINE_32BIT_FLAGS += -L/opt/wine-staging/lib
+-WINE_32BIT_FLAGS += -L/opt/wine-staging/lib/wine
+-WINE_32BIT_FLAGS += -L/opt/wine-staging/lib/wine/i386-unix
++WINE_32BIT_FLAGS += -L@wine@/lib
++WINE_32BIT_FLAGS += -L@wine@/lib/wine
++WINE_32BIT_FLAGS += -L@wine@/lib/wine/i386-unix
+ 
+ WINE_64BIT_FLAGS += -I/usr/include/wine/wine/windows
+ WINE_64BIT_FLAGS += -I/usr/include/wine-development/windows
+-WINE_64BIT_FLAGS += -I/opt/wine-devel/include/wine/windows
++WINE_64BIT_FLAGS += -I@wine@/include/wine/windows
+ WINE_64BIT_FLAGS += -L/usr/lib64/wine
+ WINE_64BIT_FLAGS += -L/usr/lib/x86_64-linux-gnu/wine
+ WINE_64BIT_FLAGS += -L/usr/lib/x86_64-linux-gnu/wine-development
+@@ -59,9 +59,9 @@ WINE_64BIT_FLAGS += -L/usr/lib/x86_64-linux-gnu/wine-development/x86_64-unix
+ WINE_64BIT_FLAGS += -L/opt/wine-stable/lib64
+ WINE_64BIT_FLAGS += -L/opt/wine-stable/lib64/wine
+ WINE_64BIT_FLAGS += -L/opt/wine-stable/lib64/wine/x86_64-unix
+-WINE_64BIT_FLAGS += -L/opt/wine-staging/lib64
+-WINE_64BIT_FLAGS += -L/opt/wine-staging/lib64/wine
+-WINE_64BIT_FLAGS += -L/opt/wine-staging/lib64/wine/x86_64-unix
++WINE_64BIT_FLAGS += -L@wine@/lib
++WINE_64BIT_FLAGS += -L@wine@/lib/wine
++WINE_64BIT_FLAGS += -L@wine@/lib/wine/x86_64-unix
+ 
+ WINE_LINK_FLAGS  += -lrt
+ endif
+diff --git a/carla/source/modules/dgl/Makefile b/carla/source/modules/dgl/Makefile
+index 50eab4b88..207ac5916 100644
+--- a/carla/source/modules/dgl/Makefile
++++ b/carla/source/modules/dgl/Makefile
+@@ -16,7 +16,7 @@ BUILD_CXX_FLAGS += -Isrc/pugl-upstream/include
+ ifneq ($(MACOS),true)
+ WINE_FLAGS  = -I/usr/include/wine/wine/windows
+ WINE_FLAGS += -I/usr/include/wine-development/windows
+-WINE_FLAGS += -I/opt/wine-devel/include/wine/windows
++WINE_FLAGS += -I@wine@/include/wine/windows
+ endif
+ 
+ # ---------------------------------------------------------------------------------------------------------------------
+

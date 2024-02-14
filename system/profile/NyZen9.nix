@@ -354,6 +354,7 @@
         "Sync"
 
         # music
+        ".config/Ildaeil"
         ".config/Jean Pierre Cimalando"
         ".config/Sononym"
         ".config/audiogridder"

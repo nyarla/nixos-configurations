@@ -22,7 +22,7 @@ index 44a8cdc72..bcf10e301 100644
          engine->setOption(CB::ENGINE_OPTION_PATH_RESOURCES, 0, resourceDir);
      else
 -        engine->setOption(CB::ENGINE_OPTION_PATH_RESOURCES, 0, waterBinaryDir.getChildFile("resources").getFullPathName().toRawUTF8());
-+        engine->setOption(CB::ENGINE_OPTION_PATH_RESOURCES, 0, "@carla@/share/carla");
++        engine->setOption(CB::ENGINE_OPTION_PATH_RESOURCES, 0, "@carla@/share/carla/resources");
  
      if (const char* const preventBadBehaviour = std::getenv("ENGINE_OPTION_PREVENT_BAD_BEHAVIOUR"))
          engine->setOption(CB::ENGINE_OPTION_PREVENT_BAD_BEHAVIOUR, (std::strcmp(preventBadBehaviour, "true") == 0) ? 1 : 0, nullptr);
@@ -50,7 +50,7 @@ index 69a30ac0e..1499b97b3 100644
  WINE_32BIT_FLAGS += -I/usr/include/wine/wine/windows
  WINE_32BIT_FLAGS += -I/usr/include/wine-development/windows
 -WINE_32BIT_FLAGS += -I/opt/wine-devel/include/wine/windows
-+WINE_32BIT_FLAGS += -I@carla@/include/wine/windows
++WINE_32BIT_FLAGS += -I@wine@/include/wine/windows
  WINE_32BIT_FLAGS += -L/usr/lib32/wine
  WINE_32BIT_FLAGS += -L/usr/lib/wine
  WINE_32BIT_FLAGS += -L/usr/lib/i386-linux-gnu/wine
@@ -68,7 +68,7 @@ index 69a30ac0e..1499b97b3 100644
  WINE_64BIT_FLAGS += -I/usr/include/wine/wine/windows
  WINE_64BIT_FLAGS += -I/usr/include/wine-development/windows
 -WINE_64BIT_FLAGS += -I/opt/wine-devel/include/wine/windows
-+WINE_64BIT_FLAGS += -I@carla@/include/wine/windows
++WINE_64BIT_FLAGS += -I@wine@/include/wine/windows
  WINE_64BIT_FLAGS += -L/usr/lib64/wine
  WINE_64BIT_FLAGS += -L/usr/lib/x86_64-linux-gnu/wine
  WINE_64BIT_FLAGS += -L/usr/lib/x86_64-linux-gnu/wine-development

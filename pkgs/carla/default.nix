@@ -26,11 +26,11 @@ in (carla.override { stdenv = multiStdenv; }).overrideAttrs (old: rec {
 
   dontStrip = true;
 
+  patches = [ ./nixos.patch ];
+
   postPatch = old.postPatch + ''
     export carla=$out
     export wine=${wine}
-
-    patch -p1 ${./nixos.patch}
 
     substituteAllInPlace source/jackbridge/Makefile
     substituteAllInPlace source/modules/dgl/Makefile

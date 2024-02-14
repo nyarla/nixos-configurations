@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export WINEPREFIX=/media/data/DAW/DAW/FLStudio
+export LD_PRELOAD=
+
+cd "$HOME"
+
+# prepare wineasio
+wineasio="drive_c/windows/system32/wineasio.dll"
+
+[[ ! -e $WINEPREFIX/$wineasio ]] || chmod +w $WINEPREFIX/$wineasio
+cp ~/.nix-profile/lib/wine/x86_64-unix/wineasio.dll.so $WINEPREFIX/$wineasio
+wine64 regsvr32 /s wineasio.dll
+
+# launch jackd if not running
+if ! pgrep jackd ; then
+  pasuspender -- jackd -R -dalsa -dplughw:USB -r96000 -p512 -n3 &
+  export jackdPID=$!
+fi
+
+# launch AudioGridder if not running
+if ! pgrep AudioGridder ; then
+  AudioGridderServer &
+  export agPID=$!
+fi
+
+# launch FL Studio
+wine 'C:\Program Files\Image-Line\FL Studio 21\FL64.exe' &
+export dawPID=$!
+
+[[ -n $dawPID ]] && wait $dawPID
+
+# shutdown
+[[ -n $jackdPID ]] && kill "$jackdPID"
+[[ -n $agPID    ]] && pgrep AudioGridder | xargs -I{} kill {}
+
+wineboot --shutdown
+
+exit 0

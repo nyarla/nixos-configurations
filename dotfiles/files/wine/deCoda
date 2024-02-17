@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export WINEPREFIX=/media/data/DAW/DAW/deCoda
+export LD_PRELOAD=
+
+cd "$HOME"
+
+# setup wineasio (always)
+wineasio="drive_c/windows/system32/wineasio.dll"
+
+[[ ! -e $WINEPREFIX/$wineasio ]] || chmod +w $WINEPREFIX/$wineasio
+cp ~/.nix-profile/lib/wine/x86_64-unix/wineasio.dll.so $WINEPREFIX/$wineasio
+wine64 regsvr32 /s wineasio.dll
+
+# autostart dependence softwares for deCoda
+if ! pgrep jackd ; then
+  pasuspender -- jackd -R -dalsa -dplughw:USB -r96000 -p512 -n3 &
+  export startJackd=1
+fi
+
+# launch deCoda
+wine 'C:\Program Files\zplane\deCoda\deCoda.exe' &
+export dawPID=$!
+[[ -n $dawPID ]] && wait $dawPID
+
+# shutdown
+if [[ -n $startJackd ]]; then
+  pgrep jackd | xargs -I{} kill {}
+  (sleep 1; systemctl --user restart pulseaudio) &
+fi
+
+wineboot --shutdown
+
+exit 0

@@ -1,6 +1,6 @@
 { ... }: {
   virtualisation.virtualbox.host = {
     enable = true;
-    enableExtensionPack = true;
+    enableExtensionPack = false;
   };
 }

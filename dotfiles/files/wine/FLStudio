@@ -7,34 +7,38 @@ export LD_PRELOAD=
 
 cd "$HOME"
 
-# prepare wineasio
+# setup wineasio (always)
 wineasio="drive_c/windows/system32/wineasio.dll"
 
 [[ ! -e $WINEPREFIX/$wineasio ]] || chmod +w $WINEPREFIX/$wineasio
 cp ~/.nix-profile/lib/wine/x86_64-unix/wineasio.dll.so $WINEPREFIX/$wineasio
 wine64 regsvr32 /s wineasio.dll
 
-# launch jackd if not running
+# autostart dependence softwares for FL Studio
 if ! pgrep jackd ; then
   pasuspender -- jackd -R -dalsa -dplughw:USB -r96000 -p512 -n3 &
-  export jackdPID=$!
+  export startJackd=1
 fi
 
-# launch AudioGridder if not running
 if ! pgrep AudioGridder ; then
   AudioGridderServer &
-  export agPID=$!
+  export startAG=1
 fi
 
 # launch FL Studio
 wine 'C:\Program Files\Image-Line\FL Studio 21\FL64.exe' &
 export dawPID=$!
-
 [[ -n $dawPID ]] && wait $dawPID
 
 # shutdown
-[[ -n $jackdPID ]] && kill "$jackdPID"
-[[ -n $agPID    ]] && pgrep AudioGridder | xargs -I{} kill {}
+if [[ -n $startJackd ]]; then
+  pgrep jackd | xargs -I{} kill {}
+  (sleep 1; systemctl --user restart pulseaudio) &
+fi
+
+if [[ -n $startAG ]]; then
+  pgrep AudioGridder | xargs -I{} kill {}
+fi
 
 wineboot --shutdown
 

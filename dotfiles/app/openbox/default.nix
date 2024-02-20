@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   imports = [
     ../../config/desktop/bitwarden.nix
-    ../../config/desktop/blueman-applet.nix
     ../../config/desktop/calibre.nix
     ../../config/desktop/cmst.nix
     ../../config/desktop/desktop-panel.nix
@@ -110,7 +109,7 @@
 
       trap cleanup INT TERM
 
-      ${pkgs.openbox}/bin/openbox-session &
+      dbus-launch --exit-with-session ${pkgs.openbox}/bin/openbox-session &
       waidPID=$!
 
       test -n $waidPID && wait $waidPID

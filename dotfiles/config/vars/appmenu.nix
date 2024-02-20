@@ -34,7 +34,7 @@ let
   sep = "<separator/>";
 
   applicationMenuOnXorg = menu "applications-main" "Main" [
-    (exec "wezterm" "wezterm")
+    (exec "wezterm" ''wezterm --config "front_end='WebGpu'"'')
     (exec "virtualbox" "VirtualBox")
     "${sep}"
     (exec "waydroid" (script "waydroid-on-weston"))

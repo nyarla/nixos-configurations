@@ -17,7 +17,7 @@
   {
     name = "SKK-JISYO.L";
     url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L";
-    sha256 = "1zr76ds8620y9yq2whg8jaccxs4za3dsw7zizylcs55nyvbrxzyk";
+    sha256 = "090gl7vmhvvcr4mw8ghx2wl03g2w86zf9x3c4730nnhqwi2zr5p8";
   }
   {
     name = "SKK-JISYO.fullname";
@@ -45,13 +45,13 @@
     name = "SKK-JISYO.propernoun";
     url =
       "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.propernoun";
-    sha256 = "0lqn0iqj9dg7sm08zb7sja2q99689k06zfbcklx7c62dr9x23819";
+    sha256 = "0a5lkp69cpjhgya3m983d5hwf1zdsp8w81pdk8arw03s5hy6j8hm";
   }
   {
     name = "SKK-JISYO.station";
     url =
       "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.station";
-    sha256 = "1fnslnbdwqlj55mzknvf22sa1zq168pv2y7p1xpjpah8ivdlj67i";
+    sha256 = "1gil9kz0f8hdi04akk6dsz02jbg7pwah9ypbcm9lp3373fzhh1q0";
   }
   {
     name = "SKK-JISYO.neologd";

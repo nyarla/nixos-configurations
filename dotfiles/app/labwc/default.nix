@@ -101,7 +101,8 @@
       export GBM_BACKENDS_PATH=/etc/gbm
 
       export VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/nvidia_icd.i686.json
-      export __EGL_VENDOR_LIBRARY_DIRS=/etc/glvnd/egl_vendor.d
+      export __EGL_VENDOR_LIBRARY_DIRS=/run/opengl-driver/share/glvnd/egl_vendor.d
+      export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json
       export __GL_GSYNC_ALLOWED=0
       export __GL_VRR_ALLOWED=0
       export __GLX_VENDOR_LIBRARY_NAME=nvidia

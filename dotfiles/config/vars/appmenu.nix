@@ -33,40 +33,42 @@ let
 
   sep = "<separator/>";
 
-  applicationMenuOnXorg = menu "applications-main" "Main" [
-    (exec "wezterm" ''wezterm --config "front_end='WebGpu'"'')
+  exec2 = label:
+    { wayland ? "", xorg ? "" }:
+    if isWayland then (exec label wayland) else (exec label xorg);
+
+  applicationsMain = menu "applications-main" "Main" [
+    (exec2 "wezterm" {
+      wayland = ''
+        env  __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json wezterm --config enable_wayland=false --config "front_end='Software'"
+      '';
+      xorg = ''wezterm --config "front_end='WebGpu'"'';
+    })
     (exec "virtualbox" "VirtualBox")
     "${sep}"
-    (exec "waydroid" (script "waydroid-on-weston"))
+    (if isWayland then
+      (menu "applications-wayland" "waydroid" [
+        (exec "start" (script "waydroid-start"))
+        (exec "stop" (script "waydroid-stop"))
+      ])
+    else
+      (exec "waydroid" (script "waydroid-on-weston")))
     "${sep}"
-    (exec "Vial" "Vial")
+    (exec "vial" "Vial")
   ];
-
-  applicationMenuOnWayland = menu "applications-main" "Main" [
-    (exec "wezterm"
-      "env __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json wezterm --config enable_wayland=false")
-    (exec "wterm" "weston-terminal")
-    "${sep}"
-    (exec "virtualbox" "VirtualBox")
-    (menu "applications-waydroid" "Waydroid" [
-      (exec "Start" (script "waydroid-start"))
-      (exec "Stop" (script "waydroid-stop"))
-    ])
-    "${sep}"
-    (exec "Vial" "Vial")
-  ];
-
-  applicationsMain =
-    if isXorg then applicationMenuOnXorg else applicationMenuOnWayland;
 
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
-    (exec "Google Chrome" "google-chrome-stable")
+    (exec "Google Chrome" "google-chrome-stable --disable-gpu")
     "${sep}"
-    (exec "Scrapbox" "google-chrome-stable --app=https://scrapbox.io/")
+    (exec "Scrapbox"
+      "google-chrome-stable --disable-gpu --app=https://scrapbox.io/")
     "${sep}"
-    (exec "Bitwarden" "bitwarden")
+    (exec2 "Bitwarden" {
+      wayland = "bitwarden --disable-gpu";
+      xorg = "bitwarden";
+    })
     "${sep}"
     (exec "Telegram" "telegram-desktop")
   ];
@@ -80,7 +82,7 @@ let
   applicationsMultimedia = menu "applications-multimedia" "Media" [
     (exec "Calibre" "calibre")
     (exec "Picard" "picard")
-    (exec "Mp3tag" (wine "Mp3tag"))
+    (exec "Mp3tag" (wine "MP3TAG"))
     "${sep}"
     (exec "DeaDBeef" "deadbeef")
   ];
@@ -93,9 +95,12 @@ let
     (exec "Inkscape" "inkscape")
     (exec "Pixelorama" "pixelorama")
     "${sep}"
-    (exec "Spice up" "com.github.philip-scott.spice-up")
+    (exec "Spice up" "com.github.philip_scott.spice-up")
     (exec "Simple Scan" "simple-scan")
-    (exec "GIF Capture" "peek")
+    (exec2 "GIF Capture" {
+      wayland = "GDK_BACKEND=x11 peek";
+      xorg = "peek";
+    })
   ];
 
   applicationsUtils = menu "applications-utils" "Utils" [

@@ -1,9 +1,23 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ xdg-utils ];
+{ pkgs, ... }:
+let
+  xdgPortalApps = with pkgs; [
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-wlr
+    xdg-desktop-portal-xapp
+  ];
+in {
+  environment.systemPackages = xdgPortalApps ++ (with pkgs; [ xdg-utils ]);
+
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-    configPackages = with pkgs; [ xdg-desktop-portal-gtk ];
+    extraPortals = xdgPortalApps;
+    config = {
+      common = {
+        default = [ "gtk" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+      };
+    };
 
     wlr = {
       enable = true;

@@ -11,7 +11,7 @@
   ];
 
   # packages
-  environment.systemPackages = with pkgs; [ pavucontrol pulseaudioFull ];
+  environment.systemPackages = with pkgs; [ pavucontrol ];
 
   # configuration
   hardware.pulseaudio = {

@@ -1,11 +1,8 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs.mate; [
-    atril
-    engrampa
-    eom
-    mate-polkit
-    pluma
-  ];
+{ pkgs, ... }:
+let mateApps = with pkgs.mate; [ atril engrampa eom mate-polkit pluma ];
+in {
+  environment.systemPackages = mateApps;
+  services.dbus.packages = mateApps;
 
   services = {
     udisks2.enable = true;

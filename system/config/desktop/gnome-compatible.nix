@@ -1,11 +1,14 @@
-{ config, pkgs, ... }: {
-  environment.systemPackages =
-    (with pkgs.gnome; [ zenity dconf-editor gnome-keyring ])
+{ config, pkgs, ... }:
+let
+  gnomeApps = (with pkgs.gnome; [ zenity dconf-editor gnome-keyring ])
     ++ (with pkgs; [ gsound gcr ]);
+in {
+  environment.systemPackages = gnomeApps;
 
   services = {
     accounts-daemon.enable = true;
     dbus.enable = true;
+    dbus.packages = gnomeApps;
     system-config-printer.enable = true;
 
     gnome = {

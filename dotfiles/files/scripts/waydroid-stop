@@ -6,5 +6,6 @@ waydroid session stop
 
 env SHELL=/bin/sh pkexec sh -c '
     sudo umount /persist/home/nyarla/.local/share/waydroid/data/media/0/Music
-    sudo umount /persist/home/nyarla/.local/share/waydroid/data/media/0/eBooks 
+    sudo umount /persist/home/nyarla/.local/share/waydroid/data/media/0/eBooks
+    sudo umount /persist/home/nyarla/.local/share/waydroid/data/media/0/Download
   '

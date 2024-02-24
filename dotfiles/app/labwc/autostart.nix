@@ -12,6 +12,10 @@ in writeShellScript "autostart" ''
   systemctl --user start desktop-session.target
   systemctl --user start swaylock
 
+  eval "$(/run/wrappers/bin/gnome-keyring-daemon --components=pkcs11,secrets,ssh --replace --daemonize)"
+  export SSH_AUTH_SOCK
+  export GNOME_KEYRING_CONTROL
+
   fcitx5 -rd
   swaybg -i ${wallpaper} -m fit &
 ''

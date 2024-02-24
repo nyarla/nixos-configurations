@@ -20,5 +20,9 @@ in writeShellScript "autostart" ''
   systemctl --user restart picom
   systemctl --user restart xss-lock
 
+  eval "$(/run/wrappers/bin/gnome-keyring-daemon --components=pkcs11,secrets,ssh --replace --daemonize)"
+  export SSH_AUTH_SOCK
+  export GNOME_KEYRING_CONTROL
+
   ${pkgs.hsetroot}/bin/hsetroot -fill ${wallpaper} &
 ''

@@ -10,7 +10,6 @@ _: {
     ../config/app/wine.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
-    ../config/services/gnome-keyring.nix
     ../config/services/keychain.nix
     ../config/services/polkit.nix
     ../config/services/syncthing.nix

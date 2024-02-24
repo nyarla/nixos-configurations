@@ -10,7 +10,6 @@
     libinput.enable = true;
     exportConfiguration = true;
 
-    desktopManager.runXdgAutostartIfNone = true;
     displayManager = {
       sx.enable = true;
       job.environment.LANG = "ja_JP.UTF-8";

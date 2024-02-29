@@ -400,6 +400,7 @@
         ".local/share/applications"
         ".local/share/fcitx5"
         ".local/share/fonts"
+        ".local/share/libcskk"
         ".local/share/mime"
         ".local/share/npm"
         ".local/share/nvim"

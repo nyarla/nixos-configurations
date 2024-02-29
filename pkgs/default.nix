@@ -5,6 +5,7 @@ in {
   arc-openbox = require ./arc-openbox { };
   audiogridder = require ./audiogridder { };
   clipboard-sync = require ./clipboard-sync { };
+  cskk = require ./cskk { };
   cuda-shell = require ./cuda-shell {
     cudaPackages = super.cudaPackages_11_8;
     nvidia_x11 = null;
@@ -13,6 +14,8 @@ in {
   deadbeef-fb = require ./deadbeef-fb { };
   elk-native = require ./elk-native { };
   fcitx5-fbterm = require ./fcitx5-fbterm { };
+  fcitx5-cskk = super.libsForQt5.callPackage (import ./fcitx5-cskk) { };
+  fcitx5-cskk-qt = self.fcitx5-cskk.override { enableQt = true; };
   fedistar = require ./fedistar { };
   flatery-icon-theme = require ./flatery-icon-theme { };
   galendae = require ./galendae { };

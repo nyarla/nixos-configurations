@@ -71,21 +71,21 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2024-02-23";
+      version = "2024-03-02";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
-        rev = "7adf5533f975736be1b1a20b25dcaa650b32c0e0";
-        hash = "sha256-QaWqUwugIk//RbThA9oeNjbmRmEFFQYti5gIaERoQEA=";
+        rev = "5b2b1c31ab483349b5baa272fdbb08fe2c580972";
+        hash = "sha256-2jORTmvLoq8kXCuJ6vcuhIRBDWxcSteg0Lpmvcbub0c=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
-    version = "2024-02-21";
+    version = "2024-03-02";
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
-      rev = "2be58f173fccf2c02e108c547662595e542468dc";
-      hash = "sha256-pLePYin3aieJ2mVe7mMYZg3Z0d1GDDl7ATPRGJM+Txg=";
+      rev = "cc8e0a9848144e7786afb7932b5b173c1d080907";
+      hash = "sha256-VinGxw53vGsPIq6hJYv6Oynd0KcOPStGsg3sfPdF7jE=";
     };
     buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });

@@ -3,12 +3,12 @@
 
 multiStdenv.mkDerivation rec {
   pname = "wineasio";
-  version = "1.1.0";
+  version = "2024-03-02";
   src = fetchFromGitHub {
     owner = pname;
     repo = pname;
-    rev = "56c3e9da95b467f1f64ba069864c35762251a734";
-    hash = "sha256-HEnJj9yfXe+NQuPATMpPvseFs+3TkiMLd1L+fIfQd+o=";
+    rev = "652964155dcee005078c7cb652656e8a0b995186";
+    hash = "sha256-2wMZ+TIuD8eECTfJ0rz5JmL4sdLGVm6GMxW9CAkvIoI=";
     fetchSubmodules = true;
   };
 
@@ -41,10 +41,10 @@ multiStdenv.mkDerivation rec {
 
   installPhase = ''
     runHook preInstall
-    install -D build32/wineasio.dll     $out/lib/wine/i386-windows/wineasio.dll
-    install -D build32/wineasio.dll.so  $out/lib/wine/i386-unix/wineasio.dll.so
-    install -D build64/wineasio.dll     $out/lib/wine/x86_64-windows/wineasio.dll
-    install -D build64/wineasio.dll.so  $out/lib/wine/x86_64-unix/wineasio.dll.so
+    install -D build32/wineasio32.dll     $out/lib/wine/i386-windows/wineasio32.dll
+    install -D build32/wineasio32.dll.so  $out/lib/wine/i386-unix/wineasio32.dll.so
+    install -D build64/wineasio64.dll     $out/lib/wine/x86_64-windows/wineasio64.dll
+    install -D build64/wineasio64.dll.so  $out/lib/wine/x86_64-unix/wineasio64.dll.so
 
     cd gui
     mkdir -p $out/share/wineasio

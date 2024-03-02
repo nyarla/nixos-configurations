@@ -8,11 +8,11 @@ export LD_PRELOAD=
 cd "$HOME"
 
 # setup wineasio (always)
-wineasio="drive_c/windows/system32/wineasio.dll"
+wineasio="drive_c/windows/system32/wineasio64.dll"
 
 [[ ! -e $WINEPREFIX/$wineasio ]] || chmod +w $WINEPREFIX/$wineasio
-cp ~/.nix-profile/lib/wine/x86_64-unix/wineasio.dll.so $WINEPREFIX/$wineasio
-wine64 regsvr32 /s wineasio.dll
+cp ~/.nix-profile/lib/wine/x86_64-unix/wineasio64.dll.so $WINEPREFIX/$wineasio
+wine64 regsvr32 /s wineasio64.dll
 
 # autostart dependence softwares for deCoda
 if ! pgrep jackd ; then

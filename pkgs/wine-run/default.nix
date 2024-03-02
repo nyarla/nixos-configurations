@@ -16,6 +16,7 @@ let
   wine-setup = writeShellScript "wine-setup" ''
     ${wine-run} wineboot -u
     ${wine-run} winetricks corefonts fakejapanese
+    ${wine-run} wineboot -s
   '';
 in runCommand "wine-run" { } ''
   mkdir -p $out/bin

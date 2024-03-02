@@ -187,6 +187,7 @@
     "home/nyarla/.local/share/perl"
     "home/nyarla/.local/share/waydroid"
     "home/nyarla/.mozilla"
+    "home/nyarla/.var"
     "home/nyarla/.wrangler"
     "home/nyarla/Applications"
     "home/nyarla/Programming"
@@ -415,6 +416,7 @@
         ".mozilla"
         ".pki"
         ".thunderbird"
+        ".var"
 
         # credentials
         (secure ".fly")

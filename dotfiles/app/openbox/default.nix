@@ -80,8 +80,6 @@
         . $HOME/.config/profile.d/$rc
       done
 
-      xsetroot -cursor_name left_ptr
-
       export DESKTOP_SESSION=openbox
 
       export XDG_CONFIG_DIRS=/etc/xdg:/home/''${USER}/.nix-profile/etc/xdg:/etc/profiles/per-user/''${USER}/etc/xdg:/nix/var/nix/profiles/default/etc/xdg:/run/current-system/sw/etc/xdg

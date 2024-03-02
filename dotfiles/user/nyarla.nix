@@ -8,6 +8,7 @@ _: {
     ../config/app/office.nix
     ../config/app/weston.nix
     ../config/app/wine.nix
+    ../config/desktop/theme.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
     ../config/services/keychain.nix

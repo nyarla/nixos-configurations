@@ -13,7 +13,7 @@
         "HOME=${config.home.homeDirectory}"
         "LANG=ja_JP.UTF-8"
         "LC_ALL=ja_JP.UTF-8"
-        "XDG_DATA_DIRS=/run/current-system/sw/share"
+        "XDG_DATA_DIRS=${config.home.profileDirectory}/share"
       ];
       ExecStart = toString (pkgs.writeShellScript "panel" ''
         if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then

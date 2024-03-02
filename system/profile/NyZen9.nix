@@ -6,7 +6,6 @@
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
     ../config/desktop/flatpak.nix
-    ../config/desktop/theme.nix
     ../config/desktop/wayland.nix
     ../config/desktop/xdg.nix
     ../config/desktop/xorg.nix
@@ -426,13 +425,8 @@
         (secure ".ssh")
         (secure ".wrangler")
       ];
-      files = [
-        ".clasprc.json"
-        ".config/mimeapps.list"
-        ".config/snn.conf"
-        ".gtkrc-2.0"
-        ".npmrc"
-      ];
+      files =
+        [ ".clasprc.json" ".config/mimeapps.list" ".config/snn.conf" ".npmrc" ];
     };
   };
 

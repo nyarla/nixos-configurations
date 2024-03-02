@@ -81,12 +81,6 @@
         . $HOME/.config/profile.d/$rc
       done
 
-      schema="org.gnome.desktop.interface"
-      gsettings set $schema gtk-theme "Fluent-Light-compact"
-      gsettings set $schema icon-theme "Fluent"
-      gsettings set $schema cursor-theme $XCURSOR_THEME
-      gsettings set $schema font-name "Sans 9"
-
       export DESKTOP_SESSION=wlroots
 
       export XDG_DATA_DIRS=$HOME/.local/share:/run/current-system/etc/profiles/per-user/nyarla/share:$XDG_DATA_DIRS

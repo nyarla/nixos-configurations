@@ -5,6 +5,7 @@
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
+    ../config/desktop/flatpak.nix
     ../config/desktop/theme.nix
     ../config/desktop/wayland.nix
     ../config/desktop/xdg.nix
@@ -180,6 +181,7 @@
     # for accounts
     "home/nyarla/.config/audiogridder"
     "home/nyarla/.fly"
+    "home/nyarla/.local/share/flatpak"
     "home/nyarla/.local/share/npm"
     "home/nyarla/.local/share/nvim"
     "home/nyarla/.local/share/perl"

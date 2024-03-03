@@ -1,15 +1,15 @@
 { fetchFromGitHub, rustPlatform, cargo-c, rust-bindgen, libxkbcommon }:
 rustPlatform.buildRustPackage rec {
   pname = "cskk";
-  version = "3.1.0";
+  version = "v3.1.0";
   src = fetchFromGitHub {
     owner = "naokiri";
     repo = pname;
-    rev = version;
+    rev = "d783896ddc8510e564d542fc56c6486834424be6";
     hash = "sha256-xOCR5wfVC8OeCieC7YGlWoxRUB5MFbuk40irLS0ngBc=";
   };
 
-  cargoHash = "sha256-l3Xv03P4aVnWZh4+acOdD2031eKfdsVqy3HyS+28n3A=";
+  cargoHash = "sha256-lKLbs2Q3Vt4nIvlMBqjiPn7exO6F2y/D8AvpTPtusbo=";
 
   buildInputs = [ libxkbcommon.dev ];
   nativeBuildInputs = [ cargo-c rust-bindgen ];

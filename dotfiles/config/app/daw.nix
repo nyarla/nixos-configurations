@@ -64,7 +64,7 @@
     sorcer
     sunvox
     surge
-    surge-XT
+    # surge-XT
     synthv1
     vcv-rack
     x42-avldrums

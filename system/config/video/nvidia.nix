@@ -29,7 +29,7 @@ in {
   hardware.nvidia = {
     modesetting.enable = true;
     package = nvidia;
-    open = false;
+    open = true;
     forceFullCompositionPipeline = true;
   };
 

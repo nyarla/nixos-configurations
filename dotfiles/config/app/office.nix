@@ -4,6 +4,7 @@
     gucharmap
     inkscape
     libreoffice-fresh
+    libresprite
     mate.mate-calc
     peek
     pixelorama

@@ -19,7 +19,6 @@
 
       # credential
       libsecret
-      pinentry-gnome
 
       # clipboard
       clipit
@@ -107,7 +106,8 @@
 
       trap cleanup INT TERM
 
-      dbus-launch --exit-with-session ${pkgs.openbox}/bin/openbox-session &
+      eval "$(dbus-launch --sh-syntax --exit-with-session)"
+      ${pkgs.openbox}/bin/openbox-session &
       waidPID=$!
 
       test -n $waidPID && wait $waidPID

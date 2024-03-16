@@ -8,7 +8,6 @@
     # container toolchain
     linuxkit
     act
-    actionlint
 
     # compiler
     clang-tools
@@ -18,12 +17,10 @@
     stdenv.cc
 
     # go
-    go_1_21
-    gotools
+    go
 
     # nim
     nim
-    nimlsp
 
     # node.js
     nodejs_latest
@@ -44,27 +41,11 @@
     openjdk
 
     # nix
-    deadnix
-    nixfmt
-    nixpkgs-lint-community
-    nixd
     nurl
-    statix
-
-    # lua
-    luajitPackages.luacheck
 
     # editor
     neovim
     editorconfig-core-c
-    editorconfig-checker
-
-    # setting files
-    # hadolint
-    yamllint
-    cmake-format
-    taplo
-    shellcheck
 
     # vcs
     git-lfs

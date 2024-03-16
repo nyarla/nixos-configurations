@@ -1,4 +1,4 @@
 { pkgs, ... }: {
   programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.pinentryFlavor = "gnome3";
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
 }

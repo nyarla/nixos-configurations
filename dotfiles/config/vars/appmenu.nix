@@ -60,10 +60,10 @@ let
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
-    (exec "Google Chrome" "google-chrome-stable --disable-gpu")
-    "${sep}"
-    (exec "Scrapbox"
-      "google-chrome-stable --disable-gpu --app=https://scrapbox.io/")
+    (exec2 "Google Chrome" {
+      wayland = "google-chrome-stable --ozone-platform=wayland --gtk-version=4";
+      xorg = "google-chrome-stable";
+    })
     "${sep}"
     (exec2 "Bitwarden" {
       wayland = "bitwarden --disable-gpu";
@@ -91,16 +91,26 @@ let
     (exec "Calc" "mate-calc")
     (exec "CharMap" "gucharmap")
     "${sep}"
-    (exec "Gimp" "gimp")
-    (exec "Inkscape" "inkscape")
-    (exec "Pixelorama" "pixelorama")
-    "${sep}"
     (exec "Spice up" "com.github.philip_scott.spice-up")
     (exec "Simple Scan" "simple-scan")
     (exec2 "GIF Capture" {
       wayland = "GDK_BACKEND=x11 peek";
       xorg = "peek";
     })
+  ];
+
+  applicationsCreative = menu "applications-creative" "Creative" [
+    (menu "applications-daw" "DAW" [
+      (exec "FL Studio" (wine "FLStudio"))
+      (exec "deCoda" (wine "deCoda"))
+    ])
+    "${sep}"
+    (menu "applications-graphic" "Graphics" [
+      (exec "Gimp" "gimp")
+      (exec "Inkscape" "inkscape")
+      (exec "Pixelorama" "pixelorama")
+      (exec "Libresprite" "libresprite")
+    ])
   ];
 
   applicationsUtils = menu "applications-utils" "Utils" [
@@ -157,6 +167,7 @@ in ''
     ${applicationsMultimedia}
     ${applicationsOffice}
     ${applicationsUtils}
+    ${applicationsCreative}
     ${systemOperation}
     ${systemContextMenu}
   </openbox_menu>

@@ -71,7 +71,7 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2024-03-02";
+      version = "2024-03-13";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
         rev = "5b2b1c31ab483349b5baa272fdbb08fe2c580972";
@@ -81,11 +81,11 @@ in {
     });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
-    version = "2024-03-02";
+    version = "2024-03-13";
     src = super.fetchFromGitHub rec {
       inherit (old.src) owner repo;
-      rev = "cc8e0a9848144e7786afb7932b5b173c1d080907";
-      hash = "sha256-VinGxw53vGsPIq6hJYv6Oynd0KcOPStGsg3sfPdF7jE=";
+      rev = "f7e538fe887ca96bbcf6549376ccf502f62a54c6";
+      hash = "sha256-eu7Zz/pWNWNdH4FUzdtTRsD/yD2vhWBfzewY6LE3UYo=";
     };
     buildInputs = old.buildInputs ++ [ super.xorg.xcbutil ];
   });
@@ -110,8 +110,8 @@ in {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = "3f2aced8c6fd00b0b71da24c790850af2004052b";
-      hash = "sha256-Z0gWM7AQqJOSr2maUtjdgk/MF6pyeyFMMTaivgt+RMI=";
+      rev = "6dce6ae2ed92544b9758b194618e21f4c97f1d6b";
+      hash = "sha256-Of9qykyVnBURc5A2pvCMm7sLbnuuG7OPWLxodQLN2Xg=";
     };
 
     buildInputs = old.buildInputs

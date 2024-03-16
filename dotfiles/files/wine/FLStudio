@@ -7,6 +7,10 @@ export LD_PRELOAD=
 
 cd "$HOME"
 
+if ! grep -q "Focusrite" <(lsusb); then
+  zenity --notification --text="USB Device not found"
+fi
+
 # setup wineasio (always)
 wineasio="drive_c/windows/system32/wineasio64.dll"
 
@@ -15,6 +19,7 @@ cp ~/.nix-profile/lib/wine/x86_64-unix/wineasio64.dll.so $WINEPREFIX/$wineasio
 wine64 regsvr32 /s wineasio64.dll
 
 # autostart dependence softwares for FL Studio
+(pgrep jackdbus | xargs -I{} kill -9 {}) || true
 if ! pgrep jackd ; then
   pasuspender -- jackd -R -dalsa -dplughw:USB -r96000 -p512 -n3 &
   export startJackd=1

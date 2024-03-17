@@ -629,7 +629,7 @@
     };
   };
 
-  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
+  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" "nix-2.16.2" ];
 
   system.stateVersion = "23.05";
 

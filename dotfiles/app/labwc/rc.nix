@@ -88,6 +88,8 @@ in ''
     (keybind "A-o" [ (action "SnapToRegion" [ (prop "region" "center") ]) ])
 
     (keybind "A-F1" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
+    (keybind "A-F2"
+      [ (action "ShowMenu" [ (prop "menu" "applications-creative") ]) ])
     (keybind "C-W-q" [ (exec "swaylock -C ~/.config/swaylock/config -f") ])
   ])
 ])

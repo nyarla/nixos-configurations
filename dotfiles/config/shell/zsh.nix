@@ -4,7 +4,6 @@
     autocd = true;
     shellAliases = {
       "cd" = "__cd";
-      "edit" = "make -f ~/.config/nvim/Makefile edit";
       "l" = "ls --color -F -la";
       "ls" = "ls --color -F";
       "nixos-apply" =
@@ -17,6 +16,7 @@
       "rm" = "trash";
       "waydroid" =
         "env XDG_DATA_HOME=/persist/home/nyarla/.local/share waydroid";
+      "nvim" = "nvim-run";
     };
     sessionVariables = {
       FAKE_RELEASE = 1;

@@ -23,6 +23,7 @@ let
     nodePackages.vscode-json-languageserver
     perlnavigator
     sqls
+    tailwindcss-language-server
     taplo
 
     # all-in-one toolchains

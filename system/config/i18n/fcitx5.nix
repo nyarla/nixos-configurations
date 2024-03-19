@@ -7,6 +7,7 @@
       fcitx5-gtk
       libsForQt5.fcitx5-qt
     ];
+    fcitx5.waylandFrontend = true;
   };
 
   services.dbus.packages = [ config.i18n.inputMethod.package ];

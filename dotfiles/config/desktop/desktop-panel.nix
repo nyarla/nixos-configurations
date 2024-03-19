@@ -1,37 +1,4 @@
 { pkgs, config, ... }: {
-  systemd.user.services.desktop-panel = {
-    Unit = {
-      Description = "Autostart for Desktop Panel";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Install = { WantedBy = [ "graphical-session.target" ]; };
-
-    Service = {
-      Environment = [
-        "HOME=${config.home.homeDirectory}"
-        "LANG=ja_JP.UTF-8"
-        "LC_TIME=ja_JP.UTF-8"
-        "LC_ALL=ja_JP.UTF-8"
-        "XDG_DATA_DIRS=${config.home.profileDirectory}/share"
-      ];
-      ExecStart = toString (pkgs.writeShellScript "panel" ''
-        if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
-          export DISPLAY=:0
-          ${pkgs.waybar}/bin/waybar &
-          export waidPID=$!
-        else
-          ${pkgs.lxqt.lxqt-panel}/bin/lxqt-panel 2>/dev/null &
-          export waitPID=$!
-        fi
-
-        test -n $waitPID && wait $waitPID
-      '');
-      Restart = "always";
-    };
-  };
-
   xdg.configFile."waybar/style.css".text = ''
     * image {
       -GtkWidget-vexpand: true;

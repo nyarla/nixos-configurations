@@ -6,9 +6,10 @@ let
     sha256 = "07ly21bhs6cgfl7pv4xlqzdqm44h22frwfhdqyd4gkn2jla1waab";
   };
 in writeShellScript "autostart" ''
-  xembedsniproxy &
+  eval "$(dbus-launch --sh-syntax --exit-with-session)"
 
   systemctl --user import-environment WAYLAND_DISPLAY
+
   systemctl --user start desktop-session.target
   systemctl --user start swaylock
 
@@ -17,5 +18,8 @@ in writeShellScript "autostart" ''
   export GNOME_KEYRING_CONTROL
 
   fcitx5 -rd
+  ${pkgs.waybar}/bin/waybar &
+  ${pkgs.xembed-sni-proxy}/bin/xembedsniproxy &
+  ${pkgs.calibre}/bin/calibre --start-in-tray &
   swaybg -i ${wallpaper} -m fit &
 ''

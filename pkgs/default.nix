@@ -72,11 +72,11 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2024-03-13";
+      version = "2024-03-18";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
-        rev = "5b2b1c31ab483349b5baa272fdbb08fe2c580972";
-        hash = "sha256-2jORTmvLoq8kXCuJ6vcuhIRBDWxcSteg0Lpmvcbub0c=";
+        rev = "9d51107166b584d35a14d4f769c90f64fb420e87";
+        hash = "sha256-RuWcp/1z3BVmuZ0b/7bfe5f3Dyjfda1rlOxZjigO9PM=";
       };
       buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
@@ -117,8 +117,6 @@ in {
 
     buildInputs = old.buildInputs
       ++ (with super; [ glslang libdrm.dev mesa.dev ]);
-
-    patches = [ ];
 
     postPatch = ''
       sed -i 's/glFlush/glFinish/' render/gles2/renderer.c

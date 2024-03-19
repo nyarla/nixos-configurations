@@ -24,5 +24,6 @@ in writeShellScript "autostart" ''
   export SSH_AUTH_SOCK
   export GNOME_KEYRING_CONTROL
 
+  ${pkgs.lxqt.lxqt-panel}/bin/lxqt-panel &
   ${pkgs.hsetroot}/bin/hsetroot -fill ${wallpaper} &
 ''

@@ -107,15 +107,8 @@ in {
   thunderbird-bin-unwrapped =
     super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  tmux = super.tmux.overrideAttrs (old: rec {
-    patches = old.patches ++ [
-      (super.fetchpatch {
-        url =
-          "https://raw.githubusercontent.com/z80oolong/tmux-eaw-fix/master/tmux-3.4-fix.diff";
-        sha256 = "0fhbgxsbg207vzm7lbkslwwpxpgmv2b2va9jbv1gphyw28al0wd7";
-      })
-    ];
-  });
+  tmux = super.tmux.overrideAttrs
+    (old: rec { patches = old.patches ++ [ ../patches/tmux-3.4-fix.diff ]; });
 
   wlroots_0_17 = super.wlroots.overrideAttrs (old: rec {
     src = super.fetchFromGitLab {

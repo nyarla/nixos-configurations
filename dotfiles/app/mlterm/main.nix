@@ -14,7 +14,7 @@ let
     use_anti_alias = true;
     box_drawing_font = "unicode";
     type_engine = "cairo";
-    unicode_half_width_areas = "U+2500-257F";
+    unicode_half_width_areas = "U+2500-25FF";
     unicode_full_width_areas = "U+E000-F8FF";
 
     # appearance

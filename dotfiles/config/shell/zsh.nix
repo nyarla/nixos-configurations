@@ -148,6 +148,7 @@
   };
 
   home.packages = with pkgs; [
+    shoreman
     tmux
     fzy
     platinum-searcher

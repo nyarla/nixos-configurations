@@ -148,6 +148,7 @@
   };
 
   home.packages = with pkgs; [
+    tmux
     fzy
     platinum-searcher
     mmv-go

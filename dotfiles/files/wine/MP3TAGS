@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-export WINEPREFIX=/home/nyarla/Applications/Wine/Mp3tag
+export WINEPREFIX=/home/nyarla/Applications/Wine/MP3TAG
 export LD_PRELOAD=
 
 wine 'C:\Program Files\Mp3tag\Mp3tag.exe' &

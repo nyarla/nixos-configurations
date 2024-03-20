@@ -6,13 +6,11 @@ let
     sha256 = "07ly21bhs6cgfl7pv4xlqzdqm44h22frwfhdqyd4gkn2jla1waab";
   };
 
-  Procfile = with pkgs;
-    writeText "Procfile" ''
-      waybar: while true ; do ${waybar}/bin/waybar ; done
-      xembedsniproxy: while true ; do ${xembed-sni-proxy}/bin/xembedsniproxy; done
-      calibre: while true ; do ${calibre}/bin/calibre --start-in-tray; done
-      fcitx5: while true ; do fcitx5 -r ; done
-    '';
+  launch = cmd: ''
+    while [[ -e /run/user/$(id -u)/wayland-0 ]]; do
+      ${cmd}
+    done &
+  '';
 in writeShellScript "autostart" ''
 
   systemctl --user import-environment WAYLAND_DISPLAY
@@ -24,6 +22,10 @@ in writeShellScript "autostart" ''
   export SSH_AUTH_SOCK
   export GNOME_KEYRING_CONTROL
 
-  ${pkgs.shoreman}/bin/shoreman ${Procfile} &
+  ${launch "${pkgs.waybar}/bin/waybar"}
+  ${launch "${pkgs.xembed-sni-proxy}/bin/xembedsniproxy"}
+  ${launch "fcitx5 -r"}
+  ${launch "${pkgs.calibre}/bin/calibre --start-in-tray"}
+
   swaybg -i ${wallpaper} -m fit &
 ''

@@ -38,11 +38,9 @@ let
     if isWayland then (exec label wayland) else (exec label xorg);
 
   applicationsMain = menu "applications-main" "Main" [
-    (exec2 "wezterm" {
-      wayland = ''
-        env  __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json wezterm --config enable_wayland=false --config "front_end='Software'"
-      '';
-      xorg = ''wezterm --config "front_end='WebGpu'"'';
+    (exec2 "mlterm" {
+      wayland = "mlterm-wl";
+      xorg = "mlterm-sdl2";
     })
     (exec "virtualbox" "VirtualBox")
     "${sep}"
@@ -61,7 +59,7 @@ let
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
     (exec2 "Google Chrome" {
-      wayland = "google-chrome-stable --ozone-platform=wayland --gtk-version=4";
+      wayland = "google-chrome-stable --ozone-platform=x11";
       xorg = "google-chrome-stable";
     })
     "${sep}"

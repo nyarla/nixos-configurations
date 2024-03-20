@@ -35,6 +35,7 @@ in {
   novelai-manager = require ./novelai-manager { };
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
+  shoreman = require ./shoreman { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   sononym-bin = require ./sononym-bin { };
   sysmontask = require ./sysmontask { };

@@ -12,4 +12,5 @@
 
   services.dbus.packages = [ config.i18n.inputMethod.package ];
   environment.systemPackages = with pkgs; [ skk-dicts skktools ];
+  environment.variables = { QT_IM_MODULE = "fcitx"; };
 }

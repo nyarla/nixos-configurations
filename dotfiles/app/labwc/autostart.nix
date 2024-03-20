@@ -5,8 +5,15 @@ let
       "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-dracula.png";
     sha256 = "07ly21bhs6cgfl7pv4xlqzdqm44h22frwfhdqyd4gkn2jla1waab";
   };
+
+  Procfile = with pkgs;
+    writeText "Procfile" ''
+      waybar: while true ; do ${waybar}/bin/waybar ; done
+      xembedsniproxy: while true ; do ${xembed-sni-proxy}/bin/xembedsniproxy; done
+      calibre: while true ; do ${calibre}/bin/calibre --start-in-tray; done
+      fcitx5: while true ; do fcitx5 -r ; done
+    '';
 in writeShellScript "autostart" ''
-  eval "$(dbus-launch --sh-syntax --exit-with-session)"
 
   systemctl --user import-environment WAYLAND_DISPLAY
 
@@ -17,9 +24,6 @@ in writeShellScript "autostart" ''
   export SSH_AUTH_SOCK
   export GNOME_KEYRING_CONTROL
 
-  fcitx5 -rd
-  ${pkgs.waybar}/bin/waybar &
-  ${pkgs.xembed-sni-proxy}/bin/xembedsniproxy &
-  ${pkgs.calibre}/bin/calibre --start-in-tray &
+  ${pkgs.shoreman}/bin/shoreman ${Procfile} &
   swaybg -i ${wallpaper} -m fit &
 ''

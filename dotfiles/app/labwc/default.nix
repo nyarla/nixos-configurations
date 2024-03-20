@@ -70,7 +70,7 @@
 
   home.file.".local/bin/sw".source = let
     Xwayland = pkgs.writeShellScript "Xwayland" ''
-      exec -a Xwayland ${pkgs.xwayland-explicit-sync}/bin/Xwayland "''${@}" -eglstream
+      exec -a Xwayland ${pkgs.xwayland}/bin/Xwayland "''${@}" -eglstream
     '';
   in toString (pkgs.writeShellScript "startlabwc" ''
     for rc in $(ls /etc/profile.d); do
@@ -102,7 +102,7 @@
 
     export WLR_NO_HARDWARE_CURSORS=1
     export WLR_RENDERER_ALLOW_SOFTWARE=1
-    export WLR_RENDERER=vulkan
+    export WLR_RENDERER=gles2
     export WLR_DRM_NO_ATOMIC=1
     export WLR_XWAYLAND=${Xwayland}
     export XWAYLAND_NO_GLAMOR=1
@@ -119,12 +119,14 @@
     systemctl --user reset-failed
 
     cleanup() {
+      pkill shoreman
       if systemctl --user -q is-active desktop-session.target ; then
         systemctl --user stop desktop-session.target
       fi
     }
     trap cleanup INT TERM
 
+    eval "$(dbus-launch --sh-syntax --exit-with-session)"
     ${pkgs.labwc}/bin/labwc -V &
     waidPID=$!
 

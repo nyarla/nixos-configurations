@@ -22,6 +22,7 @@ _: {
     ../app/git
     ../app/openbox
     ../app/labwc
+    ../app/mlterm
   ];
 
   # More customizations

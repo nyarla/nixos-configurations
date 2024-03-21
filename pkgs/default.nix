@@ -124,6 +124,7 @@ in {
 
     postPatch = ''
       sed -i 's/glFlush/glFinish/' render/gles2/renderer.c
+      sed -i 's/glFlush/glFinish/' render/gles2/pass.c
     '';
   });
 

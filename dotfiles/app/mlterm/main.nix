@@ -16,6 +16,8 @@ let
     type_engine = "cairo";
     unicode_half_width_areas = "U+2500-25FF";
     unicode_full_width_areas = "U+E000-F8FF";
+    emoji_path =
+      "${pkgs.noto-fonts-color-emoji}/share/fonts/noto/NotoColorEmoji.ttf";
 
     # appearance
     scrollbar_mode = false;

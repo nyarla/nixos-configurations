@@ -19,6 +19,10 @@ let
   nvidia32 = nvidia.lib32;
 in {
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
+  boot.kernelModules = [
+    # this module requires by cuda on wayland
+    "nvidia_uvm"
+  ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.deviceSection = ''

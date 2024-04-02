@@ -21,6 +21,7 @@
     bitwig-studio3
     musescore
     helio-workstation
+    famistudio
 
     # samples manager
     sononym-bin
@@ -62,7 +63,6 @@
     qsynth
     samplv1
     sorcer
-    sunvox
     surge
     # surge-XT
     synthv1

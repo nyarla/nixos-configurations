@@ -143,9 +143,4 @@ in {
     inherit (self) yabridge;
     wine = self.wineUsingFull;
   };
-
-  waybar = super.waybar.override {
-    swaySupport = false;
-    hyprlandSupport = false;
-  };
 }

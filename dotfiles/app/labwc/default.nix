@@ -1,7 +1,5 @@
 { pkgs, ... }: {
   imports = [
-    ../../config/desktop/bitwarden.nix
-    ../../config/desktop/cmst.nix
     ../../config/desktop/desktop-panel.nix
     ../../config/desktop/desktop-session.nix
     ../../config/desktop/dunst.nix
@@ -16,6 +14,10 @@
 
     # credential
     libsecret
+    bitwarden
+
+    # desktop
+    mate.mate-system-monitor
 
     # wayland
     grim
@@ -30,7 +32,6 @@
     wayout
     wev
     wlr-randr
-    wmname
     ydotool
 
     galendae

@@ -10,18 +10,6 @@
     libinput.enable = true;
     exportConfiguration = true;
 
-    displayManager = {
-      sx.enable = true;
-      job.environment.LANG = "ja_JP.UTF-8";
-    };
-  };
-
-  security.wrappers = {
-    "Xorg" = {
-      setuid = true;
-      owner = "root";
-      group = "root";
-      source = "${pkgs.xorg.xorgserver}/bin/Xorg";
-    };
+    displayManager = { job.environment.LANG = "ja_JP.UTF-8"; };
   };
 }

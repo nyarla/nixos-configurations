@@ -148,7 +148,7 @@
     "/" = {
       device = "none";
       fsType = "tmpfs";
-      options = [ "defaults" "size=8G" "mode=755" ];
+      options = [ "defaults" "size=16G" "mode=755" ];
     };
 
     "/boot" = {
@@ -355,8 +355,10 @@
         "Sync"
 
         # music
+        ".config/Helio"
         ".config/Ildaeil"
         ".config/Jean Pierre Cimalando"
+        ".config/MuseScore"
         ".config/Sononym"
         ".config/audiogridder"
         ".config/falkTX"
@@ -364,6 +366,7 @@
         ".config/yabridgectl"
         ".helm"
         ".local/share/DigitalSuburban"
+        ".local/share/MuseScore"
 
         # cache
         ".cache/wine"
@@ -392,6 +395,7 @@
         ".config/rclone"
         ".config/simple-scan"
         ".config/syncthing"
+        ".config/tmux"
         ".config/wezterm"
         ".config/whipper"
         ".config/xfce4"

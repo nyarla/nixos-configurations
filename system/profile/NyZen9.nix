@@ -29,7 +29,7 @@
     ../config/linux/wine.nix
     ../config/networking/agent.nix
     ../config/networking/avahi.nix
-    ../config/networking/connman.nix
+    ../config/networking/network-manager.nix
     ../config/networking/printer.nix
     ../config/networking/tailscale.nix
     ../config/networking/tcp-bbr.nix
@@ -321,7 +321,6 @@
     hideMounts = true;
     directories = [
       "/etc/NetworkManager"
-      "/etc/mdevctl.d"
       "/etc/nixos"
       "/etc/ssh"
       "/etc/wpa_supplicant"

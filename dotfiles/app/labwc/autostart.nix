@@ -26,6 +26,8 @@ in writeShellScript "autostart" ''
   ${launch "${pkgs.xembed-sni-proxy}/bin/xembedsniproxy"}
   ${launch "fcitx5 -r"}
   ${launch "${pkgs.calibre}/bin/calibre --start-in-tray"}
+  ${launch "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"}
+  ${launch "${pkgs.blueman}/bin/blueman-applet"}
 
   swaybg -i ${wallpaper} -m fit &
 ''

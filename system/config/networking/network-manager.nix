@@ -1,21 +1,18 @@
-_: {
-  programs.nm-applet = {
-    enable = true;
-    indicator = true;
-  };
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [ networkmanagerapplet ];
   networking.networkmanager = {
     enable = true;
     dhcp = "internal";
     wifi = {
-      backend = "iwd";
+      backend = "wpa_supplicant";
       powersave = false;
     };
     unmanaged = [
-      "interface-name:br-*"
-      "interface-name:docker*"
       "interface-name:tailscale*"
+      "interface-name:vboxnet*"
       "interface-name:virbr*"
       "interface-name:waydroid*"
+      "type:bridge"
     ];
   };
 

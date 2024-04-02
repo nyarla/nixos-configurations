@@ -3,6 +3,7 @@
     gimp
     gucharmap
     inkscape
+    krita
     libreoffice-fresh
     libresprite
     mate.mate-calc

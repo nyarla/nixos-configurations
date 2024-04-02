@@ -101,11 +101,22 @@ let
     (menu "applications-daw" "DAW" [
       (exec "FL Studio" (wine "FLStudio"))
       (exec "deCoda" (wine "deCoda"))
+      (exec "Bitwig Studio 3" "bitwig-studio")
+      (exec "MuseScore 4" "mscore")
+      (exec "Helio workstation" "helio")
+      "${sep}"
+      (exec "Sononym" "sononym")
+      "${sep}"
+      (exec "Carla" "carla")
+      (exec "Ildaeil" "Ildaeil")
+      "${sep}"
+      (exec "QJackctl" "qjackctl")
     ])
     "${sep}"
     (menu "applications-graphic" "Graphics" [
       (exec "Gimp" "gimp")
       (exec "Inkscape" "inkscape")
+      (exec "Krita" "krita")
       (exec "Pixelorama" "pixelorama")
       (exec "Libresprite" "libresprite")
     ])

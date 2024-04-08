@@ -1,1 +1,1 @@
-{ pkgs, ... }: { environment.systemPackages = with pkgs; [ neovim nano deno ]; }
+{ pkgs, ... }: { environment.systemPackages = with pkgs; [ neovim nano ]; }

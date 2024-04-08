@@ -329,8 +329,6 @@
       "/var/lib"
       "/var/log"
       "/var/lib/docker"
-
-      "/usr/share/waydroid-extra/images"
     ];
     files = [ "/etc/machine-id" ];
 
@@ -368,6 +366,9 @@
         ".local/share/MuseScore"
 
         # cache
+        ".cache/act"
+        ".cache/actcache"
+        ".cache/nix"
         ".cache/wine"
         ".cache/winetricks"
 
@@ -379,16 +380,17 @@
         ".config/Thunar"
         ".config/VirtualBox"
         ".config/Yubico"
+        ".config/act"
         ".config/calibre"
         ".config/dconf"
         ".config/fcitx5"
         ".config/gcloud"
+        ".config/gh"
         ".config/google-chrome"
         ".config/gtk-2.0"
         ".config/gtk-3.0"
         ".config/gtk-4.0"
         ".config/inkscape"
-        ".config/lxqt"
         ".config/nvim"
         ".config/pulse"
         ".config/rclone"
@@ -419,6 +421,7 @@
         ".pki"
         ".thunderbird"
         ".var"
+        ".codeium"
 
         # credentials
         (secure ".fly")

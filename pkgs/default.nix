@@ -73,13 +73,12 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2024-03-18";
+      version = "2024-04-14";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
-        rev = "9d51107166b584d35a14d4f769c90f64fb420e87";
-        hash = "sha256-RuWcp/1z3BVmuZ0b/7bfe5f3Dyjfda1rlOxZjigO9PM=";
+        rev = "55138dbe0eefb37a052036500406e45423e3639a";
+        hash = "sha256-76OX1Ew8FeW41yaFhEEZh4BQFMwZ7Cm/FJSJChh3Ksw=";
       };
-      buildInputs = old.buildInputs ++ [ super.xorg.xcbutilwm ];
     });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
@@ -117,6 +116,7 @@ in {
       repo = "wlroots";
       rev = "6dce6ae2ed92544b9758b194618e21f4c97f1d6b";
       hash = "sha256-Of9qykyVnBURc5A2pvCMm7sLbnuuG7OPWLxodQLN2Xg=";
+
     };
 
     buildInputs = old.buildInputs

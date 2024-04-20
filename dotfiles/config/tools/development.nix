@@ -47,6 +47,7 @@
     neovim
     editorconfig-core-c
     nvim-run
+    devenv
 
     # vcs
     git-lfs

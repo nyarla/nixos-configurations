@@ -59,7 +59,7 @@ let
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
     (exec2 "Google Chrome" {
-      wayland = "google-chrome-stable --ozone-platform=x11";
+      wayland = "env GTK_IM_MODULE=fcitx google-chrome-stable";
       xorg = "google-chrome-stable";
     })
     "${sep}"

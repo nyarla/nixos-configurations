@@ -1,8 +1,8 @@
 { buildFHSUserEnv, writeShellScript }:
 buildFHSUserEnv rec {
   name = "perl-shell";
-  targetPkgs = pkgs:
-    with pkgs; [
+  targetPkgs =
+    pkgs: with pkgs; [
       gnumake
       libxcrypt
       openssl.dev

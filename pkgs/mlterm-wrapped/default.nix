@@ -1,4 +1,11 @@
-{ stdenv, mlterm, wcwidth-cjk, coreutils, writeScript, runCommand }:
+{
+  stdenv,
+  mlterm,
+  wcwidth-cjk,
+  coreutils,
+  writeScript,
+  runCommand,
+}:
 let
   mlterm-sh = writeScript "mlterm" ''
     #!${stdenv.shell}
@@ -24,7 +31,8 @@ let
 
     exec ${wcwidth-cjk}/bin/wcwidth-cjk -- ${mlterm}/bin/mlterm-fb $@
   '';
-in runCommand "mlterm-wrapped" { } ''
+in
+runCommand "mlterm-wrapped" { } ''
   mkdir -p $out/bin
 
   cp ${mlterm-sh} $out/bin/mlterm

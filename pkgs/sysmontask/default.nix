@@ -1,5 +1,17 @@
-{ python3, fetchpatch, fetchFromGitHub, wrapGAppsHook, cairo, dmidecode, glib
-, gobject-introspection, gtk3, libwnck, lshw, psutils }:
+{
+  python3,
+  fetchpatch,
+  fetchFromGitHub,
+  wrapGAppsHook,
+  cairo,
+  dmidecode,
+  glib,
+  gobject-introspection,
+  gtk3,
+  libwnck,
+  lshw,
+  psutils,
+}:
 python3.pkgs.buildPythonApplication rec {
   pname = "SysMonTask";
   version = "2022-07-09";
@@ -23,11 +35,26 @@ python3.pkgs.buildPythonApplication rec {
     sed -i "s|dmidecode -t memory|${dmidecode}/bin/dmidecode -t memory|" sysmontask/mem.py
   '';
 
-  buildInputs = [ glib gtk3 cairo gobject-introspection libwnck lshw psutils ];
+  buildInputs = [
+    glib
+    gtk3
+    cairo
+    gobject-introspection
+    libwnck
+    lshw
+    psutils
+  ];
 
-  nativeBuildInputs = [ wrapGAppsHook gobject-introspection ];
+  nativeBuildInputs = [
+    wrapGAppsHook
+    gobject-introspection
+  ];
 
-  propagatedBuildInputs = with python3.pkgs; [ psutil pycairo pygobject3 ];
+  propagatedBuildInputs = with python3.pkgs; [
+    psutil
+    pycairo
+    pygobject3
+  ];
 
   postInstall = ''
     mv $out/lib/*/site-packages/usr/share $out/share

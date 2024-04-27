@@ -1,8 +1,18 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   # mysql
   services.mysql.settings = {
-    mysqld = { character-set-server = "utf8mb4"; };
-    client = { default-character-set = "utf8mb4"; };
+    mysqld = {
+      character-set-server = "utf8mb4";
+    };
+    client = {
+      default-character-set = "utf8mb4";
+    };
   };
 
   # postgresql
@@ -42,16 +52,17 @@
 
   services.nginx.virtualHosts = {
     "reader.home.thotep.net" = {
-      listen = [{
-        addr = "100.103.65.77";
-        port = 443;
-        ssl = true;
-      }];
+      listen = [
+        {
+          addr = "100.103.65.77";
+          port = 443;
+          ssl = true;
+        }
+      ];
       addSSL = true;
       sslCertificate = "/var/lib/acme/home.thotep.net/fullchain.pem";
       sslCertificateKey = "/var/lib/acme/home.thotep.net/key.pem";
       locations."/".proxyWebsockets = true;
     };
   };
-
 }

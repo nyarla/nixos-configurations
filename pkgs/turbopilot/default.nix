@@ -1,4 +1,11 @@
-{ stdenv, boost, cmake, fetchFromGitHub, nvidia_x11, cudaPackages_12_0 }:
+{
+  stdenv,
+  boost,
+  cmake,
+  fetchFromGitHub,
+  nvidia_x11,
+  cudaPackages_12_0,
+}:
 stdenv.mkDerivation rec {
   pname = "turbopilot";
   version = "eaeb52f";
@@ -19,11 +26,21 @@ stdenv.mkDerivation rec {
       extern/spdlog/CMakeLists.txt
   '';
 
-  cmakeFlags = [ "-DGGML_CLBLAST=ON" "-DGGML_CUBLAS=ON" ];
+  cmakeFlags = [
+    "-DGGML_CLBLAST=ON"
+    "-DGGML_CUBLAS=ON"
+  ];
 
   nativeBuildInputs = [ cmake ];
-  buildInputs = [ boost.dev nvidia_x11 ]
-    ++ (with cudaPackages_12_0; [ cudatoolkit cudnn ]);
+  buildInputs =
+    [
+      boost.dev
+      nvidia_x11
+    ]
+    ++ (with cudaPackages_12_0; [
+      cudatoolkit
+      cudnn
+    ]);
 
   preInstall = ''
     mkdir -p $out/bin

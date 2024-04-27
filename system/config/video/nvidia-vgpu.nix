@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   inherit (config.boot.kernelPackages.nvidiaPackages) mkDriver;
   vgpuVersion = "525.125.03";
@@ -21,8 +26,7 @@ let
     version = vgpuVersion;
 
     src = pkgs.fetchurl {
-      url =
-        "file:///home/nyarla/Applications/Environment/vGPU/NVIDIA-Linux-x86_64-525.125.06-merged-vgpu-kvm-patched.run";
+      url = "file:///home/nyarla/Applications/Environment/vGPU/NVIDIA-Linux-x86_64-525.125.06-merged-vgpu-kvm-patched.run";
       sha256 = "1a7dlniimkkbjwzc9bjm6gk2wh42nbgfdnncjgnxxvarf56p1q97";
     };
 
@@ -54,12 +58,16 @@ let
   });
 
   patched-nvidia-32 = patched-nvidia.lib32;
-in {
+in
+{
   boot = {
     blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
     kernelModules = [ "nvidia-vgpu-vfio" ];
-    kernelParams =
-      [ "nvidia.vgpukvm=1" "nvidia.cudahost=1" "nvidia.kmalimit=6144" ];
+    kernelParams = [
+      "nvidia.vgpukvm=1"
+      "nvidia.cudahost=1"
+      "nvidia.kmalimit=6144"
+    ];
   };
 
   hardware.nvidia = {
@@ -91,8 +99,7 @@ in {
 
     serviceConfig = {
       Type = "forking";
-      ExecStart =
-        "${lib.getBin config.hardware.nvidia.package}/bin/nvidia-vgpud";
+      ExecStart = "${lib.getBin config.hardware.nvidia.package}/bin/nvidia-vgpud";
       ExecStopPost = "${pkgs.coreutils}/bin/rm -rf /var/run/nvidia-vgpud";
       Environment = [
         "LD_PRELOAD=${pkgs.vgpu_unlock-rs}/lib/libvgpu_unlock_rs.so"
@@ -109,8 +116,7 @@ in {
     serviceConfig = {
       Type = "forking";
       KillMode = "process";
-      ExecStart =
-        "${lib.getBin config.hardware.nvidia.package}/bin/nvidia-vgpu-mgr";
+      ExecStart = "${lib.getBin config.hardware.nvidia.package}/bin/nvidia-vgpu-mgr";
       ExecStopPost = "${pkgs.coreutils}/bin/rm -rf /var/run/nvidia-vgpu-mgr";
       Environment = [
         "LD_PRELOAD=${pkgs.vgpu_unlock-rs}/lib/libvgpu_unlock_rs.so"
@@ -127,12 +133,9 @@ in {
 
   environment = {
     etc = {
-      "glvnd/egl_vendor.d".source =
-        "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
-      "gbm/nvidia-drm_gbm.so".source =
-        "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
-      "nvidia-vgpu-xxxxx/vgpuConfig.xml".source =
-        "${config.hardware.nvidia.package}/vgpuConfig.xml";
+      "glvnd/egl_vendor.d".source = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
+      "gbm/nvidia-drm_gbm.so".source = "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
+      "nvidia-vgpu-xxxxx/vgpuConfig.xml".source = "${config.hardware.nvidia.package}/vgpuConfig.xml";
 
       "vgpu_unlock/profile_override.toml".text = ''
         [profile.nvidia-256]
@@ -154,7 +157,10 @@ in {
     ];
   };
 
-  programs.nix-ld.libraries = [ patched-nvidia.out patched-nvidia.bin ];
+  programs.nix-ld.libraries = [
+    patched-nvidia.out
+    patched-nvidia.bin
+  ];
 
   virtualisation.docker.enableNvidia = true;
 }

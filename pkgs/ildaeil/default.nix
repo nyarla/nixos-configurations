@@ -1,6 +1,28 @@
-{ stdenv, fetchFromGitHub, autoPatchelfHook, pkg-config, patchelf, qt5
-, findutils, bzip2, carla, dbus, file, flac, libGL, libcap, libglvnd, libjack2
-, libogg, libopus, libsndfile, libvorbis, wine, xorg, zstd }:
+{
+  stdenv,
+  fetchFromGitHub,
+  autoPatchelfHook,
+  pkg-config,
+  patchelf,
+  qt5,
+  findutils,
+  bzip2,
+  carla,
+  dbus,
+  file,
+  flac,
+  libGL,
+  libcap,
+  libglvnd,
+  libjack2,
+  libogg,
+  libopus,
+  libsndfile,
+  libvorbis,
+  wine,
+  xorg,
+  zstd,
+}:
 stdenv.mkDerivation rec {
   pname = "ildaeil";
   version = "2024-02-13";
@@ -12,8 +34,13 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs =
-    [ findutils pkg-config patchelf autoPatchelfHook qt5.wrapQtAppsHook ];
+  nativeBuildInputs = [
+    findutils
+    pkg-config
+    patchelf
+    autoPatchelfHook
+    qt5.wrapQtAppsHook
+  ];
 
   buildInputs = [
     bzip2.dev

@@ -1,5 +1,10 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ multipath-tools pciutils usbutils ];
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    multipath-tools
+    pciutils
+    usbutils
+  ];
 
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none"

@@ -1,6 +1,8 @@
 self: super:
-let require = path: super.callPackage (import path);
-in {
+let
+  require = path: super.callPackage (import path);
+in
+{
   # additional packages
   arc-openbox = require ./arc-openbox { };
   audiogridder = require ./audiogridder { };
@@ -53,8 +55,7 @@ in {
   bitwig-sutido3 = super.bitwig-sutido3.overrideAttrs (old: rec {
     version = "3.3.11";
     src = super.fetchurl {
-      url =
-        "https://downloads.bitwig.com/stable/${version}/${old.pname}-${version}.deb";
+      url = "https://downloads.bitwig.com/stable/${version}/${old.pname}-${version}.deb";
       sha256 = "137i7zqazc2kj40rg6fl6sbkz7kjbkhzdd7550fabl6cz1a20pvh";
     };
   });
@@ -68,19 +69,16 @@ in {
     wine = self.wineUsingFull;
   };
 
-  firefox-bin-unwrapped =
-    super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
+  firefox-bin-unwrapped = super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
-    (old: rec {
-      version = "2024-04-20";
-      src = super.fetchFromGitHub {
-        inherit (old.src) owner repo;
-        rev = "55138dbe0eefb37a052036500406e45423e3639a";
-        hash = "sha256-76OX1Ew8FeW41yaFhEEZh4BQFMwZ7Cm/FJSJChh3Ksw=";
-
-      };
-    });
+  labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs (old: rec {
+    version = "2024-04-20";
+    src = super.fetchFromGitHub {
+      inherit (old.src) owner repo;
+      rev = "55138dbe0eefb37a052036500406e45423e3639a";
+      hash = "sha256-76OX1Ew8FeW41yaFhEEZh4BQFMwZ7Cm/FJSJChh3Ksw=";
+    };
+  });
 
   picom-next = super.picom-next.overrideAttrs (old: rec {
     version = "2024-03-13";
@@ -104,11 +102,11 @@ in {
     nativeBuildInputs = old.nativeBuildInputs ++ [ super.wrapGAppsHook ];
   });
 
-  thunderbird-bin-unwrapped =
-    super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
+  thunderbird-bin-unwrapped = super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  tmux = super.tmux.overrideAttrs
-    (old: rec { patches = old.patches ++ [ ../patches/tmux-3.4-fix.diff ]; });
+  tmux = super.tmux.overrideAttrs (old: rec {
+    patches = old.patches ++ [ ../patches/tmux-3.4-fix.diff ];
+  });
 
   wlroots_0_17 = super.wlroots.overrideAttrs (old: rec {
     src = super.fetchFromGitLab {
@@ -117,11 +115,15 @@ in {
       repo = "wlroots";
       rev = "6dce6ae2ed92544b9758b194618e21f4c97f1d6b";
       hash = "sha256-Of9qykyVnBURc5A2pvCMm7sLbnuuG7OPWLxodQLN2Xg=";
-
     };
 
-    buildInputs = old.buildInputs
-      ++ (with super; [ glslang libdrm.dev mesa.dev ]);
+    buildInputs =
+      old.buildInputs
+      ++ (with super; [
+        glslang
+        libdrm.dev
+        mesa.dev
+      ]);
 
     postPatch = ''
       sed -i 's/glFlush/glFinish/' render/gles2/renderer.c
@@ -129,14 +131,24 @@ in {
     '';
   });
 
-  wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull
-    (old: rec {
-      buildInputs = old.buildInputs ++ (with super; [ libgcrypt.dev libva.dev ])
-        ++ (with super.pkgsi686Linux; [ libgcrypt.dev libva.dev ]);
+  wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {
+    buildInputs =
+      old.buildInputs
+      ++ (with super; [
+        libgcrypt.dev
+        libva.dev
+      ])
+      ++ (with super.pkgsi686Linux; [
+        libgcrypt.dev
+        libva.dev
+      ]);
 
-      configureFlags = old.configureFlags
-        ++ [ "--with-va" "--with-gcrypt" "--disable-test" ];
-    });
+    configureFlags = old.configureFlags ++ [
+      "--with-va"
+      "--with-gcrypt"
+      "--disable-test"
+    ];
+  });
   # wineUsingFull = super.wineWowPackages.stagingFull;
 
   virtualbox-kvm = super.virtualbox.override { enableKvm = true; };

@@ -6,7 +6,8 @@ let
   main = (import ./main.nix) { inherit color pkgs; };
   color = import ./color.nix;
   key = import ./key.nix;
-in {
+in
+{
   home = {
     packages = with pkgs; [ mlterm-wayland ];
     file = {

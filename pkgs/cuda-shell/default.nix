@@ -1,12 +1,30 @@
-{ gcc9Stdenv, lib, buildFHSUserEnv, cudaPackages, nvidia_x11, curl, libGL, xorg,
+{
+  gcc9Stdenv,
+  lib,
+  buildFHSUserEnv,
+  cudaPackages,
+  nvidia_x11,
+  curl,
+  libGL,
+  xorg,
 }:
 let
-  libPath = lib.makeLibraryPath
-    ([ nvidia_x11 gcc9Stdenv.cc.cc gcc9Stdenv.cc.libc ]
-      ++ (with cudaPackages; [ cudatoolkit cudnn ]));
-in buildFHSUserEnv rec {
+  libPath = lib.makeLibraryPath (
+    [
+      nvidia_x11
+      gcc9Stdenv.cc.cc
+      gcc9Stdenv.cc.libc
+    ]
+    ++ (with cudaPackages; [
+      cudatoolkit
+      cudnn
+    ])
+  );
+in
+buildFHSUserEnv rec {
   name = "cuda-shell";
-  targetPkgs = p:
+  targetPkgs =
+    p:
     (with p; [
       autoconf
       binutils
@@ -32,7 +50,11 @@ in buildFHSUserEnv rec {
       xorg.libXrandr
       xorg.libXv
       zlib
-    ]) ++ (with cudaPackages; [ cudatoolkit cudnn ]);
+    ])
+    ++ (with cudaPackages; [
+      cudatoolkit
+      cudnn
+    ]);
 
   multiPkgs = pkgs: with pkgs; [ zlib ];
   runScript = "bash";

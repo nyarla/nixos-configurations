@@ -1,4 +1,9 @@
-{ isXorg ? false, isWayland ? false, pkgs, ... }:
+{
+  isXorg ? false,
+  isWayland ? false,
+  pkgs,
+  ...
+}:
 let
   exec = label: command: ''
     <item label="${label}">
@@ -8,9 +13,8 @@ let
     </item>
   '';
 
-  stop = label: command:
-    exec label
-    "sh -c 'systemctl --user stop graphical-session.target ; ${command}'";
+  stop =
+    label: command: exec label "sh -c 'systemctl --user stop graphical-session.target ; ${command}'";
 
   menu = id: label: contains: ''
     <menu id="${id}" label="${label}">
@@ -33,8 +37,12 @@ let
 
   sep = "<separator/>";
 
-  exec2 = label:
-    { wayland ? "", xorg ? "" }:
+  exec2 =
+    label:
+    {
+      wayland ? "",
+      xorg ? "",
+    }:
     if isWayland then (exec label wayland) else (exec label xorg);
 
   applicationsMain = menu "applications-main" "Main" [
@@ -44,13 +52,15 @@ let
     })
     (exec "virtualbox" "VirtualBox")
     "${sep}"
-    (if isWayland then
-      (menu "applications-wayland" "waydroid" [
-        (exec "start" (script "waydroid-start"))
-        (exec "stop" (script "waydroid-stop"))
-      ])
-    else
-      (exec "waydroid" (script "waydroid-on-weston")))
+    (
+      if isWayland then
+        (menu "applications-wayland" "waydroid" [
+          (exec "start" (script "waydroid-start"))
+          (exec "stop" (script "waydroid-stop"))
+        ])
+      else
+        (exec "waydroid" (script "waydroid-on-weston"))
+    )
     "${sep}"
     (exec "vial" "Vial")
   ];
@@ -159,8 +169,7 @@ let
     (stop "Shutdown" "shutdown -h now")
   ];
 
-  systemOperation =
-    if isXorg then systemOperationXorg else systemOperationWayland;
+  systemOperation = if isXorg then systemOperationXorg else systemOperationWayland;
 
   systemContextMenu = menu "root-menu" "Menu" [
     (item "applications-main")
@@ -172,7 +181,8 @@ let
     (item "applications-utils")
     (item "system-operation")
   ];
-in ''
+in
+''
   <?xml version="1.0" encoding="UTF-8"?>
   <openbox_menu xmlns="http://openbox.org/3.4/menu">
     ${applicationsMain}

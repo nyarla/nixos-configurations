@@ -1,8 +1,23 @@
-{ pkgs, lib, name, vm, ... }:
+{
+  pkgs,
+  lib,
+  name,
+  vm,
+  ...
+}:
 let
   startupScript = pkgs.writeShellScript "startup.sh" ''
     set -x
-    export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
+    export PATH=${
+      lib.makeBinPath (
+        with pkgs;
+        [
+          kmod
+          procps
+          libvirt
+        ]
+      )
+    }:$PATH
 
     # shutdown display manager
     if systemctl is-active display-manager ; then
@@ -38,7 +53,16 @@ let
 
   shutdownScript = pkgs.writeShellScript "shutdown.sh" ''
     set -x
-    export PATH=${lib.makeBinPath (with pkgs; [ kmod procps libvirt ])}:$PATH
+    export PATH=${
+      lib.makeBinPath (
+        with pkgs;
+        [
+          kmod
+          procps
+          libvirt
+        ]
+      )
+    }:$PATH
 
     # unload vfio kernel modules
     modprobe -r vfio_pci
@@ -66,7 +90,8 @@ let
       fi
     done < "$input"
   '';
-in {
+in
+{
   systemd.tmpfiles.rules = [
     "L+ /etc/executable/etc/libvirt/hooks/qemu.d/${vm}/prepare/begin/${name}.sh - - - - ${startupScript}"
     "L+ /etc/executable/etc/libvirt/hooks/qemu.d/${vm}/release/end/${name}.sh - - - - ${shutdownScript}"

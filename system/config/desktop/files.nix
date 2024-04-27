@@ -1,6 +1,14 @@
 { pkgs, ... }:
-let mateApps = with pkgs.mate; [ atril engrampa eom mate-polkit pluma ];
-in {
+let
+  mateApps = with pkgs.mate; [
+    atril
+    engrampa
+    eom
+    mate-polkit
+    pluma
+  ];
+in
+{
   environment.systemPackages = mateApps;
   services.dbus.packages = mateApps;
 
@@ -12,7 +20,10 @@ in {
 
   programs.thunar = {
     enable = true;
-    plugins = with pkgs.xfce; [ thunar-archive-plugin thunar-archive-plugin ];
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-archive-plugin
+    ];
   };
 
   programs.xfconf.enable = true;

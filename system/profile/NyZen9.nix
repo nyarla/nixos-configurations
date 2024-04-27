@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   imports = [
     ../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
@@ -70,8 +71,15 @@
     };
   };
 
-  boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+    "sr_mod"
+  ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
 
   # tmpfs
@@ -103,184 +111,209 @@
     #"efifb:off"
   ];
 
-  fileSystems = let
-    device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
-
-    btrfsOptions = [ "compress=zstd" "ssd" "space_cache=v2" "x-gvfs-hide" ];
-    btrfsNoExec = [ "noexec" "nosuid" "nodev" ];
-    btrfsRWOnly = btrfsOptions ++ btrfsNoExec;
-
-    subvolRW = path: {
-      "/persist/${path}" = {
-        inherit device;
-        fsType = "btrfs";
-        options = btrfsRWOnly ++ [ "subvol=/persist/${path}" ];
-        neededForBoot = true;
-      };
-    };
-
-    subvolEx = path: {
-      "/persist/${path}" = {
-        inherit device;
-        fsType = "btrfs";
-        options = btrfsOptions ++ [ "subvol=/persist/${path}" ];
-        neededForBoot = true;
-      };
-    };
-
-    subvolsEx = paths:
-      lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolEx);
-    subvolsRW = paths:
-      lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolRW);
-
-    backup = path: dest: {
-      "/backup/${path}" = {
-        device = dest;
-        options = [ "bind" ];
-      };
-    };
-
-    backups = paths:
-      lib.attrsets.mergeAttrsList
-      (lib.lists.forEach paths ({ name, dest }: backup name dest));
-  in {
-    # for boot
-    "/" = {
-      device = "none";
-      fsType = "tmpfs";
-      options = [ "defaults" "size=16G" "mode=755" ];
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/709E-6BDD";
-      fsType = "vfat";
-    };
-
-    "/nix" = {
+  fileSystems =
+    let
       device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
-      fsType = "btrfs";
-      options = btrfsOptions ++ [ "subvol=/nix" "noatime" ];
-      neededForBoot = true;
-    };
-  } // (subvolsRW [
-    # for boot
-    "etc"
-    "etc/nixos"
-    "usr/share"
-    "var/db"
-    "var/lib"
-    "var/log"
 
-    # for accounts
-    "home/nyarla"
-  ]) // (subvolsEx [
-    # for boot
-    "var/lib/docker"
+      btrfsOptions = [
+        "compress=zstd"
+        "ssd"
+        "space_cache=v2"
+        "x-gvfs-hide"
+      ];
+      btrfsNoExec = [
+        "noexec"
+        "nosuid"
+        "nodev"
+      ];
+      btrfsRWOnly = btrfsOptions ++ btrfsNoExec;
 
-    # for accounts
-    "home/nyarla/.config/audiogridder"
-    "home/nyarla/.fly"
-    "home/nyarla/.local/share/flatpak"
-    "home/nyarla/.local/share/npm"
-    "home/nyarla/.local/share/nvim"
-    "home/nyarla/.local/share/perl"
-    "home/nyarla/.local/share/waydroid"
-    "home/nyarla/.mozilla"
-    "home/nyarla/.var"
-    "home/nyarla/.wrangler"
-    "home/nyarla/Applications"
-    "home/nyarla/Programming"
-  ]) // (backups [
+      subvolRW = path: {
+        "/persist/${path}" = {
+          inherit device;
+          fsType = "btrfs";
+          options = btrfsRWOnly ++ [ "subvol=/persist/${path}" ];
+          neededForBoot = true;
+        };
+      };
+
+      subvolEx = path: {
+        "/persist/${path}" = {
+          inherit device;
+          fsType = "btrfs";
+          options = btrfsOptions ++ [ "subvol=/persist/${path}" ];
+          neededForBoot = true;
+        };
+      };
+
+      subvolsEx = paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolEx);
+      subvolsRW = paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolRW);
+
+      backup = path: dest: {
+        "/backup/${path}" = {
+          device = dest;
+          options = [ "bind" ];
+        };
+      };
+
+      backups =
+        paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths ({ name, dest }: backup name dest));
+    in
     {
-      name = "Applications";
-      dest = "/persist/home/nyarla/Applications";
+      # for boot
+      "/" = {
+        device = "none";
+        fsType = "tmpfs";
+        options = [
+          "defaults"
+          "size=16G"
+          "mode=755"
+        ];
+      };
+
+      "/boot" = {
+        device = "/dev/disk/by-uuid/709E-6BDD";
+        fsType = "vfat";
+      };
+
+      "/nix" = {
+        device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
+        fsType = "btrfs";
+        options = btrfsOptions ++ [
+          "subvol=/nix"
+          "noatime"
+        ];
+        neededForBoot = true;
+      };
     }
-    {
-      name = "Archives";
-      dest = "/persist/home/nyarla/Archives";
-    }
-    {
-      name = "Calibre";
-      dest = "/persist/home/nyarla/Calibre";
-    }
-    {
-      name = "Development";
-      dest = "/persist/home/nyarla/Development";
-    }
-    {
-      name = "Documents";
-      dest = "/persist/home/nyarla/Documents";
-    }
-    {
-      name = "Music";
-      dest = "/persist/home/nyarla/Music";
-    }
-    {
-      name = "NixOS";
-      dest = "/persist/etc/nixos";
-    }
-    {
-      name = "Programming";
-      dest = "/persist/home/nyarla/Programming";
-    }
-    {
-      name = "Sync";
-      dest = "/persist/home/nyarla/Sync/Backup";
-    }
-    {
-      name = "Thunderbird";
-      dest = "/persist/home/nyarla/.thunderbird";
-    }
-  ]);
+    // (subvolsRW [
+      # for boot
+      "etc"
+      "etc/nixos"
+      "usr/share"
+      "var/db"
+      "var/lib"
+      "var/log"
+
+      # for accounts
+      "home/nyarla"
+    ])
+    // (subvolsEx [
+      # for boot
+      "var/lib/docker"
+
+      # for accounts
+      "home/nyarla/.config/audiogridder"
+      "home/nyarla/.fly"
+      "home/nyarla/.local/share/flatpak"
+      "home/nyarla/.local/share/npm"
+      "home/nyarla/.local/share/nvim"
+      "home/nyarla/.local/share/perl"
+      "home/nyarla/.local/share/waydroid"
+      "home/nyarla/.mozilla"
+      "home/nyarla/.var"
+      "home/nyarla/.wrangler"
+      "home/nyarla/Applications"
+      "home/nyarla/Programming"
+    ])
+    // (backups [
+      {
+        name = "Applications";
+        dest = "/persist/home/nyarla/Applications";
+      }
+      {
+        name = "Archives";
+        dest = "/persist/home/nyarla/Archives";
+      }
+      {
+        name = "Calibre";
+        dest = "/persist/home/nyarla/Calibre";
+      }
+      {
+        name = "Development";
+        dest = "/persist/home/nyarla/Development";
+      }
+      {
+        name = "Documents";
+        dest = "/persist/home/nyarla/Documents";
+      }
+      {
+        name = "Music";
+        dest = "/persist/home/nyarla/Music";
+      }
+      {
+        name = "NixOS";
+        dest = "/persist/etc/nixos";
+      }
+      {
+        name = "Programming";
+        dest = "/persist/home/nyarla/Programming";
+      }
+      {
+        name = "Sync";
+        dest = "/persist/home/nyarla/Sync/Backup";
+      }
+      {
+        name = "Thunderbird";
+        dest = "/persist/home/nyarla/.thunderbird";
+      }
+    ]);
 
   systemd.services.automount-encrypted-storages = {
     enable = true;
     description = "Automount Encrypted Storages";
-    path = with pkgs; [ coreutils cryptsetup ];
+    path = with pkgs; [
+      coreutils
+      cryptsetup
+    ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
-      ExecStart = toString (pkgs.writeShellScript "mount" ''
-        set -xeuo pipefail
+      ExecStart = toString (
+        pkgs.writeShellScript "mount" ''
+          set -xeuo pipefail
 
-        export PATH=/run/wrappers/bin:$PATH
+          export PATH=/run/wrappers/bin:$PATH
 
-        test -e /media/data     || mkdir -p /media/data
-        test -e /media/src      || mkdir -p /media/src
-        test -e /backup/DAW     || mkdir -p /backup/DAW
-        test -e /backup/Sources || mkdir -p /backup/Sources
+          test -e /media/data     || mkdir -p /media/data
+          test -e /media/src      || mkdir -p /media/src
+          test -e /backup/DAW     || mkdir -p /backup/DAW
+          test -e /backup/Sources || mkdir -p /backup/Sources
 
-        device=0c2fc422-2013-46eb-bc52-e6a4f6f145cb
-        if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
-          cryptsetup luksOpen /dev/disk/by-uuid/$device data --key-file /boot/keys/$device;
-          if test $? = 0 && test -e /dev/mapper/data ; then
-            mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
-            mount -o bind /media/data/DAW /backup/DAW
+          device=0c2fc422-2013-46eb-bc52-e6a4f6f145cb
+          if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
+            cryptsetup luksOpen /dev/disk/by-uuid/$device data --key-file /boot/keys/$device;
+            if test $? = 0 && test -e /dev/mapper/data ; then
+              mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
+              mount -o bind /media/data/DAW /backup/DAW
+            fi
           fi
-        fi
 
-        device=a3da35b5-35e8-45bb-a4b4-87fbc19ed459
-        if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
-          cryptsetup luksOpen /dev/disk/by-uuid/$device src --key-file /boot/keys/$device;
-          if test $? = 0 && test -e /dev/mapper/src ; then
-            mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/src /media/src
-            mount -o bind /media/src/Sources /backup/Sources
+          device=a3da35b5-35e8-45bb-a4b4-87fbc19ed459
+          if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
+            cryptsetup luksOpen /dev/disk/by-uuid/$device src --key-file /boot/keys/$device;
+            if test $? = 0 && test -e /dev/mapper/src ; then
+              mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/src /media/src
+              mount -o bind /media/src/Sources /backup/Sources
+            fi
           fi
-        fi
-      '');
-      ExecStop = toString (pkgs.writeShellScript "unmount" ''
-        set -xeuo pipefail
+        ''
+      );
+      ExecStop = toString (
+        pkgs.writeShellScript "unmount" ''
+          set -xeuo pipefail
 
-        export PATH=/run/wrappers/bin:$PATH
+          export PATH=/run/wrappers/bin:$PATH
 
-        test ! -e /backup/DAW       || umount /backup/DAW
-        test ! -e /backup/Sources   || umount /backup/Sources
-        test ! -e /media/data       || umount /media/data
-        test ! -e /media/src        || umount /media/src
+          test ! -e /backup/DAW       || umount /backup/DAW
+          test ! -e /backup/Sources   || umount /backup/Sources
+          test ! -e /media/data       || umount /media/data
+          test ! -e /media/src        || umount /media/src
 
-        test ! -e /dev/mapper/data  || ctryptsetup luksClose /dev/mapper/data
-        test ! -e /dev/mapper/src   || ctryptsetup luksClose /dev/mapper/src
-      '');
+          test ! -e /dev/mapper/data  || ctryptsetup luksClose /dev/mapper/data
+          test ! -e /dev/mapper/src   || ctryptsetup luksClose /dev/mapper/src
+        ''
+      );
     };
     wantedBy = [ "local-fs.target" ];
   };
@@ -333,106 +366,112 @@
     files = [ "/etc/machine-id" ];
 
     users.nyarla = {
-      directories = let
-        secure = directory: {
-          inherit directory;
-          mode = "0700";
-        };
-      in [
-        # data
-        "Applications"
-        "Archives"
-        "Calibre"
-        "Development"
-        "Documents"
-        "Downloads"
-        "Music"
-        "Programming"
-        "Reports"
-        "Sync"
+      directories =
+        let
+          secure = directory: {
+            inherit directory;
+            mode = "0700";
+          };
+        in
+        [
+          # data
+          "Applications"
+          "Archives"
+          "Calibre"
+          "Development"
+          "Documents"
+          "Downloads"
+          "Music"
+          "Programming"
+          "Reports"
+          "Sync"
 
-        # music
-        ".config/Helio"
-        ".config/Ildaeil"
-        ".config/Jean Pierre Cimalando"
-        ".config/MuseScore"
-        ".config/Sononym"
-        ".config/audiogridder"
-        ".config/falkTX"
-        ".config/rncbc.org"
-        ".config/yabridgectl"
-        ".helm"
-        ".local/share/DigitalSuburban"
-        ".local/share/MuseScore"
+          # music
+          ".config/Helio"
+          ".config/Ildaeil"
+          ".config/Jean Pierre Cimalando"
+          ".config/MuseScore"
+          ".config/Sononym"
+          ".config/audiogridder"
+          ".config/falkTX"
+          ".config/rncbc.org"
+          ".config/yabridgectl"
+          ".helm"
+          ".local/share/DigitalSuburban"
+          ".local/share/MuseScore"
 
-        # cache
-        ".cache/act"
-        ".cache/actcache"
-        ".cache/nix"
-        ".cache/wine"
-        ".cache/winetricks"
+          # cache
+          ".cache/act"
+          ".cache/actcache"
+          ".cache/nix"
+          ".cache/wine"
+          ".cache/winetricks"
 
-        # .config
-        ".config/Bitwarden"
-        ".config/GIMP"
-        ".config/Kvantum"
-        ".config/MusicBrainz"
-        ".config/Thunar"
-        ".config/VirtualBox"
-        ".config/Yubico"
-        ".config/act"
-        ".config/calibre"
-        ".config/dconf"
-        ".config/fcitx5"
-        ".config/gcloud"
-        ".config/gh"
-        ".config/google-chrome"
-        ".config/gtk-2.0"
-        ".config/gtk-3.0"
-        ".config/gtk-4.0"
-        ".config/inkscape"
-        ".config/nvim"
-        ".config/pulse"
-        ".config/rclone"
-        ".config/simple-scan"
-        ".config/syncthing"
-        ".config/tmux"
-        ".config/wezterm"
-        ".config/whipper"
-        ".config/xfce4"
+          # .config
+          ".config/Bitwarden"
+          ".config/GIMP"
+          ".config/Kvantum"
+          ".config/MusicBrainz"
+          ".config/Thunar"
+          ".config/VirtualBox"
+          ".config/Yubico"
+          ".config/act"
+          ".config/calibre"
+          ".config/dconf"
+          ".config/fcitx5"
+          ".config/gcloud"
+          ".config/gh"
+          ".config/google-chrome"
+          ".config/gtk-2.0"
+          ".config/gtk-3.0"
+          ".config/gtk-4.0"
+          ".config/inkscape"
+          ".config/nvim"
+          ".config/pulse"
+          ".config/rclone"
+          ".config/simple-scan"
+          ".config/syncthing"
+          ".config/tmux"
+          ".config/wezterm"
+          ".config/whipper"
+          ".config/xfce4"
 
-        # .local
-        ".local/share/TelegramDesktop"
-        ".local/share/Trash"
-        ".local/share/applications"
-        ".local/share/fcitx5"
-        ".local/share/fonts"
-        ".local/share/libcskk"
-        ".local/share/mime"
-        ".local/share/npm"
-        ".local/share/nvim"
-        ".local/share/perl"
-        ".local/share/pixelorama"
-        ".local/share/waydroid"
+          # .local
+          ".local/share/TelegramDesktop"
+          ".local/share/Trash"
+          ".local/share/applications"
+          ".local/share/fcitx5"
+          ".local/share/fonts"
+          ".local/share/libcskk"
+          ".local/share/mime"
+          ".local/share/npm"
+          ".local/share/nvim"
+          ".local/share/perl"
+          ".local/share/pixelorama"
+          ".local/share/waydroid"
 
-        # application
-        ".android"
-        ".mozilla"
-        ".pki"
-        ".thunderbird"
-        ".var"
-        ".codeium"
+          # application
+          ".android"
+          ".mozilla"
+          ".pki"
+          ".thunderbird"
+          ".var"
+          ".codeium"
 
-        # credentials
-        (secure ".fly")
-        (secure ".gnupg")
-        (secure ".gsutil")
-        (secure ".local/share/keyrings")
-        (secure ".ssh")
-        (secure ".wrangler")
+          # credentials
+          (secure ".fly")
+          (secure ".gnupg")
+          (secure ".gsutil")
+          (secure ".local/share/keyrings")
+          (secure ".ssh")
+          (secure ".wrangler")
+        ];
+      files = [
+        ".clasprc.json"
+        ".config/mimeapps.list"
+        ".config/snn.conf"
+        ".npmrc"
       ];
-      files =
-        [ ".clasprc.json" ".config/mimeapps.list" ".config/snn.conf" ".npmrc" ];
     };
   };
 
@@ -457,7 +496,9 @@
 
   # tcp optimize
   networking.interfaces."wlan0".mtu = 1472;
-  boot.kernel.sysctl = { "net.ipv4.tcp_window_scaling" = 1; };
+  boot.kernel.sysctl = {
+    "net.ipv4.tcp_window_scaling" = 1;
+  };
 
   # samba
   services.samba = {
@@ -506,31 +547,32 @@
   # --------
 
   # snapper
-  services.snapper.configs = let
-    snapshot = path: {
-      SUBVOLUME = "/persist/${path}";
-      ALLOW_USERS = [ "nyarla" ];
-      ALLOW_GROUP = [ "users" ];
-      TIMELINE_CREATE = true;
-      TIMELINE_CLEANUP = true;
-      TIMETINE_MIN_AGE = 1800;
-      TIMELINE_LIMIT_HOURLY = 6;
-      TIMELIME_DAILY = 7;
-      TIMELINE_WEEKLY = 2;
-      TIMELINE_MONTHLY = 1;
-      TIMELINE_YEARLY = 1;
-    };
+  services.snapper.configs =
+    let
+      snapshot = path: {
+        SUBVOLUME = "/persist/${path}";
+        ALLOW_USERS = [ "nyarla" ];
+        ALLOW_GROUP = [ "users" ];
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
+        TIMETINE_MIN_AGE = 1800;
+        TIMELINE_LIMIT_HOURLY = 6;
+        TIMELIME_DAILY = 7;
+        TIMELINE_WEEKLY = 2;
+        TIMELINE_MONTHLY = 1;
+        TIMELINE_YEARLY = 1;
+      };
 
-    snapshots = paths:
-      lib.attrsets.concatMapAttrs (n: v: { "${n}" = snapshot v; }) paths;
-  in snapshots {
-    nixos = "etc/nixos";
-    varlib = "var/lib";
-    usrshare = "usr/share";
-    nyarla = "home/nyarla";
-    apps = "home/nyarla/Applications";
-    program = "home/nyarla/Programming";
-  };
+      snapshots = paths: lib.attrsets.concatMapAttrs (n: v: { "${n}" = snapshot v; }) paths;
+    in
+    snapshots {
+      nixos = "etc/nixos";
+      varlib = "var/lib";
+      usrshare = "usr/share";
+      nyarla = "home/nyarla";
+      apps = "home/nyarla/Applications";
+      program = "home/nyarla/Programming";
+    };
 
   # systemd
   systemd.extraConfig = ''
@@ -551,12 +593,14 @@
     Option "SuspendTime"  "1"
     Option "OffTime"      "1"
   '';
-  services.xserver.xrandrHeads = [{
-    output = "HDMI-0";
-    monitorConfig = ''
-      Option "DPMS" "true"
-    '';
-  }];
+  services.xserver.xrandrHeads = [
+    {
+      output = "HDMI-0";
+      monitorConfig = ''
+        Option "DPMS" "true"
+      '';
+    }
+  ];
 
   # clamav
   services.clamav.daemon.settings = {
@@ -578,15 +622,17 @@
     description = "Full Virus Scan by ClamAV";
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = toString (pkgs.writeShellScript "clamav-scan.sh" ''
-        set -euo pipefail
+      ExecStart = toString (
+        pkgs.writeShellScript "clamav-scan.sh" ''
+          set -euo pipefail
 
-        export PATH=${lib.makeBinPath (with pkgs; [ clamav ])}:$PATH
+          export PATH=${lib.makeBinPath (with pkgs; [ clamav ])}:$PATH
 
-        clamdscan -l /home/nyarla/Reports/clamav.log -i -m --fdpass / || true
+          clamdscan -l /home/nyarla/Reports/clamav.log -i -m --fdpass / || true
 
-        exit 0
-      '');
+          exit 0
+        ''
+      );
     };
   };
 
@@ -604,23 +650,28 @@
   # backup by restic
   systemd.services.backup = {
     enable = true;
-    path = with pkgs; [ restic-run rclone ];
+    path = with pkgs; [
+      restic-run
+      rclone
+    ];
     description = "Automatic backup by restic and rclone";
     requires = [ "network-online.target" ];
     after = [ "network-online.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = toString (pkgs.writeShellScript "backup.sh" ''
-        set -euo pipefail
-        export HOME=/home/nyarla
+      ExecStart = toString (
+        pkgs.writeShellScript "backup.sh" ''
+          set -euo pipefail
+          export HOME=/home/nyarla
 
-        if test -d /backup ; then
-          cd /backup
-          restic-backup .
-        fi
+          if test -d /backup ; then
+            cd /backup
+            restic-backup .
+          fi
 
-        exit 0
-      '');
+          exit 0
+        ''
+      );
     };
   };
 

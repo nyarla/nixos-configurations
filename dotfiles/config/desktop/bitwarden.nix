@@ -1,12 +1,18 @@
-{ config, ... }: {
+{ config, ... }:
+{
   systemd.user.services.bitwarden = {
     Unit = {
       Description = "Autostart for Bitwarden";
-      After = [ "graphical-session.target" "desktop-panel.service" ];
+      After = [
+        "graphical-session.target"
+        "desktop-panel.service"
+      ];
       PartOf = [ "graphical-session.target" ];
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
 
     Service = {
       Environment = [

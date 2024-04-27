@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   systemd.user.services.sfwbar = {
     Unit = {
       Description = "wayland bar services by sfwbar";
@@ -10,10 +11,15 @@
       Type = "simple";
       Restart = "on-failure";
       ExecStart = "${pkgs.sfwbar}/bin/sfwbar";
-      Environment = [ "WAYLAND_DISPLAY=wayland-0" "LANG=ja_JP.UTF-8" ];
+      Environment = [
+        "WAYLAND_DISPLAY=wayland-0"
+        "LANG=ja_JP.UTF-8"
+      ];
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
 
   xdg.configFile."sfwbar/sfwbar.config".text = ''

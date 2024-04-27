@@ -1,4 +1,13 @@
-{ runCommand, writeShellScript, curl, coreutils, jq, xdotool, maim, xdg-utils }:
+{
+  runCommand,
+  writeShellScript,
+  curl,
+  coreutils,
+  jq,
+  xdotool,
+  maim,
+  xdg-utils,
+}:
 let
   gyazoScript = writeShellScript "gyazo.sh" ''
     set -euo pipefail
@@ -45,7 +54,8 @@ let
 
     main $@
   '';
-in runCommand "gyazo.sh" { } ''
+in
+runCommand "gyazo.sh" { } ''
   mkdir -p $out/bin/
   cp ${gyazoScript} $out/bin/gyazo
   chmod +x $out/bin/gyazo

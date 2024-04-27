@@ -1,4 +1,8 @@
-{ stdenv, fetchFromGitHub, pkgsCross }:
+{
+  stdenv,
+  fetchFromGitHub,
+  pkgsCross,
+}:
 stdenv.mkDerivation rec {
   pname = "wine-vst-wrapper";
   version = "git";

@@ -1,10 +1,16 @@
-{ stdenv, fetchurl, patchelf, wine, libjack2, wine-vst-wrapper }:
+{
+  stdenv,
+  fetchurl,
+  patchelf,
+  wine,
+  libjack2,
+  wine-vst-wrapper,
+}:
 stdenv.mkDerivation rec {
   pname = "JackAss";
   version = "v1.1";
   src = fetchurl {
-    url =
-      "https://github.com/falkTX/${pname}/releases/download/v1.1/${pname}-${version}_wine64.tar.gz";
+    url = "https://github.com/falkTX/${pname}/releases/download/v1.1/${pname}-${version}_wine64.tar.gz";
     sha256 = "sha256-VN//OK37BQI9MVRRRiPl17F24kxf4DnPtYQ29WdjPAk=";
   };
 

@@ -14,8 +14,15 @@ let
     </context>
   '';
 
-  font = place:
-    { name, size, weight, slant }: ''
+  font =
+    place:
+    {
+      name,
+      size,
+      weight,
+      slant,
+    }:
+    ''
       <font place="${place}">
         <name>${name}</name>
         <size>${size}</size>
@@ -42,15 +49,18 @@ let
     </action>
   '';
 
-  action = name: contains:
+  action =
+    name: contains:
     if (builtins.length contains) == 0 then
       ''<action name="${name}" />''
-    else ''
-      <action name="${name}">${builtins.concatStringsSep "\n" contains}</action>
-    '';
+    else
+      ''
+        <action name="${name}">${builtins.concatStringsSep "\n" contains}</action>
+      '';
 
   join = builtins.concatStringsSep "\n";
-in ''
+in
+''
   <?xml version="1.0" encoding="UTF-8" ?>
   <openbox_config
     xmlns="http://openbox.org/3.4/rc"
@@ -133,7 +143,10 @@ in ''
           (prop "drawContents" "yes")
           (prop "popupShow" "NonPixel")
           (prop "popupPosition" "Center")
-          (props "popupFixedPosition" [ (prop "x" "10") (prop "y" "10") ])
+          (props "popupFixedPosition" [
+            (prop "x" "10")
+            (prop "y" "10")
+          ])
         ])
 
         (props "margins" [
@@ -219,8 +232,7 @@ in ''
           (prop "screenEdgeWrapMouse" "false")
           (context "Titlebar" [
             (mousebind "Left" "Drag" [ (action "Move" [ ]) ])
-            (mousebind "Left" "DoubleClick"
-              [ (action "ToggleMaximizeFull" [ ]) ])
+            (mousebind "Left" "DoubleClick" [ (action "ToggleMaximizeFull" [ ]) ])
             (mousebind "Up" "Click" [
               (action "if" [
                 (prop "shaded" "no")
@@ -235,48 +247,40 @@ in ''
             (mousebind "Down" "Click" [
               (action "if" [
                 (prop "shaded" "yes")
-                (props "then" [ (action "Unshade" [ ]) (action "Raise" [ ]) ])
+                (props "then" [
+                  (action "Unshade" [ ])
+                  (action "Raise" [ ])
+                ])
               ])
             ])
           ])
-          (context
-            "Titlebar Top Right Bottom Left TLCorner TRCorner BRCorner BLCorner" [
-              (mousebind "Left" "Press" [
-                (action "Focus" [ ])
-                (action "Raise" [ ])
-                (action "Unshade" [ ])
-              ])
-              (mousebind "Middle" "Press" [
-                (action "Lower" [ ])
-                (action "FocusToBottom" [ ])
-                (action "UnFocus" [ ])
-              ])
-              (mousebind "Right" "Press" [
-                (action "Focus" [ ])
-                (action "Raise" [ ])
-                (action "ShowMenu" [ (prop "menu" "client-menu") ])
-              ])
+          (context "Titlebar Top Right Bottom Left TLCorner TRCorner BRCorner BLCorner" [
+            (mousebind "Left" "Press" [
+              (action "Focus" [ ])
+              (action "Raise" [ ])
+              (action "Unshade" [ ])
             ])
+            (mousebind "Middle" "Press" [
+              (action "Lower" [ ])
+              (action "FocusToBottom" [ ])
+              (action "UnFocus" [ ])
+            ])
+            (mousebind "Right" "Press" [
+              (action "Focus" [ ])
+              (action "Raise" [ ])
+              (action "ShowMenu" [ (prop "menu" "client-menu") ])
+            ])
+          ])
           (context "Frame" [
             (mousebind "Alt-Left" "Drag" [ (action "Move" [ ]) ])
             (mousebind "Alt-Right" "Drag" [ (action "Resize" [ ]) ])
           ])
 
-          (context "Top" [
-            (mousebind "Left" "Drag"
-              [ (action "Raise" [ (prop "edge" "top") ]) ])
-          ])
-          (context "Left" [
-            (mousebind "Left" "Drag"
-              [ (action "Raise" [ (prop "edge" "left") ]) ])
-          ])
-          (context "Right" [
-            (mousebind "Left" "Drag"
-              [ (action "Raise" [ (prop "edge" "right") ]) ])
-          ])
+          (context "Top" [ (mousebind "Left" "Drag" [ (action "Raise" [ (prop "edge" "top") ]) ]) ])
+          (context "Left" [ (mousebind "Left" "Drag" [ (action "Raise" [ (prop "edge" "left") ]) ]) ])
+          (context "Right" [ (mousebind "Left" "Drag" [ (action "Raise" [ (prop "edge" "right") ]) ]) ])
           (context "Bottom" [
-            (mousebind "Left" "Drag"
-              [ (action "Raise" [ (prop "edge" "bottom") ]) ])
+            (mousebind "Left" "Drag" [ (action "Raise" [ (prop "edge" "bottom") ]) ])
             (mousebind "Right" "Press" [
               (action "Focus" [ ])
               (action "Raise" [ ])
@@ -367,10 +371,8 @@ in ''
               (action "Unshade" [ ])
             ])
             (mousebind "Left" "Click" [ (action "ToggleMaximize" [ ]) ])
-            (mousebind "Middle" "Click"
-              [ (action "ToggleMaximize" [ (prop "direction" "vertical") ]) ])
-            (mousebind "Right" "Click"
-              [ (action "ToggleMaximize" [ (prop "direction" "horizontal") ]) ])
+            (mousebind "Middle" "Click" [ (action "ToggleMaximize" [ (prop "direction" "vertical") ]) ])
+            (mousebind "Right" "Click" [ (action "ToggleMaximize" [ (prop "direction" "horizontal") ]) ])
           ])
 
           (context "Close" [
@@ -383,11 +385,8 @@ in ''
           ])
 
           (context "Root" [
-            (mousebind "Middle" "Press" [
-              (action "ShowMenu" [ (prop "menu" "client-list-combinde-menu") ])
-            ])
-            (mousebind "Right" "Press"
-              [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
+            (mousebind "Middle" "Press" [ (action "ShowMenu" [ (prop "menu" "client-list-combinde-menu") ]) ])
+            (mousebind "Right" "Press" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
           ])
         ])
 

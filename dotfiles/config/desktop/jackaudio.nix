@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   systemd.user.services.jackd = {
     Unit = {
       Description = "Autostart Jack Audio Connection Kit";
@@ -6,7 +7,9 @@
       PartOf = [ "graphical-session.target" ];
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
 
     Service = {
       Type = "simple";
@@ -16,5 +19,9 @@
     };
   };
 
-  home.packages = with pkgs; [ jack-example-tools jack2Full qjackctl ];
+  home.packages = with pkgs; [
+    jack-example-tools
+    jack2Full
+    qjackctl
+  ];
 }

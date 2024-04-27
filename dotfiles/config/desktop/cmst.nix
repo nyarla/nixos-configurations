@@ -1,12 +1,18 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   systemd.user.services.cmst = {
     Unit = {
       Description = "Autostart for connman-gtk";
-      After = [ "graphical-session.target" "desktop-panel.service" ];
+      After = [
+        "graphical-session.target"
+        "desktop-panel.service"
+      ];
       PartOf = [ "graphical-session.target" ];
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
 
     Service = {
       Environment = [

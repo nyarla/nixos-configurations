@@ -5,7 +5,8 @@ let
     xdg-desktop-portal-wlr
     xdg-desktop-portal-xapp
   ];
-in {
+in
+{
   environment.systemPackages = xdgPortalApps ++ (with pkgs; [ xdg-utils ]);
 
   xdg.portal = {

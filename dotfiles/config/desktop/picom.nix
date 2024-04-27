@@ -1,10 +1,14 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   services.picom = {
     enable = true;
     package = pkgs.picom-next;
 
     shadow = true;
-    shadowOffsets = [ (-15) (-15) ];
+    shadowOffsets = [
+      (-15)
+      (-15)
+    ];
     shadowOpacity = 0.2;
     shadowExclude = [
       "class_g = 'firefox' && argb"
@@ -16,7 +20,10 @@
 
     fade = true;
     fadeDelta = 5;
-    fadeSteps = [ 0.25 0.25 ];
+    fadeSteps = [
+      0.25
+      0.25
+    ];
 
     vSync = true;
 

@@ -1,1 +1,7 @@
-{ pkgs, ... }: { environment.systemPackages = with pkgs; [ htop lsof ]; }
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    htop
+    lsof
+  ];
+}

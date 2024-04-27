@@ -5,8 +5,7 @@ libsForQt5.plasma-workspace.overrideAttrs (old: rec {
 
   patches = [
     (fetchpatch {
-      url =
-        "https://aur.archlinux.org/cgit/aur.git/plain/cmake.patch?h=xembed-sni-proxy-git";
+      url = "https://aur.archlinux.org/cgit/aur.git/plain/cmake.patch?h=xembed-sni-proxy-git";
       sha256 = "1nas6kdxprcvcj3d9p59jp6rqgfnvkkm2g28x9hp2ydydbgi4hmk";
     })
   ];
@@ -28,5 +27,4 @@ libsForQt5.plasma-workspace.overrideAttrs (old: rec {
   installPhase = ''
     make install
   '';
-
 })

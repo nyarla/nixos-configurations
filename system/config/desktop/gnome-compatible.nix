@@ -1,8 +1,16 @@
 { config, pkgs, ... }:
 let
-  gnomeApps = (with pkgs.gnome; [ zenity dconf-editor ])
-    ++ (with pkgs; [ gsound gcr ]);
-in {
+  gnomeApps =
+    (with pkgs.gnome; [
+      zenity
+      dconf-editor
+    ])
+    ++ (with pkgs; [
+      gsound
+      gcr
+    ]);
+in
+{
   environment.systemPackages = gnomeApps;
 
   services = {

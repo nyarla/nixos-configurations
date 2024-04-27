@@ -1,4 +1,8 @@
-{ rustPlatform, fetchFromGitHub, lib }:
+{
+  rustPlatform,
+  fetchFromGitHub,
+  lib,
+}:
 rustPlatform.buildRustPackage rec {
   pname = "git-credential-keepassxc";
   version = "0.11.0";

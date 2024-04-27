@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   target = lib.lists.remove null config.environment.systemPackages;
 
@@ -30,9 +35,10 @@ let
     ${lib.concatMapStrings (p: addDBus p "share/dbus-1/interfaces") target}
     ${lib.concatMapStrings (p: addDBus p "share/dbus-1/services") target} 
     ${lib.concatMapStrings (p: addDBus p "share/dbus-1/session.d") target} 
-    ${
-      lib.concatMapStrings (p: addDBus p "share/dbus-1/system-services") target
-    } 
+    ${lib.concatMapStrings (p: addDBus p "share/dbus-1/system-services") target} 
     ${lib.concatMapStrings (p: addDBus p "share/dbus-1/system.d") target} 
   '';
-in { services.dbus.packages = lib.mkForce (lib.singleton dbusBundlePackage); }
+in
+{
+  services.dbus.packages = lib.mkForce (lib.singleton dbusBundlePackage);
+}

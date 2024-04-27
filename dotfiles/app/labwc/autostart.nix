@@ -1,8 +1,11 @@
-{ fetchurl, writeShellScript, pkgs }:
+{
+  fetchurl,
+  writeShellScript,
+  pkgs,
+}:
 let
   wallpaper = fetchurl {
-    url =
-      "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-dracula.png";
+    url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-dracula.png";
     sha256 = "07ly21bhs6cgfl7pv4xlqzdqm44h22frwfhdqyd4gkn2jla1waab";
   };
 
@@ -11,7 +14,8 @@ let
       ${cmd}
     done &
   '';
-in writeShellScript "autostart" ''
+in
+writeShellScript "autostart" ''
 
   systemctl --user import-environment WAYLAND_DISPLAY
 

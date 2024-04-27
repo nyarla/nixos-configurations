@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   users.users.nixos = {
     home = "/home/nixos";
     group = "users";

@@ -1,4 +1,5 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   xdg.configFile."waybar/style.css".text = ''
     * image {
       -GtkWidget-vexpand: true;
@@ -12,8 +13,15 @@
   xdg.configFile."waybar/config".text = builtins.toJSON {
     position = "top";
     height = 28;
-    modules-left = [ "custom/app" "custom/creative" "wlr/taskbar" ];
-    modules-right = [ "tray" "clock" ];
+    modules-left = [
+      "custom/app"
+      "custom/creative"
+      "wlr/taskbar"
+    ];
+    modules-right = [
+      "tray"
+      "clock"
+    ];
 
     "custom/app" = {
       format = "  ";
@@ -44,8 +52,7 @@
       format = "<b>{:%F %T（%a）}</b>";
       timezone = "Asia/Tokyo";
       locale = "ja_JP.UTF-8";
-      on-click-release =
-        "env GDK_BACKEND=x11 galendae -c /home/nyarla/.config/galendae/config";
+      on-click-release = "env GDK_BACKEND=x11 galendae -c /home/nyarla/.config/galendae/config";
     };
   };
 

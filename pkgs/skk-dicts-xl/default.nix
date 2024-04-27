@@ -1,10 +1,16 @@
-{ stdenv, lib, fetchurl, skktools, libiconv }:
+{
+  stdenv,
+  lib,
+  fetchurl,
+  skktools,
+  libiconv,
+}:
 let
-  dicts = lib.strings.concatStringsSep " + "
-    (lib.lists.forEach (import ./skk.nix)
-      (x: fetchurl { inherit (x) name url sha256; }));
-
-in stdenv.mkDerivation rec {
+  dicts = lib.strings.concatStringsSep " + " (
+    lib.lists.forEach (import ./skk.nix) (x: fetchurl { inherit (x) name url sha256; })
+  );
+in
+stdenv.mkDerivation rec {
   pname = "skk-dicts-xl";
   version = "2022-07-07";
   dontUnpack = true;

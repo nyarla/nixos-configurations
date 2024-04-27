@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [ mosh ];
 
   services.openssh = {
@@ -8,9 +9,11 @@
     settings.PasswordAuthentication = true;
     settings.PermitRootLogin = "no";
     startWhenNeeded = true;
-    listenAddresses = [{
-      addr = "0.0.0.0";
-      port = 2222;
-    }];
+    listenAddresses = [
+      {
+        addr = "0.0.0.0";
+        port = 2222;
+      }
+    ];
   };
 }

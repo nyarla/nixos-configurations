@@ -1,22 +1,27 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  gui = if config.services.xserver.enable then
-    (with pkgs; [
-      looking-glass-client
-      spice
-      spice-gtk
-      virt-manager
-      virt-viewer
-    ])
-  else
-    [ ];
+  gui =
+    if config.services.xserver.enable then
+      (with pkgs; [
+        looking-glass-client
+        spice
+        spice-gtk
+        virt-manager
+        virt-viewer
+      ])
+    else
+      [ ];
 
   qemu_hook = pkgs.runCommand "qemu.sh" { } ''
     mkdir -p $out/bin
     cp ${
       pkgs.fetchurl {
-        url =
-          "https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/master/libvirt_hooks/qemu";
+        url = "https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/master/libvirt_hooks/qemu";
         sha256 = "sha256-DIqdPZrKHIq4lRNb5u+VVXayuO7rMFewoo7SkpGL8Do=";
       }
     } $out/bin/qemu
@@ -25,13 +30,17 @@ let
     chmod +x $out/bin/qemu
   '';
 
-  hasNvidia = lib.hasPrefix (lib.findFirst (x: lib.hasPrefix x "nvidia") ""
-    config.services.xserver.videoDrivers) "nvidia";
-
-in {
+  hasNvidia = lib.hasPrefix (lib.findFirst (
+    x: lib.hasPrefix x "nvidia"
+  ) "" config.services.xserver.videoDrivers) "nvidia";
+in
+{
   environment.systemPackages = gui ++ [ pkgs.bash ];
 
-  boot.kernelModules = [ "pcie_aspm" "iommu" ];
+  boot.kernelModules = [
+    "pcie_aspm"
+    "iommu"
+  ];
   boot.kernelParams = [
     "iommu=pt"
     "kvm.ignore_msrs=1"

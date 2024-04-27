@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   i18n.inputMethod = {
     enabled = "fcitx5";
     fcitx5.addons = with pkgs; [
@@ -11,6 +12,11 @@
   };
 
   services.dbus.packages = [ config.i18n.inputMethod.package ];
-  environment.systemPackages = with pkgs; [ skk-dicts skktools ];
-  environment.variables = { QT_IM_MODULE = "fcitx"; };
+  environment.systemPackages = with pkgs; [
+    skk-dicts
+    skktools
+  ];
+  environment.variables = {
+    QT_IM_MODULE = "fcitx";
+  };
 }

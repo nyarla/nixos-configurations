@@ -161,11 +161,12 @@ let
     "U+E0077" = font;
     "U+E007F" = font;
   };
-
-in {
+in
+{
   x86_64-linux = {
     DEFAULT = "Monospace";
     "U+E000-F8FF" = "Hack Nerd Font";
     "U+F0000-FFFFD" = "Hack Nerd Font";
   } // mapEmoji "Noto Color Emoji";
-}."${system}"
+}
+."${system}"

@@ -1,11 +1,23 @@
-{ stdenv, lib, fetchurl }:
-let fonts = import ./fonts.nix;
-in stdenv.mkDerivation rec {
+{
+  stdenv,
+  lib,
+  fetchurl,
+}:
+let
+  fonts = import ./fonts.nix;
+in
+stdenv.mkDerivation rec {
   version = "V2.0001";
   name = "noto-fonts-jp-${version}";
 
-  files =
-    map ({ name, url, sha256 }: fetchurl { inherit name url sha256; }) fonts;
+  files = map (
+    {
+      name,
+      url,
+      sha256,
+    }:
+    fetchurl { inherit name url sha256; }
+  ) fonts;
 
   unpackPhase = ''
     mkdir -p noto

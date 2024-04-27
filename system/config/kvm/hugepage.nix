@@ -1,4 +1,10 @@
-{ pkgs, name, vm, allocationSize, ... }:
+{
+  pkgs,
+  name,
+  vm,
+  allocationSize,
+  ...
+}:
 let
   startupScript = pkgs.writeShellScript "startup.sh" ''
     set -x
@@ -25,7 +31,8 @@ let
   shutdownScript = pkgs.writeShellScript "shutdown.sh" ''
     echo 0 > /proc/sys/vm/nr_hugepages
   '';
-in {
+in
+{
   systemd.tmpfiles.rules = [
     "L+ /etc/executable/etc/libvirt/hooks/qemu.d/${vm}/prepare/begin/${name}.sh - - - - ${startupScript}"
     "L+ /etc/executable/etc/libvirt/hooks/qemu.d/${vm}/release/end/${name}.sh - - - - ${shutdownScript}"

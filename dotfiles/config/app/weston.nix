@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   home.packages = with pkgs; [ weston ];
 
   xdg.configFile."weston.ini".text = lib.generators.toINI { } {
@@ -6,7 +7,9 @@
       xwayland = false;
       idle-time = 0;
     };
-    libinput = { enable-tap = true; };
+    libinput = {
+      enable-tap = true;
+    };
     shell = {
       panel-position = "none";
       locking = false;

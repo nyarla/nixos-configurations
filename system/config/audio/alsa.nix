@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   sound.enable = true;
 
   boot.kernelModules = [ "snd_aloop" ];

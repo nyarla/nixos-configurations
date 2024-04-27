@@ -8,8 +8,10 @@ let
 
   prop = tag: value: "<${tag}>${value}</${tag}>";
 
-  font = place:
-    { name, size }: ''
+  font =
+    place:
+    { name, size }:
+    ''
       <font place="${place}">
         <name>${name}</name>
         <size>${size}</size>
@@ -34,16 +36,19 @@ let
     </action>
   '';
 
-  action = name: contains:
+  action =
+    name: contains:
     if (builtins.length contains) == 0 then
       ''<action name="${name}" />''
-    else ''
-      <action name="${name}">${builtins.concatStringsSep "\n" contains}</action>
-    '';
-
-in ''
+    else
+      ''
+        <action name="${name}">${builtins.concatStringsSep "\n" contains}</action>
+      '';
+in
+''
   <?xml version="1.0" ?>
-'' + (props "labwc_config" [
+''
++ (props "labwc_config" [
   (props "core" [
     (prop "decoration" "server")
     (prop "gap" "0")
@@ -51,7 +56,10 @@ in ''
     (prop "reuseOutputMode" "no")
   ])
 
-  (props "focus" [ (prop "followMouse" "no") (prop "raiseOnFocus" "no") ])
+  (props "focus" [
+    (prop "followMouse" "no")
+    (prop "raiseOnFocus" "no")
+  ])
 
   (props "theme" [
     (prop "name" "Kaunas")
@@ -76,7 +84,10 @@ in ''
     </regions>
   ''
 
-  (props "snapping" [ (prop "range" "1") (prop "topMaximize" "yes") ])
+  (props "snapping" [
+    (prop "range" "1")
+    (prop "topMaximize" "yes")
+  ])
   (props "resistance" [ (prop "screenEdgeStrength" "20") ])
 
   (props "keyboard" [
@@ -88,8 +99,7 @@ in ''
     (keybind "A-o" [ (action "SnapToRegion" [ (prop "region" "center") ]) ])
 
     (keybind "A-F1" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
-    (keybind "A-F2"
-      [ (action "ShowMenu" [ (prop "menu" "applications-creative") ]) ])
+    (keybind "A-F2" [ (action "ShowMenu" [ (prop "menu" "applications-creative") ]) ])
     (keybind "C-W-q" [ (exec "swaylock -C ~/.config/swaylock/config -f") ])
   ])
 ])

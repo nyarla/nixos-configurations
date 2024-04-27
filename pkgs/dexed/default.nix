@@ -1,6 +1,28 @@
-{ stdenv, fetchFromGitHub, pkg-config, cmake, alsa-lib, curlFull, doxygen
-, freetype, glib, graphviz, gtk3, ladspa-sdk, libjack2, libjpeg_turbo, libpng
-, pcre, python3, webkitgtk, zlib, xorg, libGLU, juce-framework, lib }:
+{
+  stdenv,
+  fetchFromGitHub,
+  pkg-config,
+  cmake,
+  alsa-lib,
+  curlFull,
+  doxygen,
+  freetype,
+  glib,
+  graphviz,
+  gtk3,
+  ladspa-sdk,
+  libjack2,
+  libjpeg_turbo,
+  libpng,
+  pcre,
+  python3,
+  webkitgtk,
+  zlib,
+  xorg,
+  libGLU,
+  juce-framework,
+  lib,
+}:
 stdenv.mkDerivation rec {
   pname = "dexed";
   version = "git";
@@ -20,34 +42,47 @@ stdenv.mkDerivation rec {
     "-DCMAKE_RANLIB=${stdenv.cc.cc}/bin/gcc-ranlib"
   ];
 
-  nativeBuildInputs = [ cmake pkg-config doxygen python3 ];
-  buildInputs = [
-    alsa-lib
-    curlFull.dev
-    freetype
-    glib.dev
-    graphviz
-    gtk3
-    ladspa-sdk
-    libGLU
-    libjack2
-    libjpeg_turbo
-    libpng
-    pcre
-    webkitgtk
-    zlib
-  ] ++ (with xorg; [
-    libX11
-    libXcomposite
-    libXcursor
-    libXext
-    libXinerama
-    libXrandr
-    libXrender
-  ]);
+  nativeBuildInputs = [
+    cmake
+    pkg-config
+    doxygen
+    python3
+  ];
+  buildInputs =
+    [
+      alsa-lib
+      curlFull.dev
+      freetype
+      glib.dev
+      graphviz
+      gtk3
+      ladspa-sdk
+      libGLU
+      libjack2
+      libjpeg_turbo
+      libpng
+      pcre
+      webkitgtk
+      zlib
+    ]
+    ++ (with xorg; [
+      libX11
+      libXcomposite
+      libXcursor
+      libXext
+      libXinerama
+      libXrandr
+      libXrender
+    ]);
 
-  libPath = lib.makeLibraryPath
-    (buildInputs ++ [ curlFull.out stdenv.cc.cc stdenv.cc.libc ]);
+  libPath = lib.makeLibraryPath (
+    buildInputs
+    ++ [
+      curlFull.out
+      stdenv.cc.cc
+      stdenv.cc.libc
+    ]
+  );
 
   installPhase = ''
     mkdir -p $out/bin

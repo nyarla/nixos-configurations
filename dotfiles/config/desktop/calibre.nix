@@ -1,12 +1,18 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   systemd.user.services.calibre = {
     Unit = {
       Description = "Autostart for calibre";
-      After = [ "graphical-session.target" "desktop-panel.service" ];
+      After = [
+        "graphical-session.target"
+        "desktop-panel.service"
+      ];
       PartOf = [ "graphical-session.target" ];
     };
 
-    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
 
     Service = {
       Environment = [

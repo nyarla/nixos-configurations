@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   boot.kernelModules = [ "uinput" ];
 
   hardware.keyboard.qmk.enable = true;
@@ -10,5 +11,8 @@
 
   services.udev.packages = with pkgs; [ vial ];
 
-  environment.systemPackages = with pkgs; [ qmk vial ];
+  environment.systemPackages = with pkgs; [
+    qmk
+    vial
+  ];
 }

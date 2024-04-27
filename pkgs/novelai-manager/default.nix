@@ -1,15 +1,25 @@
-{ gcc12Stdenv, flutter, cmake, ninja, pkg-config, makeWrapper, fetchFromGitHub
-, fetchurl, pcre2, libdeflate }:
+{
+  gcc12Stdenv,
+  flutter,
+  cmake,
+  ninja,
+  pkg-config,
+  makeWrapper,
+  fetchFromGitHub,
+  fetchurl,
+  pcre2,
+  libdeflate,
+}:
 
 let
   realmLinuxVersion = "0.9.0+rc";
   realmLinuxVersionUrlSafe = "0.9.0%2Brc";
   realmLinuxBinary = fetchurl {
-    url =
-      "https://static.realm.io/downloads/dart/${realmLinuxVersionUrlSafe}/linux.tar.gz";
+    url = "https://static.realm.io/downloads/dart/${realmLinuxVersionUrlSafe}/linux.tar.gz";
     sha256 = "sha256-2Xaac9wlvZ4wMogJ40VHuY9nv7WT2zrveKppQz/UbFk=";
   };
-in flutter.mkFlutterApp rec {
+in
+flutter.mkFlutterApp rec {
   pname = "NovelAIManager";
   version = "2023-01-21";
   src = fetchFromGitHub {
@@ -19,8 +29,16 @@ in flutter.mkFlutterApp rec {
     sha256 = "sha256-69VnSEMbKkvJau0Veb4QyOvZMnQt+nOBBIqIJriykrg=";
   };
 
-  buildInputs = [ pcre2 libdeflate ];
-  nativeBuildInputs = [ cmake ninja pkg-config makeWrapper ];
+  buildInputs = [
+    pcre2
+    libdeflate
+  ];
+  nativeBuildInputs = [
+    cmake
+    ninja
+    pkg-config
+    makeWrapper
+  ];
 
   patches = [ ./linux-support.patch ];
 

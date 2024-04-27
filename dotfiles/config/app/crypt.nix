@@ -1,1 +1,7 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ electrum electrum-ltc ]; }
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    electrum
+    electrum-ltc
+  ];
+}

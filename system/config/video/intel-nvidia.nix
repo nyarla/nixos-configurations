@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   boot.blacklistedKernelModules = [ "nouveau" ];
 
   hardware.bumblebee = {
@@ -10,16 +11,18 @@
 
   nixpkgs.config.packageOverrides = super: {
     bumblebee = super.bumblebee.overrideAttrs (old: rec {
-      postInstall = old.postInstall + ''
-        cat <<EOF >$out/etc/bumblebee/xorg.conf.nvidia
+      postInstall =
+        old.postInstall
+        + ''
+          cat <<EOF >$out/etc/bumblebee/xorg.conf.nvidia
 
-        Section "Screen"
-          Identifier "Default Screen"
-          Device "DiscreteNvidia"
-        EndSection
+          Section "Screen"
+            Identifier "Default Screen"
+            Device "DiscreteNvidia"
+          EndSection
 
-        EOF
-      '';
+          EOF
+        '';
     });
   };
 
@@ -27,8 +30,7 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
-    extraPackages = (with pkgs; [ libGL_dri ])
-      ++ [ config.boot.kernelPackages.nvidia_x11.out ];
+    extraPackages = (with pkgs; [ libGL_dri ]) ++ [ config.boot.kernelPackages.nvidia_x11.out ];
   };
 
   services.xserver.useGlamor = true;

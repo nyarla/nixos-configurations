@@ -21,8 +21,7 @@
   }
   {
     name = "SKK-JISYO.fullname";
-    url =
-      "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.fullname";
+    url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.fullname";
     sha256 = "1cx8cd1ji9jks692x3sddbn5cs0kb0jxi4wdwvlax4cvwqpm0d5h";
   }
   {
@@ -37,26 +36,22 @@
   }
   {
     name = "SKK-JISYO.okinawa";
-    url =
-      "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.okinawa";
+    url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.okinawa";
     sha256 = "1zcx4gyabb1k1fwim1gqg2pjfgvqgy1bas3azxmdaamvc0xs5yl8";
   }
   {
     name = "SKK-JISYO.propernoun";
-    url =
-      "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.propernoun";
+    url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.propernoun";
     sha256 = "0a5lkp69cpjhgya3m983d5hwf1zdsp8w81pdk8arw03s5hy6j8hm";
   }
   {
     name = "SKK-JISYO.station";
-    url =
-      "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.station";
+    url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.station";
     sha256 = "1gil9kz0f8hdi04akk6dsz02jbg7pwah9ypbcm9lp3373fzhh1q0";
   }
   {
     name = "SKK-JISYO.neologd";
-    url =
-      "https://raw.githubusercontent.com/tokuhirom/skk-jisyo-neologd/master/SKK-JISYO.neologd";
+    url = "https://raw.githubusercontent.com/tokuhirom/skk-jisyo-neologd/master/SKK-JISYO.neologd";
     sha256 = "08pdzbzrzcfw2f62fnw1njrnpqkgn04kbhx0wkrrm5cg8b948n6k";
   }
 ]

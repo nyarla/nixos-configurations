@@ -1,9 +1,20 @@
-{ runCommand, writeShellScript, restic, rclone, lib }:
+{
+  runCommand,
+  writeShellScript,
+  restic,
+  rclone,
+  lib,
+}:
 let
   restic-run = writeShellScript "restic-run.sh" ''
     set -euo pipefail
 
-    export PATH=${lib.makeBinPath [ restic rclone ]}:$PATH
+    export PATH=${
+      lib.makeBinPath [
+        restic
+        rclone
+      ]
+    }:$PATH
 
     export HOME=/home/nyarla
 
@@ -35,7 +46,8 @@ let
     ${restic-run} ${restic}/bin/restic backup $RESTIC_BACKUP_ARGS "$DIR"
     ${restic-run} ${restic}/bin/restic forget $RESTIC_FORGET_ARGS
   '';
-in runCommand "restic-run" { } ''
+in
+runCommand "restic-run" { } ''
   mkdir -p $out/bin
   cp ${restic-backup} $out/bin/restic-backup
   cp ${restic-run} $out/bin/restic-run

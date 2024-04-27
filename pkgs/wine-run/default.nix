@@ -18,7 +18,8 @@ let
     ${wine-run} winetricks corefonts fakejapanese
     ${wine-run} wineboot -s
   '';
-in runCommand "wine-run" { } ''
+in
+runCommand "wine-run" { } ''
   mkdir -p $out/bin
   cp ${wine-run} $out/bin/wine-run
   chmod +x $out/bin/wine-run

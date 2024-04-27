@@ -1,3 +1,8 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [ wineUsingFull winetricks wine-run ];
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    wineUsingFull
+    winetricks
+    wine-run
+  ];
 }

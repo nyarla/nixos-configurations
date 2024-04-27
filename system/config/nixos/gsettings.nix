@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   add-to-xdg-dirs = p: ''
      if test -d "${p}/share"; then
@@ -42,8 +47,8 @@ let
 
     ${pkgs.glib.dev}/bin/glib-compile-schemas $out/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/
   '';
-
-in {
+in
+{
   environment.etc."profile.d/gsettings.sh" = {
     text = ''
       export NIX_GSETTINGS_OVERRIDES_DIR=${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas

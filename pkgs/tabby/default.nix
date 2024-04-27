@@ -1,5 +1,16 @@
-{ gcc9Stdenv, fetchFromGitHub, rustPlatform, nvidia_x11, cudaPackages_11_2
-, protobuf, cmake, pkg-config, openssl, openblas, llvmPackages_10 }:
+{
+  gcc9Stdenv,
+  fetchFromGitHub,
+  rustPlatform,
+  nvidia_x11,
+  cudaPackages_11_2,
+  protobuf,
+  cmake,
+  pkg-config,
+  openssl,
+  openblas,
+  llvmPackages_10,
+}:
 let
   CTranslate2 = gcc9Stdenv.mkDerivation rec {
     pname = "Ctranslate2";
@@ -18,9 +29,20 @@ let
       "-DWITH_MKL=OFF"
       "-DWITH_OPENBLAS=ON"
     ];
-    nativeBuildInputs = [ cmake pkg-config ];
-    buildInputs = [ openblas nvidia_x11 llvmPackages_10.openmp ]
-      ++ (with cudaPackages_11_2; [ cudatoolkit cudnn ]);
+    nativeBuildInputs = [
+      cmake
+      pkg-config
+    ];
+    buildInputs =
+      [
+        openblas
+        nvidia_x11
+        llvmPackages_10.openmp
+      ]
+      ++ (with cudaPackages_11_2; [
+        cudatoolkit
+        cudnn
+      ]);
   };
 
   llamacpp = gcc9Stdenv.mkDerivation rec {
@@ -40,7 +62,10 @@ let
       "-DLLAMA_LTO=ON"
       "-DLLAMA_NATIVE=ON"
     ];
-    nativeBuildInputs = [ cmake pkg-config ];
+    nativeBuildInputs = [
+      cmake
+      pkg-config
+    ];
     buildInputs = [ openblas ];
 
     installPhase = ''
@@ -49,7 +74,8 @@ let
       cp -R . $out/
     '';
   };
-in rustPlatform.buildRustPackage rec {
+in
+rustPlatform.buildRustPackage rec {
   pname = "tabby";
   version = "76c2cd2";
 
@@ -65,16 +91,25 @@ in rustPlatform.buildRustPackage rec {
   CTRANSLATE2_ROOT = "${CTranslate2}";
   buildFeatures = [ "link_shared" ];
 
-  nativeBuildInputs = [ cmake pkg-config protobuf ];
+  nativeBuildInputs = [
+    cmake
+    pkg-config
+    protobuf
+  ];
 
-  buildInputs = [
-    CTranslate2
-    llamacpp
-    llvmPackages_10.openmp
-    nvidia_x11
-    openblas.dev
-    openssl.dev
-  ] ++ (with cudaPackages_11_2; [ cudatoolkit cudnn ]);
+  buildInputs =
+    [
+      CTranslate2
+      llamacpp
+      llvmPackages_10.openmp
+      nvidia_x11
+      openblas.dev
+      openssl.dev
+    ]
+    ++ (with cudaPackages_11_2; [
+      cudatoolkit
+      cudnn
+    ]);
 
   postPatch = ''
     sed -i 's|let dst|// let dst|' crates/llama-cpp-bindings/build.rs

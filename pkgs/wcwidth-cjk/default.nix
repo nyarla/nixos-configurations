@@ -1,4 +1,9 @@
-{ stdenv, lib, fetchFromGitHub, autoreconfHook }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  autoreconfHook,
+}:
 stdenv.mkDerivation rec {
   name = "wcwidth-cjk-${src.rev}";
   src = fetchFromGitHub {
@@ -17,8 +22,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description =
-      "Run command with CJK-friendly wcwidth(3) to fix ambiguous width chars";
+    description = "Run command with CJK-friendly wcwidth(3) to fix ambiguous width chars";
     homepage = "https://github.com/fumiyas/wcwidth-cjk";
     license = lib.licenses.bsd2;
     maintainers = [ "nyarla <nyarla@kalaclista.com>" ];

@@ -1,4 +1,8 @@
-{ lib, fetchFromGitHub, rustPackages }:
+{
+  lib,
+  fetchFromGitHub,
+  rustPackages,
+}:
 rustPackages.rustPlatform.buildRustPackage rec {
   pname = "vgpu_unlock-rs";
   version = "2.3.1";

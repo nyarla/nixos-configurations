@@ -1,5 +1,18 @@
-{ stdenv, lib, fetchFromGitHub, cmake, extra-cmake-modules, pkg-config, gettext
-, fcitx5, fcitx5-qt, qtbase, wrapQtAppsHook, cskk, skk-dicts, enableQt ? false
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  cmake,
+  extra-cmake-modules,
+  pkg-config,
+  gettext,
+  fcitx5,
+  fcitx5-qt,
+  qtbase,
+  wrapQtAppsHook,
+  cskk,
+  skk-dicts,
+  enableQt ? false,
 }:
 stdenv.mkDerivation rec {
   pname = "fcitx5-cskk";
@@ -11,10 +24,22 @@ stdenv.mkDerivation rec {
     hash = "sha256-rDaFsBXd3he40W27B6641qEfPYBpuw7Rc8JhvsZiPFg=";
   };
 
-  nativeBuildInputs = [ cmake extra-cmake-modules pkg-config gettext ]
-    ++ lib.optional enableQt wrapQtAppsHook;
+  nativeBuildInputs = [
+    cmake
+    extra-cmake-modules
+    pkg-config
+    gettext
+  ] ++ lib.optional enableQt wrapQtAppsHook;
 
-  buildInputs = [ fcitx5 cskk ] ++ lib.optionals enableQt [ fcitx5-qt qtbase ];
+  buildInputs =
+    [
+      fcitx5
+      cskk
+    ]
+    ++ lib.optionals enableQt [
+      fcitx5-qt
+      qtbase
+    ];
 
   cmakeFlags = [
     "-DENABLE_QT=${toString enableQt}"

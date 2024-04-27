@@ -1,5 +1,14 @@
-{ multiStdenv, lib, fetchFromGitHub, libjack2, pkg-config, wine, pkgsi686Linux
-, qt5, python3 }:
+{
+  multiStdenv,
+  lib,
+  fetchFromGitHub,
+  libjack2,
+  pkg-config,
+  wine,
+  pkgsi686Linux,
+  qt5,
+  python3,
+}:
 
 multiStdenv.mkDerivation rec {
   pname = "wineasio";
@@ -12,10 +21,18 @@ multiStdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs =
-    [ pkg-config wine qt5.wrapQtAppsHook python3.pkgs.wrapPython ];
-  buildInputs =
-    [ pkgsi686Linux.libjack2 libjack2 python3.pkgs.pyqt5 qt5.qtbase ];
+  nativeBuildInputs = [
+    pkg-config
+    wine
+    qt5.wrapQtAppsHook
+    python3.pkgs.wrapPython
+  ];
+  buildInputs = [
+    pkgsi686Linux.libjack2
+    libjack2
+    python3.pkgs.pyqt5
+    qt5.qtbase
+  ];
   pythonPath = with python3.pkgs; [ pyqt5 ];
 
   dontConfigure = true;

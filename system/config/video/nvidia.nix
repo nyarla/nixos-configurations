@@ -17,7 +17,8 @@ let
 
   nvidia = config.boot.kernelPackages.nvidiaPackages.latest;
   nvidia32 = nvidia.lib32;
-in {
+in
+{
   boot.blacklistedKernelModules = [ "i2c_nvidia_gpu" ];
   boot.kernelModules = [
     # this module requires by cuda on wayland
@@ -44,25 +45,25 @@ in {
     setLdLibraryPath = true;
     package = nvidia;
     package32 = nvidia32;
-    extraPackages = with pkgs; [ pkgs.mesa.drivers libGL ];
+    extraPackages = with pkgs; [
+      pkgs.mesa.drivers
+      libGL
+    ];
   };
 
   environment = {
     etc = {
-      "glvnd/egl_vendor.d".source =
-        "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
-      "gbm/nvidia-drm_gbm.so".source =
-        "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
+      "glvnd/egl_vendor.d".source = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/";
+      "gbm/nvidia-drm_gbm.so".source = "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
     };
 
-    systemPackages = with pkgs;
-      [
-        (cuda-shell.override {
-          nvidia_x11 = nvidia;
-          cudaPackages = pkgs.cudaPackages_12_1;
-        })
-        #(tabby.override { nvidia_x11 = nvidia; })
-      ];
+    systemPackages = with pkgs; [
+      (cuda-shell.override {
+        nvidia_x11 = nvidia;
+        cudaPackages = pkgs.cudaPackages_12_1;
+      })
+      #(tabby.override { nvidia_x11 = nvidia; })
+    ];
   };
 
   virtualisation.docker.enableNvidia = true;

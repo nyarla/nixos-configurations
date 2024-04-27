@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.file.".asoundrc".text = ''
     pcm.cd {
       type hw

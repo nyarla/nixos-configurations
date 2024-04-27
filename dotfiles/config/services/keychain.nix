@@ -1,7 +1,10 @@
 _: {
   programs.keychain = {
     enable = false;
-    extraFlags = [ "--nogui" "--quiet" ];
+    extraFlags = [
+      "--nogui"
+      "--quiet"
+    ];
     enableZshIntegration = true;
     enableBashIntegration = true;
   };

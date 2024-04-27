@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   nix = {
     package = pkgs.nixUnstable;
     extraOptions = ''
@@ -6,5 +7,7 @@
     '';
   };
 
-  nixpkgs = { config.allowUnfree = true; };
+  nixpkgs = {
+    config.allowUnfree = true;
+  };
 }

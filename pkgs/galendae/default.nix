@@ -1,4 +1,10 @@
-{ stdenv, fetchFromGitHub, gtk3, pkg-config, wrapGAppsHook }:
+{
+  stdenv,
+  fetchFromGitHub,
+  gtk3,
+  pkg-config,
+  wrapGAppsHook,
+}:
 stdenv.mkDerivation rec {
   pname = "galendae";
   version = "git";
@@ -9,7 +15,10 @@ stdenv.mkDerivation rec {
     sha256 = "07mnmj1fh1s763vs97hpmzsiyx52fss52m8d6jf8frgxasap6sb1";
   };
 
-  buildInputs = [ gtk3.dev pkg-config ];
+  buildInputs = [
+    gtk3.dev
+    pkg-config
+  ];
   nativeBuildInupts = [ wrapGAppsHook ];
 
   patchPhase = ''

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   console.colors = [
     "000000"
     "FF6633"

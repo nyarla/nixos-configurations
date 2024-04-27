@@ -1,4 +1,8 @@
-{ stdenv, fetchFromGitHub, python3 }:
+{
+  stdenv,
+  fetchFromGitHub,
+  python3,
+}:
 stdenv.mkDerivation rec {
   pname = "locale-eaw";
   version = "2022-08-28";

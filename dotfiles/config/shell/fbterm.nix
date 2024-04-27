@@ -1,6 +1,8 @@
 { lib, ... }:
-let toKV = lib.generators.toKeyValue { };
-in {
+let
+  toKV = lib.generators.toKeyValue { };
+in
+{
   xdg.configFile."fbterm/fbtermrc".text = toKV {
     font-names = "monospace";
     font-size = 14;

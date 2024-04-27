@@ -1,1 +1,4 @@
-{ pkgs, ... }: { environment.systemPackages = with pkgs; [ whipper ]; }
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [ whipper ];
+}

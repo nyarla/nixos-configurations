@@ -1,9 +1,49 @@
-{ stdenv, fetchFromGitHub, fetchzip, lib, runCommand, binutils, cmake, findutils
-, pkg-config, python3, alsaLib, atk, boost178, cairo, curlFull, freetype
-, gdk-pixbuf, glib, graphviz, gtk3, gtkmm3, harfbuzz, ladspa-sdk, libGLU
-, libappindicator-gtk3, libdatrie, libdbusmenu, libepoxy, libjack2
-, libjpeg_turbo, libpng, libselinux, libsepol, libsysprof-capture, libthai
-, libxkbcommon, pango, pcre, pcre2, sqlite, util-linux, webkitgtk, xorg, zlib }:
+{
+  stdenv,
+  fetchFromGitHub,
+  fetchzip,
+  lib,
+  runCommand,
+  binutils,
+  cmake,
+  findutils,
+  pkg-config,
+  python3,
+  alsaLib,
+  atk,
+  boost178,
+  cairo,
+  curlFull,
+  freetype,
+  gdk-pixbuf,
+  glib,
+  graphviz,
+  gtk3,
+  gtkmm3,
+  harfbuzz,
+  ladspa-sdk,
+  libGLU,
+  libappindicator-gtk3,
+  libdatrie,
+  libdbusmenu,
+  libepoxy,
+  libjack2,
+  libjpeg_turbo,
+  libpng,
+  libselinux,
+  libsepol,
+  libsysprof-capture,
+  libthai,
+  libxkbcommon,
+  pango,
+  pcre,
+  pcre2,
+  sqlite,
+  util-linux,
+  webkitgtk,
+  xorg,
+  zlib,
+}:
 let
   deps = fetchFromGitHub {
     owner = "apohl79";
@@ -26,7 +66,8 @@ let
     enableShared = false;
     enableStatic = true;
   };
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "audiogridder-modded";
   version = "1.2.0-mod";
 
@@ -38,72 +79,85 @@ in stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  nativeBuildInputs = [ cmake pkg-config python3 findutils binutils ];
-  buildInputs = [
-    alsaLib
-    atk
-    boost178Static
-    cairo
-    curlFull
-    curlFull.dev
-    freetype
-    gdk-pixbuf
-    glib
-    glib.dev
-    graphviz
-    gtk3
-    gtk3.dev
-    gtkmm3
-    gtkmm3.dev
-    harfbuzz
-    ladspa-sdk
-    libGLU
-    libappindicator-gtk3
-    libappindicator-gtk3.dev
-    libdatrie.dev
-    libdatrie.out
-    libdbusmenu
-    libepoxy.dev
-    libepoxy.out
-    libjack2
-    libjpeg_turbo
-    libpng
-    libselinux.dev
-    libselinux.out
-    libsepol.dev
-    libsepol.out
-    libsysprof-capture
-    libthai.dev
-    libthai.out
-    libxkbcommon.dev
-    libxkbcommon.out
-    pango
-    pcre.dev
-    pcre.out
-    pcre2.dev
-    pcre2.out
-    sqlite.dev
-    sqlite.out
-    util-linux.dev
-    util-linux.out
-    webkitgtk
-    zlib
-  ] ++ (with xorg; [
-    libX11
-    libXcomposite
-    libXcursor
-    libXdmcp.dev
-    libXdmcp.out
-    libXext
-    libXinerama
-    libXrandr
-    libXrender
-    libXtst
-    libxcb
-  ]);
+  nativeBuildInputs = [
+    cmake
+    pkg-config
+    python3
+    findutils
+    binutils
+  ];
+  buildInputs =
+    [
+      alsaLib
+      atk
+      boost178Static
+      cairo
+      curlFull
+      curlFull.dev
+      freetype
+      gdk-pixbuf
+      glib
+      glib.dev
+      graphviz
+      gtk3
+      gtk3.dev
+      gtkmm3
+      gtkmm3.dev
+      harfbuzz
+      ladspa-sdk
+      libGLU
+      libappindicator-gtk3
+      libappindicator-gtk3.dev
+      libdatrie.dev
+      libdatrie.out
+      libdbusmenu
+      libepoxy.dev
+      libepoxy.out
+      libjack2
+      libjpeg_turbo
+      libpng
+      libselinux.dev
+      libselinux.out
+      libsepol.dev
+      libsepol.out
+      libsysprof-capture
+      libthai.dev
+      libthai.out
+      libxkbcommon.dev
+      libxkbcommon.out
+      pango
+      pcre.dev
+      pcre.out
+      pcre2.dev
+      pcre2.out
+      sqlite.dev
+      sqlite.out
+      util-linux.dev
+      util-linux.out
+      webkitgtk
+      zlib
+    ]
+    ++ (with xorg; [
+      libX11
+      libXcomposite
+      libXcursor
+      libXdmcp.dev
+      libXdmcp.out
+      libXext
+      libXinerama
+      libXrandr
+      libXrender
+      libXtst
+      libxcb
+    ]);
 
-  libPath =
-    lib.makeLibraryPath (buildInputs ++ [ stdenv.cc.cc stdenv.cc.libc ]);
+  libPath = lib.makeLibraryPath (
+    buildInputs
+    ++ [
+      stdenv.cc.cc
+      stdenv.cc.libc
+    ]
+  );
 
   postPatch = ''
     export binutils=${binutils}

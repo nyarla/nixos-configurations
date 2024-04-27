@@ -1,5 +1,9 @@
-{ pkgs, ... }: {
-  boot.kernelModules = [ "kvm" "kvm-amd" ];
+{ pkgs, ... }:
+{
+  boot.kernelModules = [
+    "kvm"
+    "kvm-amd"
+  ];
   boot.kernelParams = [ "kvm.ignore_msrs=1" ];
 
   virtualisation.virtualbox.host = {

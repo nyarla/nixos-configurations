@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   programs.zsh = {
     enable = true;
     autocd = true;
@@ -6,16 +7,12 @@
       "cd" = "__cd";
       "l" = "ls --color -F -la";
       "ls" = "ls --color -F";
-      "nixos-apply" =
-        ''sudo nixos-rebuild switch --flake "/etc/nixos#$(hostname)"'';
-      "nixos-build" =
-        ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
-      "nixos-upgrade" =
-        ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
+      "nixos-apply" = ''sudo nixos-rebuild switch --flake "/etc/nixos#$(hostname)"'';
+      "nixos-build" = ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
+      "nixos-upgrade" = ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
       "nvim-resume" = "pkill -SIGCONT nvim";
       "rm" = "trash";
-      "waydroid" =
-        "env XDG_DATA_HOME=/persist/home/nyarla/.local/share waydroid";
+      "waydroid" = "env XDG_DATA_HOME=/persist/home/nyarla/.local/share waydroid";
       "nvim" = "nvim-run";
     };
     sessionVariables = {
@@ -32,16 +29,18 @@
       ignoreDups = true;
       share = true;
     };
-    plugins = [{
-      name = "z";
-      file = "z.sh";
-      src = pkgs.fetchFromGitHub {
-        owner = "rupa";
-        repo = "z";
-        rev = "b82ac78a2d4457d2ca09973332638f123f065fd1";
-        sha256 = "sha256-4jMHh1GVRdFNjUjiPH94vewbfLcah7Agu153zjVNE14=";
-      };
-    }];
+    plugins = [
+      {
+        name = "z";
+        file = "z.sh";
+        src = pkgs.fetchFromGitHub {
+          owner = "rupa";
+          repo = "z";
+          rev = "b82ac78a2d4457d2ca09973332638f123f065fd1";
+          sha256 = "sha256-4jMHh1GVRdFNjUjiPH94vewbfLcah7Agu153zjVNE14=";
+        };
+      }
+    ];
     initExtraFirst = ''
       # enable home-manager
       export PATH=${

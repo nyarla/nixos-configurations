@@ -37,7 +37,9 @@ _: {
         style = "white";
       };
 
-      git_status = { format = " [$ahead_behind](cyan)"; };
+      git_status = {
+        format = " [$ahead_behind](cyan)";
+      };
 
       env_var = {
         IN_NIX_SHELL = {

@@ -14,8 +14,8 @@ in (carla.override { stdenv = multiStdenv; }).overrideAttrs (old: rec {
   version = "2024-02-13"; # keep same version of ildaeil
   src = fetchFromGitHub {
     inherit (old.src) owner repo;
-    rev = "fe8631bc13a507507ccc6b5c408d5a4a880b1936";
-    hash = "sha256-RPHy1XS1vkFiUJ2kZ0sLlVlbQqIrWp6RFt4tiySv0fQ=";
+    rev = "0032f18fad01806c512f1e12804d8c7adffb4e8a";
+    hash = "sha256-WsZIXiJFAatL9xltDzb8C0Y8559RpwS9lC9ae2pcZhw=";
     fetchSubmodules = true;
   };
 

@@ -73,11 +73,12 @@ in {
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs
     (old: rec {
-      version = "2024-04-14";
+      version = "2024-04-20";
       src = super.fetchFromGitHub {
         inherit (old.src) owner repo;
         rev = "55138dbe0eefb37a052036500406e45423e3639a";
         hash = "sha256-76OX1Ew8FeW41yaFhEEZh4BQFMwZ7Cm/FJSJChh3Ksw=";
+
       };
     });
 

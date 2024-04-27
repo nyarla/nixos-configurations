@@ -8,19 +8,10 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "asb2m10";
     repo = "dexed";
-    rev = "b6cf2e9190e216387ad96f977284ebbef765b447";
-    hash = "sha256-2h57+T7I+QZuuTJbirvit2za9iEmJPvsdgY2qKOgPzo=";
+    rev = "e4b536dc1194a008a0dfb4087242b6f8641946c8";
+    hash = "sha256-1tWdCVtp3uMkbVa1aoEx63MbVuaIL4svBN0G4ELUJLo=";
     fetchSubmodules = true;
   };
-
-  postUnpack = ''
-    mkdir -p source/assets/JUCE
-    cp -R ${juce-framework.src}/* source/assets/JUCE
-    chmod -R +w source/assets/JUCE
-
-    cp ${juce-framework}/bin/Projucer source/assets/JUCE/Projucer
-    chmod +x source/assets/JUCE/Projucer
-  '';
 
   dontFixup = true;
 

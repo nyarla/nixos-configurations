@@ -5,6 +5,7 @@
     google-cloud-sdk
     awscli
     flyctl
+    gh
 
     # container toolchain
     linuxkit

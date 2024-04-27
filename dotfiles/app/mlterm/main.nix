@@ -16,8 +16,7 @@ let
     type_engine = "cairo";
     unicode_half_width_areas = "U+2500-25FF";
     unicode_full_width_areas = "U+E000-F8FF";
-    emoji_path =
-      "${pkgs.noto-fonts-color-emoji}/share/fonts/noto/NotoColorEmoji.ttf";
+    emoji_path = "${pkgs.noto-fonts-color-emoji}/share/fonts/noto/NotoColorEmoji.ttf";
 
     # appearance
     scrollbar_mode = false;
@@ -31,7 +30,7 @@ let
     cursor_fg_color = color.black;
 
     tab_size = 2;
-    log_size = 4096;
+    log_size = 100000;
 
     # others
     mod_meta_key = "alt";
@@ -45,4 +44,5 @@ let
       input_method = "ibus";
     };
   };
-in config // extraConfig."${pkgs.stdenv.system}"
+in
+config // extraConfig."${pkgs.stdenv.system}"

@@ -5,11 +5,12 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "naokiri";
     repo = pname;
-    rev = "d783896ddc8510e564d542fc56c6486834424be6";
-    hash = "sha256-xOCR5wfVC8OeCieC7YGlWoxRUB5MFbuk40irLS0ngBc=";
+    rev = "432295efcff4c236e82beb635b2e8e862fb40b95";
+    hash = "sha256-mhQZeCa4shxO8/kRqAwR60pwvfeQ9Ue+r25BtTAI1Hw=";
+
   };
 
-  cargoHash = "sha256-lKLbs2Q3Vt4nIvlMBqjiPn7exO6F2y/D8AvpTPtusbo=";
+  cargoHash = "sha256-oHtwjLvfMVMWiaHlZoaiLR8YXRg0g9I0YlbsKozasv4=";
 
   buildInputs = [ libxkbcommon.dev ];
   nativeBuildInputs = [ cargo-c rust-bindgen ];

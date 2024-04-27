@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://www.sononym.net/download/sononym-${version}.tar.bz2";
-    sha256 = "0ffhrjzb3n9jajlgkckf52lif9ljgb6i8cv1p6xkrhcmng7dsf6m";
+    hash = "sha256-2Of+7MWyiRhK09jJSdFmr1/iM1cAs30BhcFZsdg2bB4=";
   };
 
   nativeBuildInputs = [

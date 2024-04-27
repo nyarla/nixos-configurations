@@ -25,12 +25,12 @@
 }:
 stdenv.mkDerivation rec {
   pname = "ildaeil";
-  version = "2024-02-13";
+  version = "2024-04-27";
   src = fetchFromGitHub {
     owner = "DISTRHO";
     repo = "Ildaeil";
-    rev = "10c9089d261567f4feec04859135924f003415e3";
-    hash = "sha256-zHD82RNTqkFpvbh4Js5VFIAULIHv8qFRaiUi67LRZT4=";
+    rev = "ce4c3e24a2da459362eeb723f5e4568048ec9d72";
+    hash = "sha256-cu/Yy6UszwOlXpdAYF63aIyvCGrjhWyNdFlTMWm6tsw=";
     fetchSubmodules = true;
   };
 

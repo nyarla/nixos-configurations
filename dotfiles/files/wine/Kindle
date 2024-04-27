@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-export WINEPREFIX=/media/data/executable/wine/Kindle
+export WINEPREFIX=$HOME/Applications/Wine/Kindle
 export LD_PRELOAD=
 
-wine 'C:\Program Files (x86)\Amazon\Kindle\Kindle.exe' &
+wine 'C:\Program Files\Amazon\Kindle\Kindle.exe' &
 waitPID=$!
 
 test -n "$waitPID" && wait $waitPID
 
-wineserver -k
+wineboot --shutdown
 
 exit 0

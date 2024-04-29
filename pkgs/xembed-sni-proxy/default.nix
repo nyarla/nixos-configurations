@@ -10,6 +10,10 @@ libsForQt5.plasma-workspace.overrideAttrs (old: rec {
     })
   ];
 
+  postPatch = ''
+    sed -i 's|s_embedSize = 32;|s_embedSize = 1;|' xembed-sni-proxy/sniproxy.cpp
+  '';
+
   srcRoot = "xembed-sni-proxy";
   configurePhase = ''
     cd xembed-sni-proxy

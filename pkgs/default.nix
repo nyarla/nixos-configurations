@@ -72,11 +72,11 @@ in
   firefox-bin-unwrapped = super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs (old: rec {
-    version = "2024-04-20";
+    version = "2024-04-29";
     src = super.fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "55138dbe0eefb37a052036500406e45423e3639a";
-      hash = "sha256-76OX1Ew8FeW41yaFhEEZh4BQFMwZ7Cm/FJSJChh3Ksw=";
+      rev = "2603dbf396bddeebefeb8e6e1f4ef7cce3b4eb31";
+      hash = "sha256-EQc7zjsIuiz0uAJb0g7xzHXV3nUP1Y3zzVuLz+ZZMmI=";
     };
   });
 
@@ -113,8 +113,8 @@ in
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      rev = "6dce6ae2ed92544b9758b194618e21f4c97f1d6b";
-      hash = "sha256-Of9qykyVnBURc5A2pvCMm7sLbnuuG7OPWLxodQLN2Xg=";
+      rev = "bc73e507abd1e8319353a8601f1f8ebfe17307ee";
+      hash = "sha256-jth6BKci3sVDC86o+gSHKyDWnibVcNmipm7nn0S6LTg=";
     };
 
     buildInputs =

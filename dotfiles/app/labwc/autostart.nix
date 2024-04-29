@@ -32,6 +32,7 @@ writeShellScript "autostart" ''
   ${launch "${pkgs.calibre}/bin/calibre --start-in-tray"}
   ${launch "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"}
   ${launch "${pkgs.blueman}/bin/blueman-applet"}
+  ${launch "wl-paste -t text -w xclip -selection clipboard"}
 
   swaybg -i ${wallpaper} -m fit &
 ''

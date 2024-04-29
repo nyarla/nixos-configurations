@@ -24,6 +24,7 @@
     grim
     slurp
     wl-clipboard
+    xclip
 
     labwc
     swaybg

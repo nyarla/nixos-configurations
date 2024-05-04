@@ -33,6 +33,7 @@ in
   locale-eaw = require ./locale-eaw { };
   mlterm-wrapped = require ./mlterm-wrapped { inherit (self) mlterm; };
   nvim-run = require ./nvim-run { };
+  openjtalk = require ./openjtalk { };
   noto-fonts-jp = require ./noto-fonts-jp { };
   novelai-manager = require ./novelai-manager { };
   perl-shell = require ./perl-shell { };
@@ -96,6 +97,15 @@ in
       rev = "ad20073a3cb5bb354a1fde44ffe5aa331982cbd1";
       sha256 = "sha256-FNHlALFwMbajaHWOehdSFeQmvZSuCZLdqGqLZ7DF+pI=";
     };
+  });
+
+  speechd-with-openjtalk = super.speechd.overrideAttrs (old: rec {
+    src = super.fetchurl {
+      url = "https://github.com/brailcom/speechd/releases/download/0.12.0-rc3/speech-dispatcher-0.12.0-rc3.tar.gz";
+      hash = "sha256-vStiv9z3RVKs2F6dpOQv0f8SuOoYYQpqG9aDXfdntmM=";
+    };
+    buildInputs = old.buildInputs ++ [ self.openjtalk ];
+    configureFlags = old.configureFlags ++ [ "--with-openjtalk" ];
   });
 
   sfwbar = super.sfwbar.overrideAttrs (old: rec {

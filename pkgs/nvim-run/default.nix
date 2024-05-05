@@ -28,6 +28,7 @@ let
       lua-language-server
       nixd
       nodePackages.bash-language-server
+      nodePackages.typescript-language-server
       nodePackages.vscode-json-languageserver
       perlnavigator
       sqls

@@ -119,7 +119,7 @@ let
         (exec "Helio workstation" "helio")
       ])
       (menu "applications-vsthost" "VST Host" [
-        (exec "Carla" "carla")
+        (exec "Carla" "env QT_QPA_PLATFORM=xcb carla")
         (exec "Ildaeil" "Ildaeil")
       ])
       (menu "applications-daw-toolchain" "Toolchain" [

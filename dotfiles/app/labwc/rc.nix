@@ -101,5 +101,8 @@ in
     (keybind "A-F1" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
     (keybind "A-F2" [ (action "ShowMenu" [ (prop "menu" "applications-creative") ]) ])
     (keybind "C-W-q" [ (exec "swaylock -C ~/.config/swaylock/config -f") ])
+
+    (keybind "S-Print" [ (exec "gyazo screenshot") ])
+    (keybind "C-Print" [ (exec "gyazo capture") ])
   ])
 ])

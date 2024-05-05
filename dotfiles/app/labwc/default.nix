@@ -25,6 +25,7 @@
     slurp
     wl-clipboard
     xclip
+    gyazo-diy
 
     labwc
     swaybg

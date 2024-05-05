@@ -246,6 +246,10 @@
         dest = "/persist/etc/nixos";
       }
       {
+        name = "Pictures";
+        dest = "/persist/home/nyarla/Pictures";
+      }
+      {
         name = "Programming";
         dest = "/persist/home/nyarla/Programming";
       }
@@ -382,6 +386,7 @@
           "Documents"
           "Downloads"
           "Music"
+          "Pictures"
           "Programming"
           "Reports"
           "Sync"
@@ -425,6 +430,7 @@
           ".config/gtk-2.0"
           ".config/gtk-3.0"
           ".config/gtk-4.0"
+          ".config/gyazo"
           ".config/inkscape"
           ".config/nvim"
           ".config/pulse"

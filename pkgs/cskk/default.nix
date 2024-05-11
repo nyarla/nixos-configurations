@@ -7,7 +7,7 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "cskk";
-  version = "v3.1.0";
+  version = "git";
   src = fetchFromGitHub {
     owner = "naokiri";
     repo = pname;
@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-mhQZeCa4shxO8/kRqAwR60pwvfeQ9Ue+r25BtTAI1Hw=";
   };
 
-  cargoHash = "sha256-oHtwjLvfMVMWiaHlZoaiLR8YXRg0g9I0YlbsKozasv4=";
+  cargoHash = "sha256-9LV1N6SZi0mPBNi5A4CHbxWxQVlMLsAfGhXkJ3FQkgk=";
 
   buildInputs = [ libxkbcommon.dev ];
   nativeBuildInputs = [

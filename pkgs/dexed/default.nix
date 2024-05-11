@@ -20,7 +20,6 @@
   zlib,
   xorg,
   libGLU,
-  juce-framework,
   lib,
 }:
 stdenv.mkDerivation rec {

@@ -1,7 +1,6 @@
 {
   stdenv,
   fetchurl,
-  patchelf,
   wine,
   libjack2,
   wine-vst-wrapper,

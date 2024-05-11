@@ -37,6 +37,7 @@ let
 
       # all-in-one toolchains
       biome
+      deno
       sqlfluff
 
       # for test

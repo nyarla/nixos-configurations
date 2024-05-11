@@ -1,6 +1,5 @@
 {
   multiStdenv,
-  lib,
   fetchFromGitHub,
   libjack2,
   pkg-config,

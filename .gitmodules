@@ -1,6 +1,0 @@
-[submodule "external/dotnix"]
-	path = external/dotnix
-	url = https://github.com/nyarla/dotnix
-[submodule "external/wayland"]
-	path = external/wayland
-	url = https://github.com/nix-community/nixpkgs-wayland

@@ -39,7 +39,7 @@ let
 
             # nix
             nix = {
-              package = pkgs.nixUnstable;
+              package = pkgs.nixVersions.latest;
               registry = {
                 nixpkgs = {
                   inherit flake;

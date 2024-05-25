@@ -89,6 +89,8 @@ let
 
   applicationsMultimedia = menu "applications-multimedia" "Media" [
     (exec "Calibre" "calibre")
+    (exec "Kindle" (wine "Kindle"))
+    "${sep}"
     (exec "Picard" "picard")
     (exec "Mp3tag" (wine "MP3TAG"))
     "${sep}"

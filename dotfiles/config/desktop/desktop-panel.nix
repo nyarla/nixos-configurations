@@ -49,7 +49,7 @@
 
     "clock" = {
       interval = 1;
-      format = "<b>{:%F %T（%a）}</b>";
+      format = "<b>{:L%F %T（%a）}</b>";
       timezone = "Asia/Tokyo";
       locale = "ja_JP.UTF-8";
       on-click-release = "env GDK_BACKEND=x11 galendae -c /home/nyarla/.config/galendae/config";

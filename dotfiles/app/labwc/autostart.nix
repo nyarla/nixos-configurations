@@ -11,7 +11,9 @@ let
 
   launch = cmd: ''
     while [[ -e /run/user/$(id -u)/wayland-0 ]]; do
-      ${cmd}
+      env \
+        XDG_DATA_DIRS=$HOME/.nix-profile/share:/run/current-system/sw/share \
+        ${cmd}
     done &
   '';
 in

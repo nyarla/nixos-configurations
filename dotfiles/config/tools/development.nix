@@ -39,9 +39,6 @@
     perlPackages.Appcpanminus
     perlPackages.PerlTidy
 
-    # java
-    openjdk
-
     # nix
     nurl
 
@@ -58,7 +55,6 @@
     cvs
 
     # misc
-    mecab
     openssl
   ];
 }

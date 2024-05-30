@@ -10,12 +10,8 @@
   ];
 
   home.packages = with pkgs; [
-    # terminal
-    wezterm
-
     # credential
     libsecret
-    bitwarden
 
     # desktop
     mate.mate-system-monitor
@@ -42,13 +38,13 @@
 
   xdg.configFile = {
     "labwc/autostart".source = toString (
-      with pkgs; (import ./autostart.nix) { inherit fetchurl writeShellScript pkgs; }
+      (import ./autostart.nix) {
+        inherit pkgs;
+        inherit (pkgs) fetchurl writeShellScript;
+      }
     );
 
-    "labwc/menu.xml".text = import ../../config/vars/appmenu.nix {
-      inherit pkgs;
-      isWayland = true;
-    };
+    "labwc/menu.xml".text = import ../../config/vars/appmenu.nix { };
     "labwc/rc.xml".text = (import ./rc.nix) { };
 
     "labwc/environment".text = ''

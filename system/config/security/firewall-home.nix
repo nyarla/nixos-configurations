@@ -17,14 +17,6 @@ _: {
           # ssh
           22
         ];
-
-        allowedUDPPortRanges = [
-          {
-            # mosh
-            from = 60000;
-            to = 61000;
-          }
-        ];
       };
 
       "wlan0" = {

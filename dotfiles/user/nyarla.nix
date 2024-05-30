@@ -6,7 +6,6 @@ _: {
     ../config/app/daw.nix
     ../config/app/multimedia.nix
     ../config/app/office.nix
-    ../config/app/weston.nix
     ../config/app/wine.nix
     ../config/desktop/theme.nix
     ../config/files/skk.nix
@@ -47,4 +46,5 @@ _: {
 
   # stateVersion (same as NixOS)
   home.stateVersion = "23.05";
+  home.enableNixpkgsReleaseCheck = false;
 }

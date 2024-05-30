@@ -1,9 +1,4 @@
-{
-  isXorg ? false,
-  isWayland ? false,
-  pkgs,
-  ...
-}:
+_:
 let
   exec = label: command: ''
     <item label="${label}">
@@ -37,30 +32,14 @@ let
 
   sep = "<separator/>";
 
-  exec2 =
-    label:
-    {
-      wayland ? "",
-      xorg ? "",
-    }:
-    if isWayland then (exec label wayland) else (exec label xorg);
-
   applicationsMain = menu "applications-main" "Main" [
-    (exec2 "mlterm" {
-      wayland = "mlterm-wl";
-      xorg = "mlterm-sdl2";
-    })
+    (exec "mlterm" "mlterm-wl")
     (exec "virtualbox" "VirtualBox")
     "${sep}"
-    (
-      if isWayland then
-        (menu "applications-wayland" "waydroid" [
-          (exec "start" (script "waydroid-start"))
-          (exec "stop" (script "waydroid-stop"))
-        ])
-      else
-        (exec "waydroid" (script "waydroid-on-weston"))
-    )
+    (menu "applications-wayland" "waydroid" [
+      (exec "start" (script "waydroid-start"))
+      (exec "stop" (script "waydroid-stop"))
+    ])
     "${sep}"
     (exec "vial" "Vial")
   ];
@@ -68,15 +47,9 @@ let
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
-    (exec2 "Google Chrome" {
-      wayland = "env GTK_IM_MODULE=fcitx google-chrome-stable";
-      xorg = "google-chrome-stable";
-    })
+    (exec "Google Chrome" "env GTK_IM_MODULE=fcitx google-chrome-stable")
     "${sep}"
-    (exec2 "Bitwarden" {
-      wayland = "bitwarden --disable-gpu";
-      xorg = "bitwarden";
-    })
+    (exec "bitwarden" "bitwarden --disable-gpu")
     "${sep}"
     (exec "Telegram" "telegram-desktop")
   ];
@@ -101,12 +74,7 @@ let
     (exec "Calc" "mate-calc")
     (exec "CharMap" "gucharmap")
     "${sep}"
-    (exec "Spice up" "com.github.philip_scott.spice-up")
     (exec "Simple Scan" "simple-scan")
-    (exec2 "GIF Capture" {
-      wayland = "GDK_BACKEND=x11 peek";
-      xorg = "peek";
-    })
   ];
 
   applicationsCreative = menu "applications-creative" "Creative" [
@@ -149,18 +117,7 @@ let
     (exec "Task Manager" "mate-system-monitor")
   ];
 
-  systemOperationXorg = menu "system-operation" "System" [
-    (action "Reconfigure" "Reconfigure")
-    (stop "Exit" "openbox --exit")
-    "${sep}"
-    (exec "Lock" "xset dpms force off")
-    (stop "Logout" "loginctl terminate-session self")
-    "${sep}"
-    (stop "Reboot" "systemctl reboot")
-    (stop "Shutdown" "shutdown -h now")
-  ];
-
-  systemOperationWayland = menu "system-operation" "System" [
+  systemOperation = menu "system-operation" "System" [
     (action "Reconfigure" "Reconfigure")
     (stop "Exit" "labwc --exit")
     "${sep}"
@@ -170,8 +127,6 @@ let
     (stop "Reboot" "systemctl reboot")
     (stop "Shutdown" "shutdown -h now")
   ];
-
-  systemOperation = if isXorg then systemOperationXorg else systemOperationWayland;
 
   systemContextMenu = menu "root-menu" "Menu" [
     (item "applications-main")

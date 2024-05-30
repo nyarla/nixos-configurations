@@ -34,7 +34,7 @@
       "vboxusers"
 
       # vmm
-      # "kvm"
+      "kvm"
       # "libvirtd"
     ];
 

@@ -161,8 +161,6 @@ in
   # });
   wineUsingFull = super.wineWowPackages.stagingFull;
 
-  virtualbox-kvm = super.virtualbox.override { enableKvm = true; };
-
   yabridge = super.yabridge.override { wine = self.wineUsingFull; };
   yabridtctl = super.yabridgectl.override {
     inherit (self) yabridge;

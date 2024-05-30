@@ -94,18 +94,11 @@
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.kernelModules = [
     "k10temp"
-    # "kvm-amd"
     "nct6775"
-
-    # "kvm"
-    # "vfio"
-    # "vfio_iommu_type1"
-    # "vfio_pci"
-    # "vfio_virqfd"
+    "amd-pstate"
   ];
   boot.kernelParams = [
-    # CPU
-
+    "amd_pstate=active"
     # KVM
     # "amd_iommu=force_enable"
     # "vfio-pci.ids=1022:149c"
@@ -325,7 +318,7 @@
 
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
-    "/persist/nix"
+    "/nix"
 
     "/persist/etc"
     "/persist/etc/nixos"
@@ -337,14 +330,15 @@
 
     "/persist/usr/share"
 
-    "/persist/home/nyarla"
     "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.fly"
+    "/persist/home/nyarla/.local/share/flatpak"
     "/persist/home/nyarla/.local/share/npm"
     "/persist/home/nyarla/.local/share/nvim"
     "/persist/home/nyarla/.local/share/perl"
     "/persist/home/nyarla/.local/share/waydroid"
     "/persist/home/nyarla/.mozilla"
+    "/persist/home/nyarla/.var"
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
@@ -507,49 +501,6 @@
     "net.ipv4.tcp_window_scaling" = 1;
   };
 
-  # samba
-  services.samba = {
-    enable = true;
-    enableNmbd = true;
-    enableWinbindd = true;
-    securityType = "user";
-    # package = pkgs.samba4Full;
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = nixos
-      netbios name = nixos
-      security = user
-      use sendfile = yes
-      hosts allow = 192.168.122.0/24 localhost
-      hosts deny = 0.0.0.0/0
-      guest account = nobody
-      map to guest = bad user
-    '';
-    shares = {
-      Downloads = {
-        "path" = "/home/nyarla/Downloads/KVM";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force group" = "users";
-        "force user" = "nyarla";
-        "guest ok" = "no";
-        "read only" = "yes";
-      };
-
-      DAW = {
-        "path" = "/media/data/Sources/DAW";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force group" = "users";
-        "force user" = "nyarla";
-        "guest ok" = "no";
-        "read only" = "yes";
-      };
-    };
-  };
-
   # Services
   # --------
 
@@ -591,23 +542,6 @@
   systemd.services.waydroid-container.environment = {
     XDG_DATA_HOME = "/persist/home/nyarla/.local/share";
   };
-
-  # Xorg
-  services.picom.backend = "glx";
-  services.xserver.serverLayoutSection = ''
-    Option "BlankTime"    "0"
-    Option "StandbyTime"  "1"
-    Option "SuspendTime"  "1"
-    Option "OffTime"      "1"
-  '';
-  services.xserver.xrandrHeads = [
-    {
-      output = "HDMI-0";
-      monitorConfig = ''
-        Option "DPMS" "true"
-      '';
-    }
-  ];
 
   # clamav
   services.clamav.daemon.settings = {

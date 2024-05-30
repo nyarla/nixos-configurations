@@ -23,6 +23,8 @@ in
       glib-networking.enable = true;
       gnome-keyring.enable = true;
     };
+
+    libinput.enable = true;
   };
 
   programs.dconf.enable = true;

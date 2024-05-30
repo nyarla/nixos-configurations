@@ -5,7 +5,7 @@
     package = pkgs.dunst;
     iconTheme = {
       name = "Fluent";
-      package = pkgs.flatery-icon-theme;
+      package = pkgs.fluent-icon-theme;
       size = "16x16";
     };
     waylandDisplay = "wayland-0";

@@ -46,7 +46,7 @@ in
     package = nvidia;
     package32 = nvidia32;
     extraPackages = with pkgs; [
-      pkgs.mesa.drivers
+      mesa.drivers
       libGL
     ];
   };
@@ -57,12 +57,12 @@ in
       "gbm/nvidia-drm_gbm.so".source = "${config.hardware.nvidia.package}/lib/libnvidia-allocator.so";
     };
 
-    systemPackages = with pkgs; [
-      (cuda-shell.override {
+    systemPackages = [
+      (pkgs.cuda-shell.override {
         nvidia_x11 = nvidia;
         cudaPackages = pkgs.cudaPackages_12_1;
       })
-      #(tabby.override { nvidia_x11 = nvidia; })
+      pkgs.nvtopPackages.nvidia
     ];
   };
 

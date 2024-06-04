@@ -5,7 +5,7 @@ let
     writeShellScript "swaylock.sh" ''
       ${swayidle}/bin/swayidle -w \
         timeout 60 'swaylock -C ~/.config/swaylock/config -f' \
-        timeout 60 '${wayout}/bin/wayout --off HDMI-A-1' resume '${wayout}/bin/wayout --on HDMI-A-1'
+        timeout 60 '${wayout}/bin/wayout --off HDMI-A-3' resume '${wayout}/bin/wayout --on HDMI-A-3'
         before-sleep 'swaylock -C ~/.config/swaylock/config -f' \
         lock 'swaylock -C ~/.config/swaylock/config -f'
     ''

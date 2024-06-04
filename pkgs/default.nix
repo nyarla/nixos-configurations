@@ -135,10 +135,10 @@ in
         mesa.dev
       ]);
 
-    postPatch = ''
-      sed -i 's/glFlush/glFinish/' render/gles2/renderer.c
-      sed -i 's/glFlush/glFinish/' render/gles2/pass.c
-    '';
+    # postPatch = ''
+    #   sed -i 's/glFlush/glFinish/' render/gles2/renderer.c
+    #   sed -i 's/glFlush/glFinish/' render/gles2/pass.c
+    # '';
   });
 
   # wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {

@@ -87,22 +87,8 @@
       export XDG_SESSION_DESKTOP=wlroots
       export XDG_SESSION_TYPE=wayland
 
-      export GBM_BACKEND=nvidia-drm
-      export GBM_BACKENDS_PATH=/etc/gbm
-      export __GLX_VENDOR_LIBRARY_NAME=nvidia
-
-      export LIBVA_DRIVER_NAME=nvidia
-      export VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/nvidia_icd.i686.json
-      export __EGL_VENDOR_LIBRARY_DIRS=/run/opengl-driver/share/glvnd/egl_vendor.d
-      export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json
-      export __GL_GSYNC_ALLOWED=1
-      export __GL_VRR_ALLOWED=0
-
-      export WLR_NO_HARDWARE_CURSORS=1
       export WLR_RENDERER_ALLOW_SOFTWARE=1
       export WLR_RENDERER=gles2
-      export WLR_DRM_NO_ATOMIC=1
-      export XWAYLAND_NO_GLAMOR=1
 
       if systemctl --user -q is-active desktop-session.target ; then
         echo "Desktop session already exists." >&2

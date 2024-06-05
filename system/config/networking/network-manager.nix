@@ -12,6 +12,7 @@
       "interface-name:tailscale*"
       "interface-name:vboxnet*"
       "interface-name:virbr*"
+      "interface-name:vmnet*"
       "interface-name:waydroid*"
       "type:bridge"
     ];

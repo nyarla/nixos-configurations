@@ -20,10 +20,7 @@ in
 
   programs.thunar = {
     enable = true;
-    plugins = with pkgs.xfce; [
-      thunar-archive-plugin
-      thunar-archive-plugin
-    ];
+    plugins = with pkgs.xfce; [ thunar-archive-plugin ];
   };
 
   programs.xfconf.enable = true;

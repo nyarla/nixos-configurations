@@ -25,7 +25,6 @@
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
     ../config/linux/process.nix
-    ../config/linux/virtualbox.nix
     ../config/linux/waydroid.nix
     ../config/linux/wine.nix
     ../config/networking/agent.nix

@@ -1,14 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 {
   boot.kernelModules = [
     "snd-seq"
     "snd-rawmidi"
   ];
-  boot.kernel.sysctl = {
-    "vm.swapiness" = 10;
-    "fs.inotify.max_user_watches" = 524288;
-  };
-  boot.kernelParams = [ "threadirq" ];
   security.pam.loginLimits = [
     {
       domain = "@audio";

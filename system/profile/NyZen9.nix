@@ -33,7 +33,6 @@
     ../config/networking/network-manager.nix
     ../config/networking/printer.nix
     ../config/networking/tailscale.nix
-    ../config/networking/tcp-bbr.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
     ../config/security/clamav.nix
@@ -104,6 +103,7 @@
     # "vfio-pci.ids=1022:149c"
     #"efifb:off"
   ];
+  boot.blacklistedKernelModules = [ "acpi-cpufreq" ];
 
   fileSystems =
     let
@@ -479,10 +479,6 @@
   # Hardware
   # --------
 
-  # cpu
-  powerManagement.cpuFreqGovernor = "performance";
-  boot.blacklistedKernelModules = [ "acpi-cpufreq" ];
-
   # firmware
   hardware.enableRedistributableFirmware = true;
 
@@ -497,9 +493,6 @@
 
   # tcp optimize
   networking.interfaces."wlan0".mtu = 1472;
-  boot.kernel.sysctl = {
-    "net.ipv4.tcp_window_scaling" = 1;
-  };
 
   # Services
   # --------

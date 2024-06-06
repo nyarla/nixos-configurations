@@ -1,6 +1,6 @@
 _: {
   services.ollama = {
-    enable = true;
+    enable = false;
     home = "/var/lib/ollama";
     writablePaths = [ "/var/lib/ollama" ];
     acceleration = "cuda";

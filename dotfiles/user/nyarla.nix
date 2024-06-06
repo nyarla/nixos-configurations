@@ -45,6 +45,6 @@ _: {
   systemd.user.startServices = "sd-switch";
 
   # stateVersion (same as NixOS)
-  home.stateVersion = "23.05";
+  home.stateVersion = "24.11";
   home.enableNixpkgsReleaseCheck = false;
 }

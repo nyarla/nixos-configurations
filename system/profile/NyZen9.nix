@@ -62,7 +62,7 @@
   # initrd
   boot.initrd.luks.devices = {
     nixos = {
-      device = "/dev/disk/by-uuid/71779cc6-0484-4dac-9cb9-6f10f10e6a2d";
+      device = "/dev/disk/by-uuid/2b254558-0847-48f0-93c6-31a26d588d01";
       preLVM = true;
       allowDiscards = true;
       bypassWorkqueues = true;
@@ -105,7 +105,7 @@
 
   fileSystems =
     let
-      device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
+      device = "/dev/disk/by-uuid/6fe94981-cc0a-4f8d-b853-4889781b3220";
 
       btrfsOptions = [
         "compress=zstd"
@@ -164,12 +164,12 @@
       };
 
       "/boot" = {
-        device = "/dev/disk/by-uuid/709E-6BDD";
+        device = "/dev/disk/by-uuid/BA2E-6B22";
         fsType = "vfat";
       };
 
       "/nix" = {
-        device = "/dev/disk/by-uuid/34da11a3-1b2e-49e4-a318-33404cd9e4ea";
+	inherit device;
         fsType = "btrfs";
         options = btrfsOptions ++ [
           "subvol=/nix"
@@ -620,7 +620,7 @@
 
   nixpkgs.config.permittedInsecurePackages = [ ];
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.11";
 
   environment.systemPackages = with pkgs; [ wpa_supplicant ];
 }

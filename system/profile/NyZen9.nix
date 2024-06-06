@@ -26,7 +26,6 @@
     ../config/linux/optical.nix
     ../config/linux/process.nix
     ../config/linux/waydroid.nix
-    ../config/linux/wine.nix
     ../config/networking/agent.nix
     ../config/networking/avahi.nix
     ../config/networking/network-manager.nix
@@ -89,7 +88,7 @@
   zramSwap.memoryPercent = 50;
 
   # kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
   boot.kernelModules = [
     "k10temp"
     "nct6775"

@@ -37,6 +37,7 @@
     wineasio
     yabridge
     yabridgectl
+    jackass
 
     # plugins
     ChowKick
@@ -66,7 +67,7 @@
     samplv1
     sorcer
     surge
-    # surge-XT
+    surge-XT
     synthv1
     vcv-rack
     x42-avldrums

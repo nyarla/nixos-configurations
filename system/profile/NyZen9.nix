@@ -88,6 +88,16 @@
   zramSwap.enable = true;
   zramSwap.memoryPercent = 50;
 
+  swapDevices = [
+    {
+      device = "/dev/disk/by-partuuid/c5fdfe0f-7cbb-4354-9bb1-6c3132c4fa6d";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+    }
+  ];
+
   # kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
   boot.kernelModules = [
@@ -342,8 +352,6 @@
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
   ];
-
-  swapDevices = [ ];
 
   # Impermanence
   # ------------

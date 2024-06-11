@@ -13,6 +13,7 @@
     ../config/gadgets/android.nix
     ../config/graphic/fonts.nix
     ../config/graphic/lodpi.nix
+    ../config/hardware/firmware.nix
     ../config/i18n/en.nix
     ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix
@@ -169,7 +170,7 @@
       };
 
       "/nix" = {
-	inherit device;
+        inherit device;
         fsType = "btrfs";
         options = btrfsOptions ++ [
           "subvol=/nix"
@@ -476,9 +477,6 @@
 
   # Hardware
   # --------
-
-  # firmware
-  hardware.enableRedistributableFirmware = true;
 
   # clock
   time.hardwareClockInLocalTime = true; # for dualboot windows

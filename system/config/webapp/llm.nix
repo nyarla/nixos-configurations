@@ -3,6 +3,5 @@ _: {
     enable = false;
     home = "/var/lib/ollama";
     writablePaths = [ "/var/lib/ollama" ];
-    acceleration = "cuda";
   };
 }

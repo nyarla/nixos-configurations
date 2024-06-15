@@ -1,18 +1,18 @@
 { pkgs, config, ... }:
 let
   nvidia = config.boot.kernelPackages.nvidiaPackages.latest;
-  nvidia32 = nvidia.lib32;
 in
 {
   boot = {
-    blacklistedKernelModules = [ "nouveau" ];
-
-    initrd.kernelModules = [ "i915" ];
-
-    kernelModules = [
-      # this modules requires by CUDA on Wayland environment
-      "nvidia_uvm"
+    blacklistedKernelModules = [
+      "i2c_nvidia_gpu"
+      "nouveau"
+      "nvidia"
+      "nvidia_drm"
+      "nvidia_modeset"
     ];
+    initrd.kernelModules = [ "i915" ];
+    kernelModules = [ "nvidia_uvm" ];
   };
 
   hardware = {
@@ -27,39 +27,25 @@ in
       driSupport = true;
       driSupport32Bit = true;
       setLdLibraryPath = true;
-      extraPackages =
-        (with pkgs; [
-          intel-media-driver
-          intel-vaapi-driver
-          libvdpau-va-gl
-          mesa.drivers
-          libGL
-        ])
-        ++ [ nvidia ];
-      extraPackages32 =
-        (with pkgs.pkgsi686Linux; [
-          intel-media-driver
-          intel-vaapi-driver
-          libvdpau-va-gl
-          mesa.drivers
-          libGL
-        ])
-        ++ [ nvidia32 ];
+      extraPackages = with pkgs; [
+        intel-media-driver
+        intel-vaapi-driver
+        libvdpau-va-gl
+        mesa.drivers
+        libGL
+      ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [
+        intel-media-driver
+        intel-vaapi-driver
+        libvdpau-va-gl
+        mesa.drivers
+        libGL
+      ];
     };
   };
 
-  environment = {
-    variables = {
-      VDPAU_DRIVER = "va_gl";
-    };
-
-    # systemPackages = [
-    #   (pkgs.cuda-shell.override {
-    #     nvidia_x11 = nvidia;
-    #     cudaPackages = pkgs.cudaPackages_12_1;
-    #   })
-    #   pkgs.nvtopPackages.nvidia
-    # ];
+  environment.variables = {
+    VDPAU_DRIVER = "va_gl";
   };
 
   services.xserver.videoDrivers = [

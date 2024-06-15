@@ -1,87 +1,118 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, lib, ... }:
 let
-  gui =
-    if config.services.xserver.enable then
-      (with pkgs; [
-        looking-glass-client
-        spice
-        spice-gtk
-        virt-manager
-        virt-viewer
-      ])
-    else
-      [ ];
-
-  qemu_hook = pkgs.runCommand "qemu.sh" { } ''
-    mkdir -p $out/bin
-    cp ${
-      pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/master/libvirt_hooks/qemu";
-        sha256 = "sha256-DIqdPZrKHIq4lRNb5u+VVXayuO7rMFewoo7SkpGL8Do=";
-      }
-    } $out/bin/qemu
-
-    sed -i 's|#!/usr/bin/env bash|#!${pkgs.bash}/bin/bash|' $out/bin/qemu
-    chmod +x $out/bin/qemu
-  '';
-
-  hasNvidia = lib.hasPrefix (lib.findFirst (
-    x: lib.hasPrefix x "nvidia"
-  ) "" config.services.xserver.videoDrivers) "nvidia";
+  gpuIds = lib.concatStringsSep "," [
+    "10de:10f8"
+    "10de:1ad8"
+    "10de:1ad9"
+    "10de:1e89"
+  ];
+  usbId = "1022:149c";
+  ids = lib.concatStringsSep "," [
+    gpuIds
+    usbId
+  ];
 in
 {
-  environment.systemPackages = gui ++ [ pkgs.bash ];
+  # libvirt-related packages
+  programs.virt-manager.enable = true;
+  environment.systemPackages = with pkgs; [
+    looking-glass-client
+    spice
+    spice-gtk
+    virt-manager
+  ];
 
+  # vfio kernel settings
   boot.kernelModules = [
     "pcie_aspm"
     "iommu"
   ];
+
   boot.kernelParams = [
     "iommu=pt"
     "kvm.ignore_msrs=1"
     "pcie_aspm=off"
-    "vfio_iommu_type1.allow_unsafe_interrupts=1"
   ];
 
-  # system.activationScripts.libvirt-hooks.text = ''
-  #   ln -Tfs /etc/executable/etc/libvirt/hooks /var/lib/libvirt/hooks
-  # '';
+  boot.extraModprobeConfig = ''
+    options vfio_pci ids=${ids}
+  '';
 
-  # environment.etc."executable/etc/libvirt/hooks/qemu" = {
-  #   source = "${qemu_hook}/bin/qemu";
-  #   mode = "0755";
-  # };
-
+  # libvirtd configurations
   virtualisation.libvirtd = {
     enable = true;
+    hooks.qemu =
+      let
+        PATH = lib.makeBinPath (
+          with pkgs;
+          [
+            libvirt
+            kmod
+          ]
+        );
+
+        loadVFIO = pkgs.writeShellScript "start.sh" ''
+          set -euo pipefail
+          export PATH=${PATH}:$PATH
+
+          modprobe -r nvidia_uvm
+          modprobe -r nvidia
+
+          modprobe vfio_pci
+          modprobe vfio
+          modprobe vfio_iommu_type1
+
+          virsh nodedev-detach pci_0000_0b_00_3
+          virsh nodedev-detach pci_0000_0b_00_2
+          virsh nodedev-detach pci_0000_0b_00_1
+          virsh nodedev-detach pci_0000_0b_00_0
+
+          virsh nodedev-detach pci_0000_0d_00_3
+        '';
+
+        unloadVFIO = pkgs.writeShellScript "stop.sh" ''
+          set -euo pipefail
+          export PATH=${PATH}:$PATH
+
+          virsh nodedev-reattach pci_0000_0b_00_3
+          virsh nodedev-reattach pci_0000_0b_00_2
+          virsh nodedev-reattach pci_0000_0b_00_1
+          virsh nodedev-reattach pci_0000_0b_00_0
+
+          virsh nodedev-reattach pci_0000_0d_00_3
+
+          modprobe -r vfio_pci
+          modprobe -r vfio_iommu_type1
+          modprobe -r vfio
+
+          modprobe nvidia_uvm
+        '';
+
+        qemuHooks = pkgs.runCommand "qemu-hooks" { } ''
+          mkdir -p $out/prepare/begin
+          mkdir -p $out/release/end
+
+          cp ${loadVFIO} $out/prepare/begin/00_load_vfio.sh
+          cp ${unloadVFIO} $out/release/end/00_unload_vfio.sh
+        '';
+
+      in
+      {
+        Sandbox = toString qemuHooks;
+      };
+
     qemu = {
       package = pkgs.qemu_full;
       runAsRoot = true;
-      ovmf.packages = [ pkgs.OVMFFull.fd ];
       swtpm.enable = true;
+      ovmf.enable = true;
+      ovmf.packages = [ pkgs.OVMFFull.fd ];
+
       verbatimConfig = ''
         user = "root"
         group = "libvirtd"
 
         cgroup_device_acl = [
-        ${lib.optionalString hasNvidia ''
-          "/dev/nvidia-modeset",
-          "/dev/nvidia-uvm",
-          "/dev/nvidia-uvm-tools",
-          "/dev/nvidia0",
-          "/dev/nvidia1",
-          "/dev/nvidia2",
-          "/dev/nvidia3",
-          "/dev/nvidiactl",
-          "/dev/dri/card0",
-          "/dev/dri/renderD128",
-        ''}
-
           "/dev/null",
           "/dev/full",
           "/dev/zero",
@@ -92,7 +123,6 @@ in
         ]
       '';
     };
-
     extraConfig = ''
       unix_sock_group = "libvirtd"
       unix_sock_ro_perms = "0770"
@@ -101,7 +131,23 @@ in
       auth_unix_rw = "none"
       clear_emulator_capabilities = 0
     '';
-    onBoot = "start";
+
+    onBoot = "ignore";
     onShutdown = "shutdown";
   };
+
+  systemd.tmpfiles.rules =
+    let
+      qemuScript =
+        let
+          script = pkgs.fetchurl {
+            url = "https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/0410193a205c5f150b8dfb411e83f8c42c511a2e/libvirt_hooks/qemu";
+            sha256 = "0fphif8r5llflaq5fc7bxswb4xjmjppycnqkjnw8l76ak8yrv2hc";
+          };
+        in
+        pkgs.writeShellScript "qemu-hook.sh" ''
+          ${builtins.readFile (toString script)}
+        '';
+    in
+    [ "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuScript}" ];
 }

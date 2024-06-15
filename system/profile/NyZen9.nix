@@ -43,6 +43,7 @@
     ../config/user/nyarla.nix
     ../config/video/droidcam.nix
     ../config/video/intel-with-nvidia.nix
+    ../config/vmm/kvm.nix
     ../config/webapp/llm.nix
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix

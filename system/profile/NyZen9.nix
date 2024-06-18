@@ -392,6 +392,7 @@
           "Pictures"
           "Programming"
           "Reports"
+          "Sources"
           "Sync"
 
           # music

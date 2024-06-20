@@ -149,5 +149,50 @@ in
           ${builtins.readFile (toString script)}
         '';
     in
-    [ "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuScript}" ];
+    [
+      "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuScript}"
+      "f /dev/shm/looking-glass 0660 user kvm -"
+    ];
+
+  services.samba = {
+    enable = true;
+    enableNmbd = true;
+    enableWinbindd = true;
+    securityType = "user";
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = nixos
+      netbios name = nixos
+      security = user
+      use sendfile = yes
+      hosts allow = 192.168.122.0/24 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+    '';
+
+    shares = {
+      Downloads = {
+        path = "/persist/home/nyarla/Downloads/KVM";
+        browsable = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "false";
+        "read only" = "yes";
+      };
+
+      DAW = {
+        path = "/persist/home/nyarla/Sources/DAW";
+        browsable = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "false";
+        "read only" = "yes";
+      };
+    };
+  };
 }

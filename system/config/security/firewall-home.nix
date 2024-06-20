@@ -36,7 +36,7 @@ _: {
         ];
       };
 
-      "vboxnet0" = {
+      "virbr0" = {
         allowedTCPPorts = [
           # NetBIOS
           137

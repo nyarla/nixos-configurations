@@ -115,6 +115,60 @@
   ];
   boot.blacklistedKernelModules = [ "acpi-cpufreq" ];
 
+  # Hardware
+  # --------
+
+  # clock
+  time.hardwareClockInLocalTime = true; # for dualboot windows
+
+  # network
+
+  ## avahi
+  services.avahi.allowInterfaces = [ "wlan0" ];
+
+  ## tcp optimize
+  networking.interfaces."wlan0".mtu = 1472;
+
+  # fan control
+  hardware.fancontrol = {
+    enable = true;
+    config = ''
+      # scan tempture interval
+      INTERVAL=10
+
+      # hwmon2 = slot to Lexar NM790 4TB
+      # hwmon5 = slot to CPU
+      DEVPATH=hwmon2=devices/pci0000:00/0000:00:01.1/0000:01:00.0/nvme/nvme0 hwmon5=devices/platform/nct6775.656
+      DEVNAME=hwmon2=nvme hwmon5=nct6798
+
+      # hwmon5/temp2_input = CPU temperture
+      # hwmon2/temp1_input = NVME SSD (Lexar NM790 4TB)
+      FCTEMPS=hwmon5/pwm2=hwmon5/temp2_input hwmon5/pwm1=hwmon2/temp1_input
+
+      # hwmon5/fan2 = CPU fan
+      # hwmon5/fan7 = Exhaust fan (back)
+      # hwmon5/fan1 = Intake fan (front)
+      FCFANS=hwmon5/pwm2=hwmon5/fan7_input+hwmon5/fan2_input hwmon5/pwm1=hwmon5/fan1_input
+
+      # Temperture limit
+      # CPU: 20 <= temperature <= 70
+      # NVMe: 30 <= temperature <= 50
+      MINTEMP=hwmon5/pwm2=20 hwmon5/pwm1=30
+      MAXTEMP=hwmon5/pwm2=70 hwmon5/pwm1=50
+
+      # Start spin at nearly 1000rpm
+      MINSTART=hwmon5/pwm2=100 hwmon5/pwm1=100
+
+      # CPU fan stopped at pwm2 == 20
+      # Case can stopped at pwm2 == 60
+      MINSTOP=hwmon5/pwm2=12 hwmon5/pwm1=60
+    '';
+  };
+
+  # Filesystem with Impermanence structure
+  # --------------------------------------
+
+  # mount
   fileSystems =
     let
       device = "/dev/disk/by-uuid/6fe94981-cc0a-4f8d-b853-4889781b3220";
@@ -258,6 +312,10 @@
         dest = "/persist/home/nyarla/Programming";
       }
       {
+        name = "Sources";
+        dest = "/persist/home/nyarla/Sources";
+      }
+      {
         name = "Sync";
         dest = "/persist/home/nyarla/Sync/Backup";
       }
@@ -267,6 +325,7 @@
       }
     ]);
 
+  # mount (as systemd service)
   systemd.services.automount-encrypted-storages = {
     enable = true;
     description = "Automount Encrypted Storages";
@@ -284,9 +343,7 @@
           export PATH=/run/wrappers/bin:$PATH
 
           test -e /media/data     || mkdir -p /media/data
-          test -e /media/src      || mkdir -p /media/src
           test -e /backup/DAW     || mkdir -p /backup/DAW
-          test -e /backup/Sources || mkdir -p /backup/Sources
 
           device=0c2fc422-2013-46eb-bc52-e6a4f6f145cb
           if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
@@ -294,15 +351,6 @@
             if test $? = 0 && test -e /dev/mapper/data ; then
               mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
               mount -o bind /media/data/DAW /backup/DAW
-            fi
-          fi
-
-          device=a3da35b5-35e8-45bb-a4b4-87fbc19ed459
-          if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
-            cryptsetup luksOpen /dev/disk/by-uuid/$device src --key-file /boot/keys/$device;
-            if test $? = 0 && test -e /dev/mapper/src ; then
-              mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/src /media/src
-              mount -o bind /media/src/Sources /backup/Sources
             fi
           fi
         ''
@@ -314,18 +362,15 @@
           export PATH=/run/wrappers/bin:$PATH
 
           test ! -e /backup/DAW       || umount /backup/DAW
-          test ! -e /backup/Sources   || umount /backup/Sources
           test ! -e /media/data       || umount /media/data
-          test ! -e /media/src        || umount /media/src
-
           test ! -e /dev/mapper/data  || ctryptsetup luksClose /dev/mapper/data
-          test ! -e /dev/mapper/src   || ctryptsetup luksClose /dev/mapper/src
         ''
       );
     };
     wantedBy = [ "local-fs.target" ];
   };
 
+  # btrfs settings
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
     "/nix"
@@ -354,8 +399,7 @@
     "/persist/home/nyarla/Programming"
   ];
 
-  # Impermanence
-  # ------------
+  # impermanence
   environment.persistence."/persist" = {
     enable = true;
     hideMounts = true;
@@ -485,25 +529,7 @@
     };
   };
 
-  # Hardware
-  # --------
-
-  # clock
-  time.hardwareClockInLocalTime = true; # for dualboot windows
-
-  # Network
-  # -------
-
-  # avahi
-  services.avahi.allowInterfaces = [ "wlan0" ];
-
-  # tcp optimize
-  networking.interfaces."wlan0".mtu = 1472;
-
-  # Services
-  # --------
-
-  # snapper
+  # snapshot
   services.snapper.configs =
     let
       snapshot = path: {
@@ -530,6 +556,9 @@
       apps = "home/nyarla/Applications";
       program = "home/nyarla/Programming";
     };
+
+  # Services
+  # --------
 
   # systemd
   systemd.extraConfig = ''
@@ -626,9 +655,9 @@
     };
   };
 
+  # Others
+  # ------
   nixpkgs.config.permittedInsecurePackages = [ ];
-
   system.stateVersion = "24.11";
-
   environment.systemPackages = with pkgs; [ wpa_supplicant ];
 }

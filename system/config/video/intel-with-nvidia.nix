@@ -10,9 +10,9 @@ in
       "nvidia"
       "nvidia_drm"
       "nvidia_modeset"
+      "nvidia_uvm"
     ];
     initrd.kernelModules = [ "i915" ];
-    kernelModules = [ "nvidia_uvm" ];
   };
 
   hardware = {

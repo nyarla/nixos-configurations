@@ -95,10 +95,9 @@ in
           cp ${loadVFIO} $out/prepare/begin/00_load_vfio.sh
           cp ${unloadVFIO} $out/release/end/00_unload_vfio.sh
         '';
-
       in
       {
-        Sandbox = toString qemuHooks;
+        DAW = toString qemuHooks;
       };
 
     qemu = {

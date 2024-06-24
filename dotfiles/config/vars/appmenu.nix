@@ -49,7 +49,7 @@ let
     (exec "Thunderbird" "thunderbird")
     (exec "Google Chrome" "env GTK_IM_MODULE=fcitx google-chrome-stable")
     "${sep}"
-    (exec "bitwarden" "bitwarden --disable-gpu")
+    (exec "bitwarden" "bitwarden")
     "${sep}"
     (exec "Telegram" "telegram-desktop")
   ];
@@ -65,7 +65,7 @@ let
     (exec "Kindle" (wine "Kindle"))
     "${sep}"
     (exec "Picard" "picard")
-    (exec "Mp3tag" (wine "MP3TAG"))
+    (exec "Easytag" "easytag")
     "${sep}"
     (exec "DeaDBeef" "deadbeef")
   ];
@@ -78,33 +78,11 @@ let
   ];
 
   applicationsCreative = menu "applications-creative" "Creative" [
-    (menu "applications-music" "Musics" [
-      (menu "applications-daw" "DAW" [
-        (exec "FL Studio" (wine "FLStudio"))
-        (exec "Bitwig Studio 3" "bitwig-studio")
-        (exec "MuseScore 4" "mscore")
-      ])
-      (menu "applications-daw-specific" "Training" [
-        (exec "deCoda" (wine "deCoda"))
-        (exec "Helio workstation" "helio")
-      ])
-      (menu "applications-vsthost" "VST Host" [
-        (exec "Carla" "env QT_QPA_PLATFORM=xcb carla")
-        (exec "Ildaeil" "Ildaeil")
-      ])
-      (menu "applications-daw-toolchain" "Toolchain" [
-        (exec "Sononym" "sononym")
-        "${sep}"
-        (exec "QJackctl" "qjackctl")
-      ])
-    ])
-    (menu "applications-graphic" "Graphics" [
-      (exec "Gimp" "gimp")
-      (exec "Inkscape" "inkscape")
-      (exec "Krita" "krita")
-      (exec "Pixelorama" "pixelorama")
-      (exec "Libresprite" "libresprite")
-    ])
+    (exec "Gimp" "gimp")
+    (exec "Inkscape" "inkscape")
+    (exec "Krita" "krita")
+    (exec "Pixelorama" "pixelorama")
+    (exec "Libresprite" "libresprite")
   ];
 
   applicationsUtils = menu "applications-utils" "Utils" [

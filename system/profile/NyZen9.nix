@@ -1,7 +1,6 @@
 { pkgs, lib, ... }:
 {
   imports = [
-    ../config/audio/daw.nix
     ../config/audio/pulseaudio.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
@@ -439,20 +438,6 @@
           "Sources"
           "Sync"
 
-          # music
-          ".config/Helio"
-          ".config/Ildaeil"
-          ".config/Jean Pierre Cimalando"
-          ".config/MuseScore"
-          ".config/Sononym"
-          ".config/audiogridder"
-          ".config/falkTX"
-          ".config/rncbc.org"
-          ".config/yabridgectl"
-          ".helm"
-          ".local/share/DigitalSuburban"
-          ".local/share/MuseScore"
-
           # cache
           ".cache/act"
           ".cache/actcache"
@@ -524,7 +509,6 @@
       files = [
         ".clasprc.json"
         ".config/mimeapps.list"
-        ".config/snn.conf"
         ".npmrc"
       ];
     };

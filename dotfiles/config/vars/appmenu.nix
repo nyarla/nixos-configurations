@@ -47,9 +47,9 @@ let
   applicationsWeb = menu "applications-web" "Web" [
     (exec "Firefox" "firefox")
     (exec "Thunderbird" "thunderbird")
-    (exec "Google Chrome" "env GTK_IM_MODULE=fcitx google-chrome-stable")
+    (exec "Google Chrome" "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
     "${sep}"
-    (exec "bitwarden" "bitwarden")
+    (exec "bitwarden" "bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
     "${sep}"
     (exec "Telegram" "telegram-desktop")
   ];

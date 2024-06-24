@@ -471,6 +471,7 @@
           ".config/act"
           ".config/calibre"
           ".config/dconf"
+          ".config/easytag"
           ".config/fcitx5"
           ".config/gcloud"
           ".config/gh"

@@ -5,5 +5,6 @@
     deadbeef
     glib.out
     picard
+    easytag
   ];
 }

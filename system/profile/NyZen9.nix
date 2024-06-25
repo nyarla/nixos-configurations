@@ -223,6 +223,7 @@
         fsType = "tmpfs";
         options = [
           "defaults"
+          "noexec"
           "size=16G"
           "mode=755"
         ];

@@ -261,7 +261,6 @@
       "var/lib/docker"
 
       # for accounts
-      "home/nyarla/.config/audiogridder"
       "home/nyarla/.fly"
       "home/nyarla/.local/share/flatpak"
       "home/nyarla/.local/share/npm"

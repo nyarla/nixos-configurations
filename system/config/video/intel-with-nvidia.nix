@@ -13,6 +13,7 @@ in
       "nvidia_uvm"
     ];
     initrd.kernelModules = [ "i915" ];
+    kernelParams = [ "i915.enable_guc=3" ];
   };
 
   hardware = {
@@ -31,6 +32,7 @@ in
         libvdpau-va-gl
         mesa.drivers
         libGL
+        libglvnd
       ];
       extraPackages32 = with pkgs.pkgsi686Linux; [
         intel-media-driver
@@ -38,6 +40,7 @@ in
         libvdpau-va-gl
         mesa.drivers
         libGL
+        libglvnd
       ];
     };
   };

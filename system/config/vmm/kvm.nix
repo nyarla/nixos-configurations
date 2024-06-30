@@ -17,9 +17,11 @@ in
   programs.virt-manager.enable = true;
   environment.systemPackages = with pkgs; [
     looking-glass-client
+    remmina
     spice
     spice-gtk
     virt-manager
+    virt-viewer
   ];
 
   # vfio kernel settings
@@ -118,7 +120,9 @@ in
           "/dev/random",
           "/dev/urandom",
           "/dev/ptmx",
-          "/dev/kvm"
+          "/dev/kvm",
+          "/dev/dri/card1",
+          "/dev/dri/renderD128"
         ]
       '';
     };

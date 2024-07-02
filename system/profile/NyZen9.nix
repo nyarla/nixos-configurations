@@ -469,6 +469,7 @@
           ".config/nvim"
           ".config/pulse"
           ".config/rclone"
+          ".config/remmina"
           ".config/simple-scan"
           ".config/syncthing"
           ".config/tmux"
@@ -488,6 +489,7 @@
           ".local/share/nvim"
           ".local/share/perl"
           ".local/share/pixelorama"
+          ".local/share/remmina"
           ".local/share/waydroid"
 
           # application

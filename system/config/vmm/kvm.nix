@@ -100,6 +100,7 @@ in
       in
       {
         DAW = toString qemuHooks;
+        Development = toString qemuHooks;
       };
 
     qemu = {

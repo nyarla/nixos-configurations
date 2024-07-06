@@ -35,6 +35,7 @@ let
   applicationsMain = menu "applications-main" "Main" [
     (exec "mlterm" "mlterm-wl")
     (exec "virt-manager" "virt-manager")
+    (exec "looking-glass" "looking-glass-client")
     "${sep}"
     (menu "applications-wayland" "waydroid" [
       (exec "start" (script "waydroid-start"))

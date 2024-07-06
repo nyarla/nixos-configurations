@@ -86,8 +86,6 @@ in
           modprobe -r vfio_pci
           modprobe -r vfio_iommu_type1
           modprobe -r vfio
-
-          modprobe nvidia_uvm
         '';
 
         qemuHooks = pkgs.runCommand "qemu-hooks" { } ''
@@ -195,7 +193,7 @@ in
         "force group" = "users";
         "force user" = "nyarla";
         "guest ok" = "false";
-        "read only" = "yes";
+        "read only" = "no";
       };
     };
   };

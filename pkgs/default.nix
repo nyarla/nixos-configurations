@@ -60,8 +60,8 @@ in
     version = "2024-06-23";
     src = super.fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "7440c5096a3c27ca404a3492fc5a8f9e47180578";
-      hash = "sha256-zRPcQPyOYRqqMe//3+oZywxQecrbPm5BMOCt64oWrEI=";
+      rev = "9153c22dab77837f93c96edbf5acfbc4ffb3b0c8";
+      hash = "sha256-eN70rF8SvPu50QHLA0KHKI+mR6dqmLezK0z8fcUrrno=";
     };
 
     patches = [

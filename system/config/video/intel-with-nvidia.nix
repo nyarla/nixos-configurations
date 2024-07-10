@@ -55,6 +55,7 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
+    igsc
     (nvtopPackages.full)
     (cuda-shell.override {
       nvidia_x11 = nvidia;

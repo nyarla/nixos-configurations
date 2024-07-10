@@ -17,6 +17,7 @@ in
   fcitx5-cskk-qt = self.fcitx5-cskk.override { enableQt = true; };
   galendae = require ./galendae { };
   gyazo-diy = require ./gyazo-diy { };
+  igsc = require ./igsc { };
   ildaeil = require ./ildaeil {
     inherit (self) carla;
     wine = self.wineUsingFull;

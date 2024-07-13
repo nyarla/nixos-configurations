@@ -54,7 +54,7 @@ in
         );
 
         loadVFIO = pkgs.writeShellScript "start.sh" ''
-          set -euo pipefail
+          set -xeuo pipefail
           export PATH=${PATH}:$PATH
 
           modprobe -r nvidia_uvm
@@ -70,10 +70,13 @@ in
           virsh nodedev-detach pci_0000_0b_00_0
 
           virsh nodedev-detach pci_0000_0d_00_3
+
+          set +x
         '';
 
         unloadVFIO = pkgs.writeShellScript "stop.sh" ''
-          set -euo pipefail
+          set -x
+
           export PATH=${PATH}:$PATH
 
           virsh nodedev-reattach pci_0000_0b_00_3
@@ -86,6 +89,42 @@ in
           modprobe -r vfio_pci
           modprobe -r vfio_iommu_type1
           modprobe -r vfio
+
+          set +x
+        '';
+
+        allocHugePage = pkgs.writeShellScript "alloc.sh" ''
+          set -xeuo pipefail
+
+          export PATH=${pkgs.gawk}/bin:$PATH
+
+          MEMORY=65536
+          HUGEPAGES="$(($MEMORY / $(( $(grep Hugepagesize /proc/meminfo | awk '{print $2}') / 1024))))"
+
+          echo $HUGEPAGES > /proc/sys/vm/nr_hugepages
+          ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
+
+          TRIES=0
+          while (( $ALLOC_PAGES != $HUGEPAGES && $TRIES < 100 )) ; do
+            echo 1 > /proc/sys/vm/compact_memory
+
+            echo $HUGEPAGES > /proc/sys/vm/nr_hugepages
+            ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
+
+            let TRIES+=1
+          done
+
+          if test "$ALLOC_PAGES" -ne "$HUGEPAGES"; then
+            echo 0 >/proc/sys/vm/nr_hugepages
+            exit 1
+          fi
+
+          set +x
+          exit 0
+        '';
+
+        deallocHugePage = pkgs.writeShellScript "dealloc.sh" ''
+          echo 0 >/proc/sys/vm/nr_hugepages
         '';
 
         qemuHooks = pkgs.runCommand "qemu-hooks" { } ''
@@ -94,6 +133,9 @@ in
 
           cp ${loadVFIO} $out/prepare/begin/00_load_vfio.sh
           cp ${unloadVFIO} $out/release/end/00_unload_vfio.sh
+
+          cp ${allocHugePage} $out/prepare/begin/01_alloc_hugepage.sh
+          cp ${deallocHugePage} $out/release/end/01_dealloc_hugepage.sh
         '';
       in
       {

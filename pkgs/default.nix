@@ -61,8 +61,8 @@ in
     version = "2024-06-23";
     src = super.fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "9153c22dab77837f93c96edbf5acfbc4ffb3b0c8";
-      hash = "sha256-eN70rF8SvPu50QHLA0KHKI+mR6dqmLezK0z8fcUrrno=";
+      rev = "307f1991585474e0456c54ad4ec188b4824cc634";
+      hash = "sha256-k31PgRI78hWBCjACTsXdpv/owCwO2gT+j9qj4ncYS38=";
     };
 
     patches = [
@@ -94,7 +94,18 @@ in
   thunderbird-bin-unwrapped = super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   tmux = super.tmux.overrideAttrs (old: rec {
-    patches = old.patches ++ [ ../patches/tmux-3.4-fix.diff ];
+    patches =
+      let
+        # remove sixel patch.
+        # this patch confict to between tmux-eaw-patch
+        patches' = super.lib.lists.remove (super.lib.lists.last old.patches) old.patches;
+      in
+      patches'
+      ++ [
+        # this patch is modified for nvim rounded border.
+        # DO NOT REPLACE TO OTHERS.
+        ../patches/tmux-3.4-fix.diff
+      ];
   });
 
   # wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {

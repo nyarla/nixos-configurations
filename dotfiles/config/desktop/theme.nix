@@ -36,8 +36,8 @@
   };
 
   home.packages = with pkgs; [
-    gnome.adwaita-icon-theme
-    gnome.gnome-themes-extra
+    adwaita-icon-theme
+    gnome-themes-extra
     gtk-engine-murrine
     gtk_engines
     hicolor-icon-theme

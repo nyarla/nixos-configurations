@@ -454,6 +454,7 @@
           ".config/VirtualBox"
           ".config/Yubico"
           ".config/act"
+          ".config/blogsync"
           ".config/calibre"
           ".config/dconf"
           ".config/easytag"

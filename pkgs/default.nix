@@ -57,12 +57,12 @@ in
 
   firefox-bin-unwrapped = super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  labwc = (super.labwc.override { wlroots = self.wlroots_0_17; }).overrideAttrs (old: rec {
-    version = "2024-06-23";
+  labwc = super.labwc.overrideAttrs (old: {
+    version = "0.7.4";
     src = super.fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "307f1991585474e0456c54ad4ec188b4824cc634";
-      hash = "sha256-k31PgRI78hWBCjACTsXdpv/owCwO2gT+j9qj4ncYS38=";
+      rev = "71136fdf65940b4e924dea7f8285d2a21032755";
+      hash = "sha256-7MH1mMfyMkaTVwEBJWvI1Lt3M6kosXOwkowuBTZej3c=";
     };
 
     patches = [

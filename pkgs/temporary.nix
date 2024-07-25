@@ -3,10 +3,6 @@ let
   require = path: super.callPackage (import path);
 in
 {
-  clamav = super.clamav.overrideAttrs (_: {
-    checkInputs = [ super.python3.pkgs.pytest ];
-  });
-
   whipper =
     let
       python3 =

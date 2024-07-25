@@ -4,9 +4,6 @@
   buildFHSUserEnv,
   cudaPackages,
   nvidia_x11,
-  curl,
-  libGL,
-  xorg,
 }:
 let
   libPath = lib.makeLibraryPath (
@@ -21,7 +18,7 @@ let
     ])
   );
 in
-buildFHSUserEnv rec {
+buildFHSUserEnv {
   name = "cuda-shell";
   targetPkgs =
     p:
@@ -30,7 +27,6 @@ buildFHSUserEnv rec {
       binutils
       curl
       freeglut
-      gcc9Stdenv.cc
       git
       gitRepo
       gnumake
@@ -54,7 +50,8 @@ buildFHSUserEnv rec {
     ++ (with cudaPackages; [
       cudatoolkit
       cudnn
-    ]);
+    ])
+    ++ [ gcc9Stdenv.cc ];
 
   multiPkgs = pkgs: with pkgs; [ zlib ];
   runScript = "bash";

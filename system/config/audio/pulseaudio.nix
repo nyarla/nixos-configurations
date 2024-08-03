@@ -19,6 +19,10 @@
     enable = true;
     support32Bit = true;
     package = pkgs.pulseaudioFull;
+    tcp = {
+      enable = true;
+      anonymousClients.allowedIpRanges = [ "192.168.122.0/24" ];
+    };
     daemon.config = {
       avoid-resampling = "yes";
       alternate-sample-rate = 192000;

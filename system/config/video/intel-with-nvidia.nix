@@ -56,13 +56,16 @@ in
 
   environment.systemPackages = with pkgs; [
     igsc
-    (nvtopPackages.full)
+    (nvtopPackages.full.override {
+      intel = true;
+      nvidia = true;
+    })
     (cuda-shell.override {
       nvidia_x11 = nvidia;
       cudaPackages = pkgs.cudaPackages_12_1;
     })
   ];
 
-  virtualisation.docker.enableNvidia = true;
+  hardware.nvidia-container-toolkit.enable = true;
   services.ollama.acceleration = "cuda";
 }

@@ -32,36 +32,36 @@
   {
     name = "NotoSerifCJKjp-Black.otf";
     url = "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Black.otf";
-    sha256 = "0dmmaqm70sqgygp35k9fw912ycccia7a4fbdhr67884aky3lgh47";
+    sha256 = "0xlfbrwr359znas5x730hi69gaddnhg4sa11n1ixrv99sxnqp33s";
   }
   {
     name = "NotoSerifCJKjp-Bold.otf";
     url = "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Bold.otf";
-    sha256 = "1ih4rprgjf1q0j3i84ipkrpifmw2wa6acirc9m7a28g8mwb9dbzy";
+    sha256 = "1y1sa1faa6p51q9gp4h4ixi14gznvqzqrgk2q92kgci41qn2n6l6";
   }
   {
     name = "NotoSerifCJKjp-ExtraLight.otf";
     url = "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-ExtraLight.otf";
-    sha256 = "0d07pmf7pqnryk95fkcw2n0zpagz7f64iq8k1j3qr2qrdf3kw24w";
+    sha256 = "0iklfn8735sz6wwb5lzbx3ylpcydsr7b6zznj6n0v0rzj2sch10d";
   }
   {
     name = "NotoSerifCJKjp-Light.otf";
     url = "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Light.otf";
-    sha256 = "00mm73iis5ahfny3vsz9q881llrpiwxkn8s6nilb1lsh9qf01i9a";
+    sha256 = "0q42rk9g29yd1ln991c3ayhw7532jhn8vj5jyyk7pwwhz96p50m2";
   }
   {
     name = "NotoSerifCJKjp-Medium.otf";
     url = "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Medium.otf";
-    sha256 = "0w63n95xqhfjlf6bag3w183sbk25h6jk6z5v829ldnz00vm48ygf";
+    sha256 = "0y4lfynvq0vmffcmhn3r4y79j0cg1gi9ijjbicl0f1hc44q6lb1n";
   }
   {
     name = "NotoSerifCJKjp-Regular.otf";
     url = "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-Regular.otf";
-    sha256 = "1mlf2xcd39k83lrsnjyqnhq2psbdkjgzwdn81glfa0f16piar2sn";
+    sha256 = "1lq352ni9xgrsvz27n3w005xxf2fsrpqan15jfkvaw7iirx4r1fr";
   }
   {
     name = "NotoSerifCJKjp-SemiBold.otf";
     url = "https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/NotoSerifCJKjp-SemiBold.otf";
-    sha256 = "0k7749vrlcq90pxq93sc93ygjzzzpw2y090m3a0vny923pmxzhx2";
+    sha256 = "0302is6nr3may2qd1fh0psyra88h6mvvp9y1h9mnkhdly988aq8l";
   }
 ]

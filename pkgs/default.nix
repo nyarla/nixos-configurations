@@ -70,7 +70,7 @@ in
       (super.fetchpatch {
         name = "text-input-v1.patch";
         url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=ab3f16a1f0af8db52d88b6b69695e2a2b548fc14";
-        sha256 = "1w69kvkqvaqbz1aq808yjx01j3n6d0zrhl0mv2iyjawpf6h91hxg";
+        hash = "sha256-r3a42DY2KD9o2G5WYAiwo44D135BHUpQHao6amq7N6Q=";
       })
     ];
   });

@@ -451,7 +451,6 @@
           ".config/Kvantum"
           ".config/MusicBrainz"
           ".config/Thunar"
-          ".config/VirtualBox"
           ".config/Yubico"
           ".config/act"
           ".config/blogsync"
@@ -474,7 +473,6 @@
           ".config/simple-scan"
           ".config/syncthing"
           ".config/tmux"
-          ".config/wezterm"
           ".config/whipper"
           ".config/xfce4"
 

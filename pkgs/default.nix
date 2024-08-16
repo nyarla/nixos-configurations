@@ -95,18 +95,14 @@ in
   thunderbird-bin-unwrapped = super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   tmux = super.tmux.overrideAttrs (old: rec {
-    patches =
-      let
-        # remove sixel patch.
-        # this patch confict to between tmux-eaw-patch
-        patches' = super.lib.lists.remove (super.lib.lists.last old.patches) old.patches;
-      in
-      patches'
-      ++ [
-        # this patch is modified for nvim rounded border.
-        # DO NOT REPLACE TO OTHERS.
-        ../patches/tmux-3.4-fix.diff
-      ];
+    patches = [
+      (super.fetchpatch {
+        url = "https://github.com/tmux/tmux/commit/2d1afa0e62a24aa7c53ce4fb6f1e35e29d01a904.diff";
+        hash = "sha256-mDt5wy570qrUc0clGa3GhZFTKgL0sfnQcWJEJBKAbKs=";
+      })
+
+      ../patches/tmux-3.4-fix.diff
+    ];
   });
 
   # wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {

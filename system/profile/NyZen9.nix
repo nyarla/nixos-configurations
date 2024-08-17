@@ -36,6 +36,7 @@
     ../config/security/clamav.nix
     ../config/security/firewall-home.nix
     ../config/security/gnupg.nix
+    ../config/security/ulimit.nix
     ../config/security/yubikey.nix
     ../config/tools/editors.nix
     ../config/tools/git.nix
@@ -43,7 +44,7 @@
     ../config/video/droidcam.nix
     ../config/video/intel-with-nvidia.nix
     ../config/vmm/kvm.nix
-    ../config/webapp/llm.nix
+    #../config/webapp/llm.nix
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix
     ../config/wireless/jp.nix
@@ -99,7 +100,7 @@
   ];
 
   # kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.kernelModules = [
     "k10temp"
     "nct6775"

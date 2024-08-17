@@ -3,6 +3,14 @@ let
   require = path: super.callPackage (import path);
 in
 {
+  clamav = super.clamav.overrideAttrs (old: rec {
+    version = "1.4.0";
+    src = super.fetchurl {
+      url = "https://www.clamav.net/downloads/production/${old.pname}-${version}.tar.gz";
+      hash = "sha256-1nqymeXKBdrT2imaXqc9YCCTcqW+zX8TuaM8KQM4pOY=";
+    };
+  });
+
   devenv =
     let
       inherit (super) cachix;

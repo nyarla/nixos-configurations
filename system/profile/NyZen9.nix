@@ -69,6 +69,13 @@
       allowDiscards = true;
       bypassWorkqueues = true;
     };
+
+    data = {
+      device = "/dev/disk/by-uuid/062ba5c1-dd2f-4568-8cc1-c4b413976ce3";
+      preLVM = true;
+      allowDiscards = true;
+      bypassWorkqueues = true;
+    };
   };
 
   boot.initrd.availableKernelModules = [
@@ -244,6 +251,31 @@
         ];
         neededForBoot = true;
       };
+
+      "/data" = {
+        device = "/dev/disk/by-uuid/dd5610a1-a7f0-43cc-bbe5-24956b135b48";
+        fsType = "btrfs";
+        options = btrfsOptions;
+        neededForBoot = false;
+      };
+
+      # fore data storage
+      "/home/nyarla/Calibre" = {
+        device = "/data/Calibre";
+        options = [ "bind" ];
+        neededForBoot = false;
+      };
+      "/home/nyarla/Music" = {
+        device = "/data/Music";
+        options = [ "bind" ];
+        neededForBoot = false;
+      };
+
+      "/home/nyarla/Sources" = {
+        device = "/data/Sources";
+        options = [ "bind" ];
+        neededForBoot = false;
+      };
     }
     // (subvolsRW [
       # for boot
@@ -285,7 +317,7 @@
       }
       {
         name = "Calibre";
-        dest = "/persist/home/nyarla/Calibre";
+        dest = "/data/Calibre";
       }
       {
         name = "Development";
@@ -297,7 +329,7 @@
       }
       {
         name = "Music";
-        dest = "/persist/home/nyarla/Music";
+        dest = "/data/Music";
       }
       {
         name = "NixOS";
@@ -313,7 +345,7 @@
       }
       {
         name = "Sources";
-        dest = "/persist/home/nyarla/Sources";
+        dest = "/data/Sources";
       }
       {
         name = "Sync";
@@ -347,9 +379,9 @@
 
           device=0c2fc422-2013-46eb-bc52-e6a4f6f145cb
           if test -e /dev/disk/by-uuid/$device && test -e /boot/keys/$device; then
-            cryptsetup luksOpen /dev/disk/by-uuid/$device data --key-file /boot/keys/$device;
-            if test $? = 0 && test -e /dev/mapper/data ; then
-              mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/data /media/data
+            cryptsetup luksOpen /dev/disk/by-uuid/$device src --key-file /boot/keys/$device;
+            if test $? = 0 && test -e /dev/mapper/src ; then
+              mount -t btrfs -o compress=zstd,ssd,space_cache=v2,x-gvfs-hide /dev/mapper/src /media/data
               mount -o bind /media/data/DAW /backup/DAW
             fi
           fi
@@ -363,7 +395,7 @@
 
           test ! -e /backup/DAW       || umount /backup/DAW
           test ! -e /media/data       || umount /media/data
-          test ! -e /dev/mapper/data  || ctryptsetup luksClose /dev/mapper/data
+          test ! -e /dev/mapper/src  || ctryptsetup luksClose /dev/mapper/src
         ''
       );
     };
@@ -397,6 +429,10 @@
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
+
+    "/data/Calibre"
+    "/data/Music"
+    "/data/Sources"
   ];
 
   # impermanence
@@ -428,15 +464,12 @@
           # data
           "Applications"
           "Archives"
-          "Calibre"
           "Development"
           "Documents"
           "Downloads"
-          "Music"
           "Pictures"
           "Programming"
           "Reports"
-          "Sources"
           "Sync"
 
           # cache
@@ -520,7 +553,7 @@
   services.snapper.configs =
     let
       snapshot = path: {
-        SUBVOLUME = "/persist/${path}";
+        SUBVOLUME = "${path}";
         ALLOW_USERS = [ "nyarla" ];
         ALLOW_GROUP = [ "users" ];
         TIMELINE_CREATE = true;
@@ -536,12 +569,16 @@
       snapshots = paths: lib.attrsets.concatMapAttrs (n: v: { "${n}" = snapshot v; }) paths;
     in
     snapshots {
-      nixos = "etc/nixos";
-      varlib = "var/lib";
-      usrshare = "usr/share";
-      nyarla = "home/nyarla";
-      apps = "home/nyarla/Applications";
-      program = "home/nyarla/Programming";
+      nixos = "/persist/etc/nixos";
+      varlib = "/persist/var/lib";
+      usrshare = "/persist/usr/share";
+      nyarla = "/persist/home/nyarla";
+      apps = "/persist/home/nyarla/Applications";
+      program = "/persist/home/nyarla/Programming";
+
+      calibre = "/data/Calibre";
+      music = "/data/Music";
+      sources = "/data/Sources";
     };
 
   # Services

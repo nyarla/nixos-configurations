@@ -1,0 +1,115 @@
+--- a/nixos/modules/i18n/input-method/fcitx5.nix	2024-08-31 14:55:22.037157154 +0900
++++ b/nixos/modules/i18n/input-method/fcitx5.nix	2024-08-31 14:55:39.077329982 +0900
+@@ -1,4 +1,7 @@
+ { config, pkgs, lib, ... }:
++
++with lib;
++
+ let
+   imcfg = config.i18n.inputMethod;
+   cfg = imcfg.fcitx5;
+@@ -11,35 +14,35 @@
+ {
+   options = {
+     i18n.inputMethod.fcitx5 = {
+-      addons = lib.mkOption {
+-        type = with lib.types; listOf package;
++      addons = mkOption {
++        type = with types; listOf package;
+         default = [ ];
+-        example = lib.literalExpression "with pkgs; [ fcitx5-rime ]";
++        example = literalExpression "with pkgs; [ fcitx5-rime ]";
+         description = ''
+           Enabled Fcitx5 addons.
+         '';
+       };
+-      waylandFrontend = lib.mkOption {
+-        type = lib.types.bool;
++      waylandFrontend = mkOption {
++        type = types.bool;
+         default = false;
+         description = ''
+           Use the Wayland input method frontend.
+           See [Using Fcitx 5 on Wayland](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland).
+         '';
+       };
+-      plasma6Support = lib.mkOption {
+-        type = lib.types.bool;
++      plasma6Support = mkOption {
++        type = types.bool;
+         default = config.services.desktopManager.plasma6.enable;
+-        defaultText = lib.literalExpression "config.services.desktopManager.plasma6.enable";
++        defaultText = literalExpression "config.services.desktopManager.plasma6.enable";
+         description = ''
+           Use qt6 versions of fcitx5 packages.
+           Required for configuring fcitx5 in KDE System Settings.
+         '';
+       };
+-      quickPhrase = lib.mkOption {
+-        type = with lib.types; attrsOf str;
++      quickPhrase = mkOption {
++        type = with types; attrsOf str;
+         default = { };
+-        example = lib.literalExpression ''
++        example = literalExpression ''
+           {
+             smile = "（・∀・）";
+             angry = "(￣ー￣)";
+@@ -47,10 +50,10 @@
+         '';
+         description = "Quick phrases.";
+       };
+-      quickPhraseFiles = lib.mkOption {
+-        type = with lib.types; attrsOf path;
++      quickPhraseFiles = mkOption {
++        type = with types; attrsOf path;
+         default = { };
+-        example = lib.literalExpression ''
++        example = literalExpression ''
+           {
+             words = ./words.mb;
+             numbers = ./numbers.mb;
+@@ -84,7 +87,7 @@
+             The addon configures in `conf` folder in ini format with global sections.
+             Each item is written to the corresponding file.
+           '';
+-          example = lib.literalExpression "{ pinyin.globalSection.EmojiEnabled = \"True\"; }";
++          example = literalExpression "{ pinyin.globalSection.EmojiEnabled = \"True\"; }";
+         };
+       };
+       ignoreUserConfig = lib.mkOption {
+@@ -100,12 +103,12 @@
+   };
+ 
+   imports = [
+-    (lib.mkRemovedOptionModule [ "i18n" "inputMethod" "fcitx5" "enableRimeData" ] ''
++    (mkRemovedOptionModule [ "i18n" "inputMethod" "fcitx5" "enableRimeData" ] ''
+       RIME data is now included in `fcitx5-rime` by default, and can be customized using `fcitx5-rime.override { rimeDataPkgs = ...; }`
+     '')
+   ];
+ 
+-  config = lib.mkIf (imcfg.enable && imcfg.type == "fcitx5") {
++  config = mkIf (imcfg.enable && imcfg.type == "fcitx5") {
+     i18n.inputMethod.package = fcitx5Package;
+ 
+     i18n.inputMethod.fcitx5.addons = lib.optionals (cfg.quickPhrase != { }) [
+@@ -119,15 +122,15 @@
+     ];
+     environment.etc =
+       let
+-        lib.optionalFile = p: f: v: lib.optionalAttrs (v != { }) {
++        optionalFile = p: f: v: lib.optionalAttrs (v != { }) {
+           "xdg/fcitx5/${p}".text = f v;
+         };
+       in
+       lib.attrsets.mergeAttrsList [
+-        (lib.optionalFile "config" (lib.generators.toINI { }) cfg.settings.globalOptions)
+-        (lib.optionalFile "profile" (lib.generators.toINI { }) cfg.settings.inputMethod)
++        (optionalFile "config" (lib.generators.toINI { }) cfg.settings.globalOptions)
++        (optionalFile "profile" (lib.generators.toINI { }) cfg.settings.inputMethod)
+         (lib.concatMapAttrs
+-          (name: value: lib.optionalFile
++          (name: value: optionalFile
+             "conf/${name}.conf"
+             (lib.generators.toINIWithGlobalSection { })
+             value)

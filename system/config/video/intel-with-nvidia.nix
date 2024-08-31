@@ -21,6 +21,7 @@ in
     nvidia = {
       modesetting.enable = false;
       package = nvidia;
+      open = true;
     };
 
     graphics = {

@@ -43,7 +43,7 @@
             hostname = "nixos";
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
-            patches = [ ];
+            patches = [ ./patches/revert-fcitx5.patch ];
             overlays = [
               wayland.overlay
               (import ./pkgs/default.nix)

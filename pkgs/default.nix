@@ -59,18 +59,11 @@ in
   firefox-bin-unwrapped = super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   labwc = super.labwc.overrideAttrs (old: {
-    version = "0.7.4";
-    src = super.fetchFromGitHub {
-      inherit (old.src) owner repo;
-      rev = "71136fdf65940b4e924dea7f8285d2a21032755";
-      hash = "sha256-7MH1mMfyMkaTVwEBJWvI1Lt3M6kosXOwkowuBTZej3c=";
-    };
-
     patches = [
       (super.fetchpatch {
         name = "text-input-v1.patch";
-        url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=ab3f16a1f0af8db52d88b6b69695e2a2b548fc14";
-        hash = "sha256-r3a42DY2KD9o2G5WYAiwo44D135BHUpQHao6amq7N6Q=";
+        url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=2a23b6346a4dcedba21d815e30e165b0a6f3f9cf";
+        hash = "sha256-uJ8arT0ikCRRyyxU2AOMwfgFARTJiZ5sNCcd3DS6xSs=";
       })
     ];
   });

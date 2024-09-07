@@ -514,6 +514,7 @@
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
           ".local/share/applications"
+          ".local/share/com.poppingmoon.aria"
           ".local/share/fcitx5"
           ".local/share/fonts"
           ".local/share/libcskk"

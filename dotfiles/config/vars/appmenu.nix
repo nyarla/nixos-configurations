@@ -50,6 +50,8 @@ let
     (exec "Thunderbird" "thunderbird")
     (exec "Google Chrome" "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
     "${sep}"
+    (exec "Aria" "aria")
+    "${sep}"
     (exec "bitwarden" "bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
     "${sep}"
     (exec "Telegram" "telegram-desktop")

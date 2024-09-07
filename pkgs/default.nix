@@ -4,6 +4,7 @@ let
 in
 {
   # additional packages
+  aria-bin = require ./aria-bin { };
   audiogridder = require ./audiogridder { };
   cskk = require ./cskk { };
   cuda-shell = require ./cuda-shell {

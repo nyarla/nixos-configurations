@@ -8,5 +8,6 @@
   home.packages = with pkgs; [
     thunderbird-bin
     bitwarden
+    aria-bin
   ];
 }

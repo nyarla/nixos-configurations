@@ -109,12 +109,7 @@
       }
       trap cleanup INT TERM
 
-      eval "$(dbus-launch --sh-syntax --exit-with-session)"
-      ${pkgs.labwc}/bin/labwc -V &
-      waidPID=$!
-
-      test -n $waidPID && wait $waidPID
-
+      dbus-launch --exit-with-session ${pkgs.labwc}/bin/labwc -V
       cleanup
     ''
   );

@@ -18,7 +18,6 @@ let
   '';
 in
 writeShellScript "autostart" ''
-
   systemctl --user import-environment WAYLAND_DISPLAY
 
   systemctl --user start desktop-session.target

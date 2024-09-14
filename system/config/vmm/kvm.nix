@@ -228,7 +228,7 @@ in
       };
 
       DAW = {
-        path = "/persist/home/nyarla/Sources/DAW";
+        path = "/data/Sources/DAW";
         browsable = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";

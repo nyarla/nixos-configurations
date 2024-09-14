@@ -25,4 +25,8 @@ in
         sed -i 's|cd-paranoia|${super.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
       '';
     });
+
+  waybar = super.waybar.overrideAttrs (_: {
+    patches = [ ../patches/waybar-fix-tray.patch ];
+  });
 }

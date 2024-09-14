@@ -111,7 +111,6 @@
   boot.kernelModules = [
     "k10temp"
     "nct6775"
-    "amd-pstate"
   ];
   boot.kernelParams = [
     "amd_pstate=active"
@@ -240,6 +239,9 @@
       "/boot" = {
         device = "/dev/disk/by-uuid/BA2E-6B22";
         fsType = "vfat";
+        options = [
+          "umask=0077"
+        ];
       };
 
       "/nix" = {

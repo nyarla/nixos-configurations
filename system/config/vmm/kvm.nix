@@ -25,11 +25,6 @@ in
   ];
 
   # vfio kernel settings
-  boot.kernelModules = [
-    "pcie_aspm"
-    "iommu"
-  ];
-
   boot.kernelParams = [
     "iommu=pt"
     "kvm.ignore_msrs=1"
@@ -195,27 +190,26 @@ in
     in
     [
       "L+ /var/lib/libvirt/hooks/qemu - - - - ${qemuScript}"
-      "f /dev/shm/looking-glass 0660 user kvm -"
+      "f /dev/shm/looking-glass 0660 nyarla kvm -"
     ];
 
   services.samba = {
     enable = true;
-    enableNmbd = true;
-    enableWinbindd = true;
-    securityType = "user";
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = nixos
-      netbios name = nixos
-      security = user
-      use sendfile = yes
-      hosts allow = 192.168.122.0/24 localhost
-      hosts deny = 0.0.0.0/0
-      guest account = nobody
-      map to guest = bad user
-    '';
+    nmbd.enable = true;
+    winbindd.enable = true;
+    settings = {
+      global = {
+        "security" = "user";
+        "workgroup" = "WORKGROUP";
+        "server string" = "nixos";
+        "netbios name" = "nixos";
+        "use sendfile" = "yes";
+        "hosts allow" = "192.168.122.0/24 localhost";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
 
-    shares = {
       Downloads = {
         path = "/persist/home/nyarla/Downloads/KVM";
         browsable = "yes";

@@ -147,11 +147,11 @@
   };
 
   home.packages = with pkgs; [
+    fzy
+    mmv-go
+    ripgrep
     shoreman
     tmux
-    fzy
-    platinum-searcher
-    mmv-go
 
     file
     gawk

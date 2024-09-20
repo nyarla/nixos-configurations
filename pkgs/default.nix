@@ -69,14 +69,6 @@ in
     ];
   });
 
-  platinum-searcher = super.platinum-searcher.overrideAttrs (old: rec {
-    src = super.fetchFromGitHub {
-      inherit (old.src) owner repo;
-      rev = "ad20073a3cb5bb354a1fde44ffe5aa331982cbd1";
-      sha256 = "sha256-FNHlALFwMbajaHWOehdSFeQmvZSuCZLdqGqLZ7DF+pI=";
-    };
-  });
-
   speechd-with-openjtalk = super.speechd.overrideAttrs (old: rec {
     src = super.fetchurl {
       url = "https://github.com/brailcom/speechd/releases/download/0.12.0-rc3/speech-dispatcher-0.12.0-rc3.tar.gz";

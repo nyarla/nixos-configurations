@@ -98,6 +98,11 @@ let
     (exec "Task Manager" "mate-system-monitor")
   ];
 
+  systemDisplay = menu "system-display" "Display" [
+    (exec "Always ON" "systemctl --user stop swaylock")
+    (exec "Enable AutoLock" "systemctl --user start swaylock")
+  ];
+
   systemOperation = menu "system-operation" "System" [
     (action "Reconfigure" "Reconfigure")
     (stop "Exit" "labwc --exit")
@@ -117,6 +122,7 @@ let
     (item "applications-multimedia")
     (item "applications-office")
     (item "applications-utils")
+    (item "system-display")
     (item "system-operation")
   ];
 in
@@ -130,6 +136,7 @@ in
     ${applicationsOffice}
     ${applicationsUtils}
     ${applicationsCreative}
+    ${systemDisplay}
     ${systemOperation}
     ${systemContextMenu}
   </openbox_menu>

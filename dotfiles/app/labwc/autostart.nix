@@ -9,15 +9,23 @@ let
     sha256 = "07ly21bhs6cgfl7pv4xlqzdqm44h22frwfhdqyd4gkn2jla1waab";
   };
 
-  launch = cmd: ''
-    while [[ -e /run/user/$(id -u)/wayland-0 ]]; do
-      env \
-        XDG_DATA_DIRS=$HOME/.nix-profile/share:/run/current-system/sw/share \
-        ${cmd}
-    done &
-  '';
+  procfile =
+    with pkgs;
+    writeText "Procfile" ''
+      blueman: ${blueman}/bin/blueman-applet
+      calibre: ${calibre}/bin/calibre --start-in-tray
+      clipboard: wl-paste -t text -w xclip -selection clipboard
+      fcitx5: fcitx5 -r
+      nm-applet: ${networkmanagerapplet}/bin/nm-applet --indicator
+      waybar: ${waybar}/bin/waybar
+      xembedsniproxy: ${xembed-sni-proxy}/bin/xembedsniproxy
+    '';
 in
 writeShellScript "autostart" ''
+  cd $HOME
+  chmod +w .Procfile
+  cp ${procfile} .Procfile
+
   systemctl --user import-environment WAYLAND_DISPLAY
 
   systemctl --user start desktop-session.target
@@ -27,13 +35,7 @@ writeShellScript "autostart" ''
   export SSH_AUTH_SOCK
   export GNOME_KEYRING_CONTROL
 
-  ${launch "${pkgs.waybar}/bin/waybar"}
-  ${launch "${pkgs.xembed-sni-proxy}/bin/xembedsniproxy"}
-  ${launch "fcitx5 -r"}
-  ${launch "${pkgs.calibre}/bin/calibre --start-in-tray"}
-  ${launch "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"}
-  ${launch "${pkgs.blueman}/bin/blueman-applet"}
-  ${launch "wl-paste -t text -w xclip -selection clipboard"}
+  ${pkgs.goreman}/bin/goreman -f .Procfile start &
 
   swaybg -i ${wallpaper} -m fit &
 ''

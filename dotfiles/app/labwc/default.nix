@@ -27,6 +27,7 @@
     swaybg
     swayidle
     swaylock-effects
+    goreman
 
     wayout
     wev
@@ -71,6 +72,8 @@
 
   home.file.".local/bin/sw".source = toString (
     pkgs.writeShellScript "startlabwc" ''
+      exec >$HOME/Reports/sw.log 2>&1
+
       for rc in $(ls /etc/profile.d); do
         . /etc/profile.d/$rc
       done

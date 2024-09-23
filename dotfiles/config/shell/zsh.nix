@@ -11,7 +11,6 @@
       "nixos-build" = ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
       "nixos-upgrade" = ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
       "nvim-resume" = "pkill -SIGCONT nvim";
-      "rm" = "trash";
       "waydroid" = "env XDG_DATA_HOME=/persist/home/nyarla/.local/share waydroid";
       "nvim" = "nvim-run";
     };
@@ -159,7 +158,6 @@
     gnused
 
     inotify-tools
-    trash-cli
 
     keychain
     mosh

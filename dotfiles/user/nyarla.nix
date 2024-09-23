@@ -20,6 +20,7 @@ _: {
     ../app/git
     ../app/labwc
     ../app/mlterm
+    ../app/xdg
   ];
 
   # More customizations

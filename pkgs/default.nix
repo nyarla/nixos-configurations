@@ -4,6 +4,7 @@ let
 in
 {
   # additional packages
+  aria = require ./aria { };
   aria-bin = require ./aria-bin { };
   audiogridder = require ./audiogridder { };
   cskk = require ./cskk { };

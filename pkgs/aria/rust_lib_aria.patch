@@ -1,0 +1,19 @@
+diff --git a/rust_builder/linux/CMakeLists.txt b/rust_builder/linux/CMakeLists.txt
+index 8661930..b8cf0c5 100644
+--- a/rust_builder/linux/CMakeLists.txt
++++ b/rust_builder/linux/CMakeLists.txt
+@@ -7,13 +7,10 @@ cmake_minimum_required(VERSION 3.10)
+ set(PROJECT_NAME "rust_lib_aria")
+ project(${PROJECT_NAME} LANGUAGES CXX)
+ 
+-include("../cargokit/cmake/cargokit.cmake")
+-apply_cargokit(${PROJECT_NAME} ../../rust rust_lib_aria "")
+-
+ # List of absolute paths to libraries that should be bundled with the plugin.
+ # This list could contain prebuilt libraries, or libraries created by an
+ # external build triggered from this build file.
+ set(rust_lib_aria_bundled_libraries
+-  "${${PROJECT_NAME}_cargokit_lib}"
++  "../rust/target/release/librust_lib_aria.so"
+   PARENT_SCOPE
+ )

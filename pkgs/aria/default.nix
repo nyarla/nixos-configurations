@@ -79,8 +79,8 @@ flutter324.buildFlutterApplication rec {
     rm $out/bin/aria
     cat <<EOF >$out/bin/aria
     #!${stdenv.shell}
-    export LD_LIBRARY_PATH=\$(pwd)/lib
-    exec \$(pwd)/aria
+    export LD_LIBRARY_PATH=$out/app/lib
+    exec $out/app/aria
     EOF
 
     chmod +x $out/bin/aria

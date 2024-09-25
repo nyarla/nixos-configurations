@@ -546,7 +546,6 @@
         ];
       files = [
         ".clasprc.json"
-        ".config/mimeapps.list"
         ".npmrc"
       ];
     };

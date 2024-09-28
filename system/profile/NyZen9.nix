@@ -264,18 +264,27 @@
       # fore data storage
       "/home/nyarla/Calibre" = {
         device = "/data/Calibre";
-        options = [ "bind" ];
+        options = [
+          "bind"
+          "x-gvfs-hide"
+        ];
         neededForBoot = false;
       };
       "/home/nyarla/Music" = {
         device = "/data/Music";
-        options = [ "bind" ];
+        options = [
+          "bind"
+          "x-gvfs-hide"
+        ];
         neededForBoot = false;
       };
 
       "/home/nyarla/Sources" = {
         device = "/data/Sources";
-        options = [ "bind" ];
+        options = [
+          "bind"
+          "x-gvfs-hide"
+        ];
         neededForBoot = false;
       };
     }

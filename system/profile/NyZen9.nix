@@ -288,6 +288,9 @@
       "var/lib"
       "var/log"
 
+      # for vm
+      "var/lib/libvirt/images"
+
       # for accounts
       "home/nyarla"
     ])

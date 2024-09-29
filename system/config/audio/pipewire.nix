@@ -1,136 +1,131 @@
 { pkgs, ... }:
 {
-  # for droidcam
   boot.kernelModules = [ "snd_aloop" ];
   boot.kernelParams = [ "snd_aloop.index=10" ];
 
-  # packages
+  # add packages to system
   environment.systemPackages =
-    (with pkgs; [
-      pavucontrol
-      pipewire
-    ])
-    ++ (with pkgs.pipewire; [
+    with pkgs;
+    [
+      pwvucontrol
+      pulseaudio
+    ]
+    ++ (with pipewire; [
       out
       jack
-      pulse
     ]);
 
-  # temporary fix for `pactl` is not found in pipewire-pulse service
-  systemd.user.services.pipewire-pulse.path = with pkgs; [ pulseaudio ];
-
-  # pipewire
+  # enable to pipewire services
   security.rtkit.enable = true;
-  services.pipewire =
-    let
-      common = {
-        "default.clock.allowed-rates" = [
-          44100
-          48000
-          96000
-          192000
-        ];
-        "default.clock.rate" = 192000;
+  services.pipewire = {
+    enable = true;
+
+    # enable to audio backends
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+
+    # pipewire configurations
+    extraConfig = {
+      # pipewire daemon
+      pipewire = {
+        "10-clock-rate" = {
+          "context.properties" = {
+            "default.clock.allowed-rates" = [
+              44100
+              48000
+              88200
+              96000
+              176400
+              192000
+            ];
+          };
+        };
+
+        "98-focusrite-scalette-2gen" = {
+          "node.rules" = [
+            {
+              matches = [
+                { "node.name" = "~.*usb-Focusrite_Scarlett_Solo_USB-00.*"; }
+              ];
+              actions = {
+                update-props = {
+                  "alsa.format" = "S32_LE";
+                  "audio.format" = "S32LE";
+                };
+              };
+            }
+          ];
+          "device.rules" = [
+            {
+              matches = [
+                { "device.name" = "alsa_card.usb-Focusrite_Scarlett_Solo_USB-00"; }
+              ];
+              actions = {
+                update-props = {
+                  "alsa.format" = "S32_LE";
+                  "audio.format" = "S32LE";
+                };
+              };
+            }
+          ];
+        };
+        "99-droidcam" = {
+          "context.objects" = [
+            {
+              # for droidcam
+              factory = "adapter";
+              args = {
+                "factory.name" = "api.alsa.pcm.source";
+                "node.name" = "DroidCam";
+                "object.linger" = true;
+                "audio.channels" = 1;
+                "api.alsa.path" = "hw:10,1,0";
+                "media.class" = "Audio/Source";
+              };
+            }
+          ];
+        };
       };
-    in
-    {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      audio.enable = true;
-      jack.enable = false;
-      pulse.enable = true;
-      wireplumber.enable = true;
 
-      config = {
-        client."context.properties" = { } // common;
-        client."stream.properties" = {
-          "node.latency" = "1024/96000";
+      # client
+      client = {
+        "10-no-resampling" = {
+          "stream.properties" = {
+            "resample.disable" = true;
+          };
+        };
+      };
+      client-rt = {
+        "10-no-resampling" = {
+          "stream.properties" = {
+            "resample.disable" = true;
+          };
+        };
+      };
+
+      # pulseaudio
+      pipewire-pulse = {
+        "10-no-resampling" = {
+          "stream.properties" = {
+            "resample.disable" = true;
+          };
         };
 
-        client-rt."context.properties" = { } // common;
-        client-rt."stream.properties" = {
-          "node.latency" = "1024/96000";
+        "90-tcp-listen" = {
+          "pulse.cmd" = [
+            {
+              cmd = "load-module";
+              args = "module-native-protocol-tcp listen=192.168.122.1";
+            }
+            {
+              cmd = "set-default-sink";
+              args = "alsa_output.usb-Focusrite_Scarlett_Solo_USB-00.HiFi__Line1__sink";
+            }
+          ];
         };
-
-        pipewire-pulse."context.properties" = { } // common;
-        pipewire-pulse."stream.properties" = {
-          "node.latency" = "1024/96000";
-        };
-
-        #jack."context.properties" = { } // common;
-        #jack."stream.properties" = { "node.latency" = "1024/96000"; };
-
-        pipewire."context.properties" = { } // common;
-        pipewire."stream.properties" = {
-          "node.latency" = "1024/96000";
-          "node.autoconnect" = true;
-          "resample.quality" = 10;
-        };
-        pipewire."context.objects" = [
-          {
-            # bit-perfect for 44100Hz
-            factory = "adapter";
-            args = {
-              "factory.name" = "support.null-audio-sink";
-              "node.name" = "44100Hz";
-              "media.class" = "Audio/Duplex";
-              "object.linger" = true;
-              "audio.channels" = 2;
-              "audio.format" = "S16LE";
-              "audio.position" = [
-                "FL"
-                "FR"
-              ];
-              "audio.rate" = 44100;
-            };
-          }
-          {
-            # bit-perfect for 48000Hz
-            factory = "adapter";
-            args = {
-              "factory.name" = "support.null-audio-sink";
-              "node.name" = "48000Hz";
-              "media.class" = "Audio/Duplex";
-              "object.linger" = true;
-              "audio.channels" = 2;
-              "audio.format" = "S24LE";
-              "audio.position" = [
-                "FL"
-                "FR"
-              ];
-              "audio.rate" = 48000;
-            };
-          }
-          {
-            # bit-perfect for 96000Hz
-            factory = "adapter";
-            args = {
-              "factory.name" = "support.null-audio-sink";
-              "node.name" = "96000Hz";
-              "media.class" = "Audio/Duplex";
-              "object.linger" = true;
-              "audio.channels" = 2;
-              "audio.format" = "S24LE";
-              "audio.position" = [
-                "FL"
-                "FR"
-              ];
-              "audio.rate" = 96000;
-            };
-          }
-          {
-            # for droidcam
-            factory = "adapter";
-            args = {
-              "factory.name" = "api.alsa.pcm.source";
-              "node.name" = "DroidCam";
-              "object.linger" = true;
-              "audio.channels" = 1;
-              "api.alsa.path" = "hw:10,1,0";
-            };
-          }
-        ];
       };
     };
+  };
 }

@@ -89,7 +89,7 @@ let
   ];
 
   applicationsUtils = menu "applications-utils" "Utils" [
-    (exec "Audio" "pavucontrol")
+    (exec "Audio" "pwvucontrol")
     (exec "Bluetooth" "blueman-manager")
     (exec "DroidCam" "droidcam")
     "${sep}"

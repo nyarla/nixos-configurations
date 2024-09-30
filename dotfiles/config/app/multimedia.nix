@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     calibre
-    deadbeef
+    (deadbeef-with-plugins.override { plugins = [ deadbeef-fb ]; })
     glib.out
     picard
     easytag

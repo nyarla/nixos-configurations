@@ -504,6 +504,7 @@
           ".config/blogsync"
           ".config/calibre"
           ".config/dconf"
+          ".config/deadbeef"
           ".config/easytag"
           ".config/fcitx5"
           ".config/gcloud"

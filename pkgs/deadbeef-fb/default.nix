@@ -1,6 +1,6 @@
 {
   stdenv,
-  fetchurl,
+  fetchFromGitLab,
   pkg-config,
   deadbeef,
   gtk3,
@@ -12,11 +12,12 @@
 stdenv.mkDerivation rec {
   pname = "deadbeef-fb";
   version = "git";
-  src = fetchurl {
-    url = "https://gitlab.com/zykure/deadbeef-fb/-/archive/master/deadbeef-fb-master.tar.gz";
-    sha256 = "1m78gd9paxw0182n5xsjzb8fxq90dq1izgff0fgxcx72fbgkvxzx";
+  src = fetchFromGitLab {
+    owner = "zykure";
+    repo = "deadbeef-fb";
+    rev = "17accd5345adeb3b81315d284dd81ac881517cc6";
+    hash = "sha256-xmC0m47OnEQS4nXRG+bq5vMiAui0+ehhCrcWF8n1t/s=";
   };
-
   nativeBuildInputs = [
     autoconf
     automake
@@ -28,10 +29,6 @@ stdenv.mkDerivation rec {
     glib
     gtk3
   ];
-
-  postPatch = ''
-    sed -i "s/errno/errorNum/g" utils.c
-  '';
 
   preConfigure = ''
     ./autogen.sh

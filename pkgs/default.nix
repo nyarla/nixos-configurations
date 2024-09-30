@@ -4,8 +4,8 @@ let
 in
 {
   # additional packages
-  aria = require ./aria { };
-  aria-bin = require ./aria-bin { };
+  aria-misskey = require ./aria-misskey { };
+  aria-misskey-bin = require ./aria-misskey-bin { };
   audiogridder = require ./audiogridder { };
   cskk = require ./cskk { };
   cuda-shell = require ./cuda-shell {
@@ -18,7 +18,6 @@ in
   fcitx5-cskk = super.libsForQt5.callPackage (import ./fcitx5-cskk) { };
   fcitx5-cskk-qt = self.fcitx5-cskk.override { enableQt = true; };
   galendae = require ./galendae { };
-  goreman = require ./goreman { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
   ildaeil = require ./ildaeil {
@@ -34,7 +33,6 @@ in
   shoreman = require ./shoreman { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   sononym-bin = require ./sononym-bin { };
-  vgpu_unlock-rs = require ./vgpu_unlock-rs { };
   wine-run = require ./wine-run { };
   wine-vst-wrapper = require ./wine-vst-wrapper { };
   wineasio = require ./wineasio { wine = self.wineUsingFull; };

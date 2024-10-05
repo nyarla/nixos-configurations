@@ -17,6 +17,12 @@ _: {
           # ssh
           22
         ];
+
+        allowedUDPPorts = [
+          # http
+          80
+          443
+        ];
       };
 
       "wlan0" = {

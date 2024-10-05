@@ -47,6 +47,8 @@
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix
     ../config/wireless/jp.nix
+
+    ../config/development/nyzen9.nix
   ];
 
   # Machine specific configurations

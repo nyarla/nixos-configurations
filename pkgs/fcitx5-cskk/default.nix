@@ -11,7 +11,7 @@
   qtbase,
   wrapQtAppsHook,
   cskk,
-  skk-dicts,
+  skkDictionaries,
   enableQt ? false,
 }:
 stdenv.mkDerivation rec {
@@ -43,6 +43,6 @@ stdenv.mkDerivation rec {
 
   cmakeFlags = [
     "-DENABLE_QT=${toString enableQt}"
-    "-DSKK_DICT_DEFAULT_PATH=${skk-dicts}/share/SKK-JISYO.L"
+    "-DSKK_DICT_DEFAULT_PATH=${skkDictionaries.l}/share/SKK-JISYO.L"
   ];
 }

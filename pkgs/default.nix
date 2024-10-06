@@ -81,12 +81,7 @@ in
 
   tmux = super.tmux.overrideAttrs (old: rec {
     patches = [
-      (super.fetchpatch {
-        url = "https://github.com/tmux/tmux/commit/2d1afa0e62a24aa7c53ce4fb6f1e35e29d01a904.diff";
-        hash = "sha256-mDt5wy570qrUc0clGa3GhZFTKgL0sfnQcWJEJBKAbKs=";
-      })
-
-      ../patches/tmux-3.4-fix.diff
+      ../patches/tmux-3.5-fix.diff
     ];
   });
 
@@ -115,4 +110,12 @@ in
     inherit (self) yabridge;
     wine = self.wineUsingFull;
   };
+
+  waybar = super.waybar.overrideAttrs (old: rec {
+    buildInputs = old.buildInputs ++ [
+      super.libnotify.dev
+      super.upower.dev
+    ];
+    nativeBuildInputs = old.nativeBuildInputs ++ [ super.cmake ];
+  });
 }

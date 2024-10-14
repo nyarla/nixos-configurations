@@ -542,6 +542,9 @@
           ".local/share/remmina"
           ".local/share/waydroid"
 
+          # state
+          ".local/state/wireplumber"
+
           # application
           ".android"
           ".mozilla"

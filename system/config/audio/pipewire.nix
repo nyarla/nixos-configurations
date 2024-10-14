@@ -26,6 +26,11 @@
     pulse.enable = true;
     jack.enable = true;
 
+    # wireplumber settings
+    wireplumber = {
+      enable = true;
+    };
+
     # pipewire configurations
     extraConfig = {
       # pipewire daemon
@@ -44,19 +49,6 @@
         };
 
         "98-focusrite-scalette-2gen" = {
-          "node.rules" = [
-            {
-              matches = [
-                { "node.name" = "~.*usb-Focusrite_Scarlett_Solo_USB-00.*"; }
-              ];
-              actions = {
-                update-props = {
-                  "alsa.format" = "S32_LE";
-                  "audio.format" = "S32LE";
-                };
-              };
-            }
-          ];
           "device.rules" = [
             {
               matches = [
@@ -113,15 +105,11 @@
           };
         };
 
-        "90-tcp-listen" = {
+        "90-pacmd" = {
           "pulse.cmd" = [
             {
               cmd = "load-module";
               args = "module-native-protocol-tcp listen=192.168.122.1";
-            }
-            {
-              cmd = "set-default-sink";
-              args = "alsa_output.usb-Focusrite_Scarlett_Solo_USB-00.HiFi__Line1__sink";
             }
           ];
         };

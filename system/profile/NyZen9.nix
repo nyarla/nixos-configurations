@@ -261,33 +261,6 @@
         options = btrfsOptions;
         neededForBoot = false;
       };
-
-      # fore data storage
-      "/home/nyarla/Calibre" = {
-        device = "/data/Calibre";
-        options = [
-          "bind"
-          "x-gvfs-hide"
-        ];
-        neededForBoot = false;
-      };
-      "/home/nyarla/Music" = {
-        device = "/data/Music";
-        options = [
-          "bind"
-          "x-gvfs-hide"
-        ];
-        neededForBoot = false;
-      };
-
-      "/home/nyarla/Sources" = {
-        device = "/data/Sources";
-        options = [
-          "bind"
-          "x-gvfs-hide"
-        ];
-        neededForBoot = false;
-      };
     }
     // (subvolsRW [
       # for boot
@@ -332,7 +305,7 @@
       }
       {
         name = "Calibre";
-        dest = "/data/Calibre";
+        dest = "/persist/home/nyarla/Calibre";
       }
       {
         name = "Development";
@@ -344,7 +317,7 @@
       }
       {
         name = "Music";
-        dest = "/data/Music";
+        dest = "/persist/home/nyarla/Music";
       }
       {
         name = "NixOS";
@@ -360,7 +333,7 @@
       }
       {
         name = "Sources";
-        dest = "/data/Sources";
+        dest = "/persist/home/nyarla/Sources";
       }
       {
         name = "Sync";
@@ -479,12 +452,15 @@
           # data
           "Applications"
           "Archives"
+          "Calibre"
           "Development"
           "Documents"
           "Downloads"
+          "Music"
           "Pictures"
           "Programming"
           "Reports"
+          "Sources"
           "Sync"
 
           # cache

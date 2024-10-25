@@ -9,7 +9,7 @@
   libtool,
   glib,
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "deadbeef-fb";
   version = "git";
   src = fetchFromGitLab {

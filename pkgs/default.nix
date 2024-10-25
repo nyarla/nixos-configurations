@@ -47,7 +47,7 @@ in
     };
   });
 
-  calibre = super.calibre.overrideAttrs (old: rec {
+  calibre = super.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
   });
 
@@ -58,7 +58,7 @@ in
 
   firefox-bin-unwrapped = super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  labwc = super.labwc.overrideAttrs (old: {
+  labwc = super.labwc.overrideAttrs (_: {
     patches = [
       (super.fetchpatch {
         name = "text-input-v1.patch";

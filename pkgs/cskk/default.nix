@@ -5,17 +5,17 @@
   rust-bindgen,
   libxkbcommon,
 }:
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "cskk";
-  version = "git";
+  version = "v3.1.2";
   src = fetchFromGitHub {
     owner = "naokiri";
-    repo = pname;
-    rev = "432295efcff4c236e82beb635b2e8e862fb40b95";
-    hash = "sha256-mhQZeCa4shxO8/kRqAwR60pwvfeQ9Ue+r25BtTAI1Hw=";
+    repo = "cskk";
+    rev = "9d96fd17161dcac85a202d27da789415f3182c4f";
+    hash = "sha256-drBuYasp8FIHMOFWFVd31GRNvE4a6A3V+0KS2NnJzoI=";
   };
 
-  cargoHash = "sha256-9LV1N6SZi0mPBNi5A4CHbxWxQVlMLsAfGhXkJ3FQkgk=";
+  cargoHash = "sha256-A0LtCiSlJUJWwg+nPT7mO+GtySakVEB6fPyMvFLs+EA=";
 
   buildInputs = [ libxkbcommon.dev ];
   nativeBuildInputs = [

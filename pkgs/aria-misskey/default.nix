@@ -13,8 +13,8 @@ let
   source = fetchFromGitHub {
     owner = "poppingmoon";
     repo = "aria";
-    rev = "30124fd8a9a74a21c92a1bc7eeebb1b39c42cd75";
-    hash = "sha256-54Mw/Ckh11El6+lUf/N64F0DskSM7b3gkiEZ60WF3Iw=";
+    rev = "80362a9ef7006781bac6e009c5d887567cf86376";
+    hash = "sha256-w0o1qU04VtsFos+17Zu+Y5uzmrAUwHXi2v5LCLOBSSY=";
     fetchSubmodules = true;
   };
 
@@ -29,7 +29,7 @@ let
 in
 flutter324.buildFlutterApplication rec {
   pname = "aria";
-  version = "2024-09-13";
+  version = "v1.0.0-beta.2";
   inherit src;
 
   pubspecLock =
@@ -41,11 +41,14 @@ flutter324.buildFlutterApplication rec {
     lib.importJSON "${lockfile}";
 
   gitHashes = {
+    "flutter_apns_only" = "sha256-5KlICoKqekSE4LCzd1MP+o8Ezq0xLZmzeAQZExXBalM=";
     "flutter_launcher_icons" = "sha256-/oYrlXShHgB/5u694Fe3PY7kCksaqgX59S3YaQf71Ik=";
+    "highlighting" = "sha256-IedjKNGFBSbU4vu5x8GI28WL4uJ8B/kvw6iGkX2+uGg=";
     "mfm_parser" = "sha256-zi/K0R9mGy4Y/eLyZYEP0eEQSftprDsjyA/++t1AJdY=";
-    "misskey_dart" = "sha256-WdQg21VpP5LbvQj8qMo9CBi2Wh3FREe8Wwlg54Xtyl0=";
+    "misskey_dart" = "sha256-+wHM70FXIhkduirnfkUz3DU7ZRjEp1m2wY6byMYq6gE=";
     "tinycolor2" = "sha256-RGjhuX6487TJ2ofNdJS1FCMl6ciKU0qkGKg4yfkPE+w=";
     "twemoji_v2" = "sha256-Gi9PIMpw4NWkk357X+iZPUhzIKMDg5WdzTPHvJDBzSg=";
+    "webcrypto" = "sha256-9xZqJdgm9Ngv0fJwzIZJ0mHyPYMY8JsEh6nOm2RbYR0=";
   };
 
   cargoRoot = "rust";

@@ -71,6 +71,13 @@
       bypassWorkqueues = true;
     };
 
+    windows = {
+      device = "/dev/disk/by-uuid/f5b97076-6cba-45e8-b775-a2ba55d12f83";
+      preLVM = true;
+      allowDiscards = true;
+      bypassWorkqueues = true;
+    };
+
     data = {
       device = "/dev/disk/by-uuid/062ba5c1-dd2f-4568-8cc1-c4b413976ce3";
       preLVM = true;

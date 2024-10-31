@@ -33,6 +33,7 @@ in
   shoreman = require ./shoreman { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   sononym-bin = require ./sononym-bin { };
+  stability-matrix = require ./stability-matrix { };
   wine-run = require ./wine-run { };
   wine-vst-wrapper = require ./wine-vst-wrapper { };
   wineasio = require ./wineasio { wine = self.wineUsingFull; };

@@ -6,5 +6,7 @@
     glib.out
     picard
     easytag
+
+    stability-matrix
   ];
 }

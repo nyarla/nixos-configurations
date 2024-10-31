@@ -482,6 +482,7 @@
           ".config/GIMP"
           ".config/Kvantum"
           ".config/MusicBrainz"
+          ".config/StabilityMatrix"
           ".config/Thunar"
           ".config/Yubico"
           ".config/act"
@@ -577,10 +578,6 @@
       nyarla = "/persist/home/nyarla";
       apps = "/persist/home/nyarla/Applications";
       program = "/persist/home/nyarla/Programming";
-
-      calibre = "/data/Calibre";
-      music = "/data/Music";
-      sources = "/data/Sources";
     };
 
   # Services

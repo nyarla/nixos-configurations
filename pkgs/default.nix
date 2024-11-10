@@ -16,7 +16,11 @@ in
   deadbeef-fb = require ./deadbeef-fb { };
   fcitx5-fbterm = require ./fcitx5-fbterm { };
   fcitx5-cskk = super.libsForQt5.callPackage (import ./fcitx5-cskk) { };
-  fcitx5-cskk-qt = self.fcitx5-cskk.override { enableQt = true; };
+  fcitx5-cskk-qt5 = super.libsForQt5.callPackage (import ./fcitx5-cskk) { enableQt = true; };
+  fcitx5-cskk-qt6 = super.kdePackages.callPackage (import ./fcitx5-cskk) {
+    enableQt = true;
+    useQt6 = true;
+  };
   galendae = require ./galendae { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };

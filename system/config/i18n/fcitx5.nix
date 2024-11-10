@@ -5,9 +5,11 @@
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
       fcitx5-cskk
-      fcitx5-cskk-qt
+      fcitx5-cskk-qt5
+      fcitx5-cskk-qt6
       fcitx5-gtk
       libsForQt5.fcitx5-qt
+      kdePackages.fcitx5-qt
     ];
     fcitx5.waylandFrontend = true;
   };

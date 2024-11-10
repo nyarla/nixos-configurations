@@ -13,6 +13,7 @@
   cskk,
   skkDictionaries,
   enableQt ? false,
+  useQt6 ? false,
 }:
 stdenv.mkDerivation rec {
   pname = "fcitx5-cskk";
@@ -20,8 +21,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "fcitx";
     repo = "fcitx5-cskk";
-    rev = version;
-    hash = "sha256-rDaFsBXd3he40W27B6641qEfPYBpuw7Rc8JhvsZiPFg=";
+    rev = "223c99a5dde7362f51059a15849edceb4a030d0a";
+    hash = "sha256-NSYtVX7XE9WkI8g1s+pC4/7QHEbQ3GO87ZZA9oMo090=";
   };
 
   nativeBuildInputs = [
@@ -43,6 +44,7 @@ stdenv.mkDerivation rec {
 
   cmakeFlags = [
     "-DENABLE_QT=${toString enableQt}"
+    "-DUSE_QT6=${toString useQt6}"
     "-DSKK_DICT_DEFAULT_PATH=${skkDictionaries.l}/share/SKK-JISYO.L"
   ];
 }

@@ -13,7 +13,7 @@ let
     with pkgs;
     writeText "Procfile" ''
       blueman: ${blueman}/bin/blueman-applet
-      calibre: ${calibre}/bin/calibre --start-in-tray
+      calibre: env QT_IM_MODULE= GTK_IM_MODULE= ${calibre}/bin/calibre --start-in-tray
       clipboard: wl-paste -t text -w xclip -selection clipboard
       fcitx5: fcitx5 -r
       nm-applet: ${networkmanagerapplet}/bin/nm-applet --indicator

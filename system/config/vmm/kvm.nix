@@ -22,6 +22,7 @@ in
     spice-gtk
     virt-manager
     virt-viewer
+    virtiofsd
   ];
 
   # vfio kernel settings

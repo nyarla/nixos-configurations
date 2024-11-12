@@ -67,8 +67,8 @@ in
     patches = [
       (super.fetchpatch {
         name = "text-input-v1.patch";
-        url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=2a23b6346a4dcedba21d815e30e165b0a6f3f9cf";
-        hash = "sha256-uJ8arT0ikCRRyyxU2AOMwfgFARTJiZ5sNCcd3DS6xSs=";
+        url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=54103c35c0e8859317e7455204d78fb606c494f9";
+        hash = "sha256-WJnbd6DXSYSccvyLiLIswpC3uBzsvGZ4BX8mxUl2b7Q=";
       })
     ];
   });

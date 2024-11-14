@@ -73,6 +73,18 @@ in
     ];
   });
 
+  looking-glass-client = super.looking-glass-client.overrideAttrs (_: {
+    version = "bleeding-edge";
+    src = super.fetchFromGitHub {
+      owner = "gnif";
+      repo = "LookingGlass";
+      rev = "e25492a3a36f7e1fde6e3c3014620525a712a64a";
+      hash = "sha256-RQ6xOQN3x7lj0HQp//lDyeKdVT1vicUgfEJ58KEIUYY=";
+      fetchSubmodules = true;
+    };
+    patches = [ ];
+  });
+
   speechd-with-openjtalk = super.speechd.overrideAttrs (old: rec {
     src = super.fetchurl {
       url = "https://github.com/brailcom/speechd/releases/download/0.12.0-rc3/speech-dispatcher-0.12.0-rc3.tar.gz";

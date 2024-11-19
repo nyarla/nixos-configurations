@@ -79,7 +79,7 @@ in
       owner = "gnif";
       repo = "LookingGlass";
       rev = "e25492a3a36f7e1fde6e3c3014620525a712a64a";
-      hash = "sha256-RQ6xOQN3x7lj0HQp//lDyeKdVT1vicUgfEJ58KEIUYY=";
+      hash = "sha256-DBmCJRlB7KzbWXZqKA0X4VTpe+DhhYG5uoxsblPXVzg=";
       fetchSubmodules = true;
     };
     patches = [ ];

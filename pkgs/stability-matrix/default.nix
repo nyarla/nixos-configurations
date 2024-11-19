@@ -8,13 +8,13 @@
 let
   app = buildDotnetModule rec {
     pname = "StabilityMatrix";
-    version = "2.12.2";
+    version = "2.12.3";
 
     src = fetchFromGitHub {
       owner = "LykosAI";
       repo = pname;
-      rev = version;
-      hash = "sha256-MWENjkS9qpUGNVh4la2e60nb/jALNoEDBL0OTM1nIUw=";
+      rev = "v${version}";
+      hash = "sha256-LapdC522CMfe1UI+dbw+PkkNIY+9hEftsV8IQppxsXM=";
     };
 
     patches = [

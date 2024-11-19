@@ -655,6 +655,21 @@
     hash = "sha256-mUQ63atpT00r49ca50uZu2YCiLg3yd6r3HzTryqcuEA=";
   })
   (fetchNuGet {
+    pname = "Microsoft.AspNetCore.App.Runtime.osx-arm64";
+    version = "8.0.10";
+    hash = "sha256-GL7OjLalZPKLsoheVJAmVStJFpJ7zTDJtikCP7fB3jU=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.AspNetCore.App.Runtime.osx-x64";
+    version = "8.0.10";
+    hash = "sha256-u6/4q54irXtyKSSi1bH6HYrvcod7yfs5YdYD0NXeYbs=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.AspNetCore.App.Runtime.win-x64";
+    version = "8.0.10";
+    hash = "sha256-MrEAlX9Ep1w6fnXM1H5PehDbVXj6HrSSBE8ka5+zr4w=";
+  })
+  (fetchNuGet {
     pname = "Microsoft.Bcl.HashCode";
     version = "1.1.1";
     hash = "sha256-gP6ZhEsjjbmw6a477sm7UuOvGFFTxZYfRE2kKxK8jnc=";
@@ -865,6 +880,36 @@
     hash = "sha256-rkHIqB2mquNXF89XBTFpUL2z5msjTBsOcyjSBCh36I0=";
   })
   (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Host.osx-arm64";
+    version = "8.0.10";
+    hash = "sha256-IZ59kjeU/mGHBVXtOO5AFK0ocxwFAkFqwtn99N+l0zw=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Host.osx-x64";
+    version = "8.0.10";
+    hash = "sha256-B4aqUvMpyewAwquTRVh+bs2RG875ZsveYQU89+4VFxw=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Host.win-x64";
+    version = "8.0.10";
+    hash = "sha256-bLWBI3G4+TrV5cyaaKbuk0RSh7Q6lYI5msZd8QXi7so=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Runtime.osx-arm64";
+    version = "8.0.10";
+    hash = "sha256-0fH2KlzVL5ydblrVtBtAoHa5kNYY92Wzv8FCVqav3Mw=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Runtime.osx-x64";
+    version = "8.0.10";
+    hash = "sha256-XKUQ0DDWWbZNtgGPKhdI7ufpd9Ki1EcOcK9ojiaWEVM=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Runtime.win-x64";
+    version = "8.0.10";
+    hash = "sha256-B6o1+6o3Cih7cmgo2ClwBkIYcDA7NGZ6JClaHRDJ/B8=";
+  })
+  (fetchNuGet {
     pname = "Microsoft.NETCore.Platforms";
     version = "1.1.0";
     hash = "sha256-FeM40ktcObQJk4nMYShB61H/E8B7tIKfl9ObJ0IOcCM=";
@@ -953,6 +998,11 @@
     pname = "Microsoft.WindowsDesktop.App.Ref";
     version = "8.0.10";
     hash = "sha256-FMjKjqwKCXyMWhUR1pziL1lZjQOh0txky+4pj0TUdLM=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.WindowsDesktop.App.Runtime.win-x64";
+    version = "8.0.10";
+    hash = "sha256-SJuRTW5s9cnRdpxFxBPvqcCDsyY+TxwrOCUohF61OSQ=";
   })
   (fetchNuGet {
     pname = "MSTest.TestAdapter";
@@ -1313,6 +1363,41 @@
     pname = "runtime.unix.System.Runtime.Extensions";
     version = "4.3.0";
     hash = "sha256-l8S9gt6dk3qYG6HYonHtdlYtBKyPb29uQ6NDjmrt3V4=";
+  })
+  (fetchNuGet {
+    pname = "runtime.win.Microsoft.Win32.Primitives";
+    version = "4.3.0";
+    hash = "sha256-ZnzR82+YDpNYf1GICTbzPjB20AjSy8dlRhfocK1FMEw=";
+  })
+  (fetchNuGet {
+    pname = "runtime.win.System.Console";
+    version = "4.3.0";
+    hash = "sha256-TCb+x4hHljj7sPIQLDsM10x5OyGZVnueYb+wlZ1UXnQ=";
+  })
+  (fetchNuGet {
+    pname = "runtime.win.System.Diagnostics.Debug";
+    version = "4.3.0";
+    hash = "sha256-DpU+PGIUCtaK6gQEl/OWSO/JKg/TA9yeD01Zzxaxy5k=";
+  })
+  (fetchNuGet {
+    pname = "runtime.win.System.IO.FileSystem";
+    version = "4.3.0";
+    hash = "sha256-6JnGF9kj6jYd9xneKQdTvb3zNTSHdeWW/pr7vui0AbA=";
+  })
+  (fetchNuGet {
+    pname = "runtime.win.System.Net.Primitives";
+    version = "4.3.0";
+    hash = "sha256-jqUpP60h/kkampLU9Bt8T5gSDaVXwxPsOOTEVVKAPbY=";
+  })
+  (fetchNuGet {
+    pname = "runtime.win.System.Net.Sockets";
+    version = "4.3.0";
+    hash = "sha256-k2lTk08ryI2NSEI3IFlO0y2cltiT8TIhNnqHgeL8I1M=";
+  })
+  (fetchNuGet {
+    pname = "runtime.win.System.Runtime.Extensions";
+    version = "4.3.0";
+    hash = "sha256-+TMflNyjP+Lf5bge0xVN5AKxMAk4/caWY6zZrqtyAJw=";
   })
   (fetchNuGet {
     pname = "Salaros.ConfigParser";
@@ -1911,6 +1996,11 @@
     pname = "System.Threading.Channels";
     version = "8.0.0";
     hash = "sha256-c5TYoLNXDLroLIPnlfyMHk7nZ70QAckc/c7V199YChg=";
+  })
+  (fetchNuGet {
+    pname = "System.Threading.Overlapped";
+    version = "4.3.0";
+    hash = "sha256-tUX099CChkqWiHyP/1e4jGYzZAjgIthMOdMmiOGMUNk=";
   })
   (fetchNuGet {
     pname = "System.Threading.Tasks";

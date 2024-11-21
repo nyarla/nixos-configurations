@@ -135,4 +135,24 @@ in
     ];
     nativeBuildInputs = old.nativeBuildInputs ++ [ super.cmake ];
   });
+
+  weylus = super.weylus.overrideAttrs (old: rec {
+    src = super.fetchFromGitHub {
+      owner = "H-M-H";
+      repo = "Weylus";
+      rev = "d30b8b3e56820b72a858e227654823722f0d5d8f";
+      hash = "sha256-TpCUtrk2oqjB0CEWy96fSz1w1HjZrwEVqwVqlWqkQD8=";
+    };
+
+    patches = [
+      ../patches/weylus.patch
+    ];
+
+    cargoDeps = super.rustPlatform.importCargoLock {
+      lockFile = src + /Cargo.lock;
+      outputHashes = {
+        "autopilot-0.4.0" = "sha256-1DRuhAAXaIADUmXlDVr8UNbI/Ab2PYdrx9Qh0j9rTX8=";
+      };
+    };
+  });
 }

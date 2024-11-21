@@ -1,0 +1,13 @@
+diff --git a/ts/lib.ts b/ts/lib.ts
+index 53f72d4..d93169f 100644
+--- a/ts/lib.ts
++++ b/ts/lib.ts
+@@ -944,7 +944,7 @@ function handle_messages(
+             let msg = JSON.parse(event.data);
+             if (typeof msg == "string") {
+                 if (msg == "NewVideo") {
+-                    let MS = window.ManagedMediaSource ? window.ManagedMediaSource : window.MediaSource;
++                    let MS = window.MediaSource;
+                     mediaSource = new MS();
+                     sourceBuffer = null;
+                     video.src = URL.createObjectURL(mediaSource);

@@ -5,7 +5,6 @@ in
 {
   # additional packages
   aria-misskey = require ./aria-misskey { };
-  aria-misskey-bin = require ./aria-misskey-bin { };
   audiogridder = require ./audiogridder { };
   cskk = require ./cskk { };
   cuda-shell = require ./cuda-shell {

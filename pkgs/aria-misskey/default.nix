@@ -13,8 +13,8 @@ let
   source = fetchFromGitHub {
     owner = "poppingmoon";
     repo = "aria";
-    rev = "80362a9ef7006781bac6e009c5d887567cf86376";
-    hash = "sha256-w0o1qU04VtsFos+17Zu+Y5uzmrAUwHXi2v5LCLOBSSY=";
+    rev = "d720a1852d77099797f9e5cb26e21c0e4bc77f5c";
+    hash = "sha256-q+fpOxB09c7Ao+80EaUR3RMgWY6nHoRx7+vkX2JB4wo=";
     fetchSubmodules = true;
   };
 
@@ -29,7 +29,7 @@ let
 in
 flutter324.buildFlutterApplication rec {
   pname = "aria";
-  version = "v1.0.0-beta.2";
+  version = "v1.0.0-beta.6";
   inherit src;
 
   pubspecLock =

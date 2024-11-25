@@ -24,12 +24,12 @@ let
 in
 stdenv.mkDerivation {
   pname = "igsc";
-  version = "0.9.4";
+  version = "0.9.5";
   src = fetchFromGitHub {
     owner = "intel";
     repo = "igsc";
-    rev = "fbaa86af735dc255a6d54c6fb1e247e3195872b8";
-    hash = "sha256-UiyisaQM/wbgFhzhn1kNG993+8yHPLtbeqGkuu8kNRE=";
+    rev = "fcfa86452b50f62e30393ba5e554d413c7b6dca9";
+    hash = "sha256-r6lJi21xiMnQDufrO+LHADhSaJXnD/rvc6+xWVjW2GE=";
   };
 
   buildInputs = [

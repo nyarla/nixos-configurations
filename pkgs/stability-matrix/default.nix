@@ -3,6 +3,7 @@
   dotnetCorePackages,
   fetchFromGitHub,
   buildFHSUserEnv,
+  writeShellScript,
 }:
 
 let
@@ -20,6 +21,12 @@ let
     patches = [
       ./nixos.patch
     ];
+
+    postPatch = ''
+      # workaround for my environment
+      sed -i 's!RegisterUriSchemeLinux();!/* RegisterUriSchemeLinux(); */!' \
+        StabilityMatrix.Avalonia/Helpers/UriHandler.cs
+    '';
 
     projectFile = "StabilityMatrix.sln";
     nugetDeps = ./deps.nix;
@@ -46,12 +53,34 @@ buildFHSUserEnv {
     (
       with p;
       [
-        python310
+        python310Full
+
+        # dependences for pytyon 3.10.x runtime
+        expat
+        glib
+        libGL
         libxcrypt-legacy
+        tcl
+        tclx
+        tix
+        tk
+        xorg.libX11
+        xorg.xorgproto
+        zlib
       ]
-      ++ python310.buildInputs
+      ++ python310Full.buildInputs
     )
     ++ [ app ];
 
-  runScript = "${app}/bin/StabilityMatrix.Avalonia";
+  # # workaround for my environment
+  runScript = toString (
+    writeShellScript "StabilityMatrix" ''
+      export HOME=/persist/home/nyarla
+      export XDG_CONFIG_HOME=$HOME/.config
+      export XDG_DATA_HOME=$HOME/.local/share
+      export XDG_STATE_HOME=$HOME/.local/state
+
+      exec -a StabilityMatrix.Avalonia ${app}/bin/StabilityMatrix.Avalonia ''${@:-};
+    ''
+  );
 }

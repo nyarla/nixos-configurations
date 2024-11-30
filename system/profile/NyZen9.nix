@@ -483,7 +483,6 @@
           ".config/GIMP"
           ".config/Kvantum"
           ".config/MusicBrainz"
-          ".config/StabilityMatrix"
           ".config/Thunar"
           ".config/Yubico"
           ".config/act"

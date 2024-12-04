@@ -4,7 +4,7 @@ set -euo pipefail
 
 grep -qF 'Established ADB connection to Waydroid device' <(waydroid -w show-full-ui 2>&1) \
   && env SHELL=/bin/sh pkexec sh -c '
-    sudo mount --bind /data/Music /persist/home/nyarla/.local/share/waydroid/data/media/0/Music
+    sudo mount --bind /persist/home/nyarla/Music /persist/home/nyarla/.local/share/waydroid/data/media/0/Music
     sudo mount --bind /persist/home/nyarla/Documents/eBooks /persist/home/nyarla/.local/share/waydroid/data/media/0/eBooks
     sudo mount --bind /persist/home/nyarla/Downloads /persist/home/nyarla/.local/share/waydroid/data/media/0/Download
   '

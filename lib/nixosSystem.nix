@@ -40,7 +40,7 @@ let
             # nix
             nix = {
               # workaround for devenv 1.0.8
-              package = pkgs.nixVersions.nix_2_23;
+              package = pkgs.nixVersions.nix_2_24;
               registry = {
                 nixpkgs = {
                   inherit flake;

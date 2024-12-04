@@ -10,7 +10,7 @@
 
       # monospace
       hackgen-font
-      (nerdfonts.override { fonts = [ "Hack" ]; })
+      nerd-fonts.hack
 
       # fallback
       dejavu_fonts

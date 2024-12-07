@@ -85,9 +85,9 @@
       export DESKTOP_SESSION=wlroots
       export LIBSEAT_BACKEND=logind
 
-      export XDG_CURRENT_DESKTOP=wlroots
+      export XDG_CURRENT_DESKTOP=labwc:wlroots
       export XDG_SESSION_CLASS=user
-      export XDG_SESSION_DESKTOP=wlroots
+      export XDG_SESSION_DESKTOP=labwc:wlroots
       export XDG_SESSION_TYPE=wayland
 
       export WLR_RENDERER_ALLOW_SOFTWARE=1

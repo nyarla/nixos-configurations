@@ -148,35 +148,17 @@
   hardware.fancontrol = {
     enable = true;
     config = ''
-      # scan tempture interval
       INTERVAL=10
-
-      # hwmon2 = slot to Lexar NM790 4TB
-      # hwmon4 = slot to CPU
-      DEVPATH=hwmon2=devices/pci0000:00/0000:00:01.1/0000:01:00.0/nvme/nvme0 hwmon4=devices/platform/nct6775.656
+      DEVPATH=hwmon2=devices/pci0000:00/0000:00:01.2/0000:02:00.2/0000:03:04.0/0000:08:00.0/nvme/nvme1 hwmon4=devices/platform/nct6775.656
       DEVNAME=hwmon2=nvme hwmon4=nct6798
-
-      # hwmon4/temp2_input = CPU temperture
-      # hwmon2/temp1_input = NVME SSD (Lexar NM790 4TB)
       FCTEMPS=hwmon4/pwm2=hwmon4/temp2_input hwmon4/pwm1=hwmon2/temp1_input
-
-      # hwmon4/fan2 = CPU fan
-      # hwmon4/fan7 = Exhaust fan (back)
-      # hwmon4/fan1 = Intake fan (front)
       FCFANS=hwmon4/pwm2=hwmon4/fan7_input+hwmon4/fan2_input hwmon4/pwm1=hwmon4/fan1_input
-
-      # Temperture limit
-      # CPU: 20 <= temperature <= 70
-      # NVMe: 30 <= temperature <= 50
-      MINTEMP=hwmon4/pwm2=20 hwmon4/pwm1=30
-      MAXTEMP=hwmon4/pwm2=70 hwmon4/pwm1=50
-
-      # Start spin at nearly 1000rpm
-      MINSTART=hwmon4/pwm2=100 hwmon4/pwm1=100
-
-      # CPU fan stopped at pwm2 == 20
-      # Case can stopped at pwm2 == 60
-      MINSTOP=hwmon4/pwm2=12 hwmon4/pwm1=60
+      MINTEMP=hwmon4/pwm2=20 hwmon4/pwm1=40
+      MAXTEMP=hwmon4/pwm2=65 hwmon4/pwm1=65
+      MINSTART=hwmon4/pwm2=13 hwmon4/pwm1=76
+      MINSTOP=hwmon4/pwm2=12 hwmon4/pwm1=75
+      MINPWM=hwmon4/pwm2=12 hwmon4/pwm1=75
+      MAXPWM=hwmon4/pwm2=255 hwmon4/pwm1=255
     '';
   };
 

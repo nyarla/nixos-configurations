@@ -407,10 +407,6 @@
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
-
-    "/data/Calibre"
-    "/data/Music"
-    "/data/Sources"
   ];
 
   # impermanence

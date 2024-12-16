@@ -19,41 +19,9 @@
     };
   };
 
-  services.goatcounter = {
-    enable = true;
-    port = 40081;
-    address = "127.0.0.1";
-    proxy = true;
-    extraArgs = [
-      "-db=sqlite+/var/lib/goatcounter/sqlite.db"
-    ];
-  };
-
   services.caddy = {
     enable = true;
     virtualHosts = {
-      "web.p.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:40081
-        '';
-      };
-
-      "search.p.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:40081
-        '';
-      };
-
       "gts.f.localhost.thotep.net" = {
         listenAddresses = [ "100.103.65.77" ];
         useACMEHost = "localhost.thotep.net";

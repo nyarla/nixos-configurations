@@ -13,6 +13,7 @@ _: {
           80
           443
           1313 # for development
+          8191 # for flaresolverr
 
           # ssh
           22

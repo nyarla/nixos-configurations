@@ -19,6 +19,8 @@
     };
   };
 
+  services.flaresolverr.enable = true;
+
   services.caddy = {
     enable = true;
     virtualHosts = {

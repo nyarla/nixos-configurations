@@ -63,6 +63,8 @@ in
 
   firefox-bin-unwrapped = super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
+  flaresolverr = require ./flaresolverr-21hsmw { };
+
   labwc = super.labwc.overrideAttrs (_: {
     patches = [
       (super.fetchpatch {

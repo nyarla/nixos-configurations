@@ -1,69 +1,59 @@
-_:
+{ lib, ... }:
 let
-  props = tag: contains: ''
-    <${tag}>
-      ${builtins.concatStringsSep "\n" contains}
-    </${tag}>
-  '';
+  inherit (import ../../config/vars/xml.nix { inherit lib; })
+    tag2
+    el2
+    el3
+    ;
 
-  prop = tag: value: "<${tag}>${value}</${tag}>";
+  p = name: contains: el2 name (if builtins.isList contains then contains else [ contains ]);
+  a = name: attrs: tag2 name attrs;
 
   font =
     place:
     { name, size }:
-    ''
-      <font place="${place}">
-        <name>${name}</name>
-        <size>${size}</size>
-      </font>
-    '';
+    el3 "font" { inherit place; } [
+      (p "name" name)
+      (p "size" size)
+    ];
 
-  keybind = key: actions: ''
-    <keybind key="${key}">
-      ${builtins.concatStringsSep "\n" actions}
-    </keybind>
-  '';
+  keybind = key: actions: el3 "keybind" { inherit key; } actions;
+  mousebind =
+    button: action: actions:
+    el3 "mousebind" { inherit button action; } actions;
 
-  mousebind = button: action: contains: ''
-    <mousebind button="${button}" action="${action}">
-      ${builtins.concatStringsSep "\n" contains}
-    </mousebind>
-  '';
-
-  exec = command: ''
-    <action name="Execute">
-      <command>${command}</command>
-    </action>
-  '';
+  run =
+    commandline:
+    el3 "action" { name = "Execute"; } [
+      (el2 "command" [ commandline ])
+    ];
 
   action =
     name: contains:
     if (builtins.length contains) == 0 then
-      ''<action name="${name}" />''
+      el2 "action" { inherit name; }
     else
-      ''
-        <action name="${name}">${builtins.concatStringsSep "\n" contains}</action>
-      '';
+      el3 "action" { inherit name; } contains;
 in
 ''
   <?xml version="1.0" ?>
 ''
-+ (props "labwc_config" [
-  (props "core" [
-    (prop "decoration" "server")
-    (prop "gap" "0")
-    (prop "adaptiveSync" "no")
-    (prop "reuseOutputMode" "no")
++ (p "labwc_config" [
+  (p "core" [
+    (p "decoration" "server")
+    (p "gap" "0")
+    (p "adaptiveSync" "no")
+    (p "reuseOutputMode" "no")
   ])
 
-  (props "focus" [
-    (prop "followMouse" "no")
-    (prop "raiseOnFocus" "no")
+  (p "focus" [
+    (p "followMouse" "no")
+    (p "raiseOnFocus" "no")
   ])
 
-  (props "theme" [
-    (prop "name" "Kaunas")
-    (prop "cornerRadius" "0")
+  (p "theme" [
+    (p "name" "Kaunas")
+    (p "cornerRadius" "0")
     (font "ActiveWindow" {
       name = "sans";
       size = "9";
@@ -78,31 +68,35 @@ in
     })
   ])
 
-  ''
-    <regions>
-      <region name="center" x="25%" y="25%" width="50%" height="50%" />
-    </regions>
-  ''
-
-  (props "snapping" [
-    (prop "range" "1")
-    (prop "topMaximize" "yes")
+  (p "regions" [
+    (a "region" {
+      name = "center";
+      x = "25%";
+      y = "25%";
+      width = "50%";
+      height = "50%";
+    })
   ])
-  (props "resistance" [ (prop "screenEdgeStrength" "20") ])
 
-  (props "keyboard" [
-    (keybind "A-Left" [ (action "SnapToEdge" [ (prop "direction" "left") ]) ])
-    (keybind "A-Right" [ (action "SnapToEdge" [ (prop "direction" "right") ]) ])
-    (keybind "A-Up" [ (action "SnapToEdge" [ (prop "direction" "up") ]) ])
-    (keybind "A-Down" [ (action "SnapToEdge" [ (prop "direction" "down") ]) ])
+  (p "snapping" [
+    (p "range" "1")
+    (p "topMaximize" "yes")
+  ])
+  (p "resistance" [ (p "screenEdgeStrength" "20") ])
 
-    (keybind "A-o" [ (action "SnapToRegion" [ (prop "region" "center") ]) ])
+  (p "keyboard" [
+    (keybind "A-Left" [ (action "SnapToEdge" [ (p "direction" "left") ]) ])
+    (keybind "A-Right" [ (action "SnapToEdge" [ (p "direction" "right") ]) ])
+    (keybind "A-Up" [ (action "SnapToEdge" [ (p "direction" "up") ]) ])
+    (keybind "A-Down" [ (action "SnapToEdge" [ (p "direction" "down") ]) ])
 
-    (keybind "A-F1" [ (action "ShowMenu" [ (prop "menu" "root-menu") ]) ])
-    (keybind "A-F2" [ (action "ShowMenu" [ (prop "menu" "applications-creative") ]) ])
-    (keybind "C-W-q" [ (exec "swaylock -C ~/.config/swaylock/config -f") ])
+    (keybind "A-o" [ (action "SnapToRegion" [ (p "region" "center") ]) ])
 
-    (keybind "S-Print" [ (exec "gyazo screenshot") ])
-    (keybind "C-Print" [ (exec "gyazo capture") ])
+    (keybind "A-F1" [ (action "ShowMenu" [ (p "menu" "root-menu") ]) ])
+    (keybind "A-F2" [ (action "ShowMenu" [ (p "menu" "applications-creative") ]) ])
+    (keybind "C-W-q" [ (run "swaylock -C ~/.config/swaylock/config -f") ])
+
+    (keybind "S-Print" [ (run "gyazo screenshot") ])
+    (keybind "C-Print" [ (run "gyazo capture") ])
   ])
 ])

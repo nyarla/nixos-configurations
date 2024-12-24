@@ -46,7 +46,7 @@
     );
 
     "labwc/menu.xml".text = import ../../config/vars/appmenu.nix { inherit lib; };
-    "labwc/rc.xml".text = (import ./rc.nix) { };
+    "labwc/rc.xml".text = (import ./rc.nix) { inherit lib; };
 
     "labwc/environment".text = ''
       GTK2_RC_FILES=$HOME/.gtkrc-2.0

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ../../config/desktop/desktop-panel.nix
@@ -45,7 +45,7 @@
       }
     );
 
-    "labwc/menu.xml".text = import ../../config/vars/appmenu.nix { };
+    "labwc/menu.xml".text = import ../../config/vars/appmenu.nix { inherit lib; };
     "labwc/rc.xml".text = (import ./rc.nix) { };
 
     "labwc/environment".text = ''

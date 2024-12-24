@@ -1,5 +1,18 @@
-_:
+{ lib, ... }:
 let
+  inherit (import ./xml.nix { inherit lib; }) labwc;
+  inherit (labwc)
+    action
+    run
+    sep
+    list
+    include
+    script
+    wine
+    id
+    sys
+    ;
+
   exec = label: command: ''
     <item label="${label}">
       <action name="Execute">
@@ -9,7 +22,8 @@ let
   '';
 
   stop =
-    label: command: exec label "sh -c 'systemctl --user stop graphical-session.target ; ${command}'";
+    label: commandline:
+    run label "sh -c 'systemctl --user stop graphical-session.target ; ${commandline}'";
 
   menu = id: label: contains: ''
     <menu id="${id}" label="${label}">
@@ -17,67 +31,51 @@ let
     </menu>
   '';
 
-  action = label: action: ''
-    <item label="${label}">
-      <action name="${action}" />
-    </item>
-  '';
-
-  item = id: ''
-    <menu id="${id}"/>
-  '';
-
-  script = name: "bash /etc/nixos/dotfiles/files/scripts/${name}";
-  wine = name: "bash /etc/nixos/dotfiles/files/wine/${name}";
-
-  sep = "<separator/>";
-
-  applicationsMain = menu "applications-main" "Main" [
-    (exec "mlterm" "mlterm-wl")
-    (exec "virt-manager" "virt-manager")
-    (exec "looking-glass" "looking-glass-client")
-    "${sep}"
-    (menu "applications-wayland" "waydroid" [
-      (exec "start" (script "waydroid-start"))
-      (exec "stop" (script "waydroid-stop"))
+  mainList = list "Main" (id "main") [
+    (run "Terminal" "mlterm-wl")
+    (list "Virtual Machine" (id "vm") [
+      (run "Virtual Machine Manager" "virt-manager")
+      (run "Looking Glass" "looking-glass-client")
+      (run "Remmina" "remmina")
     ])
-    "${sep}"
-    (exec "vial" "Vial")
+    (list "Waydroid" (id "waydroid") [
+      (script "start" "waydroid-start")
+      (script "stop" "waydroid-stop")
+    ])
+    (run "Vial" "Vial")
   ];
 
-  applicationsWeb = menu "applications-web" "Web" [
-    (exec "Firefox" "firefox")
-    (exec "Thunderbird" "thunderbird")
-    (exec "Google Chrome" "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
-    "${sep}"
-    (exec "Aria" "aria")
-    "${sep}"
-    (exec "bitwarden" "bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
-    "${sep}"
-    (exec "Telegram" "telegram-desktop")
+  internetList = list "Internet" (id "internet") [
+    (run "Firefox" "firefox")
+    (run "Thunderbird" "thunderbird")
+    sep
+    (run "Google Chrome" "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
+    sep
+    (run "Aria" "aria")
+    (run "Telegram" "telegram-desktop")
+    sep
+    (run "Bitwaden" "bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
   ];
 
-  applicationsFiles = menu "applications-files" "Files" [
-    (exec "Thunar" "thunar")
-    (exec "Atril" "atril")
-    (exec "Pluma" "pluma")
+  filesList = list "Files" (id "files") [
+    (run "Files" "Thunar")
+    (run "eBooks" "calibre")
+    (wine "Kindle" "Kindle")
+    sep
+    (run "Documents" "atril")
+    (run "Music" "deadbeef")
+    sep
+    (run "Text Edit" "pluma")
+    sep
+    (run "Picard" "picard")
+    (run "EasyTag" "easytag")
   ];
 
-  applicationsMultimedia = menu "applications-multimedia" "Media" [
-    (exec "Calibre" "calibre")
-    (exec "Kindle" (wine "Kindle"))
-    "${sep}"
-    (exec "Picard" "picard")
-    (exec "Easytag" "easytag")
-    "${sep}"
-    (exec "DeaDBeef" "deadbeef")
-  ];
-
-  applicationsOffice = menu "applications-office" "Office" [
-    (exec "Calc" "mate-calc")
-    (exec "CharMap" "gucharmap")
-    "${sep}"
-    (exec "Simple Scan" "simple-scan")
+  officeList = list "Office" (id "office") [
+    (run "Calc" "mate-calc")
+    (run "CharMap" "gucharmap")
+    sep
+    (run "Scanner" "simple-scan")
   ];
 
   applicationsCreative = menu "applications-creative" "Creative" [
@@ -88,56 +86,60 @@ let
     (exec "Libresprite" "libresprite")
   ];
 
-  applicationsUtils = menu "applications-utils" "Utils" [
-    (exec "Audio" "pwvucontrol")
-    (exec "Bluetooth" "blueman-manager")
-    (exec "DroidCam" "droidcam")
-    "${sep}"
-    (exec "Vault" "seahorse")
-    "${sep}"
-    (exec "Task Manager" "mate-system-monitor")
+  sysutilList = list "Configure" (sys "util") [
+    (run "Audio" "pwvucontrol")
+    (run "Bluetooth" "blueman-manager")
+    (run "DroidCam" "droidcam")
+    sep
+    (run "Keychain" "seahorse")
+    sep
+    (run "Task Manager" "mate-system-monitor")
   ];
 
-  systemDisplay = menu "system-display" "Display" [
-    (exec "Always ON" "systemctl --user stop swaylock")
-    (exec "Enable AutoLock" "systemctl --user start swaylock")
+  sysDisplayList = list "Display" (sys "display") [
+    (run "Always ON" "systemctl --user stop swaylock")
+    (run "Enable AutoLock" "systemctl --user start swaylock")
   ];
 
-  systemOperation = menu "system-operation" "System" [
+  sysOperationList = list "System" (sys "operation") [
     (action "Reconfigure" "Reconfigure")
-    (stop "Exit" "labwc --exit")
-    "${sep}"
-    (exec "Lock" "swaylock -C ~/.config/swaylock/config -f")
+    sep
+    (run "Lock" "swaylock -C ~/.config/swaylock/config -f")
+    sep
     (stop "Logout" "loginctl terminate-session self")
-    "${sep}"
+    (stop "Exit" "labwc --exit")
+    sep
     (stop "Reboot" "systemctl reboot")
     (stop "Shutdown" "shutdown -h now")
   ];
 
-  systemContextMenu = menu "root-menu" "Menu" [
-    (item "applications-main")
-    (item "applications-vm")
-    (item "applications-web")
-    (item "applications-files")
-    (item "applications-multimedia")
-    (item "applications-office")
-    (item "applications-utils")
-    (item "system-display")
-    (item "system-operation")
+  contextCreativeRoot = list "Creative" (id "creative") [
+    (run "Gimp" "gimp")
+    (run "Inkscape" "inkscape")
+    (run "Krita" "krita")
+  ];
+
+  contextMenuRoot = list "Menu" "root-menu" [
+    (include (id "main"))
+    (include (id "internet"))
+    (include (id "files"))
+    (include (id "office"))
+    sep
+    (include (sys "util"))
+    (include (sys "display"))
+    (include (sys "operation"))
   ];
 in
-''
-  <?xml version="1.0" encoding="UTF-8"?>
-  <openbox_menu xmlns="http://openbox.org/3.4/menu">
-    ${applicationsMain}
-    ${applicationsWeb}
-    ${applicationsFiles}
-    ${applicationsMultimedia}
-    ${applicationsOffice}
-    ${applicationsUtils}
-    ${applicationsCreative}
-    ${systemDisplay}
-    ${systemOperation}
-    ${systemContextMenu}
-  </openbox_menu>
-''
+labwc.openbox [
+  mainList
+  internetList
+  filesList
+  officeList
+
+  sysutilList
+  sysDisplayList
+  sysOperationList
+
+  contextMenuRoot
+  contextCreativeRoot
+]

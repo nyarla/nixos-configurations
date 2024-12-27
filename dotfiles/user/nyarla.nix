@@ -2,6 +2,7 @@ _: {
   imports = [
     ../config/app/browser.nix
     ../config/app/chat.nix
+    ../config/app/creative.nix
     ../config/app/multimedia.nix
     ../config/app/office.nix
     ../config/app/wine.nix

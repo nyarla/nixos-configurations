@@ -117,6 +117,8 @@ let
     (run "Gimp" "gimp")
     (run "Inkscape" "inkscape")
     (run "Krita" "krita")
+    sep
+    (run "Libresprite" "libresprite")
   ];
 
   contextMenuRoot = list "Menu" "root-menu" [

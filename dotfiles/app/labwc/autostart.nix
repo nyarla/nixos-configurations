@@ -6,8 +6,8 @@
   blueman,
   calibre,
   goreman,
+  lxqt,
   networkmanagerapplet,
-  waybar,
   xembed-sni-proxy,
 }:
 let
@@ -22,7 +22,7 @@ let
     clipboard: wl-paste -t text -w xclip -selection clipboard
     fcitx5: fcitx5 -r
     nm-applet: ${networkmanagerapplet}/bin/nm-applet --indicator
-    waybar: ${waybar}/bin/waybar
+    lxqt-panel: ${lxqt.lxqt-panel}/bin/lxqt-panel
     xembedsniproxy: ${xembed-sni-proxy}/bin/xembedsniproxy
   '';
 in

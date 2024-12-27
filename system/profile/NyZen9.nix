@@ -435,6 +435,7 @@
           ".config/gtk-4.0"
           ".config/gyazo"
           ".config/inkscape"
+          ".config/lxqt"
           ".config/nvim"
           ".config/pulse"
           ".config/rclone"

@@ -4,7 +4,6 @@ let
 in
 {
   imports = [
-    ../../config/desktop/desktop-panel.nix
     ../../config/desktop/desktop-session.nix
     ../../config/desktop/dunst.nix
     ../../config/desktop/swaylock.nix
@@ -36,8 +35,6 @@ in
     wev
     wlr-randr
     ydotool
-
-    galendae
   ];
 
   xdg.configFile = {

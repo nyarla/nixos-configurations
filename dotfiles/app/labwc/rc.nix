@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib }:
 let
   inherit (import ../../config/vars/xml.nix { inherit lib; })
     tag2

@@ -1,4 +1,7 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
+let
+  require = path: pkgs.callPackage (import path);
+in
 {
   imports = [
     ../../config/desktop/desktop-panel.nix
@@ -38,15 +41,9 @@
   ];
 
   xdg.configFile = {
-    "labwc/autostart".source = toString (
-      (import ./autostart.nix) {
-        inherit pkgs;
-        inherit (pkgs) fetchurl writeShellScript;
-      }
-    );
-
-    "labwc/menu.xml".text = import ../../config/vars/appmenu.nix { inherit lib; };
-    "labwc/rc.xml".text = (import ./rc.nix) { inherit lib; };
+    "labwc/autostart".source = toString (require ./autostart.nix { });
+    "labwc/menu.xml".text = require ../../config/vars/appmenu.nix { };
+    "labwc/rc.xml".text = require ./rc.nix { };
 
     "labwc/environment".text = ''
       GTK2_RC_FILES=$HOME/.gtkrc-2.0

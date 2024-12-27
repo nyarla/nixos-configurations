@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib }:
 let
   inherit (import ./xml.nix { inherit lib; }) labwc;
   inherit (labwc)

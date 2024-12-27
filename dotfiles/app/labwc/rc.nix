@@ -39,21 +39,22 @@ in
   <?xml version="1.0" ?>
 ''
 + (p "labwc_config" [
-  (p "core" [
-    (p "decoration" "server")
-    (p "gap" "0")
-    (p "adaptiveSync" "no")
-    (p "reuseOutputMode" "no")
-  ])
 
-  (p "focus" [
-    (p "followMouse" "no")
-    (p "raiseOnFocus" "no")
+  (p "regions" [
+    (a "region" {
+      name = "center";
+      x = "25%";
+      y = "25%";
+      width = "50%";
+      height = "50%";
+    })
   ])
 
   (p "theme" [
     (p "name" "Kaunas")
+    (p "icon" "Fluent-light")
     (p "cornerRadius" "0")
+    (p "dropShadow" "yes")
     (font "ActiveWindow" {
       name = "sans";
       size = "9";
@@ -67,22 +68,6 @@ in
       size = "9";
     })
   ])
-
-  (p "regions" [
-    (a "region" {
-      name = "center";
-      x = "25%";
-      y = "25%";
-      width = "50%";
-      height = "50%";
-    })
-  ])
-
-  (p "snapping" [
-    (p "range" "1")
-    (p "topMaximize" "yes")
-  ])
-  (p "resistance" [ (p "screenEdgeStrength" "20") ])
 
   (p "keyboard" [
     (keybind "A-Left" [ (action "SnapToEdge" [ (p "direction" "left") ]) ])

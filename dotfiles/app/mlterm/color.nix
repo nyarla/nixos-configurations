@@ -1,19 +1,19 @@
 {
-  black = "#111111";
-  red = "#ff4a6e";
-  green = "#b0e300";
-  yellow = "#ffbf00";
-  blue = "#5fc7ff";
-  magenta = "#efa6ff";
-  cyan = "#00fff9";
-  white = "#f1f1f1";
+  black = "#111111"; # 5
+  red = "#f77468"; # 65
+  green = "#aee46f"; # 85
+  yellow = "#ffcb61"; # 85
+  blue = "#8cc8ff"; # 85
+  magenta = "#fb7fd5"; # 85
+  cyan = "#00efff"; # 85
+  white = "#f1f1f1"; # 95
 
-  hl_black = "#111111";
-  hl_red = "#ff4a6e";
-  hl_green = "#b0e300";
-  hl_yellow = "#ffbf00";
-  hl_blue = "#5fc7ff";
-  hl_magenta = "#efa6ff";
-  hl_cyan = "#00fff9";
-  hl_white = "#f1f1f1";
+  hl_black = "#9e9e9e"; # 65
+  hl_red = "#ff8274"; # 75
+  hl_green = "#bcf27c"; # 90
+  hl_yellow = "#ffd96e"; # 90
+  hl_blue = "#abe4ff"; # 90
+  hl_magenta = "#ffb7ff"; # 90
+  hl_cyan = "##00ffff"; # 95
+  hl_white = "#ffffff"; # 100
 }

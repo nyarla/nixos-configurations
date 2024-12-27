@@ -1,13 +1,20 @@
 { pkgs, ... }:
 {
-  programs.firefox.enable = true;
-  programs.firefox.package = pkgs.firefox-bin;
+  programs = {
+    firefox = {
+      enable = true;
+      package = pkgs.firefox-bin;
+    };
 
-  programs.google-chrome.enable = true;
+    chromium = {
+      enable = true;
+      package = pkgs.google-chrome;
+    };
+  };
 
   home.packages = with pkgs; [
-    thunderbird-bin
-    bitwarden
     aria-misskey
+    bitwarden
+    thunderbird-bin
   ];
 }

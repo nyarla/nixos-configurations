@@ -4,7 +4,7 @@
     enable = true;
 
     iconTheme = {
-      name = "Fluent";
+      name = "Fluent-light";
       package = pkgs.fluent-icon-theme;
     };
 

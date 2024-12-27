@@ -3,6 +3,6 @@
 Type=Application
 Version=1.0
 Name=Creative
-Exec=ydotool key 56:1 60:1 60:0 56:0
+Exec=sh -c "ydotool mousemove -a 0 12; ydotool key 56:1 60:1 60:0 56:0"
 Icon=gnome-paint
 Terminal=false

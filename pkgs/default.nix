@@ -20,6 +20,7 @@ in
     enableQt = true;
     useQt6 = true;
   };
+  fluent-kde = require ./fluent-kde { };
   galendae = require ./galendae { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };

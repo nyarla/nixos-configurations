@@ -37,6 +37,7 @@
 
   home.packages = with pkgs; [
     adwaita-icon-theme
+    fluent-kde
     gnome-themes-extra
     gtk-engine-murrine
     gtk_engines

@@ -1,6 +1,5 @@
 _: {
   imports = [
-    ../config/app/appimage.nix
     ../config/app/browser.nix
     ../config/app/chat.nix
     ../config/app/multimedia.nix

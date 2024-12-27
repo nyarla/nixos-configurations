@@ -9,7 +9,6 @@ _: {
     ../config/desktop/theme.nix
     ../config/files/skk.nix
     ../config/nixos/gsettings.nix
-    ../config/services/keychain.nix
     ../config/services/polkit.nix
     ../config/services/syncthing.nix
     ../config/shell/starship.nix

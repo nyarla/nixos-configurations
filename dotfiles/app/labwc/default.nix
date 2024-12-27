@@ -16,7 +16,7 @@ in
     libsecret
 
     # desktop
-    mate.mate-system-monitor
+    mission-center
 
     # wayland
     grim

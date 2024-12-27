@@ -93,7 +93,7 @@ let
     sep
     (run "Keychain" "seahorse")
     sep
-    (run "Task Manager" "mate-system-monitor")
+    (run "Task Manager" "missioncenter")
   ];
 
   sysDisplayList = list "Display" (sys "display") [

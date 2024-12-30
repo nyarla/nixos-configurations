@@ -3,6 +3,10 @@ let
   require = path: super.callPackage (import path);
 in
 {
+  cnijfilter2 = super.cnijfilter2.overrideAttrs (old: rec {
+    patches = old.patches ++ [ ../patches/cnijfilter2.patch ];
+  });
+
   whipper =
     let
       python3 =

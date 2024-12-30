@@ -3,15 +3,15 @@
   home.packages = with pkgs; [
     bzip2
     cpio
-    dmg2img
+    # dmg2img
     gnutar
     lzip
     nodePackages.asar
     p7zip
-    pbzx
+    # pbzx
     unrar
     unzip
-    xar
+    # xar
     xz
     zip
     zstd

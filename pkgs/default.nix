@@ -76,17 +76,39 @@ in
     ];
   });
 
-  looking-glass-client = super.looking-glass-client.overrideAttrs (_: {
-    version = "bleeding-edge";
-    src = super.fetchFromGitHub {
-      owner = "gnif";
-      repo = "LookingGlass";
-      rev = "e25492a3a36f7e1fde6e3c3014620525a712a64a";
-      hash = "sha256-DBmCJRlB7KzbWXZqKA0X4VTpe+DhhYG5uoxsblPXVzg=";
-      fetchSubmodules = true;
+  looking-glass-client =
+    (super.looking-glass-client.override { stdenv = super.gcc13Stdenv; }).overrideAttrs
+      (_: {
+        version = "bleeding-edge";
+        src = super.fetchFromGitHub {
+          owner = "gnif";
+          repo = "LookingGlass";
+          rev = "e25492a3a36f7e1fde6e3c3014620525a712a64a";
+          hash = "sha256-DBmCJRlB7KzbWXZqKA0X4VTpe+DhhYG5uoxsblPXVzg=";
+          fetchSubmodules = true;
+        };
+        patches = [ ];
+      });
+
+  mlterm = super.mlterm.override {
+    stdenv = super.gcc13Stdenv;
+    enableGuis = {
+      xlib = true;
+      fb = true;
+      quartz = false;
+      wayland = true;
+      sdl2 = true;
     };
-    patches = [ ];
-  });
+    enableFeatures = {
+      uim = false;
+      ibus = true;
+      fcitx = true;
+      m17n = true;
+      ssh2 = true;
+      bidi = true;
+      otl = true;
+    };
+  };
 
   speechd-with-openjtalk = super.speechd.overrideAttrs (old: rec {
     src = super.fetchurl {

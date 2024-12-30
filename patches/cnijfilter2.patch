@@ -1,0 +1,12 @@
+# copied from https://github.com/NixOS/nixpkgs/issues/368651#issuecomment-2564070473
+diff --git a/lgmon3/src/keytext.c b/lgmon3/src/keytext.c
+index d0f148f..7a74e93 100755
+--- a/lgmon3/src/keytext.c
++++ b/lgmon3/src/keytext.c
+@@ -37,6 +37,7 @@
+ #include <unistd.h>
+ #include <libxml/parser.h>	/* Ver.2.80 */
+ #include <string.h>
++#include <stdlib.h>
+ 
+ #include "keytext.h"

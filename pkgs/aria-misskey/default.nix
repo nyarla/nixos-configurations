@@ -4,7 +4,7 @@
   runCommand,
   fetchFromGitHub,
 
-  flutter324,
+  flutter327,
   rustPlatform,
   cargo,
   yq,
@@ -13,8 +13,8 @@ let
   source = fetchFromGitHub {
     owner = "poppingmoon";
     repo = "aria";
-    rev = "d720a1852d77099797f9e5cb26e21c0e4bc77f5c";
-    hash = "sha256-q+fpOxB09c7Ao+80EaUR3RMgWY6nHoRx7+vkX2JB4wo=";
+    rev = "4d0d70f81d7f30bfd42530360e0308a8981a2836";
+    hash = "sha256-YdqGPmo4wU6dX4yDBs+cMEYDOP45MBe2KA6cWxqk3/g=";
     fetchSubmodules = true;
   };
 
@@ -27,9 +27,9 @@ let
     patch -p1 -i ${./rust_lib_aria.patch}
   '';
 in
-flutter324.buildFlutterApplication rec {
+flutter327.buildFlutterApplication rec {
   pname = "aria";
-  version = "v1.0.0-beta.6";
+  version = "v1.0.0-beta.7";
   inherit src;
 
   pubspecLock =
@@ -42,14 +42,20 @@ flutter324.buildFlutterApplication rec {
 
   gitHashes = {
     "flutter_apns_only" = "sha256-5KlICoKqekSE4LCzd1MP+o8Ezq0xLZmzeAQZExXBalM=";
+    "flutter_highlighting" = "sha256-YtCAFbFrSwjW4WRqMXWty60Q4GFVX0OTIBqn2GsLRj4=";
+    "flutter_html" = "sha256-/BrcXZ6im/Sb3UVbdlfjYV3R3lOzKdmoAWY4ikgoVRg=";
     "flutter_launcher_icons" = "sha256-/oYrlXShHgB/5u694Fe3PY7kCksaqgX59S3YaQf71Ik=";
     "highlighting" = "sha256-IedjKNGFBSbU4vu5x8GI28WL4uJ8B/kvw6iGkX2+uGg=";
+    "image_compression" = "sha256-9RBjKId8TYdx3O0wT2We8FbCiJYkqJlyBY7TYDUxsMg=";
     "mfm_parser" = "sha256-zi/K0R9mGy4Y/eLyZYEP0eEQSftprDsjyA/++t1AJdY=";
-    "misskey_dart" = "sha256-+wHM70FXIhkduirnfkUz3DU7ZRjEp1m2wY6byMYq6gE=";
+    "misskey_dart" = "sha256-BzXgiejPWC6uJtNiEvGWQUPGM2kPxchQSnP0uSy9a1o=";
+    "receive_sharing_intent" = "sha256-8D5ZENARPZ7FGrdIErxOoV3Ao35/XoQ2tleegI42ZUY=";
     "tinycolor2" = "sha256-RGjhuX6487TJ2ofNdJS1FCMl6ciKU0qkGKg4yfkPE+w=";
     "twemoji_v2" = "sha256-Gi9PIMpw4NWkk357X+iZPUhzIKMDg5WdzTPHvJDBzSg=";
     "webcrypto" = "sha256-9xZqJdgm9Ngv0fJwzIZJ0mHyPYMY8JsEh6nOm2RbYR0=";
   };
+
+  targetFlutterPlatform = "linux";
 
   cargoRoot = "rust";
   cargoDeps = rustPlatform.importCargoLock {

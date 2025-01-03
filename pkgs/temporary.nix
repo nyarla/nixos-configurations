@@ -7,6 +7,10 @@ in
     patches = old.patches ++ [ ../patches/cnijfilter2.patch ];
   });
 
+  dqlite = super.dqlite.overrideAttrs (old: rec {
+    buildInputs = old.buildInputs ++ [ super.lz4.dev ];
+  });
+
   whipper =
     let
       python3 =

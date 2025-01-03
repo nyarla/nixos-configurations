@@ -38,6 +38,7 @@ in
   skk-dicts-xl = require ./skk-dicts-xl { };
   sononym-bin = require ./sononym-bin { };
   stability-matrix = require ./stability-matrix { };
+  wcwidth-cjk = require ./wcwidh-cjk { };
   wine-run = require ./wine-run { };
   wine-vst-wrapper = require ./wine-vst-wrapper { };
   wineasio = require ./wineasio { wine = self.wineUsingFull; };
@@ -120,12 +121,6 @@ in
   });
 
   thunderbird-bin-unwrapped = super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
-
-  tmux = super.tmux.overrideAttrs (old: rec {
-    patches = [
-      ../patches/tmux-3.5-fix.diff
-    ];
-  });
 
   # wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {
   #   buildInputs =

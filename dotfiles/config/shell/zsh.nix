@@ -151,6 +151,7 @@
     ripgrep
     shoreman
     tmux
+    wcwidth-cjk
 
     file
     gawk

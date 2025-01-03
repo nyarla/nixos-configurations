@@ -5,7 +5,7 @@ let
     use_login_shell = true;
     termtype = "mlterm-256color";
     encoding = "UTF-8";
-    col_size_of_width_a = 2;
+    col_size_of_width_a = 1;
     bidi_mode = "left";
 
     # font
@@ -14,8 +14,7 @@ let
     use_anti_alias = true;
     box_drawing_font = "unicode";
     type_engine = "cairo";
-    unicode_half_width_areas = "U+2500-25FF";
-    unicode_full_width_areas = "U+E000-F8FF";
+    unicode_full_width_areas = "U+2030-2031,U+203B-203B,U+2121-2121,U+213B-213B,U+214F-214F,U+2160-2182,U+2190-21FF,U+2318-2318,U+2325-2325,U+2460-24FF,U+25A0-25D7,U+25D9-25E5,U+25E7-2653,U+2668-2668,U+2670-2712,U+2744-2744,U+2747-2747,U+2763-2763,U+2776-2793,U+27F5-27FF,U+2B33-2B33,U+3248-324F,U+E000-EDFF,U+EE0C-F8FF,U+1F000-1F02B,U+1F030-1F093,U+1F0A0-1F0F5,U+1F100-1FAF8,U+F0000-10FFFD";
     emoji_path = "${pkgs.noto-fonts-color-emoji}/share/fonts/noto/NotoColorEmoji.ttf";
 
     # appearance

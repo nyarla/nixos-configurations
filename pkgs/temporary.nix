@@ -3,10 +3,6 @@ let
   require = path: super.callPackage (import path);
 in
 {
-  cnijfilter2 = super.cnijfilter2.overrideAttrs (old: rec {
-    patches = old.patches ++ [ ../patches/cnijfilter2.patch ];
-  });
-
   dqlite = super.dqlite.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ super.lz4.dev ];
   });

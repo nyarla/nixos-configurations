@@ -32,9 +32,7 @@ let
   '';
 
   mainList = list "Main" (id "main") [
-    (run "Ghostty" "ghostty")
-    sep
-    (run "mlterm" "mlterm-wl")
+    (run "Terminal" "mlterm-wl")
     (list "Virtual Machine" (id "vm") [
       (run "Virtual Machine Manager" "virt-manager")
       (run "Looking Glass" "looking-glass-client")

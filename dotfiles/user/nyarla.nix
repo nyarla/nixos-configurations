@@ -16,7 +16,6 @@ _: {
     ../config/tools/archiver.nix
     ../config/tools/development.nix
 
-    ../app/ghostty
     ../app/git
     ../app/labwc
     ../app/mlterm

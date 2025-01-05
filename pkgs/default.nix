@@ -22,6 +22,7 @@ in
   };
   fluent-kde = require ./fluent-kde { };
   galendae = require ./galendae { };
+  glibc-locales-eaw = require ./glibc-locales-eaw { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
   ildaeil = require ./ildaeil {
@@ -121,6 +122,13 @@ in
   });
 
   thunderbird-bin-unwrapped = super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
+
+  tmux = super.tmux.overrideAttrs (_: {
+    preConfigure = ''
+      cp ${../patches/utf8_force_wide.h} utf8_force_wide.h
+    '';
+    patches = [ ../patches/tmux3.5a-utf8.patch ];
+  });
 
   # wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {
   #   buildInputs =

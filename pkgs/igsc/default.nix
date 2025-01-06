@@ -12,8 +12,8 @@ let
     src = fetchFromGitHub {
       owner = "intel";
       repo = "metee";
-      rev = "46931fda41bcafebc04f096f5fa74e554b97f3d9";
-      hash = "sha256-PJAbvOeQz6AUfz3llBIDWeUo/0bfQPyhM0GqhEDxQIU=";
+      rev = "6f3ada2480f8071beb1200555976c159fc63507b";
+      hash = "sha256-2sy1qwlCdYE6dOPHpdkeX8ueZr+q72qhm9RZh+kHSuA=";
     };
 
     nativeBuildInputs = [

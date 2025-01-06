@@ -1,5 +1,5 @@
-{ buildFHSUserEnv, writeShellScript }:
-buildFHSUserEnv rec {
+{ buildFHSEnv, writeShellScript }:
+buildFHSEnv rec {
   name = "perl-shell";
   targetPkgs =
     pkgs: with pkgs; [

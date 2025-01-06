@@ -1,7 +1,7 @@
 {
   gcc9Stdenv,
   lib,
-  buildFHSUserEnv,
+  buildFHSEnv,
   cudaPackages,
   nvidia_x11,
 }:
@@ -18,7 +18,7 @@ let
     ])
   );
 in
-buildFHSUserEnv {
+buildFHSEnv {
   name = "cuda-shell";
   targetPkgs =
     p:

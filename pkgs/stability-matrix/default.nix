@@ -2,7 +2,7 @@
   buildDotnetModule,
   dotnetCorePackages,
   fetchFromGitHub,
-  buildFHSUserEnv,
+  buildFHSEnv,
   writeShellScript,
 }:
 
@@ -46,7 +46,7 @@ let
     runtimeId = "linux-x64";
   };
 in
-buildFHSUserEnv {
+buildFHSEnv {
   name = "StabilityMatrix";
   targetPkgs =
     p:

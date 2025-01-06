@@ -1,8 +1,7 @@
 {
   lib,
   pkgs,
-  writeShellScript,
-  runCommand,
+  writeShellScriptBin,
   neovim,
 }:
 let
@@ -44,14 +43,8 @@ let
       hello
     ]
   );
-
-  nvimCmd = writeShellScript "nvim-run" ''
-    export PATH=$PATH:${PATH}
-    exec -a nvim ${neovim}/bin/nvim "''${@}"
-  '';
 in
-runCommand "nvim-run" { } ''
-  mkdir -p $out/bin
-  cp ${nvimCmd} $out/bin/nvim-run
-  chmod +x $out/bin/nvim-run
+writeShellScriptBin "nvim-run" ''
+  export PATH=$PATH:${PATH}
+  exec -a nvim ${neovim}/bin/nvim "''${@}"
 ''

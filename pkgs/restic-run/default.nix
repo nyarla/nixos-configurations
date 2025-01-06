@@ -1,12 +1,12 @@
 {
   runCommand,
-  writeShellScript,
+  writeShellScriptBin,
   restic,
   rclone,
   lib,
 }:
 let
-  restic-run = writeShellScript "restic-run.sh" ''
+  restic-run = writeShellScriptBin "restic-run" ''
     set -euo pipefail
 
     export PATH=${
@@ -24,7 +24,7 @@ let
     exec "''${@}"
   '';
 
-  restic-backup = writeShellScript "restic-backup.sh" ''
+  restic-backup = writeShellScriptBin "restic-backup" ''
     set -euo pipefail
 
     export RESTIC_FORGET_ARGS="--prune --keep-daily 7 --keep-weekly 3 --keep-monthly 3"
@@ -49,7 +49,7 @@ let
 in
 runCommand "restic-run" { } ''
   mkdir -p $out/bin
-  cp ${restic-backup} $out/bin/restic-backup
-  cp ${restic-run} $out/bin/restic-run
+  cp -r ${restic-run}/bin/* $out/bin/
+  cp -r ${restic-backup}/bin/* $out/bin/
   chmod +x $out/bin/*
 ''

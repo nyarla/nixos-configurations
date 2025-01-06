@@ -1,6 +1,6 @@
-{ writeShellScript, runCommand }:
+{ writeShellScriptBin, runCommand }:
 let
-  wine-run = writeShellScript "wine-run" ''
+  wine-run = writeShellScriptBin "wine-run" ''
     export LD_PRELOAD=
 
     if ! test -e $(pwd)/drive_c ; then
@@ -13,7 +13,7 @@ let
     exec "''${@:-}"
   '';
 
-  wine-setup = writeShellScript "wine-setup" ''
+  wine-setup = writeShellScriptBin "wine-setup" ''
     ${wine-run} wineboot -u
     ${wine-run} winetricks corefonts fakejapanese
     ${wine-run} wineboot -s
@@ -21,9 +21,8 @@ let
 in
 runCommand "wine-run" { } ''
   mkdir -p $out/bin
-  cp ${wine-run} $out/bin/wine-run
-  chmod +x $out/bin/wine-run
+  cp -r ${wine-run}/bin/* $out/bin/
+  cp -r ${wine-setup}/bin/* $out/bin/
 
-  cp ${wine-setup} $out/bin/wine-setup
-  chmod +x $out/bin/wine-setup
+  chmod +x $out/bin/*
 ''

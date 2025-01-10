@@ -69,6 +69,13 @@ in
   flaresolverr = require ./flaresolverr-21hsmw { };
 
   labwc = super.labwc.overrideAttrs (_: {
+    # 2025-01-13
+    src = super.fetchFromGitHub {
+      owner = "labwc";
+      repo = "labwc";
+      rev = "1a6dd845a2d321ea754d1cfcf53d142436b41a3b";
+      hash = "sha256-eLgqXaQQQbTsOjSdtUskGDWYy+riRymCCxFPUeLUHzA=";
+    };
     patches = [
       (super.fetchpatch {
         name = "text-input-v1.patch";

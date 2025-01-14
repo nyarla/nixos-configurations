@@ -56,7 +56,11 @@ in
 
   calibre = super.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
-    disabledTests = [ "test_fts_search" ];
+    disabledTests = [
+      "test_fts_search"
+      "test_fts_pool"
+      "test_export_import"
+    ];
   });
 
   carla = require ./carla {

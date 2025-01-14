@@ -48,7 +48,7 @@
     ../config/wireless/bluetooth.nix
     ../config/wireless/jp.nix
 
-    ../config/development/nyzen9.nix
+    ../config/services/nyzen9.nix
   ];
 
   # Machine specific configurations

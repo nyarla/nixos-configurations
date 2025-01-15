@@ -32,7 +32,9 @@
           output stdout
         '';
         extraConfig = ''
-          reverse_proxy 127.0.0.1:40001
+          reverse_proxy 127.0.0.1:40001 {
+            header_up X-Real-IP {remote_host}
+          }
         '';
       };
 
@@ -95,8 +97,26 @@
     environmentFile = "/persist/home/nyarla/.config/open-webui/env";
   };
 
+  systemd.services.searx.serviceConfig.ExecStartPre = pkgs.writeShellScript "searx-prestart" ''
+    cd /run/searx && ln -sf /etc/searxng/limiter.toml limiter.toml
+  '';
   services.searx = {
     enable = true;
+    redisCreateLocally = true;
+    limiterSettings = {
+      real_ip = {
+        x_for = 1;
+        ipv4_prefix = 32;
+        ipv6_prefix = 48;
+      };
+
+      botdetection.ip_lists = {
+        pass_ip = [
+          "100.64.0.0/10"
+        ];
+      };
+    };
+
     settings = {
       use_default_settings = {
         engines.keep_only = [ ];
@@ -110,6 +130,7 @@
         base_url = "https://search.p.localhost.thotep.net";
         port = 40001;
         bind_address = "127.0.0.1";
+        limiter = false;
       };
 
       search = {
@@ -121,6 +142,12 @@
           "all"
           "ja"
           "en-US"
+        ];
+        formats = [
+          "html"
+          "csv"
+          "json"
+          "rss"
         ];
       };
 

@@ -35,6 +35,18 @@
           reverse_proxy 127.0.0.1:40001
         '';
       };
+
+      "chat.p.localhost.thotep.net" = {
+        listenAddresses = [ "100.103.65.77" ];
+        useACMEHost = "localhost.thotep.net";
+        logFormat = ''
+          output stdout
+        '';
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:40002
+        '';
+      };
+
       # for development
       "gts.f.localhost.thotep.net" = {
         listenAddresses = [ "100.103.65.77" ];
@@ -75,6 +87,12 @@
         '';
       };
     };
+  };
+
+  services.open-webui = {
+    enable = true;
+    port = 40002;
+    environmentFile = "/persist/home/nyarla/.config/open-webui/env";
   };
 
   services.searx = {

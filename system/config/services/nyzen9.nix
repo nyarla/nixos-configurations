@@ -21,6 +21,13 @@
 
   services.flaresolverr.enable = true;
 
+  systemd.services.caddy.serviceConfig.ExecStartPre = toString (
+    pkgs.writeShellScript "wait.sh" ''
+      while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
+        sleep 1
+      done
+    ''
+  );
   services.caddy = {
     enable = true;
     virtualHosts = {

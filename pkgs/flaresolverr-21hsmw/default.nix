@@ -23,20 +23,28 @@
 # SOFTWARE.
 {
   lib,
+  fetchFromGitHub,
   stdenv,
   python3,
   makeWrapper,
   chromium,
   xorg,
   undetected-chromedriver,
-  fetchFromGitHub,
+  ...
 }:
 let
+  selenium' = python3.pkgs.callPackage ./selenium { };
+  python3-undetected-chromedriver' = python3.pkgs.undetected-chromedriver.override {
+    selenium = selenium';
+  };
+  undetected-chromedriver' = undetected-chromedriver.overrideAttrs (_old: {
+    nativeBuildInputs = [ (python3.withPackages (_ps: [ python3-undetected-chromedriver' ])) ];
+  });
   python = python3.withPackages (
     p: with p; [
       bottle
       waitress
-      selenium
+      selenium'
       func-timeout
       psutil
       prometheus-client
@@ -52,25 +60,25 @@ let
 
   path = lib.makeBinPath [
     chromium
-    undetected-chromedriver
+    undetected-chromedriver'
     xorg.xorgserver
   ];
 in
 stdenv.mkDerivation rec {
   pname = "flaresolverr-21hsmw";
-  version = "e7880c8a5de7914a6c7039b66a8b0ff143adee29";
+  version = "23273a62a0d1f5cf3afb89a3ca016053ad82f88b";
   src = fetchFromGitHub {
     owner = "21hsmw";
     repo = "FlareSolverr";
-    rev = version;
-    hash = "sha256-VVr9tDOE15gqYmi9AHwUkbY7LmBGrQeeenXfp21PEKY=";
+    rev = "23273a62a0d1f5cf3afb89a3ca016053ad82f88b";
+    hash = "sha256-yb43jzBIxHAhsReZUuGWNduyM2Qm/P+FaSTQf1O06ew=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
 
   postPatch = ''
     substituteInPlace src/utils.py \
-      --replace 'PATCHED_DRIVER_PATH = None' 'PATCHED_DRIVER_PATH = "${undetected-chromedriver}/bin/undetected-chromedriver"'
+      --replace 'PATCHED_DRIVER_PATH = None' 'PATCHED_DRIVER_PATH = "${undetected-chromedriver'}/bin/undetected-chromedriver"'
   '';
 
   installPhase = ''

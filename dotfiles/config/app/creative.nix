@@ -5,5 +5,8 @@
     inkscape
     krita
     libresprite
+
+    carla
+    ildaeil
   ];
 }

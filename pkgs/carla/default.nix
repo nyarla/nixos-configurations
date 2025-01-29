@@ -20,11 +20,11 @@ let
   });
 in
 (carla.override { stdenv = multiStdenv; }).overrideAttrs (old: rec {
-  version = "2024-04-27"; # keep same version of ildaeil
+  version = "2024-09-23"; # keep same version of ildaeil
   src = fetchFromGitHub {
     inherit (old.src) owner repo;
-    rev = "f980758afb6f614119c8c228f3c0d993d8144657";
-    hash = "sha256-7laCsvMr5x7zknISffdBdFmkStxE2leKjtWLp+zkS9A=";
+    rev = "2f7c9394134ad8479a7c9f236123ff365fa68e99";
+    hash = "sha256-n5ZAnhrkYi2MT7FaUw279mRJKG5j+Q8WEG+UqDHqUy8=";
     fetchSubmodules = true;
   };
 

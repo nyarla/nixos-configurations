@@ -23,7 +23,13 @@
     enable = true;
     platformTheme.name = "gtk3";
     style.name = "kvantum";
+    style.package = with pkgs; [
+      libsForQt5.qtstyleplugin-kvantum
+      qt6Packages.qtstyleplugin-kvantum
+    ];
   };
+
+  xdg.configFile."Kvantum/Fluent".source = with pkgs; "${fluent-kde}/share/Kvantum/Fluent";
 
   home.pointerCursor = {
     name = "capitaine-cursors-white";

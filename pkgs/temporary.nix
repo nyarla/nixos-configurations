@@ -3,6 +3,10 @@ let
   require = path: super.callPackage (import path);
 in
 {
+  bristol = super.bristol.overrideAttrs (old: rec {
+    CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
+  });
+
   dqlite = super.dqlite.overrideAttrs (old: rec {
     buildInputs = old.buildInputs ++ [ super.lz4.dev ];
   });

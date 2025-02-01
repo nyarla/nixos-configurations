@@ -2,6 +2,7 @@
 {
   imports = [
     ../config/audio/pipewire.nix
+    ../config/audio/daw.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
@@ -485,17 +486,24 @@
 
           # .config
           ".config/Bitwarden"
+          ".config/FamiStudio"
           ".config/GIMP"
+          ".config/Helio"
           ".config/Kvantum"
+          ".config/MuseScore"
           ".config/MusicBrainz"
+          ".config/OpenUtau"
           ".config/Thunar"
           ".config/Yubico"
           ".config/act"
+          ".config/aseprite"
+          ".config/blender"
           ".config/blogsync"
           ".config/calibre"
           ".config/dconf"
           ".config/deadbeef"
           ".config/easytag"
+          ".config/falkTX"
           ".config/fcitx5"
           ".config/gcloud"
           ".config/gh"
@@ -513,16 +521,19 @@
           ".config/simple-scan"
           ".config/syncthing"
           ".config/tmux"
+          ".config/voicevox"
           ".config/whipper"
           ".config/xfce4"
 
           # .local
+          ".local/share/MuseScore"
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
           ".local/share/applications"
           ".local/share/com.poppingmoon.aria"
           ".local/share/fcitx5"
           ".local/share/fonts"
+          ".local/share/krita"
           ".local/share/libcskk"
           ".local/share/mime"
           ".local/share/npm"
@@ -536,12 +547,13 @@
           ".local/state/wireplumber"
 
           # application
+          ".BitwigStudio"
           ".android"
+          ".codeium"
           ".mozilla"
           ".pki"
           ".thunderbird"
           ".var"
-          ".codeium"
 
           # credentials
           (secure ".fly")
@@ -552,8 +564,13 @@
           (secure ".wrangler")
         ];
       files = [
+        # development
         ".clasprc.json"
         ".npmrc"
+
+        # creative
+        ".config/kritadisplayrc"
+        ".config/kritarc"
       ];
     };
   };

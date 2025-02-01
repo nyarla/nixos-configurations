@@ -45,15 +45,6 @@ in
   wineasio = require ./wineasio { wine = self.wineUsingFull; };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
-  # modified packages
-  bitwig-sutido3 = super.bitwig-sutido3.overrideAttrs (old: rec {
-    version = "3.3.11";
-    src = super.fetchurl {
-      url = "https://downloads.bitwig.com/stable/${version}/${old.pname}-${version}.deb";
-      sha256 = "137i7zqazc2kj40rg6fl6sbkz7kjbkhzdd7550fabl6cz1a20pvh";
-    };
-  });
-
   calibre = super.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
     disabledTests = [
@@ -143,6 +134,28 @@ in
       cp ${../patches/utf8_force_wide.h} utf8_force_wide.h
     '';
     patches = [ ../patches/tmux3.5a-utf8.patch ];
+  });
+
+  tunefish = super.tunefish.overrideAttrs (old: rec {
+    src = super.fetchFromGitHub {
+      owner = "paynebc";
+      repo = "tunefish";
+      rev = "7e48ce8683155d5c37eb317b7ed509481c76a352";
+      hash = "sha256-oY8+hgn5eJuEgTAlGsAnGiGsD+PE5l5hbMFpsWBhlY0=";
+    };
+
+    CFLAGS = "-I${super.vst2-sdk}";
+
+    installPhase = ''
+      mkdir -p $out/lib/vst
+      mkdir -p $out/lib/vst3
+
+      cp src/tunefish4/Builds/LinuxMakefile/build/Tunefish4.so \
+        $out/lib/vst/
+
+      cp -r src/tunefish4/Builds/LinuxMakefile/build/Tunefish4.vst3 \
+        $out/lib/vst3/Tunefish4.vst3
+    '';
   });
 
   # wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {

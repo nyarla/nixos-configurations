@@ -78,14 +78,6 @@ let
     (run "Scanner" "simple-scan")
   ];
 
-  applicationsCreative = menu "applications-creative" "Creative" [
-    (exec "Gimp" "gimp")
-    (exec "Inkscape" "inkscape")
-    (exec "Krita" "krita")
-    (exec "Pixelorama" "pixelorama")
-    (exec "Libresprite" "libresprite")
-  ];
-
   sysutilList = list "Configure" (sys "util") [
     (run "Audio" "pwvucontrol")
     (run "Bluetooth" "blueman-manager")
@@ -114,11 +106,21 @@ let
   ];
 
   contextCreativeRoot = list "Creative" (id "creative") [
-    (run "Gimp" "gimp")
-    (run "Inkscape" "inkscape")
-    (run "Krita" "krita")
+    (list "Illustration" (id "illustration") [
+      (run "Gimp" "gimp")
+      (run "Inkspace" "inkscape")
+      sep
+      (run "Krita" "krita")
+    ])
+    (list "PixelArt" (id "pixelart") [
+      (run "Pixelorama" "pixelorama --rendering-driver vulkan --gpu-index 0 --display-driver wayland")
+      (run "Aseprite" "aseprite")
+    ])
     sep
-    (run "Libresprite" "libresprite")
+    (list "Music" (id "music") [
+      (run "Carla" "pw-jack carla")
+      (run "Ildaeil" "pw-jack Ildaeil")
+    ])
   ];
 
   contextMenuRoot = list "Menu" "root-menu" [

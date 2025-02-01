@@ -123,6 +123,10 @@ in
     };
   };
 
+  pixelorama = super.pixelorama.overrideAttrs (old: rec {
+    runtimeDependencies = old.runtimeDependencies ++ super.godot_4.runtimeDependencies;
+  });
+
   speechd-with-openjtalk = super.speechd.overrideAttrs (old: rec {
     src = super.fetchurl {
       url = "https://github.com/brailcom/speechd/releases/download/0.12.0-rc3/speech-dispatcher-0.12.0-rc3.tar.gz";

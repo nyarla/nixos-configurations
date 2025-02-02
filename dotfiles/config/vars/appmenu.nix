@@ -31,6 +31,14 @@ let
     </menu>
   '';
 
+  jack =
+    cmd:
+    let
+      set-samplerate = "pw-metadata -n settings 0 clock.force-rate 96000";
+      set-buffer = "pw-metadata -n settings 0 clock.force-quantum 512";
+    in
+    ''sh -c "${set-samplerate} ; ${set-buffer} ; QT_QPA_PLATFORM=xcb GDK_BACKEND=x11 pw-jack ${cmd}"'';
+
   mainList = list "Main" (id "main") [
     (run "Terminal" "mlterm-wl")
     (list "Virtual Machine" (id "vm") [
@@ -118,8 +126,18 @@ let
     ])
     sep
     (list "Music" (id "music") [
-      (run "Carla" "pw-jack carla")
-      (run "Ildaeil" "pw-jack Ildaeil")
+      (run "Bitwig Studio" (jack "bitwig-studio"))
+      (run "Heilo Workstation" (jack "helio"))
+      (run "MuseScore" (jack "mscore"))
+      sep
+      (run "FamiStudio" "FamiStudio")
+
+      sep
+      (run "Carla" (jack "carla"))
+      (run "Ildaeil" (jack "Ildaeil"))
+      sep
+      (run "VoiceVox" "voicevox")
+      (run "OpenUtau" "OpenUtau")
     ])
   ];
 

@@ -45,6 +45,10 @@ in
   wineasio = require ./wineasio { wine = self.wineUsingFull; };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
+  bitwig-studio3 = super.bitwig-studio3.override {
+    libjack2 = super.pipewire.jack;
+  };
+
   calibre = super.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
     disabledTests = [

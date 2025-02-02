@@ -1,7 +1,6 @@
 {
   stdenv,
   fetchFromGitHub,
-  fetchzip,
   lib,
   runCommand,
   binutils,
@@ -9,7 +8,7 @@
   findutils,
   pkg-config,
   python3,
-  alsaLib,
+  alsa-lib,
   atk,
   boost178,
   cairo,
@@ -43,6 +42,7 @@
   webkitgtk,
   xorg,
   zlib,
+  vst2-sdk,
 }:
 let
   deps = fetchFromGitHub {
@@ -52,14 +52,9 @@ let
     sha256 = "sha256-ESgeLkX/CQPY4/x3yl+H0OdpM9uc2z6dh4vMzcvXTR8=";
   };
 
-  vst2sdk = fetchzip {
-    url = "https://archive.org/download/VST2SDK/vst_sdk2_4_rev2.zip";
-    sha256 = "sha256-6eDJYGfuVczOTaZNUYa/dLEoCzl6Ysi1I1NrxuN2mPQ=";
-  };
-
   sdks = runCommand "ag-sdks" { } ''
     mkdir -p $out/vstsdk2.4
-    cp -r ${vst2sdk}/* $out/vstsdk2.4/
+    cp -r ${vst2-sdk}/* $out/vstsdk2.4/
   '';
 
   boost178Static = boost178.override {
@@ -74,8 +69,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "nyarla";
     repo = "audiogridder-modded";
-    rev = "c2781656b84efc72febacf8b9242d778b630d683";
-    hash = "sha256-O7e68gBJDe1tH3vIGvUYV+q4uz2F91cqMqr6cRulg8Q=";
+    rev = "dc01e87a00b2de7f30a8d65628ceac7e4292661f";
+    hash = "sha256-DdCpULUVTclcRBbTinE6cOx1jDg1Hst21DRkb3CCru8=";
     fetchSubmodules = true;
   };
 
@@ -88,7 +83,7 @@ stdenv.mkDerivation rec {
   ];
   buildInputs =
     [
-      alsaLib
+      alsa-lib
       atk
       boost178Static
       cairo

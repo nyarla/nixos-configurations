@@ -28,12 +28,13 @@
 
       # voice synthesize
       openutau
-      # voicevox
+      voicevox
 
       # sample manager
       # sononym-bin
 
       # vst plugin host
+      audiogridder
       carla
       ildaeil
 

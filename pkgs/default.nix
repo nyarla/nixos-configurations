@@ -68,12 +68,12 @@ in
   flaresolverr = require ./flaresolverr-21hsmw { };
 
   labwc = super.labwc.overrideAttrs (_: {
-    # 2025-01-13
+    # 2025-02-03
     src = super.fetchFromGitHub {
       owner = "labwc";
       repo = "labwc";
-      rev = "1a6dd845a2d321ea754d1cfcf53d142436b41a3b";
-      hash = "sha256-eLgqXaQQQbTsOjSdtUskGDWYy+riRymCCxFPUeLUHzA=";
+      rev = "ed4553fc7e36175fa160fd50914224da00fb1181";
+      hash = "sha256-DBtnJ/uR5U6BvrrnKGVw80m7D0KZpithhwLRiiZu5dQ=";
     };
     patches = [
       (super.fetchpatch {

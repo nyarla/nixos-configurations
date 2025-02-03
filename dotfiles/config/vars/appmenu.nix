@@ -59,7 +59,6 @@ let
     sep
     (run "Google Chrome" "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
     sep
-    (run "Aria" "aria")
     (run "Telegram" "telegram-desktop")
     sep
     (run "Bitwaden" "bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")

@@ -29,19 +29,11 @@ in
       enable32Bit = true;
       extraPackages = with pkgs; [
         intel-media-driver
-        intel-vaapi-driver
         libvdpau-va-gl
-        mesa.drivers
-        libGL
-        libglvnd
       ];
-      extraPackages32 = with pkgs.pkgsi686Linux; [
+      extraPackages32 = with pkgs.driversi686Linux; [
         intel-media-driver
-        intel-vaapi-driver
         libvdpau-va-gl
-        mesa.drivers
-        libGL
-        libglvnd
       ];
     };
   };

@@ -9,13 +9,13 @@
 let
   app = buildDotnetModule rec {
     pname = "StabilityMatrix";
-    version = "2.12.3";
+    version = "2.13.3";
 
     src = fetchFromGitHub {
       owner = "LykosAI";
       repo = pname;
       rev = "v${version}";
-      hash = "sha256-LapdC522CMfe1UI+dbw+PkkNIY+9hEftsV8IQppxsXM=";
+      hash = "sha256-/EjciXJR6GCoEOjKv4qQW/Xzshs9NpnMv+ObrxQ0nwM=";
     };
 
     patches = [
@@ -28,22 +28,22 @@ let
         StabilityMatrix.Avalonia/Helpers/UriHandler.cs
     '';
 
-    projectFile = "StabilityMatrix.sln";
+    projectFile = "StabilityMatrix.Avalonia/StabilityMatrix.Avalonia.csproj";
     nugetDeps = ./deps.nix;
 
-    dotnet-runtime = dotnetCorePackages.dotnet_8.runtime;
-    dotnet-sdk = dotnetCorePackages.dotnet_8.sdk;
+    dotnet-runtime = dotnetCorePackages.dotnet_9.runtime;
+    dotnet-sdk = dotnetCorePackages.dotnet_9.sdk;
 
     preConfigure = ''
       dotnet tool uninstall husky
       dotnet tool uninstall xamlstyler.console
       dotnet tool uninstall csharpier
+      dotnet tool uninstall dotnet-script
 
       export HUSKY=0
     '';
 
     executables = [ "StabilityMatrix.Avalonia" ];
-    runtimeId = "linux-x64";
   };
 in
 buildFHSEnv {

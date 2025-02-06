@@ -1,27 +1,5 @@
-diff --git a/StabilityMatrix.Avalonia/StabilityMatrix.Avalonia.csproj b/StabilityMatrix.Avalonia/StabilityMatrix.Avalonia.csproj
-index 3a8b64f4..c655c1fb 100644
---- a/StabilityMatrix.Avalonia/StabilityMatrix.Avalonia.csproj
-+++ b/StabilityMatrix.Avalonia/StabilityMatrix.Avalonia.csproj
-@@ -145,7 +145,7 @@
-         <PackageReference Include="System.IO.Hashing" Version="8.0.0" />
-         <PackageReference Include="TextMateSharp.Grammars" Version="1.0.56" />
-         <PackageReference Include="URISchemeTools" Version="1.0.2" />
--        <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.0.0-preview.4.1" Condition="'$(RuntimeIdentifier)' == 'linux-x64'" />
-+        <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.0.0-preview.4.1" />
-     </ItemGroup>
- 
- 
-@@ -196,7 +196,7 @@
-       <!-- Only for win-64 -->
-       <AvaloniaResource Include="Assets\win-x64\**" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
-       <!-- Only for linux-64 -->
--      <AvaloniaResource Include="Assets\linux-x64\**" Condition="'$(RuntimeIdentifier)' == 'linux-x64'" />
-+      <AvaloniaResource Include="Assets\linux-x64\**" />
-       <!-- Only for osx-arm64 -->
-       <AvaloniaResource Include="Assets\macos-arm64\**" Condition="'$(RuntimeIdentifier)' == 'osx-arm64'" />
-     </ItemGroup>
 diff --git a/StabilityMatrix.Core/Helper/Compat.cs b/StabilityMatrix.Core/Helper/Compat.cs
-index 9e4b352f..fb3da197 100644
+index 1a619bab..fb3da197 100644
 --- a/StabilityMatrix.Core/Helper/Compat.cs
 +++ b/StabilityMatrix.Core/Helper/Compat.cs
 @@ -130,10 +130,7 @@ public static class Compat
@@ -36,7 +14,7 @@ index 9e4b352f..fb3da197 100644
              ExeExtension = "";
              DllExtension = ".so";
          }
-@@ -185,13 +182,7 @@ public static class Compat
+@@ -185,17 +182,7 @@ public static class Compat
      {
          if (IsLinux)
          {
@@ -44,7 +22,11 @@ index 9e4b352f..fb3da197 100644
 -            var appImage = Environment.GetEnvironmentVariable("APPIMAGE");
 -            if (string.IsNullOrEmpty(appImage))
 -            {
+-#if DEBUG
+-                return "DEBUG_NOT_RUNNING_IN_APPIMAGE";
+-#else
 -                throw new Exception("Could not find APPIMAGE environment variable");
+-#endif
 -            }
 -            return Path.GetFileName(appImage);
 +            return AppName + ".Avalonia";

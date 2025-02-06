@@ -494,6 +494,7 @@
           ".config/MuseScore"
           ".config/MusicBrainz"
           ".config/OpenUtau"
+          ".config/Sononym"
           ".config/Thunar"
           ".config/Yubico"
           ".config/act"
@@ -572,6 +573,7 @@
         # creative
         ".config/kritadisplayrc"
         ".config/kritarc"
+        ".config/snn.conf"
       ];
     };
   };

@@ -39,11 +39,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "sononym";
-  version = "1.5.5";
+  version = "1.5.6";
 
   src = fetchurl {
     url = "https://www.sononym.net/download/sononym-${version}.tar.bz2";
-    hash = "sha256-2Of+7MWyiRhK09jJSdFmr1/iM1cAs30BhcFZsdg2bB4=";
+    hash = "sha256-b4g7FY6JyQBco3bf1xe+Rga0oBUO9sgW/Dy02jKY7kw=";
   };
 
   nativeBuildInputs = [

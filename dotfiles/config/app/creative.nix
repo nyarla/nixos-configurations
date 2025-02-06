@@ -31,7 +31,7 @@
       voicevox
 
       # sample manager
-      # sononym-bin
+      sononym-bin
 
       # vst plugin host
       audiogridder

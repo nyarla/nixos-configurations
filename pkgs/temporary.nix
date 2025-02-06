@@ -11,6 +11,14 @@ in
     buildInputs = old.buildInputs ++ [ super.lz4.dev ];
   });
 
+  fcitx5 = super.fcitx5.overrideAttrs (old: rec {
+    src = super.fetchFromGitHub {
+      inherit (old.src) owner repo;
+      rev = "5.1.12";
+      hash = "sha256-Jk7YY6nrY1Yn9KeNlRJbMF/fCMIlUVg/Elt7SymlK84=";
+    };
+  });
+
   whipper =
     let
       python3 =

@@ -47,8 +47,8 @@
             patches = [ ];
             overlays = [
               wayland.overlay
-              (import ./pkgs/default.nix)
-              (import ./pkgs/temporary.nix)
+              (import ./pkgs/default.nix { inherit nixpkgs; })
+              (import ./pkgs/temporary.nix { inherit nixpkgs; })
             ];
 
             modules = [

@@ -1,18 +1,14 @@
-_: super:
-let
-  require = path: super.callPackage (import path);
-in
-{
-  bristol = super.bristol.overrideAttrs (old: rec {
+_: _: prev: {
+  bristol = prev.bristol.overrideAttrs (_: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });
 
-  dqlite = super.dqlite.overrideAttrs (old: rec {
-    buildInputs = old.buildInputs ++ [ super.lz4.dev ];
+  dqlite = prev.dqlite.overrideAttrs (old: {
+    buildInputs = old.buildInputs ++ [ prev.lz4.dev ];
   });
 
-  fcitx5 = super.fcitx5.overrideAttrs (old: rec {
-    src = super.fetchFromGitHub {
+  fcitx5 = prev.fcitx5.overrideAttrs (old: {
+    src = prev.fetchFromGitHub {
       inherit (old.src) owner repo;
       rev = "5.1.12";
       hash = "sha256-Jk7YY6nrY1Yn9KeNlRJbMF/fCMIlUVg/Elt7SymlK84=";
@@ -23,9 +19,9 @@ in
     let
       python3 =
         let
-          packageOverrides = final: prev: {
-            pycdio = prev.pycdio.overridePythonAttrs (old: rec {
-              nativeBuildInputs = with super; [
+          packageOverrides = _: before: {
+            pycdio = before.pycdio.overridePythonAttrs (_: {
+              nativeBuildInputs = with prev; [
                 pkg-config
                 swig
               ];
@@ -34,11 +30,11 @@ in
             });
           };
         in
-        super.python3.override { inherit packageOverrides; };
+        prev.python3.override { inherit packageOverrides; };
     in
-    (super.whipper.override { inherit python3; }).overrideAttrs (_: rec {
+    (prev.whipper.override { inherit python3; }).overrideAttrs (_: {
       postPatch = ''
-        sed -i 's|cd-paranoia|${super.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
+        sed -i 's|cd-paranoia|${prev.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
       '';
     });
 }

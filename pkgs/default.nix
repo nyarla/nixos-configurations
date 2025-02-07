@@ -1,6 +1,6 @@
-self: super:
+_: final: prev:
 let
-  require = path: super.callPackage (import path);
+  require = path: prev.callPackage (import path);
 in
 {
   # additional packages
@@ -8,15 +8,15 @@ in
   audiogridder = require ./audiogridder { };
   cskk = require ./cskk { };
   cuda-shell = require ./cuda-shell {
-    cudaPackages = super.cudaPackages_11_8;
+    cudaPackages = prev.cudaPackages_11_8;
     nvidia_x11 = null;
   };
-  currennt = require ./currennt { inherit (super.cudaPackages) cudatoolkit; };
+  currennt = require ./currennt { inherit (prev.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
   fcitx5-fbterm = require ./fcitx5-fbterm { };
-  fcitx5-cskk = super.libsForQt5.callPackage (import ./fcitx5-cskk) { };
-  fcitx5-cskk-qt5 = super.libsForQt5.callPackage (import ./fcitx5-cskk) { enableQt = true; };
-  fcitx5-cskk-qt6 = super.kdePackages.callPackage (import ./fcitx5-cskk) {
+  fcitx5-cskk = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { };
+  fcitx5-cskk-qt5 = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { enableQt = true; };
+  fcitx5-cskk-qt6 = prev.kdePackages.callPackage (import ./fcitx5-cskk) {
     enableQt = true;
     useQt6 = true;
   };
@@ -26,8 +26,8 @@ in
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
   ildaeil = require ./ildaeil {
-    inherit (self) carla;
-    wine = self.wineUsingFull;
+    inherit (final) carla;
+    wine = final.wineUsingFull;
   };
   kaunas = require ./kaunas { };
   nvim-run = require ./nvim-run { };
@@ -42,15 +42,15 @@ in
   wcwidth-cjk = require ./wcwidh-cjk { };
   wine-run = require ./wine-run { };
   wine-vst-wrapper = require ./wine-vst-wrapper { };
-  wineasio = require ./wineasio { wine = self.wineUsingFull; };
+  wineasio = require ./wineasio { wine = final.wineUsingFull; };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
-  bitwig-studio3 = super.bitwig-studio3.override {
-    libjack2 = super.pipewire.jack;
+  bitwig-studio3 = prev.bitwig-studio3.override {
+    libjack2 = prev.pipewire.jack;
   };
 
-  calibre = super.calibre.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [ super.python3Packages.pycrypto ];
+  calibre = prev.calibre.overrideAttrs (old: {
+    buildInputs = old.buildInputs ++ [ prev.python3Packages.pycrypto ];
     disabledTests = [
       "test_fts_search"
       "test_fts_pool"
@@ -59,24 +59,24 @@ in
   });
 
   carla = require ./carla {
-    inherit (super) carla;
-    wine = self.wineUsingFull;
+    inherit (prev) carla;
+    wine = final.wineUsingFull;
   };
 
-  firefox-bin-unwrapped = super.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
+  firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   flaresolverr = require ./flaresolverr-21hsmw { };
 
-  labwc = super.labwc.overrideAttrs (_: {
+  labwc = prev.labwc.overrideAttrs (_: {
     # 2025-02-03
-    src = super.fetchFromGitHub {
+    src = prev.fetchFromGitHub {
       owner = "labwc";
       repo = "labwc";
       rev = "ed4553fc7e36175fa160fd50914224da00fb1181";
       hash = "sha256-DBtnJ/uR5U6BvrrnKGVw80m7D0KZpithhwLRiiZu5dQ=";
     };
     patches = [
-      (super.fetchpatch {
+      (prev.fetchpatch {
         name = "text-input-v1.patch";
         url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=54103c35c0e8859317e7455204d78fb606c494f9";
         hash = "sha256-WJnbd6DXSYSccvyLiLIswpC3uBzsvGZ4BX8mxUl2b7Q=";
@@ -85,10 +85,10 @@ in
   });
 
   looking-glass-client =
-    (super.looking-glass-client.override { stdenv = super.gcc13Stdenv; }).overrideAttrs
+    (prev.looking-glass-client.override { stdenv = prev.gcc13Stdenv; }).overrideAttrs
       (_: {
         version = "bleeding-edge";
-        src = super.fetchFromGitHub {
+        src = prev.fetchFromGitHub {
           owner = "gnif";
           repo = "LookingGlass";
           rev = "e25492a3a36f7e1fde6e3c3014620525a712a64a";
@@ -98,8 +98,8 @@ in
         patches = [ ];
       });
 
-  mlterm = super.mlterm.override {
-    stdenv = super.gcc13Stdenv;
+  mlterm = prev.mlterm.override {
+    stdenv = prev.gcc13Stdenv;
     enableGuis = {
       xlib = true;
       fb = true;
@@ -118,37 +118,37 @@ in
     };
   };
 
-  pixelorama = super.pixelorama.overrideAttrs (old: rec {
-    runtimeDependencies = old.runtimeDependencies ++ super.godot_4.runtimeDependencies;
+  pixelorama = prev.pixelorama.overrideAttrs (old: {
+    runtimeDependencies = old.runtimeDependencies ++ prev.godot_4.runtimeDependencies;
   });
 
-  speechd-with-openjtalk = super.speechd.overrideAttrs (old: rec {
-    src = super.fetchurl {
+  speechd-with-openjtalk = prev.speechd.overrideAttrs (old: {
+    src = prev.fetchurl {
       url = "https://github.com/brailcom/speechd/releases/download/0.12.0-rc3/speech-dispatcher-0.12.0-rc3.tar.gz";
       hash = "sha256-vStiv9z3RVKs2F6dpOQv0f8SuOoYYQpqG9aDXfdntmM=";
     };
-    buildInputs = old.buildInputs ++ [ self.openjtalk ];
+    buildInputs = old.buildInputs ++ [ final.openjtalk ];
     configureFlags = old.configureFlags ++ [ "--with-openjtalk" ];
   });
 
-  thunderbird-bin-unwrapped = super.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
+  thunderbird-bin-unwrapped = prev.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  tmux = super.tmux.overrideAttrs (_: {
+  tmux = prev.tmux.overrideAttrs (_: {
     preConfigure = ''
       cp ${../patches/utf8_force_wide.h} utf8_force_wide.h
     '';
     patches = [ ../patches/tmux3.5a-utf8.patch ];
   });
 
-  tunefish = super.tunefish.overrideAttrs (old: rec {
-    src = super.fetchFromGitHub {
+  tunefish = prev.tunefish.overrideAttrs (_: {
+    src = prev.fetchFromGitHub {
       owner = "paynebc";
       repo = "tunefish";
       rev = "7e48ce8683155d5c37eb317b7ed509481c76a352";
       hash = "sha256-oY8+hgn5eJuEgTAlGsAnGiGsD+PE5l5hbMFpsWBhlY0=";
     };
 
-    CFLAGS = "-I${super.vst2-sdk}";
+    CFLAGS = "-I${prev.vst2-sdk}";
 
     installPhase = ''
       mkdir -p $out/lib/vst
@@ -162,14 +162,14 @@ in
     '';
   });
 
-  # wineUsingFull = super.lib.overrideDerivation super.wineWowPackages.stagingFull (old: rec {
+  # wineUsingFull = prev.lib.overrideDerivation prev.wineWowPackages.stagingFull (old: rec {
   #   buildInputs =
   #     old.buildInputs
-  #     ++ (with super; [
+  #     ++ (with prev; [
   #       libgcrypt.dev
   #       libva.dev
   #     ])
-  #     ++ (with super.pkgsi686Linux; [
+  #     ++ (with prev.pkgsi686Linux; [
   #       libgcrypt.dev
   #       libva.dev
   #     ]);
@@ -180,24 +180,24 @@ in
   #     "--disable-test"
   #   ];
   # });
-  wineUsingFull = super.wineWowPackages.stagingFull;
+  wineUsingFull = prev.wineWowPackages.stagingFull;
 
-  yabridge = super.yabridge.override { wine = self.wineUsingFull; };
-  yabridtctl = super.yabridgectl.override {
-    inherit (self) yabridge;
-    wine = self.wineUsingFull;
+  yabridge = prev.yabridge.override { wine = final.wineUsingFull; };
+  yabridtctl = prev.yabridgectl.override {
+    inherit (final) yabridge;
+    wine = final.wineUsingFull;
   };
 
-  waybar = super.waybar.overrideAttrs (old: rec {
+  waybar = prev.waybar.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [
-      super.libnotify.dev
-      super.upower.dev
+      prev.libnotify.dev
+      prev.upower.dev
     ];
-    nativeBuildInputs = old.nativeBuildInputs ++ [ super.cmake ];
+    nativeBuildInputs = old.nativeBuildInputs ++ [ prev.cmake ];
   });
 
-  weylus = super.weylus.overrideAttrs (old: rec {
-    src = super.fetchFromGitHub {
+  weylus = prev.weylus.overrideAttrs (_: rec {
+    src = prev.fetchFromGitHub {
       owner = "H-M-H";
       repo = "Weylus";
       rev = "d30b8b3e56820b72a858e227654823722f0d5d8f";
@@ -208,7 +208,7 @@ in
       ../patches/weylus.patch
     ];
 
-    cargoDeps = super.rustPlatform.importCargoLock {
+    cargoDeps = prev.rustPlatform.importCargoLock {
       lockFile = src + /Cargo.lock;
       outputHashes = {
         "autopilot-0.4.0" = "sha256-1DRuhAAXaIADUmXlDVr8UNbI/Ab2PYdrx9Qh0j9rTX8=";

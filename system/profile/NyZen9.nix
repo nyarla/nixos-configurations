@@ -341,6 +341,7 @@
     // (subvolsEx [
       # for boot
       "var/lib/docker"
+      "var/lib/flatpak"
 
       # for accounts
       "home/nyarla/.cache/nvim"
@@ -419,6 +420,7 @@
     "/persist/var/db"
     "/persist/var/lib"
     "/persist/var/lib/docker"
+    "/persist/var/lib/flatpak"
     "/persist/var/log"
 
     "/persist/usr/share"
@@ -451,6 +453,7 @@
       "/var/lib"
       "/var/log"
       "/var/lib/docker"
+      "/var/lib/flatpak"
     ];
     files = [ "/etc/machine-id" ];
 

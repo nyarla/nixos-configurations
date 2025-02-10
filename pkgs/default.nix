@@ -1,4 +1,5 @@
-_: final: prev:
+{ nixpkgs, ... }:
+final: prev:
 let
   require = path: prev.callPackage (import path);
 in
@@ -25,14 +26,10 @@ in
   glibc-locales-eaw = require ./glibc-locales-eaw { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
-  ildaeil = require ./ildaeil {
-    inherit (final) carla;
-    wine = final.wineUsingFull;
-  };
   kaunas = require ./kaunas { };
+  noto-fonts-jp = require ./noto-fonts-jp { };
   nvim-run = require ./nvim-run { };
   openjtalk = require ./openjtalk { };
-  noto-fonts-jp = require ./noto-fonts-jp { };
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
   shoreman = require ./shoreman { };
@@ -40,9 +37,6 @@ in
   sononym-bin = require ./sononym-bin { };
   stability-matrix = require ./stability-matrix { };
   wcwidth-cjk = require ./wcwidh-cjk { };
-  wine-run = require ./wine-run { };
-  wine-vst-wrapper = require ./wine-vst-wrapper { };
-  wineasio = require ./wineasio { wine = final.wineUsingFull; };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
   bitwig-studio3 = prev.bitwig-studio3.override {
@@ -57,11 +51,6 @@ in
       "test_export_import"
     ];
   });
-
-  carla = require ./carla {
-    inherit (prev) carla;
-    wine = final.wineUsingFull;
-  };
 
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
@@ -162,32 +151,6 @@ in
     '';
   });
 
-  # wineUsingFull = prev.lib.overrideDerivation prev.wineWowPackages.stagingFull (old: rec {
-  #   buildInputs =
-  #     old.buildInputs
-  #     ++ (with prev; [
-  #       libgcrypt.dev
-  #       libva.dev
-  #     ])
-  #     ++ (with prev.pkgsi686Linux; [
-  #       libgcrypt.dev
-  #       libva.dev
-  #     ]);
-
-  #   configureFlags = old.configureFlags ++ [
-  #     "--with-va"
-  #     "--with-gcrypt"
-  #     "--disable-test"
-  #   ];
-  # });
-  wineUsingFull = prev.wineWowPackages.stagingFull;
-
-  yabridge = prev.yabridge.override { wine = final.wineUsingFull; };
-  yabridtctl = prev.yabridgectl.override {
-    inherit (final) yabridge;
-    wine = final.wineUsingFull;
-  };
-
   waybar = prev.waybar.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [
       prev.libnotify.dev
@@ -215,4 +178,58 @@ in
       };
     };
   });
+
+  wine-staging-run = require ./wine-run {
+    pname = "wine-staging";
+    wine = prev.wineWowPackages.stagingFull;
+  };
+
+  # custom wine-related packages
+  wine-vst = require ./wine-runtime {
+    inherit nixpkgs;
+
+    pname = "wine-vst";
+    version = "9.21";
+    src = prev.fetchurl {
+      url = "https://dl.winehq.org/wine/source/9.x/wine-9.21.tar.xz";
+      sha256 = "1zrgra4ajxaic1ga4yfvv4lxix76sigysdhf21bs8blvzmzv8hj4";
+    };
+
+    staging = prev.fetchFromGitLab {
+      domain = "gitlab.winehq.org";
+      owner = "wine";
+      repo = "wine-staging";
+      rev = "v9.21";
+      hash = "sha256-FDNszRUvM1ewE9Ij4EkuihaX0Hf0eTb5r7KQHMdCX3U=";
+    };
+  };
+
+  wine-vst-run = require ./wine-run {
+    pname = "wine-vst";
+    wine = final.wine-vst;
+  };
+
+  carla = require ./carla {
+    inherit (prev) carla;
+    wine = final.wine-vst;
+  };
+
+  ildaeil = require ./ildaeil {
+    inherit (final) carla;
+    wine = final.wine-vst;
+  };
+
+  wineasio = require ./wineasio {
+    wine = final.wine-vst;
+  };
+
+  wine-vst-wrapper = require ./wine-vst-wrapper {
+    wine = final.wine-vst;
+  };
+
+  yabridge = prev.yabridge.override { wine = final.wine-vst; };
+  yabridgectl = prev.yabridgectl.override {
+    inherit (final) yabridge;
+    wine = final.wine-vst;
+  };
 }

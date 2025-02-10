@@ -2,14 +2,14 @@
 
 set -euo pipefail
 
-export WINEPREFIX=/home/nyarla/Applications/Wine/MP3TAG
-export LD_PRELOAD=
+cd $HOME/Applications/Wine/MP3TAG
 
-wine 'C:\Program Files\Mp3tag\Mp3tag.exe' &
+
+wine-staging wine 'C:\Program Files\Mp3tag\Mp3tag.exe' &
 waitPID=$!
 
 test -n "$waitPID" && wait $waitPID
 
-wineserver -k
+wine-staging wineboot --shutdown
 
 exit 0

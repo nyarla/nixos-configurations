@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    wineUsingFull
     winetricks
-    wine-run
+    wine-staging-run
+    wine-vst-run
   ];
 }

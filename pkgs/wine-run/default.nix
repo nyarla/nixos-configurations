@@ -1,19 +1,29 @@
-{ writeShellScriptBin, runCommand }:
+{
+  lib,
+  runCommand,
+  writeShellScript,
+  pname ? "wine",
+  wine ? null,
+}:
 let
-  wine-run = writeShellScriptBin "wine-run" ''
-    export LD_PRELOAD=
+  env = lib.optionalString (wine != null) ''
+    export PATH=${wine}/bin:$PATH
+  '';
 
-    if ! test -e $(pwd)/drive_c ; then
-      echo 'This path is not wine prefix' >&2
+  wine-run = writeShellScript "${pname}" ''
+    ${env}
+    unset LD_PRELOAD
+
+    if [[ ! -d $(pwd)/drive_c ]]; then
+      echo 'This directory is not wine prefix' >&2
       exit 1
     fi
 
     export WINEPREFIX=$(pwd)
-
     exec "''${@:-}"
   '';
 
-  wine-setup = writeShellScriptBin "wine-setup" ''
+  wine-setup = writeShellScript "${pname}-setup" ''
     ${wine-run} wineboot -u
     ${wine-run} winetricks corefonts fakejapanese
     ${wine-run} wineboot -s
@@ -21,8 +31,8 @@ let
 in
 runCommand "wine-run" { } ''
   mkdir -p $out/bin
-  cp -r ${wine-run}/bin/* $out/bin/
-  cp -r ${wine-setup}/bin/* $out/bin/
+  cp ${wine-run} $out/bin/${pname}
+  cp ${wine-setup} $out/bin/${pname}-setup
 
   chmod +x $out/bin/*
 ''

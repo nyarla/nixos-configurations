@@ -4,23 +4,11 @@ let
   require = path: prev.callPackage (import path);
 in
 {
-  # additional packages
+  # custom packages
   aria-misskey = require ./aria-misskey { };
   audiogridder = require ./audiogridder { };
   cskk = require ./cskk { };
-  cuda-shell = require ./cuda-shell {
-    cudaPackages = prev.cudaPackages_11_8;
-    nvidia_x11 = null;
-  };
-  currennt = require ./currennt { inherit (prev.cudaPackages) cudatoolkit; };
   deadbeef-fb = require ./deadbeef-fb { };
-  fcitx5-fbterm = require ./fcitx5-fbterm { };
-  fcitx5-cskk = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { };
-  fcitx5-cskk-qt5 = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { enableQt = true; };
-  fcitx5-cskk-qt6 = prev.kdePackages.callPackage (import ./fcitx5-cskk) {
-    enableQt = true;
-    useQt6 = true;
-  };
   fluent-kde = require ./fluent-kde { };
   galendae = require ./galendae { };
   glibc-locales-eaw = require ./glibc-locales-eaw { };
@@ -39,6 +27,23 @@ in
   wcwidth-cjk = require ./wcwidh-cjk { };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
+  # fcitx5 packages
+  fcitx5-fbterm = require ./fcitx5-fbterm { };
+  fcitx5-cskk = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { };
+  fcitx5-cskk-qt5 = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { enableQt = true; };
+  fcitx5-cskk-qt6 = prev.qt6Packages.callPackage (import ./fcitx5-cskk) {
+    enableQt = true;
+    useQt6 = true;
+  };
+
+  # cuda-related packages
+  cuda-shell = require ./cuda-shell {
+    inherit (prev) cudaPackages;
+    nvidia_x11 = null;
+  };
+  currennt = require ./currennt { inherit (prev.cudaPackages) cudatoolkit; };
+
+  # customized packages
   bitwig-studio3 = prev.bitwig-studio3.override {
     libjack2 = prev.pipewire.jack;
   };
@@ -151,40 +156,12 @@ in
     '';
   });
 
-  waybar = prev.waybar.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [
-      prev.libnotify.dev
-      prev.upower.dev
-    ];
-    nativeBuildInputs = old.nativeBuildInputs ++ [ prev.cmake ];
-  });
-
-  weylus = prev.weylus.overrideAttrs (_: rec {
-    src = prev.fetchFromGitHub {
-      owner = "H-M-H";
-      repo = "Weylus";
-      rev = "d30b8b3e56820b72a858e227654823722f0d5d8f";
-      hash = "sha256-TpCUtrk2oqjB0CEWy96fSz1w1HjZrwEVqwVqlWqkQD8=";
-    };
-
-    patches = [
-      ../patches/weylus.patch
-    ];
-
-    cargoDeps = prev.rustPlatform.importCargoLock {
-      lockFile = src + /Cargo.lock;
-      outputHashes = {
-        "autopilot-0.4.0" = "sha256-1DRuhAAXaIADUmXlDVr8UNbI/Ab2PYdrx9Qh0j9rTX8=";
-      };
-    };
-  });
-
+  # custom wine-related packages
   wine-staging-run = require ./wine-run {
     pname = "wine-staging";
     wine = prev.wineWowPackages.stagingFull;
   };
 
-  # custom wine-related packages
   wine-vst = require ./wine-runtime {
     inherit nixpkgs;
 

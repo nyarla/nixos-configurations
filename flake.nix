@@ -21,6 +21,13 @@
       ...
     }:
     {
+      legacyPackages.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.extend (
+        final: prev:
+        prev
+        // (import ./pkgs/default.nix { inherit nixpkgs; } final prev)
+        // (import ./pkgs/temporary.nix { inherit nixpkgs; } final prev)
+      );
+
       ## test
       nixosConfigurations =
         let

@@ -15,6 +15,16 @@ _: _: prev: {
     };
   });
 
+  fluent-icon-theme = prev.fluent-icon-theme.overrideAttrs (_: {
+    version = "2025-02-11";
+    src = prev.fetchFromGitHub {
+      owner = "vinceliuice";
+      repo = "Fluent-icon-theme";
+      rev = "7d20e2d2a2876dc859ec166bde7508cd367186b4";
+      hash = "sha256-gLEKdg0k9WMm9UUDE/q9cGk1sR3BT2/P6MikgONUxss=";
+    };
+  });
+
   whipper =
     let
       python3 =

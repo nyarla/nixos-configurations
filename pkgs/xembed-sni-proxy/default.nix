@@ -1,4 +1,8 @@
-{ libsForQt5, fetchpatch }:
+{
+  libsForQt5,
+  fetchpatch,
+  xorg,
+}:
 libsForQt5.plasma-workspace.overrideAttrs (old: rec {
   pname = "xembed-sni-proxy";
   inherit (old) version;
@@ -13,6 +17,13 @@ libsForQt5.plasma-workspace.overrideAttrs (old: rec {
   postPatch = ''
     sed -i 's|s_embedSize = 32;|s_embedSize = 1;|' xembed-sni-proxy/sniproxy.cpp
   '';
+
+  buildInputs = [
+    libsForQt5.qt5.qtx11extras
+    libsForQt5.kwin
+    xorg.libXdmcp
+    xorg.libXtst
+  ];
 
   srcRoot = "xembed-sni-proxy";
   configurePhase = ''
@@ -31,4 +42,6 @@ libsForQt5.plasma-workspace.overrideAttrs (old: rec {
   installPhase = ''
     make install
   '';
+
+  postFixup = "";
 })

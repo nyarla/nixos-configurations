@@ -50,11 +50,6 @@ in
 
   calibre = prev.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ prev.python3Packages.pycrypto ];
-    disabledTests = [
-      "test_fts_search"
-      "test_fts_pool"
-      "test_export_import"
-    ];
   });
 
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };

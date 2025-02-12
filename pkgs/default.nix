@@ -15,6 +15,7 @@ in
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
   kaunas = require ./kaunas { };
+  noise-suppression-for-voice = require ./noise-suppression-for-voice { };
   noto-fonts-jp = require ./noto-fonts-jp { };
   nvim-run = require ./nvim-run { };
   openjtalk = require ./openjtalk { };

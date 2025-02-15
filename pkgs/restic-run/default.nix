@@ -39,12 +39,12 @@ let
 
     shift 1
 
-    ${restic-run} ${restic}/bin/restic cache --cleanup
-    ${restic-run} ${restic}/bin/restic unlock --remove-all
-    ${restic-run} ${restic}/bin/restic repair index
-    ${restic-run} ${restic}/bin/restic prune
-    ${restic-run} ${restic}/bin/restic backup $RESTIC_BACKUP_ARGS "$DIR"
-    ${restic-run} ${restic}/bin/restic forget $RESTIC_FORGET_ARGS
+    ${restic-run}/bin/restic-run ${restic}/bin/restic cache --cleanup
+    ${restic-run}/bin/restic-run ${restic}/bin/restic unlock --remove-all
+    ${restic-run}/bin/restic-run ${restic}/bin/restic repair index
+    ${restic-run}/bin/restic-run ${restic}/bin/restic prune
+    ${restic-run}/bin/restic-run ${restic}/bin/restic backup $RESTIC_BACKUP_ARGS "$DIR"
+    ${restic-run}/bin/restic-run ${restic}/bin/restic forget $RESTIC_FORGET_ARGS
   '';
 in
 runCommand "restic-run" { } ''

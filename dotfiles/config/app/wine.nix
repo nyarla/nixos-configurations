@@ -4,5 +4,6 @@
     winetricks
     wine-staging-run
     wine-vst-run
+    wineasio
   ];
 }

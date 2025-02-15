@@ -3,14 +3,14 @@
   runCommand,
   writeShellScript,
   pname ? "wine",
-  wine ? null,
+  paths ? "",
 }:
 let
-  env = lib.optionalString (wine != null) ''
-    export PATH=${wine}/bin:$PATH
+  env = lib.optionalString (paths != "") ''
+    export PATH=${paths}:$PATH
   '';
 
-  wine-run = writeShellScript "${pname}" ''
+  wine-runtime = writeShellScript "${pname}" ''
     ${env}
     unset LD_PRELOAD
 
@@ -28,11 +28,26 @@ let
     ${wine-run} winetricks corefonts fakejapanese
     ${wine-run} wineboot -s
   '';
+
+  wine-run = writeShellScript "${pname}-wine" ''
+    ${env}
+
+    case "''${0:-}" in
+      *64)
+        exec wine64 "''${@:-}"
+        ;;
+      *)
+        exec wine "''${@:-}"
+        ;;
+    esac
+  '';
 in
 runCommand "wine-run" { } ''
   mkdir -p $out/bin
-  cp ${wine-run} $out/bin/${pname}
+  cp ${wine-runtime} $out/bin/${pname}
   cp ${wine-setup} $out/bin/${pname}-setup
+  cp ${wine-run} $out/bin/${pname}-wine
+  cp ${wine-run} $out/bin/${pname}-wine64
 
   chmod +x $out/bin/*
 ''

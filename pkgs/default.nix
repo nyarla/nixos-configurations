@@ -155,7 +155,12 @@ in
   # custom wine-related packages
   wine-staging-run = require ./wine-run {
     pname = "wine-staging";
-    wine = prev.wineWowPackages.stagingFull;
+    paths = prev.lib.makeBinPath [ prev.wineWowPackages.stagingFull ];
+  };
+
+  wine-vst-run = require ./wine-run {
+    pname = "wine-vst";
+    paths = prev.lib.makeBinPath [ final.wine-vst ];
   };
 
   wine-vst = require ./wine-runtime {
@@ -177,11 +182,6 @@ in
     };
   };
 
-  wine-vst-run = require ./wine-run {
-    pname = "wine-vst";
-    wine = final.wine-vst;
-  };
-
   carla = require ./carla {
     inherit (prev) carla;
     wine = final.wine-vst;
@@ -194,6 +194,7 @@ in
 
   wineasio = require ./wineasio {
     wine = final.wine-vst;
+    libjack2 = prev.pipewire.jack;
   };
 
   wine-vst-wrapper = require ./wine-vst-wrapper {

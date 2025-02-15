@@ -38,6 +38,10 @@
       carla
       ildaeil
 
+      # plugin bridge
+      yabridge
+      yabridgectl
+
       # vst plugins
       calf
       surge-XT

@@ -3,10 +3,6 @@ _: _: prev: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });
 
-  dqlite = prev.dqlite.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [ prev.lz4.dev ];
-  });
-
   fcitx5 = prev.fcitx5.overrideAttrs (old: {
     src = prev.fetchFromGitHub {
       inherit (old.src) owner repo;

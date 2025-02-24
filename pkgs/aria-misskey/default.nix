@@ -4,7 +4,7 @@
   runCommand,
   fetchFromGitHub,
 
-  flutter327,
+  flutter329,
   rustPlatform,
   cargo,
   yq,
@@ -13,8 +13,8 @@ let
   source = fetchFromGitHub {
     owner = "poppingmoon";
     repo = "aria";
-    rev = "4d0d70f81d7f30bfd42530360e0308a8981a2836";
-    hash = "sha256-YdqGPmo4wU6dX4yDBs+cMEYDOP45MBe2KA6cWxqk3/g=";
+    rev = "7a6ec27c9c2f1a5bef0cc4ebff67833c76908478";
+    hash = "sha256-akIAJmeb4jiYhRCmf3XDrS8h8R3wdfOcpMJ5a9+XB3U=";
     fetchSubmodules = true;
   };
 
@@ -27,9 +27,9 @@ let
     patch -p1 -i ${./rust_lib_aria.patch}
   '';
 in
-flutter327.buildFlutterApplication rec {
+flutter329.buildFlutterApplication rec {
   pname = "aria";
-  version = "v1.0.0-beta.7";
+  version = "v1.0.0-beta.9";
   inherit src;
 
   pubspecLock =
@@ -43,16 +43,16 @@ flutter327.buildFlutterApplication rec {
   gitHashes = {
     "flutter_apns_only" = "sha256-5KlICoKqekSE4LCzd1MP+o8Ezq0xLZmzeAQZExXBalM=";
     "flutter_highlighting" = "sha256-YtCAFbFrSwjW4WRqMXWty60Q4GFVX0OTIBqn2GsLRj4=";
-    "flutter_html" = "sha256-/BrcXZ6im/Sb3UVbdlfjYV3R3lOzKdmoAWY4ikgoVRg=";
-    "flutter_launcher_icons" = "sha256-/oYrlXShHgB/5u694Fe3PY7kCksaqgX59S3YaQf71Ik=";
+    "flutter_html" = "sha256-/BrcXZ6im/Sb3UVbdlfjYV3R3lOzKdmoAWY4ikgoVRg=;";
     "highlighting" = "sha256-IedjKNGFBSbU4vu5x8GI28WL4uJ8B/kvw6iGkX2+uGg=";
     "image_compression" = "sha256-9RBjKId8TYdx3O0wT2We8FbCiJYkqJlyBY7TYDUxsMg=";
-    "mfm_parser" = "sha256-zi/K0R9mGy4Y/eLyZYEP0eEQSftprDsjyA/++t1AJdY=";
-    "misskey_dart" = "sha256-BzXgiejPWC6uJtNiEvGWQUPGM2kPxchQSnP0uSy9a1o=";
+    "material_off_icons" = "sha256-jMO1abOm1YgFAAbFaTFgTjrmQGW6d7Z1J4o2wTynto4=";
+    "mfm_parser" = "sha256-GJUTuX3cPYe3Weo5VzYVXJuvc0EmrLmxCGgStYfH1lk=";
+    "misskey_dart" = "sha256-SXHpV8ZeKAojgongzIyf28Yj2aK7s1j1cQoJ9lmojp8=";
     "receive_sharing_intent" = "sha256-8D5ZENARPZ7FGrdIErxOoV3Ao35/XoQ2tleegI42ZUY=";
     "tinycolor2" = "sha256-RGjhuX6487TJ2ofNdJS1FCMl6ciKU0qkGKg4yfkPE+w=";
     "twemoji_v2" = "sha256-Gi9PIMpw4NWkk357X+iZPUhzIKMDg5WdzTPHvJDBzSg=";
-    "webcrypto" = "sha256-9xZqJdgm9Ngv0fJwzIZJ0mHyPYMY8JsEh6nOm2RbYR0=";
+    "webcrypto" = "sha256-KXPJk/Da9LiM0q8URqGz5zAioHpJALlqbUNeZLNrNMY=";
   };
 
   targetFlutterPlatform = "linux";

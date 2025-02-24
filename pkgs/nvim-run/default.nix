@@ -44,7 +44,7 @@ let
     ]
   );
 in
-writeShellScriptBin "nvim-run" ''
+writeShellScriptBin "nvim" ''
   export PATH=$PATH:${PATH}
   exec -a nvim ${neovim}/bin/nvim "''${@}"
 ''

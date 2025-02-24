@@ -43,7 +43,6 @@
     nurl
 
     # editor
-    neovim
     editorconfig-core-c
     nvim-run
     devenv

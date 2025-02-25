@@ -73,6 +73,7 @@ let
     sep
     (run "Documents" "atril")
     (run "Music" "deadbeef")
+    (run "Video" "vlc")
     sep
     (run "Text Edit" "pluma")
     sep

@@ -526,6 +526,7 @@
           ".config/simple-scan"
           ".config/syncthing"
           ".config/tmux"
+          ".config/vlc"
           ".config/voicevox"
           ".config/whipper"
           ".config/xfce4"
@@ -546,6 +547,7 @@
           ".local/share/perl"
           ".local/share/pixelorama"
           ".local/share/remmina"
+          ".local/share/vlc"
           ".local/share/waydroid"
 
           # state

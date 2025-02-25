@@ -6,5 +6,6 @@
     easytag
     glib.out
     picard
+    vlc
   ];
 }

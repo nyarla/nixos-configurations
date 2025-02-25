@@ -57,6 +57,8 @@ let
     (run "Firefox" "firefox")
     (run "Thunderbird" "thunderbird")
     sep
+    (run "Aria" "aria")
+    sep
     (run "Google Chrome" "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime")
     sep
     (run "Telegram" "telegram-desktop")

@@ -31,8 +31,8 @@ let
     projectFile = "StabilityMatrix.Avalonia/StabilityMatrix.Avalonia.csproj";
     nugetDeps = ./deps.nix;
 
-    dotnet-runtime = dotnetCorePackages.dotnet_9.runtime;
-    dotnet-sdk = dotnetCorePackages.dotnet_9.sdk;
+    dotnet-runtime = dotnetCorePackages.runtime_9_0;
+    dotnet-sdk = dotnetCorePackages.sdk_9_0;
 
     preConfigure = ''
       dotnet tool uninstall husky

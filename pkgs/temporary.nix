@@ -3,14 +3,6 @@ _: _: prev: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });
 
-  fcitx5 = prev.fcitx5.overrideAttrs (old: {
-    src = prev.fetchFromGitHub {
-      inherit (old.src) owner repo;
-      rev = "5.1.12";
-      hash = "sha256-Jk7YY6nrY1Yn9KeNlRJbMF/fCMIlUVg/Elt7SymlK84=";
-    };
-  });
-
   fluent-icon-theme = prev.fluent-icon-theme.overrideAttrs (_: {
     version = "2025-02-11";
     src = prev.fetchFromGitHub {

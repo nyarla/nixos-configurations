@@ -52,6 +52,7 @@
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
             patches = [
+              ./patches/biome-workaround.patch
               ./patches/flutter-3.29.patch
             ];
             overlays = [

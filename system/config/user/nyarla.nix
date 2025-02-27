@@ -19,6 +19,7 @@
 
       # hardware
       "disk"
+      "i2c"
       "input"
       "networkmanager"
       "storage"

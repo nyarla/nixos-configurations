@@ -17,6 +17,7 @@ in
   };
 
   hardware = {
+    i2c.enable = true;
     intel-gpu-tools.enable = true;
     nvidia = {
       modesetting.enable = false;
@@ -57,6 +58,8 @@ in
       nvidia_x11 = nvidia;
       cudaPackages = pkgs.cudaPackages_12_1;
     })
+    ddcui
+    ddcutil
   ];
 
   # hardware.nvidia-container-toolkit.enable = true;

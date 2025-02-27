@@ -133,11 +133,11 @@ let
       (run "MuseScore" (jack "mscore"))
       sep
       (run "FamiStudio" "FamiStudio")
-
       sep
       (run "Carla" (jack "carla"))
       (run "Ildaeil" (jack "Ildaeil"))
       sep
+      (run "Synthesizer V Pro" (jack "bash /etc/nixos/dotfiles/files/scripts/synthv"))
       (run "VoiceVox" "voicevox")
       (run "OpenUtau" "OpenUtau")
     ])

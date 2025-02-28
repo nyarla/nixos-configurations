@@ -21,9 +21,9 @@
 
     # digital audio workstation
     bitwig-studio3
-    musescore
-    helio-workstation
     famistudio
+    helio-workstation
+    musescore
 
     # samples manager
     sononym-bin
@@ -32,6 +32,7 @@
     a2jmidid
     audiogridder
     carla
+    ildaeil
 
     # wine
     wineasio
@@ -39,40 +40,94 @@
     yabridgectl
     jackass
 
-    # plugins
-    ChowKick
+    # instruments
     adlplug
     aeolus
+    aeolus-stops
     ams
-    bespokesynth
+    ams-lv2
+    bespokesynth-with-vst2
+    bjumblr
     bristol
-    calf
+    chow-kick
     dexed
     drumgizmo
     drumkv1
-    fluidsynth
     fmsynth
-    freepats
     geonkick
     gnaural
     helm
     hydrogen
-    ildaeil
     industrializer
-    linuxsampler
+    librearp-lv2
+    ninjas2
+    odin2
     opnplug
     oxefmsynth
     padthv1
     qsynth
     samplv1
+    sfizz
     sorcer
     surge
     surge-XT
     synthv1
-    vcv-rack
+    tunefish
+    tunfish
+    vital
     x42-avldrums
     x42-gmsynth
     yoshimi
-    zyn-fusion
+    zynaddsubfx
+
+    # effects
+    aether-lv2
+    airwindows
+    artyFX
+    autotalent
+    bankstown-lv2
+    bchoppr
+    bolliedelayxt-lv2
+    boops
+    bs2b-lv2
+    bshapr
+    bslizr
+    caps
+    chow-tape-model
+    eq10q
+    fverb
+    gxmatcheq-lv2
+    gxpluginsl-lv2
+    infamousePlugins
+    kapitonov-plugins-pack
+    lsp-plugins
+    mod-distortion
+    molot-lite
+    mooSpace
+    neural-amp-modeler-lv2
+    noise-repellent
+    nova-filters
+    rkrlv2
+    talentedhack
+    tap-plugins
+    vocproc
+    x42-plugins
+    zam-plugins
+
+    # plugin
+    AMB-plugins
+    bschaffl
+    bsequencer
+    calf
+    fomp
+    mda_lv2
+    metersLv2
+    midi-trigger
+    mod-arpeggiator-lv2
+    plujain-ramp
+    vcv-rack
+
+    # assets
+    freepats
   ];
 }

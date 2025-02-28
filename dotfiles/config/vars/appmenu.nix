@@ -127,16 +127,23 @@ let
       (run "Aseprite" "aseprite")
     ])
     sep
-    (list "Music" (id "music") [
+    (list "DAW" (id "daw") [
       (run "Bitwig Studio" (jack "bitwig-studio"))
+      (run "Zrythm" (jack "flatpak run org.zrythm.Zrythm"))
       (run "Heilo Workstation" (jack "helio"))
       (run "MuseScore" (jack "mscore"))
       sep
       (run "FamiStudio" "FamiStudio")
       sep
+      (run "Sononym" (jack "sononym"))
+    ])
+    (list "Plugins" (id "plugins") [
       (run "Carla" (jack "carla"))
       (run "Ildaeil" (jack "Ildaeil"))
       sep
+      (run "AudioGridder" (jack "AudioGridderServer"))
+    ])
+    (list "VSinger" (id "vsynger") [
       (run "Synthesizer V Pro" (jack "bash /etc/nixos/dotfiles/files/scripts/synthv"))
       (run "VoiceVox" "voicevox")
       (run "OpenUtau" "OpenUtau")

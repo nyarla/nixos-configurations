@@ -51,6 +51,9 @@ in
 
   calibre = prev.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ prev.python3Packages.pycrypto ];
+    disableTests = [
+      "test_fts_search"
+    ];
   });
 
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
@@ -58,18 +61,11 @@ in
   flaresolverr = require ./flaresolverr-21hsmw { };
 
   labwc = prev.labwc.overrideAttrs (_: {
-    # 2025-02-03
-    src = prev.fetchFromGitHub {
-      owner = "labwc";
-      repo = "labwc";
-      rev = "ed4553fc7e36175fa160fd50914224da00fb1181";
-      hash = "sha256-DBtnJ/uR5U6BvrrnKGVw80m7D0KZpithhwLRiiZu5dQ=";
-    };
     patches = [
       (prev.fetchpatch {
         name = "text-input-v1.patch";
-        url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=54103c35c0e8859317e7455204d78fb606c494f9";
-        hash = "sha256-WJnbd6DXSYSccvyLiLIswpC3uBzsvGZ4BX8mxUl2b7Q=";
+        url = "https://aur.archlinux.org/cgit/aur.git/plain/0001-IME-support-text-input-v1.patch?h=labwc-im&id=62363809aff2bfdf032942bb0f0e6ca926cda5f6";
+        sha256 = "1r5rpxzgzynjbpfws6ji2s2sdg68riyq205n216hzkcqazgmddzg";
       })
     ];
   });

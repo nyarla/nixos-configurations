@@ -28,7 +28,7 @@ let
       nixd
       nodePackages.bash-language-server
       nodePackages.typescript-language-server
-      nodePackages.vscode-json-languageserver
+      nodePackages.vscode-langservers-extracted
       perlnavigator
       sqls
       tailwindcss-language-server

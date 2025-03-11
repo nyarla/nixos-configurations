@@ -561,6 +561,8 @@
           ".pki"
           ".thunderbird"
           ".var"
+          ".vst"
+          ".vst3"
 
           # credentials
           (secure ".fly")

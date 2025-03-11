@@ -17,7 +17,6 @@
   home.packages = with pkgs; [
     # jackd
     qjackctl
-    jack2Full
 
     # digital audio workstation
     bitwig-studio3
@@ -35,7 +34,6 @@
     ildaeil
 
     # wine
-    wineasio
     yabridge
     yabridgectl
     jackass

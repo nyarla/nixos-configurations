@@ -215,6 +215,8 @@ in
     paths = prev.lib.makeBinPath [ final.wine-vst ];
   };
 
+  wineasio = require ./wineasio { };
+
   wine-vst = require ./wine-runtime {
     inherit nixpkgs;
 
@@ -243,27 +245,6 @@ in
     inherit (final) carla;
     wine = final.wine-vst;
   };
-
-  wineasio =
-    let
-      mkJack2 =
-        pkgs:
-        pkgs.libjack2.overrideAttrs (self: {
-          postFixup =
-            self.postFixup
-            + ''
-              chmod +w $out/lib
-              cp -Pp ${pkgs.pipewire.jack}/lib/* $out/lib/
-            '';
-        });
-    in
-    require ./wineasio {
-      wine = final.wine-vst;
-      libjack2 = mkJack2 prev;
-      pkgsi686Linux = {
-        libjack2 = prev.pkgsi686Linux.pipewire.jack;
-      };
-    };
 
   wine-vst-wrapper = require ./wine-vst-wrapper {
     wine = final.wine-vst;

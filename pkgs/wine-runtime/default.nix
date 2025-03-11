@@ -105,22 +105,38 @@ let
   wineasioRuntime = wineasio.override { wine = wineRuntime; };
   wineasio-register = writeScriptBin "wineasio-register" ''
     if [[ ! -e drive_c ]]; then
-      echo 'This directory is not wine prefix' >&2; exit 1
+      echo 'This directory is not wine prefix!' >&2; exit 1
     fi
 
-    u32=${wineasioRuntime}/lib/wine/i386-unix/wineasio32.dll.so
-    w32=$(echo $u32 | sed -e 's|/i386-unix/wineasio32.dll.so|/i386-windows/wineasio32.dll|')
-    p32=drive_c/windows/system32/wineasio32.dll
+    case "''${1:-}" in
+      32)
+        [[ ! -e drive_c/windows/system32/wineasio32.dll ]] || chmod +w drive_c/windows/system32/wineasio32.dll
+        cp ${wineasioRuntime}/lib/wine/i386-unix/wineasio32.dll.so \
+          drive_c/windows/system32/wineasio32.dll
+        wine regsvr32 wineasio32.dll
+        ;;
 
-    [[ ! -e $p32 ]] || chmod +w $p32
-    cp $w32 $p32 && wine regsvr32 $u32
+      64)
+        [[ ! -e drive_c/windows/system32/wineasio64.dll ]] || chmod +w drive_c/windows/system32/wineasio64.dll
 
-    u64=${wineasioRuntime}/lib/wine/x86_64-unix/wineasio64.dll.so
-    w64=$(echo $u64 | sed -e 's|/x86_64-unix/wineasio64.dll.so|/x86_64-windows/wineasio64.dll|')
-    p64=drive_c/windows/syswow64/wineasio64.dll
+        cp ${wineasioRuntime}/lib/wine/x86_64-unix/wineasio64.dll.so \
+          drive_c/windows/system32/wineasio64.dll
 
-    [[ ! -e $p64 ]] || chmod +w $p64
-    cp $w64 $p64 && wine64 regsvr32 $u64
+        wine64 regsvr32 wineasio64.dll
+        ;;
+
+      wow)
+        [[ ! -e drive_c/windows/system32/wineasio32.dll ]] || chmod +w drive_c/winsows/syswow64/wineasio32.dll
+        cp ${wineasioRuntime}/lib/wine/i386-unix/wineasio32.dll.so \
+          drive_c/windows/syswow64/wineasio32.dll
+        wine regsvr32 wineasio32.dll
+        ;;
+
+      *)
+        echo "Usage: wineasio-register [32|64|wow]";
+        exit 0;
+        ;;
+    esac
   '';
 in
 buildEnv {

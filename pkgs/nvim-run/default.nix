@@ -46,5 +46,10 @@ let
 in
 writeShellScriptBin "nvim" ''
   export PATH=$PATH:${PATH}
+
+  if [[ -e $HOME/.config/llm/env ]]; then
+    eval "$(cat $HOME/.config/llm/env)"
+  fi
+
   exec -a nvim ${neovim}/bin/nvim "''${@}"
 ''

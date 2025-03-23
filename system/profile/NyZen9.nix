@@ -25,6 +25,7 @@
     ../config/linux/hardware.nix
     ../config/linux/lodpi.nix
     ../config/linux/optical.nix
+    ../config/linux/optimize.nix
     ../config/linux/process.nix
     ../config/linux/waydroid.nix
     ../config/networking/agent.nix

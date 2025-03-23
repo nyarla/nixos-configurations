@@ -209,23 +209,37 @@ in
         "hosts deny" = "0.0.0.0/0";
         "guest account" = "nobody";
         "map to guest" = "bad user";
+        "acl allow execute always" = "yes";
       };
 
       Downloads = {
         path = "/persist/home/nyarla/Downloads/KVM";
         browsable = "yes";
-        "create mask" = "0644";
+        "create mask" = "0774";
+        "force create mask" = "0774";
         "directory mask" = "0755";
         "force group" = "users";
         "force user" = "nyarla";
         "guest ok" = "false";
-        "read only" = "yes";
+        "read only" = "no";
+      };
+
+      Data = {
+        path = "/persist/home/nyarla/Documents/DAW";
+        "create mask" = "0774";
+        "force create mask" = "0774";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "false";
+        "read only" = "no";
       };
 
       DAW = {
-        path = "/data/Sources/DAW";
+        path = "/persist/home/nyarla/Sources/DAW";
         browsable = "yes";
-        "create mask" = "0644";
+        "create mask" = "0774";
+        "force create mask" = "0774";
         "directory mask" = "0755";
         "force group" = "users";
         "force user" = "nyarla";

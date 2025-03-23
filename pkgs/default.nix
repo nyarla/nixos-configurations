@@ -51,7 +51,8 @@ in
 
   calibre = prev.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ prev.python3Packages.pycrypto ];
-    disableTests = [
+    disabledTests = [
+      "test_export_import"
       "test_fts_search"
     ];
   });

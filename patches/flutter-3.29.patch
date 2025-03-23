@@ -1,11 +1,89 @@
 # This patch borrowed from https://github.com/NixOS/nixpkgs/pull/384617
-From 94e6aac37b34897db996d483c38092e018c34550 Mon Sep 17 00:00:00 2001
+From bbc8c743a647fdac99583b0eaa78edbae3c186a9 Mon Sep 17 00:00:00 2001
 From: emaryn <197520219+emaryn@users.noreply.github.com>
-Date: Sun, 23 Feb 2025 23:08:28 +0000
-Subject: [PATCH 1/4] flutter329: init at 3.29.0
+Date: Wed, 12 Mar 2025 17:23:16 +0000
+Subject: [PATCH 1/3] jellyflix: pin to flutter327
 
 ---
- .../compilers/flutter/engine/source.nix       |   54 +-
+ pkgs/by-name/je/jellyflix/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/je/jellyflix/package.nix b/pkgs/by-name/je/jellyflix/package.nix
+index 281571d67429b1..5a2b86e9049445 100644
+--- a/pkgs/by-name/je/jellyflix/package.nix
++++ b/pkgs/by-name/je/jellyflix/package.nix
+@@ -1,12 +1,12 @@
+ {
+   lib,
+-  flutter,
++  flutter327,
+   fetchFromGitHub,
+   makeDesktopItem,
+   copyDesktopItems,
+   mpv-unwrapped,
+ }:
+-flutter.buildFlutterApplication rec {
++flutter327.buildFlutterApplication rec {
+   pname = "jellyflix";
+   version = "1.0.0";
+ 
+
+From b8e982fb03d7faa34233ac8763ac8fa72bac878a Mon Sep 17 00:00:00 2001
+From: emaryn <emaryn@users.noreply.github.com>
+Date: Sat, 15 Mar 2025 12:54:09 +0000
+Subject: [PATCH 2/3] dart: 3.7.1 -> 3.7.2
+
+---
+ pkgs/development/compilers/dart/sources.nix | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/pkgs/development/compilers/dart/sources.nix b/pkgs/development/compilers/dart/sources.nix
+index d591326858f7ac..5fcc0a68849cd7 100644
+--- a/pkgs/development/compilers/dart/sources.nix
++++ b/pkgs/development/compilers/dart/sources.nix
+@@ -1,27 +1,27 @@
+ let
+-  version = "3.7.1";
++  version = "3.7.2";
+ in
+ { fetchurl }:
+ {
+   versionUsed = version;
+   "${version}-x86_64-darwin" = fetchurl {
+     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-macos-x64-release.zip";
+-    sha256 = "0bldcn4j99cv2a6g3s263929r7wqhjaxylwm26nd2jdfnqbmjxm2";
++    sha256 = "1bj9libb4bnmgm4544876xz512i1nvp73fbxrs4jz0xfp398c206";
+   };
+   "${version}-aarch64-darwin" = fetchurl {
+     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-macos-arm64-release.zip";
+-    sha256 = "191jig17mnk0gjys2xd0qr267idjv2h50qnaz0cciflj60b2az7m";
++    sha256 = "0z35ndh7mdaz1dnd2yvv5g50jbfy563yclgfjlx9k400b7cn6vhh";
+   };
+   "${version}-aarch64-linux" = fetchurl {
+     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-linux-arm64-release.zip";
+-    sha256 = "1zj7k2bczb9yy63vjj8xm3ljd9sx9z77awf4wdvv6y02gnzxv4ga";
++    sha256 = "1a2cwr3qyy8paxjhgb1xwcv4rm1ml0dfv1byl5zynmz0c6nwqlil";
+   };
+   "${version}-x86_64-linux" = fetchurl {
+     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-linux-x64-release.zip";
+-    sha256 = "0wgfl118j7s7xjz4i0m4gyzxzsjv7x9wq9xr2m036l4ngng9a4r8";
++    sha256 = "133q4jz5wszs0bja7pnfgjd7mvawdspgz866ip3m0v351zbzs5n2";
+   };
+   "${version}-i686-linux" = fetchurl {
+     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-linux-ia32-release.zip";
+-    sha256 = "1zj60jqpnv1apl4439vvxxrgfvg3azwaaizdmq8chfmrg97vr85x";
++    sha256 = "0y3slablp94lbcm9bafg0p407axrdqxf33vpxc420ifqczpidmh2";
+   };
+ }
+
+From c22603e4623ce59292eb97cf58b12857583cb651 Mon Sep 17 00:00:00 2001
+From: emaryn <197520219+emaryn@users.noreply.github.com>
+Date: Sun, 23 Feb 2025 23:08:28 +0000
+Subject: [PATCH 3/3] flutter329: init at 3.29.2
+
+---
+ .../compilers/flutter/engine/package.nix      |   12 +-
+ .../compilers/flutter/engine/source.nix       |   55 +-
  .../development/compilers/flutter/flutter.nix |    6 +-
  .../flutter/update/get-engine-hashes.nix.in   |    2 +-
  .../compilers/flutter/update/update.py        |    8 +-
@@ -15,15 +93,45 @@ Subject: [PATCH 1/4] flutter329: init at 3.29.0
  .../fix-ios-build-xcode-backend-sh.patch      |   69 ++
  .../gradle-flutter-tools-wrapper.patch        |   44 +
  pkgs/top-level/all-packages.nix               |    1 +
- 10 files changed, 1259 insertions(+), 22 deletions(-)
+ 11 files changed, 1271 insertions(+), 23 deletions(-)
  create mode 100644 pkgs/development/compilers/flutter/versions/3_29/data.json
  create mode 100644 pkgs/development/compilers/flutter/versions/3_29/patches/deregister-pub-dependencies-artifact.patch
  create mode 100644 pkgs/development/compilers/flutter/versions/3_29/patches/disable-auto-update.patch
  create mode 100644 pkgs/development/compilers/flutter/versions/3_29/patches/fix-ios-build-xcode-backend-sh.patch
  create mode 100644 pkgs/development/compilers/flutter/versions/3_29/patches/gradle-flutter-tools-wrapper.patch
 
+diff --git a/pkgs/development/compilers/flutter/engine/package.nix b/pkgs/development/compilers/flutter/engine/package.nix
+index 96c4717bb8bd29..e18c31ccdbec49 100644
+--- a/pkgs/development/compilers/flutter/engine/package.nix
++++ b/pkgs/development/compilers/flutter/engine/package.nix
+@@ -174,7 +174,11 @@ stdenv.mkDerivation (finalAttrs: {
+ 
+   nativeBuildInputs =
+     [
+-      python3
++      (python3.withPackages (
++        ps: with ps; [
++          pyyaml
++        ]
++      ))
+       (tools.vpython python3)
+       gitMinimal
+       pkg-config
+@@ -295,6 +299,12 @@ stdenv.mkDerivation (finalAttrs: {
+ 
+     export TERM=dumb
+ 
++    ${lib.optionalString (lib.versionAtLeast flutterVersion "3.29") ''
++      # ValueError: ZIP does not support timestamps before 1980
++      substituteInPlace src/flutter/build/zip.py \
++        --replace-fail "zipfile.ZipFile(args.output, 'w', zipfile.ZIP_DEFLATED)" "zipfile.ZipFile(args.output, 'w', zipfile.ZIP_DEFLATED, strict_timestamps=False)"
++    ''}
++
+     ninja -C $out/out/$outName -j$NIX_BUILD_CORES
+ 
+     runHook postBuild
 diff --git a/pkgs/development/compilers/flutter/engine/source.nix b/pkgs/development/compilers/flutter/engine/source.nix
-index f20c171799ebbb..f9c3e8e5c43064 100644
+index f20c171799ebbb..989953ce9d1f46 100644
 --- a/pkgs/development/compilers/flutter/engine/source.nix
 +++ b/pkgs/development/compilers/flutter/engine/source.nix
 @@ -48,7 +48,7 @@ runCommand "flutter-engine-source-${version}-${buildPlatform.system}-${targetPla
@@ -31,11 +139,11 @@ index f20c171799ebbb..f9c3e8e5c43064 100644
        solutions = [{
          "managed": False,
 -        "name": "src/flutter",
-+        "name": "${lib.optionalString (lib.versionAtLeast version "3.29") "engine/"}src/flutter",
++        "name": "${lib.optionalString (lib.versionAtLeast flutterVersion "3.29") "engine/"}src/flutter",
          "url": "${url}",
          "custom_vars": {
            "download_fuchsia_deps": False,
-@@ -86,23 +86,43 @@ runCommand "flutter-engine-source-${version}-${buildPlatform.system}-${targetPla
+@@ -86,23 +86,44 @@ runCommand "flutter-engine-source-${version}-${buildPlatform.system}-${targetPla
        (hashes."${buildPlatform.system}" or { })."${targetPlatform.system}"
          or (throw "Hash not set for ${targetPlatform.system} on ${buildPlatform.system}");
    }
@@ -54,7 +162,7 @@ index f20c171799ebbb..f9c3e8e5c43064 100644
 -    cd $out
 +    ''
 +    + (
-+      if lib.versionAtLeast version "3.29" then
++      if lib.versionAtLeast flutterVersion "3.29" then
 +        ''
 +          mkdir -p source
 +          cp $gclient source/.gclient
@@ -75,8 +183,9 @@ index f20c171799ebbb..f9c3e8e5c43064 100644
 +      export PATH=$PATH:$depot_tools
 +      python3 $depot_tools/gclient.py sync --no-history --shallow --nohooks -j $NIX_BUILD_CORES
 +    ''
-+    + lib.optionalString (lib.versionAtLeast version "3.29") ''
-+      mv engine $out
++    + lib.optionalString (lib.versionAtLeast flutterVersion "3.29") ''
++      cp -r engine/src/flutter/third_party/* engine/src/flutter/engine/src/flutter/third_party/
++      mv engine/src/flutter/engine $out
 +    ''
 +    + ''
 +      find $out -name '.git' -exec rm -rf {} \; || true
@@ -160,40 +269,40 @@ index 5b63cec37f3740..ae61288d3720aa 100755
              f"Couldn't find Engine hash for Flutter version: {flutter_version}")
 diff --git a/pkgs/development/compilers/flutter/versions/3_29/data.json b/pkgs/development/compilers/flutter/versions/3_29/data.json
 new file mode 100644
-index 00000000000000..5b237daaf1b786
+index 00000000000000..dbf02881c6d97b
 --- /dev/null
 +++ b/pkgs/development/compilers/flutter/versions/3_29/data.json
 @@ -0,0 +1,1046 @@
 +{
-+  "version": "3.29.0",
-+  "engineVersion": "f73bfc4522dd0bc87bbcdb4bb3088082755c5e87",
++  "version": "3.29.2",
++  "engineVersion": "18b71d647a292a980abb405ac7d16fe1f0b20434",
 +  "engineSwiftShaderHash": "sha256-mRLCvhNkmHz7Rv6GzXkY7OB1opBSq+ATWZ466qZdgto=",
 +  "engineSwiftShaderRev": "2fa7e9b99ae4e70ea5ae2cc9c8d3afb43391384f",
 +  "channel": "stable",
 +  "engineHashes": {
 +    "aarch64-linux": {
-+      "aarch64-linux": "sha256-ZgKMJiNaNin+/97ydGqWqvwePAxgT+4Z5hLZz3hb1go=",
-+      "x86_64-linux": "sha256-ZgKMJiNaNin+/97ydGqWqvwePAxgT+4Z5hLZz3hb1go="
++      "aarch64-linux": "sha256-z/XGpAQg7lsvCnQKV5tDkjijb4SfcOCxfUATDLp2s7Q=",
++      "x86_64-linux": "sha256-z/XGpAQg7lsvCnQKV5tDkjijb4SfcOCxfUATDLp2s7Q="
 +    },
 +    "x86_64-linux": {
-+      "aarch64-linux": "sha256-Kvz/rIBIDtaw+5pBKWuo5IclhtklrH8gyroTiKAq0rs=",
-+      "x86_64-linux": "sha256-Kvz/rIBIDtaw+5pBKWuo5IclhtklrH8gyroTiKAq0rs="
++      "aarch64-linux": "sha256-zllQvfvtrfLjvJWpRbT6fG4dZWD41Jcv+HnninlwlEg=",
++      "x86_64-linux": "sha256-zllQvfvtrfLjvJWpRbT6fG4dZWD41Jcv+HnninlwlEg="
 +    }
 +  },
-+  "dartVersion": "3.7.0",
++  "dartVersion": "3.7.2",
 +  "dartHash": {
-+    "x86_64-linux": "sha256-Dyh13QHk5XfTCiIwcskT11Y5GvjHopDfJG+6BPx9Bow=",
-+    "aarch64-linux": "sha256-HtM9HWBRmOUej6cWu2JRLTyUGgqsSn6IxlACCw20Ci8=",
-+    "x86_64-darwin": "sha256-p/0lU69n6/vYN0xQIqjhIIm2bi8H/K6TDs8P7ryxxyA=",
-+    "aarch64-darwin": "sha256-/gCMcdEqUP9kDObVYXVvN5r9cwiBaoJ0xcNLCm23Y8Y="
++    "x86_64-linux": "sha256-ClgSWEu0+lLcPIlabVvBY197/c/kyio6Zoq3KppbW3Y=",
++    "aarch64-linux": "sha256-NACnkq/pVMiWxfAt4+bkUjM0ZLwBWk5GQrbc9HGFE4k=",
++    "x86_64-darwin": "sha256-liZz9Bj1RFH7vmEpdMiJ9/h3Yut/o0qEBvydq8dGdKs=",
++    "aarch64-darwin": "sha256-544u8sIlQudxjBCSZlnQESLsOOdWp5h4lVTaY9P+pRQ="
 +  },
-+  "flutterHash": "sha256-GlcseCJh0SDMPuAzB6QZh2W6se56f8+F3z1uai/kd/k=",
++  "flutterHash": "sha256-rHnHMpSiVhwed4TTt6nPrq0IthjXQanjQg/VDcT2Zqw=",
 +  "artifactHashes": {
 +    "android": {
-+      "aarch64-darwin": "sha256-ttfYJfyJbCczqbzFOa4mypZwBUOMX+xVzT/27JMhR70=",
-+      "aarch64-linux": "sha256-M7jDwRSgnBRE7od/C2xdDuBS3N2bMBRmzz4LfxUdqHw=",
-+      "x86_64-darwin": "sha256-ttfYJfyJbCczqbzFOa4mypZwBUOMX+xVzT/27JMhR70=",
-+      "x86_64-linux": "sha256-M7jDwRSgnBRE7od/C2xdDuBS3N2bMBRmzz4LfxUdqHw="
++      "aarch64-darwin": "sha256-mmgqWZ8ooAh8a0jPzfH4Bh2naskZ+jpd7HuIxR0BlD0=",
++      "aarch64-linux": "sha256-sjtXJ9C33LmboGIInsINLgTg/Xlpj1Uul9eafQZmAiQ=",
++      "x86_64-darwin": "sha256-mmgqWZ8ooAh8a0jPzfH4Bh2naskZ+jpd7HuIxR0BlD0=",
++      "x86_64-linux": "sha256-sjtXJ9C33LmboGIInsINLgTg/Xlpj1Uul9eafQZmAiQ="
 +    },
 +    "fuchsia": {
 +      "aarch64-darwin": "sha256-eu0BERdz53CkSexbpu3KA7O6Q4g0s9SGD3t1Snsk3Fk=",
@@ -202,38 +311,38 @@ index 00000000000000..5b237daaf1b786
 +      "x86_64-linux": "sha256-eu0BERdz53CkSexbpu3KA7O6Q4g0s9SGD3t1Snsk3Fk="
 +    },
 +    "ios": {
-+      "aarch64-darwin": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg=",
-+      "aarch64-linux": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg=",
-+      "x86_64-darwin": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg=",
-+      "x86_64-linux": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg="
++      "aarch64-darwin": "sha256-P/B4DEwpCcQaoxCjUZ39J9ygwPg3e9aizHsKoZWcfms=",
++      "aarch64-linux": "sha256-P/B4DEwpCcQaoxCjUZ39J9ygwPg3e9aizHsKoZWcfms=",
++      "x86_64-darwin": "sha256-P/B4DEwpCcQaoxCjUZ39J9ygwPg3e9aizHsKoZWcfms=",
++      "x86_64-linux": "sha256-P/B4DEwpCcQaoxCjUZ39J9ygwPg3e9aizHsKoZWcfms="
 +    },
 +    "linux": {
-+      "aarch64-darwin": "sha256-h6vdLUCGZ+cPwd+oWtiTNhwb1pbzsvASUKiC/QYY6KY=",
-+      "aarch64-linux": "sha256-h6vdLUCGZ+cPwd+oWtiTNhwb1pbzsvASUKiC/QYY6KY=",
-+      "x86_64-darwin": "sha256-LpIxVVCPmz0XEnyubEi5uy0bDJ+Wna86RPEjFN7saes=",
-+      "x86_64-linux": "sha256-LpIxVVCPmz0XEnyubEi5uy0bDJ+Wna86RPEjFN7saes="
++      "aarch64-darwin": "sha256-CXFsXdsit2L2Op2Tj3EbQYNc/GZacEdg/VPqkd13tXU=",
++      "aarch64-linux": "sha256-CXFsXdsit2L2Op2Tj3EbQYNc/GZacEdg/VPqkd13tXU=",
++      "x86_64-darwin": "sha256-KB/t+SZ7JEWdCbYVtRBzDThvrBnKpcy4JIU/9bXnFX8=",
++      "x86_64-linux": "sha256-KB/t+SZ7JEWdCbYVtRBzDThvrBnKpcy4JIU/9bXnFX8="
 +    },
 +    "macos": {
-+      "aarch64-darwin": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw=",
-+      "aarch64-linux": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw=",
-+      "x86_64-darwin": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw=",
-+      "x86_64-linux": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw="
++      "aarch64-darwin": "sha256-yi2JQBLMqWWEVWREY9xD0YMiH8Kv3PZbGSktkBLDqzY=",
++      "aarch64-linux": "sha256-yi2JQBLMqWWEVWREY9xD0YMiH8Kv3PZbGSktkBLDqzY=",
++      "x86_64-darwin": "sha256-yi2JQBLMqWWEVWREY9xD0YMiH8Kv3PZbGSktkBLDqzY=",
++      "x86_64-linux": "sha256-yi2JQBLMqWWEVWREY9xD0YMiH8Kv3PZbGSktkBLDqzY="
 +    },
 +    "universal": {
-+      "aarch64-darwin": "sha256-cI5RreWNaxbARQyWtgpM08BiGO4uo/cpXccOOhxMehA=",
-+      "aarch64-linux": "sha256-53rA7pf0Y8leu50eRV+KZGLwoNp6tMt7EvWE0bV5IcY=",
-+      "x86_64-darwin": "sha256-NLmED/8rcCr+wgfM17hPhi4+9l2be4CfolWwsDGUFnI=",
-+      "x86_64-linux": "sha256-FVIfrN14sVbSSiblin9ClDG+tKjdrtXnb83SgQGMxhQ="
++      "aarch64-darwin": "sha256-ly86Bj2cwPPWSpoJQieoebBVqrPpaU0+vAeSwEKWP40=",
++      "aarch64-linux": "sha256-xvV9OuucGX38h0lu05Jd+fzuqihX8fWgvXLXQjhynJg=",
++      "x86_64-darwin": "sha256-zJC1FYWoVVxzINty1uyZq7XjWqClHdBfYDIgM0cGtX8=",
++      "x86_64-linux": "sha256-iTDrIiiOawWf6ciFHmUwciRv3MXdOrRkueJq7pSAdYo="
 +    },
 +    "web": {
-+      "aarch64-darwin": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo=",
-+      "aarch64-linux": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo=",
-+      "x86_64-darwin": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo=",
-+      "x86_64-linux": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo="
++      "aarch64-darwin": "sha256-l54FJrths/m1chjSeKMoPhcuntnjSXR96jNHj87e980=",
++      "aarch64-linux": "sha256-l54FJrths/m1chjSeKMoPhcuntnjSXR96jNHj87e980=",
++      "x86_64-darwin": "sha256-l54FJrths/m1chjSeKMoPhcuntnjSXR96jNHj87e980=",
++      "x86_64-linux": "sha256-l54FJrths/m1chjSeKMoPhcuntnjSXR96jNHj87e980="
 +    },
 +    "windows": {
-+      "x86_64-darwin": "sha256-GGQ9PwCc72VGJ8C8G+R33hmTIlzYPc/v4D12TN2PDKg=",
-+      "x86_64-linux": "sha256-GGQ9PwCc72VGJ8C8G+R33hmTIlzYPc/v4D12TN2PDKg="
++      "x86_64-darwin": "sha256-oaKE+kbnItsKy6fw8D7K5DLPIcDgD5vG3kht7l4QBgM=",
++      "x86_64-linux": "sha256-oaKE+kbnItsKy6fw8D7K5DLPIcDgD5vG3kht7l4QBgM="
 +    }
 +  },
 +  "pubspecLock": {
@@ -1399,10 +1508,10 @@ index 00000000000000..de6080efbba8d3
 ++
 ++includeBuild(dir)
 diff --git a/pkgs/top-level/all-packages.nix b/pkgs/top-level/all-packages.nix
-index 0045cd6a98edad..2aaf1756df0630 100644
+index 8027a21d6b8007..2ccce2f815331a 100644
 --- a/pkgs/top-level/all-packages.nix
 +++ b/pkgs/top-level/all-packages.nix
-@@ -5726,6 +5726,7 @@ with pkgs;
+@@ -5720,6 +5720,7 @@ with pkgs;
    flutterPackages-source = recurseIntoAttrs (callPackage ../development/compilers/flutter { useNixpkgsEngine = true; });
    flutterPackages = flutterPackages-bin;
    flutter = flutterPackages.stable;
@@ -1410,266 +1519,3 @@ index 0045cd6a98edad..2aaf1756df0630 100644
    flutter327 = flutterPackages.v3_27;
    flutter326 = flutterPackages.v3_26;
    flutter324 = flutterPackages.v3_24;
-
-From 2562eb81791dd67f2fe2067fb83b6a218536b04a Mon Sep 17 00:00:00 2001
-From: emaryn <emaryn@users.noreply.github.com>
-Date: Fri, 7 Mar 2025 06:19:36 +0800
-Subject: [PATCH 2/4] dart: 3.6.0 -> 3.7.0
-
----
- pkgs/development/compilers/dart/sources.nix | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/pkgs/development/compilers/dart/sources.nix b/pkgs/development/compilers/dart/sources.nix
-index 064b39575c4f5b..c1e5b2be6a8258 100644
---- a/pkgs/development/compilers/dart/sources.nix
-+++ b/pkgs/development/compilers/dart/sources.nix
-@@ -1,27 +1,27 @@
- let
--  version = "3.6.0";
-+  version = "3.7.0";
- in
- { fetchurl }:
- {
-   versionUsed = version;
-   "${version}-x86_64-darwin" = fetchurl {
-     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-macos-x64-release.zip";
--    sha256 = "0avky36jmknnp3jwz4p0yz5yv8wqwl0v7rhv0s4v75r9v6mv2ndq";
-+    sha256 = "1xfphfyawnw9v9f8rmbp02bpnqyrm83jv6d1xdnxqlh58bdcj0fn";
-   };
-   "${version}-aarch64-darwin" = fetchurl {
-     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-macos-arm64-release.zip";
--    sha256 = "1802lx2ijpi4lkbbnvlkk1swn579rpbnmxmvghz6flxa99acdnqv";
-+    sha256 = "1fv4d4xjpl3sqq33ax4qkcp0y9m3wm3lzkyz69c0pwy5xds7rzcv";
-   };
-   "${version}-aarch64-linux" = fetchurl {
-     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-linux-arm64-release.zip";
--    sha256 = "1gz7ai977ynl554rplfjnd585q5m429ax51js3806w4ch07z30hg";
-+    sha256 = "0vv2kmphx1vddgp9q6kv8z5f2bsb5dghsjbidp9318861ny9m13w";
-   };
-   "${version}-x86_64-linux" = fetchurl {
-     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-linux-x64-release.zip";
--    sha256 = "18smc4nj77dvsg99mk69d0h1y9cp3914zjdbimhp5v0ydr1zy54f";
-+    sha256 = "03dqg2wwnn01jyh869lhccik6g1ksxf5wxwpqmynk8b42dpmlyrn";
-   };
-   "${version}-i686-linux" = fetchurl {
-     url = "https://storage.googleapis.com/dart-archive/channels/stable/release/${version}/sdk/dartsdk-linux-ia32-release.zip";
--    sha256 = "0k8ikz0rwhbgx6gdnxysikm8zcv3k6gf8d3a47wb5xx9dhgyk3vw";
-+    sha256 = "0bnm0qdy1hfz09nv9cz8ngnngr0irhkcxgkmgmdq408gfa1q16fn";
-   };
- }
-
-From 91816c75ae3c5aa15239da7e9eb310f25bd3622b Mon Sep 17 00:00:00 2001
-From: emaryn <emaryn@users.noreply.github.com>
-Date: Fri, 7 Mar 2025 11:45:28 +0800
-Subject: [PATCH 3/4] flutter329: fix build
-
----
- .../development/compilers/flutter/engine/package.nix | 12 +++++++++++-
- pkgs/development/compilers/flutter/engine/source.nix |  9 +++++----
- .../compilers/flutter/versions/3_29/data.json        |  8 ++++----
- 3 files changed, 20 insertions(+), 9 deletions(-)
-
-diff --git a/pkgs/development/compilers/flutter/engine/package.nix b/pkgs/development/compilers/flutter/engine/package.nix
-index 4c10c665b02340..a340dc0c9172b7 100644
---- a/pkgs/development/compilers/flutter/engine/package.nix
-+++ b/pkgs/development/compilers/flutter/engine/package.nix
-@@ -174,7 +174,11 @@ stdenv.mkDerivation (finalAttrs: {
- 
-   nativeBuildInputs =
-     [
--      python3
-+      (python3.withPackages (
-+        ps: with ps; [
-+          pyyaml
-+        ]
-+      ))
-       (tools.vpython python3)
-       gitMinimal
-       pkg-config
-@@ -295,6 +299,12 @@ stdenv.mkDerivation (finalAttrs: {
- 
-     export TERM=dumb
- 
-+    ${lib.optionalString (lib.versionAtLeast flutterVersion "3.29") ''
-+      # ValueError: ZIP does not support timestamps before 1980
-+      substituteInPlace src/flutter/build/zip.py \
-+        --replace-fail "zipfile.ZipFile(args.output, 'w', zipfile.ZIP_DEFLATED)" "zipfile.ZipFile(args.output, 'w', zipfile.ZIP_DEFLATED, strict_timestamps=False)"
-+    ''}
-+
-     ninja -C $out/out/$outName -j$NIX_BUILD_CORES
- 
-     runHook postBuild
-diff --git a/pkgs/development/compilers/flutter/engine/source.nix b/pkgs/development/compilers/flutter/engine/source.nix
-index f9c3e8e5c43064..989953ce9d1f46 100644
---- a/pkgs/development/compilers/flutter/engine/source.nix
-+++ b/pkgs/development/compilers/flutter/engine/source.nix
-@@ -48,7 +48,7 @@ runCommand "flutter-engine-source-${version}-${buildPlatform.system}-${targetPla
-     gclient = writeText "flutter-engine-${version}.gclient" ''
-       solutions = [{
-         "managed": False,
--        "name": "${lib.optionalString (lib.versionAtLeast version "3.29") "engine/"}src/flutter",
-+        "name": "${lib.optionalString (lib.versionAtLeast flutterVersion "3.29") "engine/"}src/flutter",
-         "url": "${url}",
-         "custom_vars": {
-           "download_fuchsia_deps": False,
-@@ -94,7 +94,7 @@ runCommand "flutter-engine-source-${version}-${buildPlatform.system}-${targetPla
- 
-     ''
-     + (
--      if lib.versionAtLeast version "3.29" then
-+      if lib.versionAtLeast flutterVersion "3.29" then
-         ''
-           mkdir -p source
-           cp $gclient source/.gclient
-@@ -112,8 +112,9 @@ runCommand "flutter-engine-source-${version}-${buildPlatform.system}-${targetPla
-       export PATH=$PATH:$depot_tools
-       python3 $depot_tools/gclient.py sync --no-history --shallow --nohooks -j $NIX_BUILD_CORES
-     ''
--    + lib.optionalString (lib.versionAtLeast version "3.29") ''
--      mv engine $out
-+    + lib.optionalString (lib.versionAtLeast flutterVersion "3.29") ''
-+      cp -r engine/src/flutter/third_party/* engine/src/flutter/engine/src/flutter/third_party/
-+      mv engine/src/flutter/engine $out
-     ''
-     + ''
-       find $out -name '.git' -exec rm -rf {} \; || true
-diff --git a/pkgs/development/compilers/flutter/versions/3_29/data.json b/pkgs/development/compilers/flutter/versions/3_29/data.json
-index 5b237daaf1b786..9aa85820875eb4 100644
---- a/pkgs/development/compilers/flutter/versions/3_29/data.json
-+++ b/pkgs/development/compilers/flutter/versions/3_29/data.json
-@@ -6,12 +6,12 @@
-   "channel": "stable",
-   "engineHashes": {
-     "aarch64-linux": {
--      "aarch64-linux": "sha256-ZgKMJiNaNin+/97ydGqWqvwePAxgT+4Z5hLZz3hb1go=",
--      "x86_64-linux": "sha256-ZgKMJiNaNin+/97ydGqWqvwePAxgT+4Z5hLZz3hb1go="
-+      "aarch64-linux": "sha256-oAMVM1jA+Pubrs0ulDvsIRQY4kenZHW5ly1BjSXFcPI=",
-+      "x86_64-linux": "sha256-oAMVM1jA+Pubrs0ulDvsIRQY4kenZHW5ly1BjSXFcPI="
-     },
-     "x86_64-linux": {
--      "aarch64-linux": "sha256-Kvz/rIBIDtaw+5pBKWuo5IclhtklrH8gyroTiKAq0rs=",
--      "x86_64-linux": "sha256-Kvz/rIBIDtaw+5pBKWuo5IclhtklrH8gyroTiKAq0rs="
-+      "aarch64-linux": "sha256-it1ax/iE0heyMm7NU4cy4N7Mn0ryBNs/e9KeHhfBGZo=",
-+      "x86_64-linux": "sha256-it1ax/iE0heyMm7NU4cy4N7Mn0ryBNs/e9KeHhfBGZo="
-     }
-   },
-   "dartVersion": "3.7.0",
-
-From 00ccf7d572608869689c54c118da3f13d2ca478d Mon Sep 17 00:00:00 2001
-From: emaryn <197520219+emaryn@users.noreply.github.com>
-Date: Fri, 7 Mar 2025 17:52:24 +0000
-Subject: [PATCH 4/4] flutter329: 3.29.0 -> 3.29.1
-
----
- .../compilers/flutter/versions/3_29/data.json | 66 +++++++++----------
- 1 file changed, 33 insertions(+), 33 deletions(-)
-
-diff --git a/pkgs/development/compilers/flutter/versions/3_29/data.json b/pkgs/development/compilers/flutter/versions/3_29/data.json
-index 9aa85820875eb4..4c41cf2eac9226 100644
---- a/pkgs/development/compilers/flutter/versions/3_29/data.json
-+++ b/pkgs/development/compilers/flutter/versions/3_29/data.json
-@@ -1,17 +1,17 @@
- {
--  "version": "3.29.0",
--  "engineVersion": "f73bfc4522dd0bc87bbcdb4bb3088082755c5e87",
-+  "version": "3.29.1",
-+  "engineVersion": "871f65ac1bf129edb222c3293a636ff4b67534a6",
-   "engineSwiftShaderHash": "sha256-mRLCvhNkmHz7Rv6GzXkY7OB1opBSq+ATWZ466qZdgto=",
-   "engineSwiftShaderRev": "2fa7e9b99ae4e70ea5ae2cc9c8d3afb43391384f",
-   "channel": "stable",
-   "engineHashes": {
-     "aarch64-linux": {
--      "aarch64-linux": "sha256-oAMVM1jA+Pubrs0ulDvsIRQY4kenZHW5ly1BjSXFcPI=",
--      "x86_64-linux": "sha256-oAMVM1jA+Pubrs0ulDvsIRQY4kenZHW5ly1BjSXFcPI="
-+      "aarch64-linux": "sha256-bB7dqrL9R1JQ0MfWKLZ2xQyYiT177KDouNb3ltdWVoo=",
-+      "x86_64-linux": "sha256-bB7dqrL9R1JQ0MfWKLZ2xQyYiT177KDouNb3ltdWVoo="
-     },
-     "x86_64-linux": {
--      "aarch64-linux": "sha256-it1ax/iE0heyMm7NU4cy4N7Mn0ryBNs/e9KeHhfBGZo=",
--      "x86_64-linux": "sha256-it1ax/iE0heyMm7NU4cy4N7Mn0ryBNs/e9KeHhfBGZo="
-+      "aarch64-linux": "sha256-qyRETvAhz2PaErM4WcCisHCZbWCn/LpwqBbCmyHnNbg=",
-+      "x86_64-linux": "sha256-qyRETvAhz2PaErM4WcCisHCZbWCn/LpwqBbCmyHnNbg="
-     }
-   },
-   "dartVersion": "3.7.0",
-@@ -21,13 +21,13 @@
-     "x86_64-darwin": "sha256-p/0lU69n6/vYN0xQIqjhIIm2bi8H/K6TDs8P7ryxxyA=",
-     "aarch64-darwin": "sha256-/gCMcdEqUP9kDObVYXVvN5r9cwiBaoJ0xcNLCm23Y8Y="
-   },
--  "flutterHash": "sha256-GlcseCJh0SDMPuAzB6QZh2W6se56f8+F3z1uai/kd/k=",
-+  "flutterHash": "sha256-LFj2xg2TDEzrbqxMuXtBC85nFT8b555zCcnfYlXv2Vk=",
-   "artifactHashes": {
-     "android": {
--      "aarch64-darwin": "sha256-ttfYJfyJbCczqbzFOa4mypZwBUOMX+xVzT/27JMhR70=",
--      "aarch64-linux": "sha256-M7jDwRSgnBRE7od/C2xdDuBS3N2bMBRmzz4LfxUdqHw=",
--      "x86_64-darwin": "sha256-ttfYJfyJbCczqbzFOa4mypZwBUOMX+xVzT/27JMhR70=",
--      "x86_64-linux": "sha256-M7jDwRSgnBRE7od/C2xdDuBS3N2bMBRmzz4LfxUdqHw="
-+      "aarch64-darwin": "sha256-GZDPbyXvVg9I2Bo2OITxLMViDlbJ3wSaTCiTd9A4qHk=",
-+      "aarch64-linux": "sha256-sjdQPgFOnTVpjHc5xg55WY4+ggOtp9zFD/6MmSfYenc=",
-+      "x86_64-darwin": "sha256-GZDPbyXvVg9I2Bo2OITxLMViDlbJ3wSaTCiTd9A4qHk=",
-+      "x86_64-linux": "sha256-sjdQPgFOnTVpjHc5xg55WY4+ggOtp9zFD/6MmSfYenc="
-     },
-     "fuchsia": {
-       "aarch64-darwin": "sha256-eu0BERdz53CkSexbpu3KA7O6Q4g0s9SGD3t1Snsk3Fk=",
-@@ -36,38 +36,38 @@
-       "x86_64-linux": "sha256-eu0BERdz53CkSexbpu3KA7O6Q4g0s9SGD3t1Snsk3Fk="
-     },
-     "ios": {
--      "aarch64-darwin": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg=",
--      "aarch64-linux": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg=",
--      "x86_64-darwin": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg=",
--      "x86_64-linux": "sha256-aZSfH1kds/nygG5Tuvp2Ag453lqcjCEI1ejtH9MzApg="
-+      "aarch64-darwin": "sha256-yOiivuziEgjVtSt9Izja/naXSzBWJZ0SpLaE4ly59ok=",
-+      "aarch64-linux": "sha256-yOiivuziEgjVtSt9Izja/naXSzBWJZ0SpLaE4ly59ok=",
-+      "x86_64-darwin": "sha256-yOiivuziEgjVtSt9Izja/naXSzBWJZ0SpLaE4ly59ok=",
-+      "x86_64-linux": "sha256-yOiivuziEgjVtSt9Izja/naXSzBWJZ0SpLaE4ly59ok="
-     },
-     "linux": {
--      "aarch64-darwin": "sha256-h6vdLUCGZ+cPwd+oWtiTNhwb1pbzsvASUKiC/QYY6KY=",
--      "aarch64-linux": "sha256-h6vdLUCGZ+cPwd+oWtiTNhwb1pbzsvASUKiC/QYY6KY=",
--      "x86_64-darwin": "sha256-LpIxVVCPmz0XEnyubEi5uy0bDJ+Wna86RPEjFN7saes=",
--      "x86_64-linux": "sha256-LpIxVVCPmz0XEnyubEi5uy0bDJ+Wna86RPEjFN7saes="
-+      "aarch64-darwin": "sha256-jVk2va4/axsDcTb6TxmMY0weyubxX9taZpSxVpb6xOw=",
-+      "aarch64-linux": "sha256-jVk2va4/axsDcTb6TxmMY0weyubxX9taZpSxVpb6xOw=",
-+      "x86_64-darwin": "sha256-XsgeZ342Fit0i+vvfM0iyk5vao0s6yslOqAQ1ZzSiWs=",
-+      "x86_64-linux": "sha256-XsgeZ342Fit0i+vvfM0iyk5vao0s6yslOqAQ1ZzSiWs="
-     },
-     "macos": {
--      "aarch64-darwin": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw=",
--      "aarch64-linux": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw=",
--      "x86_64-darwin": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw=",
--      "x86_64-linux": "sha256-ukp+p6EODk5F9mTbirciUwZNTMoU5yxYpKPMk8m13Uw="
-+      "aarch64-darwin": "sha256-b+2A87s1gCK6xOxa4BiUR3gQiHGQL/VBukOjKOtWUPU=",
-+      "aarch64-linux": "sha256-b+2A87s1gCK6xOxa4BiUR3gQiHGQL/VBukOjKOtWUPU=",
-+      "x86_64-darwin": "sha256-b+2A87s1gCK6xOxa4BiUR3gQiHGQL/VBukOjKOtWUPU=",
-+      "x86_64-linux": "sha256-b+2A87s1gCK6xOxa4BiUR3gQiHGQL/VBukOjKOtWUPU="
-     },
-     "universal": {
--      "aarch64-darwin": "sha256-cI5RreWNaxbARQyWtgpM08BiGO4uo/cpXccOOhxMehA=",
--      "aarch64-linux": "sha256-53rA7pf0Y8leu50eRV+KZGLwoNp6tMt7EvWE0bV5IcY=",
--      "x86_64-darwin": "sha256-NLmED/8rcCr+wgfM17hPhi4+9l2be4CfolWwsDGUFnI=",
--      "x86_64-linux": "sha256-FVIfrN14sVbSSiblin9ClDG+tKjdrtXnb83SgQGMxhQ="
-+      "aarch64-darwin": "sha256-EL2OiPMYwu8GVpErdA3T/W/6xcNxsL1Fm1nCW4RQ4jo=",
-+      "aarch64-linux": "sha256-2uQ4cnNc0KFc4ma8SNHQduP5U1QYJnK6yq5swaXvOXE=",
-+      "x86_64-darwin": "sha256-uStgtfTDx8xbskOedeA3nKSkQW9LglnHzILt2axsy/M=",
-+      "x86_64-linux": "sha256-MoONV6LUkmBO2+oZ7XciWf/1U0GXa4zEYutnTPeq1yo="
-     },
-     "web": {
--      "aarch64-darwin": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo=",
--      "aarch64-linux": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo=",
--      "x86_64-darwin": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo=",
--      "x86_64-linux": "sha256-fdUPGlCv5IXYsG7jQu7cRSDJKVnzA9zVvXJMYRHqmpo="
-+      "aarch64-darwin": "sha256-Lm7LYJFNtiPhsf0P6/hLNSYCNUKF6jETPImhBFGNktM=",
-+      "aarch64-linux": "sha256-Lm7LYJFNtiPhsf0P6/hLNSYCNUKF6jETPImhBFGNktM=",
-+      "x86_64-darwin": "sha256-Lm7LYJFNtiPhsf0P6/hLNSYCNUKF6jETPImhBFGNktM=",
-+      "x86_64-linux": "sha256-Lm7LYJFNtiPhsf0P6/hLNSYCNUKF6jETPImhBFGNktM="
-     },
-     "windows": {
--      "x86_64-darwin": "sha256-GGQ9PwCc72VGJ8C8G+R33hmTIlzYPc/v4D12TN2PDKg=",
--      "x86_64-linux": "sha256-GGQ9PwCc72VGJ8C8G+R33hmTIlzYPc/v4D12TN2PDKg="
-+      "x86_64-darwin": "sha256-oT+NADg0yT60Rh8nyle+25/ccxIfzaODBYZay7DYGg4=",
-+      "x86_64-linux": "sha256-oT+NADg0yT60Rh8nyle+25/ccxIfzaODBYZay7DYGg4="
-     }
-   },
-   "pubspecLock": {

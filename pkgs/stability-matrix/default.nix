@@ -9,13 +9,13 @@
 let
   app = buildDotnetModule rec {
     pname = "StabilityMatrix";
-    version = "2.13.3";
+    version = "2.13.4";
 
     src = fetchFromGitHub {
       owner = "LykosAI";
       repo = pname;
       rev = "v${version}";
-      hash = "sha256-/EjciXJR6GCoEOjKv4qQW/Xzshs9NpnMv+ObrxQ0nwM=";
+      hash = "sha256-D6IdNFpKqPb4xcfMCYL0YGmc+eSve6dwWYSh5MNrHAI=";
     };
 
     patches = [
@@ -39,6 +39,7 @@ let
       dotnet tool uninstall xamlstyler.console
       dotnet tool uninstall csharpier
       dotnet tool uninstall dotnet-script
+      dotnet tool uninstall refitter
 
       export HUSKY=0
     '';

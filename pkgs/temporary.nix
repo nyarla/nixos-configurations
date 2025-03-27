@@ -4,13 +4,14 @@ _: _: prev: {
   });
 
   fluent-icon-theme = prev.fluent-icon-theme.overrideAttrs (_: {
-    version = "2025-02-11";
+    version = "2025-03-27"; # last confirm date
     src = prev.fetchFromGitHub {
       owner = "vinceliuice";
       repo = "Fluent-icon-theme";
-      rev = "7d20e2d2a2876dc859ec166bde7508cd367186b4";
-      hash = "sha256-gLEKdg0k9WMm9UUDE/q9cGk1sR3BT2/P6MikgONUxss=";
+      rev = "0ca5770bcf1e15019bccb877194f005bda53c6f9";
+      hash = "sha256-6m/PYE35GxKMHjaXvdhO49BHj+ipOBg0/QbUKxFAMgA=";
     };
+
   });
 
   whipper =

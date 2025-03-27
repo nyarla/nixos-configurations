@@ -1,10 +1,8 @@
 { pkgs, lib, ... }:
 let
   gpuIds = lib.concatStringsSep "," [
-    "10de:10f8"
-    "10de:1ad8"
-    "10de:1ad9"
-    "10de:1e89"
+    "10de:2f04"
+    "10de:2f80"
   ];
   usbId = "1022:149c";
   ids = lib.concatStringsSep "," [
@@ -60,8 +58,6 @@ in
           modprobe vfio
           modprobe vfio_iommu_type1
 
-          virsh nodedev-detach pci_0000_0b_00_3
-          virsh nodedev-detach pci_0000_0b_00_2
           virsh nodedev-detach pci_0000_0b_00_1
           virsh nodedev-detach pci_0000_0b_00_0
 
@@ -75,8 +71,6 @@ in
 
           export PATH=${PATH}:$PATH
 
-          virsh nodedev-reattach pci_0000_0b_00_3
-          virsh nodedev-reattach pci_0000_0b_00_2
           virsh nodedev-reattach pci_0000_0b_00_1
           virsh nodedev-reattach pci_0000_0b_00_0
 

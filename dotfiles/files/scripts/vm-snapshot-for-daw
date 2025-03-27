@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main() {
+  local name
+  name=$(zenity --entry --text="Snapshot名を入れてください")
+
+  local prefix
+  prefix=$(date +%Y.%m)
+ 
+  if [[ -n "${name}" ]]; then
+    env SHELL=/bin/sh pkexec sh -c "
+      cd /vm/special && sudo btrfs subvol snapshot images .snapshots/${prefix}.${name}
+    " && zenity --info --text="${prefix}.${name}を作成しました"
+  fi
+}
+
+main;

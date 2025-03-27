@@ -45,6 +45,8 @@ let
       (run "Virtual Machine Manager" "virt-manager")
       (run "Looking Glass" "looking-glass-client")
       (run "Remmina" "remmina")
+      sep
+      (run "Take Snapshot" "bash /etc/nixos/dotfiles/files/scripts/vm-snapshot-for-daw")
     ])
     (list "Waydroid" (id "waydroid") [
       (script "start" "waydroid-start")

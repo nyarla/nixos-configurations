@@ -79,13 +79,6 @@
       allowDiscards = true;
       bypassWorkqueues = true;
     };
-
-    vm = {
-      device = "/dev/disk/by-uuid/9d3de6e6-ec2a-4dc0-b553-4258810b8ce8";
-      preLVM = true;
-      allowDiscards = true;
-      bypassWorkqueues = true;
-    };
   };
 
   boot.initrd.availableKernelModules = [
@@ -316,10 +309,11 @@
       };
 
       "/vm/main" = {
-        device = "/dev/disk/by-uuid/a90a86ae-a133-4cc7-9e44-fbd91bc09bc8";
-        fsType = "ext4";
-        options = [
-          "defaults"
+        inherit device;
+        fsType = "btrfs";
+        options = btrfsRWOnly ++ [
+          "subvol=/persist/vm/main"
+          "nodatacow"
         ];
         neededForBoot = false;
       };
@@ -337,7 +331,6 @@
       # for boot
       "etc"
       "etc/nixos"
-      "usr/share"
       "var/db"
       "var/lib"
       "var/log"
@@ -423,6 +416,10 @@
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
     "/nix"
+    "/vm/main"
+    "/vm/main/images"
+    "/vm/special"
+    "/vm/special/images"
 
     "/persist/etc"
     "/persist/etc/nixos"
@@ -432,8 +429,6 @@
     "/persist/var/lib/docker"
     "/persist/var/lib/flatpak"
     "/persist/var/log"
-
-    "/persist/usr/share"
 
     "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.fly"
@@ -567,7 +562,6 @@
           # application
           ".BitwigStudio"
           ".android"
-          ".codeium"
           ".mozilla"
           ".pki"
           ".thunderbird"
@@ -618,7 +612,6 @@
     snapshots {
       nixos = "/persist/etc/nixos";
       varlib = "/persist/var/lib";
-      usrshare = "/persist/usr/share";
       nyarla = "/persist/home/nyarla";
       apps = "/persist/home/nyarla/Applications";
       program = "/persist/home/nyarla/Programming";
@@ -648,6 +641,7 @@
       "^/persist/home/nyarla/Reports"
       "^/proc"
       "^/sys"
+      "^/vm"
       ".snapshots/[0-9]+"
     ];
     MaxThreads = 30;

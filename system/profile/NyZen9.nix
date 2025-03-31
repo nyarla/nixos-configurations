@@ -178,12 +178,12 @@
             (fan "back" "cpu" 7)
           ];
           sensors = [
-            (sensor "CPUIN" "nct6798" 2)
+            (sensor "cpu" "k10temp" 1)
             (sensor "nvme-pci-0100" "nvme-pci-0100" 1)
             (sensor "nvme-pci-0800" "nvme-pci-0800" 1)
           ];
           curves = [
-            (curve "cpu" "CPUIN" {
+            (curve "cpu" "cpu" {
               "30" = 15;
               "70" = 255;
             })

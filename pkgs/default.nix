@@ -51,10 +51,7 @@ in
 
   calibre = prev.calibre.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ prev.python3Packages.pycrypto ];
-    disabledTests = [
-      "test_export_import"
-      "test_fts_search"
-    ];
+    doInstallCheck = false;
   });
 
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
@@ -131,62 +128,6 @@ in
       cp -r src/tunefish4/Builds/LinuxMakefile/build/Tunefish4.vst3 \
         $out/lib/vst3/Tunefish4.vst3
     '';
-  });
-
-  # add GPU (cuda) support to VoiceVox
-  voicevox-core =
-    let
-      cudaPackages = prev.cudaPackages_11_8;
-      # this is workaround for build failure by broken symlinks
-      tensorrt = cudaPackages.tensorrt_8_6.overrideAttrs (old: {
-        outputs = [ "out" ];
-        dontCheckForBrokenSymlinks = true;
-        fixupPhase = ''
-          ${old.fixupPhase or ""}
-          find $out -type l ! -exec test -e \{} \; -delete || true
-        '';
-      });
-    in
-    prev.voicevox-core.overrideAttrs (old: {
-      src = prev.fetchurl {
-        # fetch pre-built binary with GPU supported
-        url = "https://github.com/VOICEVOX/voicevox_core/releases/download/${old.version}/voicevox_core-linux-x64-gpu-${old.version}.zip";
-        sha256 = "0hcfk9d9vahwkhh6wlvh5dgzlw1bsl2dpk1b2iqgvfxvv3cbprkf";
-      };
-
-      # add additional dependencies
-      buildInputs =
-        old.buildInputs
-        ++ (with prev; [
-          zlib
-        ])
-        ++ (with cudaPackages; [
-          cuda_cudart.lib
-          cudatoolkit.lib
-          cudnn_8_9.lib
-          libcublas.lib
-          tensorrt
-        ]);
-
-      # this is required by link libnv* library to pre-built binaries
-      extraAutoPatchelfLibs = [ "${tensorrt}/lib/stubs" ];
-
-      postInstall = ''
-        install -Dm755 libonnxruntime_* $out/lib
-      '';
-
-      preFixup = ''
-        # this is workaround for libonnxruntime_providers_tensorrt.so has not dependencies as elf's `needed`
-        patchelf --add-needed libcublasLt.so.11 $out/lib/libonnxruntime_providers_tensorrt.so
-        patchelf --add-needed libcublas.so.11 $out/lib/libonnxruntime_providers_tensorrt.so
-      '';
-    });
-
-  voicevox-engine = prev.voicevox-engine.overrideAttrs (old: {
-    # if LD_LIBRARY_PATH is not set, voicevox-engine failed to find shared libraries
-    makeWrapperArgs = old.makeWrapperArgs ++ [
-      ''--set LD_LIBRARY_PATH ${final.voicevox-core}/lib''
-    ];
   });
 
   # custom wine-related packages

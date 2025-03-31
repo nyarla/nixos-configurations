@@ -13,7 +13,6 @@
   };
 
   home.packages = with pkgs; [
-    aria-misskey
     bitwarden
     thunderbird-bin
   ];

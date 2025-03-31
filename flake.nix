@@ -52,7 +52,6 @@
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
             patches = [
-              ./patches/flutter-3.29.patch
               ./patches/flaresolverr-unstable.patch
             ];
             overlays = [

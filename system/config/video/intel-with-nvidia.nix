@@ -56,7 +56,7 @@ in
     })
     (cuda-shell.override {
       nvidia_x11 = nvidia;
-      cudaPackages = pkgs.cudaPackages_12_1;
+      cudaPackages = pkgs.cudaPackages_12_8;
     })
     ddcui
     ddcutil

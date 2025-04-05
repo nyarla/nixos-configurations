@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home.sessionVariables = {
     VST_PATH = "$HOME/.nix-profile/lib/vst:$HOME/.nix-profile/lib/lxvst";
@@ -6,6 +6,9 @@
     LV2_PATH = "$HOME/.nix-profile/lib/lv2";
     CLAP_PATH = "$HOME/.nix-profile/lib/clap";
   };
+
+  # for zrythm
+  xdg.dataFile."icons/zrythm-dark".source = "${pkgs.zrythm}/share/zrythm/themes/icons/zrythm-dark";
 
   home.packages =
     with pkgs;
@@ -25,6 +28,7 @@
       famistudio
       helio-workstation
       musescore
+      zrythm
 
       # voice synthesize
       openutau

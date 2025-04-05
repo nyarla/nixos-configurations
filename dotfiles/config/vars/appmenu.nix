@@ -129,9 +129,9 @@ let
     sep
     (list "DAW" (id "daw") [
       (run "Bitwig Studio" (jack "bitwig-studio"))
-      (run "Zrythm" (jack "flatpak run org.zrythm.Zrythm"))
       (run "Heilo Workstation" (jack "helio"))
       (run "MuseScore" (jack "mscore"))
+      (run "Zrythm" (jack "bash /etc/nixos/dotfiles/files/scripts/zrythm-launch"))
       sep
       (run "FamiStudio" "FamiStudio")
       sep
@@ -144,7 +144,6 @@ let
       (run "AudioGridder" (jack "AudioGridderServer"))
     ])
     (list "VSinger" (id "vsynger") [
-      (run "Synthesizer V Pro" (jack "bash /etc/nixos/dotfiles/files/scripts/synthv"))
       (run "VoiceVox" "voicevox")
       (run "OpenUtau" "OpenUtau")
     ])

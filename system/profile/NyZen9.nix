@@ -495,10 +495,13 @@
 
           # .config
           ".config/Bitwarden"
+          ".config/ChowdhuryDSP"
           ".config/FamiStudio"
           ".config/GIMP"
           ".config/Helio"
+          ".config/Jean Pierre Cimalando"
           ".config/Kvantum"
+          ".config/LibreArp"
           ".config/MuseScore"
           ".config/MusicBrainz"
           ".config/OpenUtau"
@@ -507,6 +510,7 @@
           ".config/Yubico"
           ".config/act"
           ".config/aseprite"
+          ".config/audiogridder"
           ".config/blender"
           ".config/blogsync"
           ".config/calibre"
@@ -538,6 +542,7 @@
           ".config/xfce4"
 
           # .local
+          ".local/share/DigitalSuburban"
           ".local/share/MuseScore"
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
@@ -550,11 +555,13 @@
           ".local/share/mime"
           ".local/share/npm"
           ".local/share/nvim"
+          ".local/share/odin2"
           ".local/share/perl"
           ".local/share/pixelorama"
           ".local/share/remmina"
           ".local/share/vlc"
           ".local/share/waydroid"
+          ".local/share/zrythm"
 
           # state
           ".local/state/wireplumber"
@@ -562,6 +569,7 @@
           # application
           ".BitwigStudio"
           ".android"
+          ".helm"
           ".mozilla"
           ".pki"
           ".thunderbird"
@@ -581,6 +589,7 @@
         # development
         ".clasprc.json"
         ".npmrc"
+        ".zynaddsubfx-bank-cache.xml"
 
         # creative
         ".config/kritadisplayrc"

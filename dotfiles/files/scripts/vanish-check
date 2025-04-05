@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+search() {
+  local dir=$1
+  find "$dir"/.* -maxdepth 0
+  find "$dir"/.config/* -maxdepth 0
+  find "$dir"/.local/share/* -maxdepth 0
+}
+
+main() {
+  local tmp
+  tmp=$(mktemp -d)
+  test -d "${tmp}" || mkdir -p "${tmp}"
+
+  search "${HOME}" | sort -u > "${tmp}/exists"
+  search "/persist${HOME}" | sort -u | sed 's|/persist||' > "${tmp}/persist"
+
+  IFS=$'\n'
+  for f in $(comm -23 "${tmp}/exists" "${tmp}/persist"); do
+    test -L "${f}" || echo "${f}"
+  done
+
+  test ! -d "${tmp}" || rm "${tmp}" -r
+}
+
+main;

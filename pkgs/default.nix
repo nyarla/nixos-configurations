@@ -66,26 +66,6 @@ in
     ];
   });
 
-  mlterm = prev.mlterm.override {
-    stdenv = prev.gcc13Stdenv;
-    enableGuis = {
-      xlib = true;
-      fb = true;
-      quartz = false;
-      wayland = true;
-      sdl2 = true;
-    };
-    enableFeatures = {
-      uim = false;
-      ibus = true;
-      fcitx = true;
-      m17n = true;
-      ssh2 = true;
-      bidi = true;
-      otl = true;
-    };
-  };
-
   pixelorama = prev.pixelorama.overrideAttrs (old: {
     runtimeDependencies = old.runtimeDependencies ++ prev.godot_4.runtimeDependencies;
   });

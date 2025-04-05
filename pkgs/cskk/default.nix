@@ -15,7 +15,8 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-EsMxEbDDYkJmwP2FsSUBVm7VdRe2efV+iKKx5ycqxeI=";
   };
 
-  cargoHash = "sha256-C25AAyrRfxflsAsuh175bCZ2khEBjKxN1ejWWTm2FzU=";
+  useFetchVendor = true;
+  cargoHash = "sha256-oHHhAvcHYNV7qRE26VKS2wDQiLvfqM5F8ZiHO+n93cw=";
 
   buildInputs = [ libxkbcommon.dev ];
   nativeBuildInputs = [

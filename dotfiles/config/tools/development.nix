@@ -1,14 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # cloud toolchain
-    google-cloud-sdk
-    awscli
-    flyctl
-    gh
-
     # container toolchain
-    linuxkit
     act
 
     # compiler
@@ -21,23 +14,11 @@
     # go
     go
 
-    # nim
-    nim
-
-    # node.js
-    nodejs_latest
-    yarn
-
     # python3
-    conda
     python3
 
     # perl
-    nix-generate-from-cpan
-    perl
     perl-shell
-    perlPackages.Appcpanminus
-    perlPackages.PerlTidy
 
     # nix
     nurl
@@ -49,9 +30,6 @@
 
     # vcs
     git-lfs
-    mercurial
-    subversion
-    cvs
 
     # misc
     openssl

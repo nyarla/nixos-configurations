@@ -46,14 +46,11 @@
           "$HOME/.nix-profile/bin"
           "$HOME/.local/bin"
           "$HOME/.fly/bin"
-          "$HOME/.local/share/npm/bin"
           "$GOPATH/bin"
           "$PATH"
         ]
       }
       export EDITOR=nvim
-      export NVIM_ENABLE_CODEIUM="1";
-
 
       # utility function
       function has() {
@@ -110,8 +107,11 @@
 
         if test ! -s ~/.z ; then
           z --add /etc/nixos
-          z --add $HOME/Development/kalaclista-social
-          z --add $HOME/Programming/the.kalaclista.com
+          z --add ~/Programming/nixos-on-vps
+          z --add ~/Programming/WebSites
+          z --add ~/Programming/WebSites/kalaclista.hatenablog.com
+          z --add ~/Programming/WebSites/kalaclista.hatenablog.jp
+          z --add ~/Programming/WebSites/kalaclista.hatenadiary.jp
 
           for d in $(\ls ~/); do
             z --add "''${HOME}/''${d}"
@@ -160,7 +160,6 @@
     inotify-tools
 
     keychain
-    mosh
 
     bc
     tree

@@ -9,8 +9,8 @@ let
   ];
 in
 {
-  environment.systemPackages = mateApps ++ [ pkgs.kdiskmark ];
-  services.dbus.packages = mateApps ++ [ pkgs.kdiskmark ];
+  environment.systemPackages = mateApps;
+  services.dbus.packages = mateApps;
 
   services = {
     udisks2.enable = true;

@@ -6,7 +6,6 @@
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
-    ../config/desktop/flatpak.nix
     ../config/desktop/wayland.nix
     ../config/desktop/xdg.nix
     ../config/desktop/xorg.nix
@@ -14,7 +13,6 @@
     ../config/graphic/fonts.nix
     ../config/graphic/lodpi.nix
     ../config/hardware/firmware.nix
-    ../config/hardware/weylus.nix
     ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix
     ../config/keyboard/us.nix
@@ -344,20 +342,14 @@
     // (subvolsEx [
       # for boot
       "var/lib/docker"
-      "var/lib/flatpak"
 
       # for accounts
       "home/nyarla/.cache/nvim"
       "home/nyarla/.config/audiogridder"
       "home/nyarla/.fly"
-      "home/nyarla/.local/share/flatpak"
-      "home/nyarla/.local/share/npm"
       "home/nyarla/.local/share/nvim"
-      "home/nyarla/.local/share/perl"
       "home/nyarla/.local/share/waydroid"
       "home/nyarla/.mozilla"
-      "home/nyarla/.var"
-      "home/nyarla/.wrangler"
       "home/nyarla/Applications"
       "home/nyarla/Programming"
     ])
@@ -416,32 +408,30 @@
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
     "/nix"
-    "/vm/main"
-    "/vm/main/images"
-    "/vm/special"
-    "/vm/special/images"
 
     "/persist/etc"
     "/persist/etc/nixos"
 
-    "/persist/var/db"
-    "/persist/var/lib"
-    "/persist/var/lib/docker"
-    "/persist/var/lib/flatpak"
-    "/persist/var/log"
-
+    "/persist/home/nyarla/.cache/nvim"
     "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.fly"
-    "/persist/home/nyarla/.local/share/flatpak"
-    "/persist/home/nyarla/.local/share/npm"
     "/persist/home/nyarla/.local/share/nvim"
-    "/persist/home/nyarla/.local/share/perl"
     "/persist/home/nyarla/.local/share/waydroid"
     "/persist/home/nyarla/.mozilla"
-    "/persist/home/nyarla/.var"
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
+
+    "/persist/var/db"
+    "/persist/var/lib"
+    "/persist/var/lib/docker"
+    "/persist/var/log"
+
+    "/vm/main"
+    "/vm/main/DAW/images"
+
+    "/vm/special"
+    "/vm/special/images"
   ];
 
   # impermanence
@@ -458,7 +448,6 @@
       "/var/lib"
       "/var/log"
       "/var/lib/docker"
-      "/var/lib/flatpak"
     ];
     files = [ "/etc/machine-id" ];
 
@@ -519,8 +508,6 @@
           ".config/easytag"
           ".config/falkTX"
           ".config/fcitx5"
-          ".config/gcloud"
-          ".config/gh"
           ".config/google-chrome"
           ".config/gtk-2.0"
           ".config/gtk-3.0"
@@ -547,16 +534,13 @@
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
           ".local/share/applications"
-          ".local/share/com.poppingmoon.aria"
           ".local/share/fcitx5"
           ".local/share/fonts"
           ".local/share/krita"
           ".local/share/libcskk"
           ".local/share/mime"
-          ".local/share/npm"
           ".local/share/nvim"
           ".local/share/odin2"
-          ".local/share/perl"
           ".local/share/pixelorama"
           ".local/share/remmina"
           ".local/share/vlc"
@@ -573,21 +557,17 @@
           ".mozilla"
           ".pki"
           ".thunderbird"
-          ".var"
           ".vst"
           ".vst3"
 
           # credentials
-          (secure ".fly")
           (secure ".gnupg")
-          (secure ".gsutil")
           (secure ".local/share/keyrings")
           (secure ".ssh")
           (secure ".wrangler")
         ];
       files = [
         # development
-        ".clasprc.json"
         ".npmrc"
         ".zynaddsubfx-bank-cache.xml"
 
@@ -619,11 +599,13 @@
       snapshots = paths: lib.attrsets.concatMapAttrs (n: v: { "${n}" = snapshot v; }) paths;
     in
     snapshots {
-      nixos = "/persist/etc/nixos";
-      varlib = "/persist/var/lib";
-      nyarla = "/persist/home/nyarla";
-      apps = "/persist/home/nyarla/Applications";
-      program = "/persist/home/nyarla/Programming";
+      etc-nixos = "/persist/etc/nixos";
+
+      home-nyarla = "/persist/home/nyarla";
+      home-nyarla-applications = "/persist/home/nyarla/Applications";
+      home-nyarla-programming = "/persist/home/nyarla/Programming";
+
+      var-lib = "/persist/var/lib";
     };
 
   # Services

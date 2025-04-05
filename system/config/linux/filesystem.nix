@@ -5,7 +5,6 @@
     cryptsetup
     e2fsprogs
     exfat
-    gocryptfs
     gptfdisk
     hfsprogs
     ntfs3g

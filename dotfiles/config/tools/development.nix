@@ -27,6 +27,7 @@
     editorconfig-core-c
     nvim-run
     devenv
+    nodejs
 
     # vcs
     git-lfs

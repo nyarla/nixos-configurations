@@ -12,6 +12,7 @@ main() {
   if [[ -n "${name}" ]]; then
     env SHELL=/bin/sh pkexec sh -c "
       cd /vm/special && sudo btrfs subvol snapshot images .snapshots/${prefix}.${name}
+      cd /vm/main/DAW && sudo btrfs subvol snapshot images .snapshots/${prefix}.${name}
     " && zenity --info --text="${prefix}.${name}を作成しました"
   fi
 }

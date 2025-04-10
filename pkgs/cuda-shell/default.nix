@@ -29,9 +29,11 @@ buildFHSEnv {
       freeglut
       git
       gitRepo
+      glib
       gnumake
       gnupg
       gperf
+      gperftools
       libGL
       libGLU
       m4

@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  environment.systemPackages = with pkgs; [
-    weylus
-  ];
+  programs.weylus = {
+    enable = true;
+    users = [ "nyarla" ];
+  };
 
   networking.firewall.interfaces.wlan0.allowedTCPPorts = [
     1701

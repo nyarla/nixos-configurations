@@ -110,6 +110,44 @@ in
     '';
   });
 
+  weylus = prev.rustPlatform.buildRustPackage rec {
+    pname = "weylus";
+    version = "2025-02-24";
+    src = prev.fetchFromGitHub {
+      owner = "H-M-H";
+      repo = "Weylus";
+      rev = "5202806798ccca67c24da52ba51ee50b973b7089";
+      hash = "sha256-lx1ZVp5DkQiL9/vw6PAZ34Lge+K8dfEVh6vLnCUNf7M=";
+    };
+
+    patches = [
+      ../patches/weylus.patch
+    ];
+
+    inherit (prev.weylus)
+      nativeBuildInputs
+      cargoBuildFlags
+      cargoTestFlags
+      postInstall
+      postFixup
+      meta
+      ;
+
+    buildInputs =
+      prev.weylus.buildInputs
+      ++ (with prev; [
+        wayland.dev
+        libxkbcommon.dev
+      ]);
+
+    cargoLock = {
+      lockFile = "${src}/Cargo.lock";
+      outputHashes = {
+        "autopilot-0.4.0" = "sha256-1DRuhAAXaIADUmXlDVr8UNbI/Ab2PYdrx9Qh0j9rTX8=";
+      };
+    };
+  };
+
   # custom wine-related packages
   wine-staging-run = require ./wine-run {
     pname = "wine-staging";

@@ -53,6 +53,7 @@
             system = "x86_64-linux";
             patches = [
               ./patches/flaresolverr-unstable.patch
+              ./patches/cuda-gdb.patch
             ];
             overlays = [
               wayland.overlay

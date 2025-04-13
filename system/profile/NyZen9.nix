@@ -13,6 +13,7 @@
     ../config/graphic/fonts.nix
     ../config/graphic/lodpi.nix
     ../config/hardware/firmware.nix
+    ../config/hardware/weylus.nix
     ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix
     ../config/keyboard/us.nix

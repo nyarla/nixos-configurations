@@ -7,13 +7,15 @@ in
     blacklistedKernelModules = [
       "i2c_nvidia_gpu"
       "nouveau"
-      "nvidia"
       "nvidia_drm"
       "nvidia_modeset"
-      "nvidia_uvm"
     ];
     initrd.kernelModules = [ "i915" ];
     kernelParams = [ "i915.enable_guc=3" ];
+    kernelModules = [
+      "nvidia_uvm"
+      "nvidia"
+    ];
   };
 
   hardware = {

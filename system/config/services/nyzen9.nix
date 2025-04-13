@@ -19,6 +19,12 @@
     };
   };
 
+  services.ollama.enable = true;
+  services.open-webui = {
+    enable = true;
+    port = 40000;
+  };
+
   services.flaresolverr.enable = true;
 
   systemd.services.caddy.serviceConfig.ExecStartPre = toString (
@@ -31,6 +37,18 @@
   services.caddy = {
     enable = true;
     virtualHosts = {
+      # for private web services
+      "chat.p.localhost.thotep.net" = {
+        listenAddresses = [ "100.103.65.77" ];
+        useACMEHost = "localhost.thotep.net";
+        logFormat = ''
+          output stdout
+        '';
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:40000
+        '';
+      };
+
       # for development
       "gts.f.localhost.thotep.net" = {
         listenAddresses = [ "100.103.65.77" ];

@@ -39,7 +39,7 @@
 
       # vst plugin host
       audiogridder
-      carla
+      carla-with-wine
       ildaeil
 
       # plugin bridge

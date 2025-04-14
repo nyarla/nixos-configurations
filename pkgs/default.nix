@@ -180,13 +180,13 @@ in
     };
   };
 
-  carla = require ./carla {
+  carla-with-wine = require ./carla {
     inherit (prev) carla;
     wine = final.wine-vst;
   };
 
   ildaeil = require ./ildaeil {
-    inherit (final) carla;
+    carla = final.carla-with-wine;
     wine = final.wine-vst;
   };
 

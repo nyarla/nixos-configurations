@@ -7,6 +7,8 @@ in
     blacklistedKernelModules = [
       "i2c_nvidia_gpu"
       "nouveau"
+      "nvidia"
+      "nvidia_uvm"
       "nvidia_drm"
       "nvidia_modeset"
     ];

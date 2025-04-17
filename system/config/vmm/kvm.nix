@@ -229,7 +229,7 @@ in
         "read only" = "no";
       };
 
-      DAW = {
+      Sources = {
         path = "/persist/home/nyarla/Sources/DAW";
         browsable = "yes";
         "create mask" = "0774";

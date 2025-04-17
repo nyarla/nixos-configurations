@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main() {
+  if ! which modprobe 2>/dev/null ; then
+    echo "modprobe is not found" >&2;
+    exit 1
+  fi
+
+  if sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/prepare/begin/01_alloc_hugepage.sh; then
+    sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/release/end/01_dealloc_hugepage.sh
+  fi
+
+  sudo systemctl stop open-webui
+  sudo systemctl stop ollama
+
+  sudo modprobe -r nvidia_uvm
+  sudo modprobe -r nvidia
+}
+
+main

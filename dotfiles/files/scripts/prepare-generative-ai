@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+sudo modprobe nvidia_uvm
+sudo modprobe nvidia
+
+sudo systemctl restart ollama
+sudo systemctl restart open-webui

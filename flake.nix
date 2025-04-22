@@ -52,8 +52,8 @@
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
             patches = [
+              ./patches/godot-workaround.patch
               ./patches/flaresolverr-unstable.patch
-              ./patches/cuda-gdb.patch
             ];
             overlays = [
               wayland.overlay

@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-cd $HOME/Applications/Wine/Kindle
+cd "$HOME"/Applications/Wine/Kindle
 
-wine-staging wine 'C:\Program Files\Amazon\Kindle\Kindle.exe' &
+wine-staging wine 'C:\Program Files (x86)\Amazon\Kindle\Kindle.exe' &
 waitPID=$!
 
 test -n "$waitPID" && wait $waitPID

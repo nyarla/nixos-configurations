@@ -7,16 +7,16 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "cskk";
-  version = "v3.1.4";
+  version = "v3.1.5";
   src = fetchFromGitHub {
     owner = "naokiri";
     repo = "cskk";
-    rev = "f1ee557c2834e065cfb6e74f8c4d8535292772db";
-    hash = "sha256-EsMxEbDDYkJmwP2FsSUBVm7VdRe2efV+iKKx5ycqxeI=";
+    rev = "af413a14bcafc811264bdedbe3bd5f943d2e7f5e";
+    hash = "sha256-sYtYwwBPP1nTbIYLQGdMEYO8lybkaTaLjwqHO7b0Puo=";
   };
 
   useFetchVendor = true;
-  cargoHash = "sha256-oHHhAvcHYNV7qRE26VKS2wDQiLvfqM5F8ZiHO+n93cw=";
+  cargoHash = "sha256-eKH7DJV5a0IhBAsXsmhzc/EF0S2KxyVwzd47HlgGj3s=";
 
   buildInputs = [ libxkbcommon.dev ];
   nativeBuildInputs = [

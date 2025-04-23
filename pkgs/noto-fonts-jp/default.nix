@@ -1,13 +1,13 @@
 {
-  stdenv,
+  stdenvNoCC,
   lib,
   fetchurl,
 }:
 let
   fonts = import ./fonts.nix;
 in
-stdenv.mkDerivation rec {
-  version = "V2.0001";
+stdenvNoCC.mkDerivation rec {
+  version = "V2.0003";
   name = "noto-fonts-jp-${version}";
 
   files = map (

@@ -99,7 +99,7 @@ in
       systemctl --user reset-failed
 
       cleanup() {
-        pkill shoreman
+        pkill goreman
         if systemctl --user -q is-active desktop-session.target ; then
           systemctl --user stop desktop-session.target
         fi

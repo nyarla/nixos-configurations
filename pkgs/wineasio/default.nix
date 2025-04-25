@@ -69,6 +69,44 @@ multiStdenv.mkDerivation rec {
 
     install -D wineasio-settings -m 755 $out/bin/wineasio-settings
 
+    cat <<EOF >$out/bin/wineasio-register
+    if [[ ! -e drive_c ]]; then
+      echo 'This directory is not wine prefix!' >&2; exit 1
+    fi
+
+    case "''${1:-}" in
+      32)
+        [[ ! -e drive_c/windows/system32/wineasio32.dll ]] || chmod +w drive_c/windows/system32/wineasio32.dll
+        cp $out/lib/wine/i386-unix/wineasio32.dll.so \
+          drive_c/windows/system32/wineasio32.dll
+        wine regsvr32 wineasio32.dll
+        ;;
+
+      64)
+        [[ ! -e drive_c/windows/system32/wineasio64.dll ]] || chmod +w drive_c/windows/system32/wineasio64.dll
+
+        cp $out/lib/wine/x86_64-unix/wineasio64.dll.so \
+          drive_c/windows/system32/wineasio64.dll
+
+        wine64 regsvr32 wineasio64.dll
+        ;;
+
+      wow)
+        [[ ! -e drive_c/windows/system32/wineasio32.dll ]] || chmod +w drive_c/winsows/syswow64/wineasio32.dll
+        cp $out/lib/wine/i386-unix/wineasio32.dll.so \
+          drive_c/windows/syswow64/wineasio32.dll
+        wine regsvr32 wineasio32.dll
+        ;;
+
+      *)
+        echo "Usage: wineasio-register [32|64|wow]";
+        exit 0;
+        ;;
+    esac
+    EOF
+
+    chmod +x $out/bin/wineasio-register
+
     runHook postInstall
   '';
 

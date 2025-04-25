@@ -54,6 +54,7 @@
             patches = [
               ./patches/godot-workaround.patch
               ./patches/flaresolverr-unstable.patch
+              ./patches/fix-wine-yabridge-with-binutils-2.44.patch
             ];
             overlays = [
               wayland.overlay

@@ -156,47 +156,31 @@ in
 
   wine-vst-run = require ./wine-run {
     pname = "wine-vst";
-    paths = prev.lib.makeBinPath [ final.wine-vst ];
+    paths = prev.lib.makeBinPath [
+      prev.wineWowPackages.yabridge
+      (final.wineasio.override { wine = prev.wineWowPackages.yabridge; })
+    ];
   };
 
   wineasio = require ./wineasio { };
 
-  wine-vst = require ./wine-runtime {
-    inherit nixpkgs;
-
-    pname = "wine-vst";
-    version = "9.21";
-    src = prev.fetchurl {
-      url = "https://dl.winehq.org/wine/source/9.x/wine-9.21.tar.xz";
-      sha256 = "1zrgra4ajxaic1ga4yfvv4lxix76sigysdhf21bs8blvzmzv8hj4";
-    };
-
-    staging = prev.fetchFromGitLab {
-      domain = "gitlab.winehq.org";
-      owner = "wine";
-      repo = "wine-staging";
-      rev = "v9.21";
-      hash = "sha256-FDNszRUvM1ewE9Ij4EkuihaX0Hf0eTb5r7KQHMdCX3U=";
-    };
-  };
-
   carla-with-wine = require ./carla {
     inherit (prev) carla;
-    wine = final.wine-vst;
+    wine = prev.wineWowPackages.yabridge;
   };
 
   ildaeil = require ./ildaeil {
     carla = final.carla-with-wine;
-    wine = final.wine-vst;
+    wine = prev.wineWowPackages.yabridge;
   };
 
   wine-vst-wrapper = require ./wine-vst-wrapper {
-    wine = final.wine-vst;
+    wine = prev.wineWowPackages.yabridge;
   };
 
-  yabridge = prev.yabridge.override { wine = final.wine-vst; };
+  yabridge = prev.yabridge.override { wine = prev.wineWowPackages.yabridge; };
   yabridgectl = prev.yabridgectl.override {
     inherit (final) yabridge;
-    wine = final.wine-vst;
+    wine = prev.wineWowPackages.yabridge;
   };
 }

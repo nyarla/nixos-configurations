@@ -13,7 +13,10 @@ in
       "nvidia_modeset"
     ];
     initrd.kernelModules = [ "i915" ];
-    kernelParams = [ "i915.enable_guc=3" ];
+    kernelParams = [
+      "i915.enable_guc=3"
+      "pcie_port_pm=off"
+    ];
     kernelModules = [
       "nvidia_uvm"
       "nvidia"

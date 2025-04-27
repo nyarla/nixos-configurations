@@ -4,19 +4,19 @@
     enable = true;
     autocd = true;
     shellAliases = {
-      "cd" = "__cd";
       "l" = "ls --color -F -la";
       "ls" = "ls --color -F";
-      "nixos-apply" = ''sudo nixos-rebuild switch --flake "/etc/nixos#$(hostname)"'';
+      "nixos-apply" =
+        ''sudo nixos-rebuild switch --flake "/etc/nixos#$(hostname)" ; sudo systemctl restart home-manager-$(id -n -u).service'';
       "nixos-build" = ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
       "nixos-upgrade" = ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
-      "nvim-resume" = "pkill -SIGCONT nvim";
       "waydroid" = "env XDG_DATA_HOME=/persist/home/nyarla/.local/share waydroid";
     };
     sessionVariables = {
       FAKE_RELEASE = 1;
       GOPATH = "$HOME/Applications/Development/go";
       NIXPKGS_ALLOW_UNFREE = 1;
+      EDITOR = "nvim";
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
@@ -29,13 +29,13 @@
     };
     plugins = [
       {
-        name = "z";
-        file = "z.sh";
+        name = "enhancd";
+        file = "init.sh";
         src = pkgs.fetchFromGitHub {
-          owner = "rupa";
-          repo = "z";
-          rev = "b82ac78a2d4457d2ca09973332638f123f065fd1";
-          sha256 = "sha256-4jMHh1GVRdFNjUjiPH94vewbfLcah7Agu153zjVNE14=";
+          owner = "babarot";
+          repo = "enhancd";
+          rev = "5afb4eb6ba36c15821de6e39c0a7bb9d6b0ba415";
+          hash = "sha256-pKQbwiqE0KdmRDbHQcW18WfxyJSsKfymWt/TboY2iic=";
         };
       }
     ];
@@ -50,23 +50,11 @@
           "$PATH"
         ]
       }
-      export EDITOR=nvim
 
       # utility function
       function has() {
         type "''${1:-}" >/dev/null 2>&1
       }
-    '';
-    initExtraBeforeCompInit = ''
-      if has perl ; then
-        eval "$(perl -I${pkgs.perlPackages.locallib}/lib/perl5/site_perl/${pkgs.perl.version} -Mlocal::lib=$HOME/.local/share/perl/global)"
-        export PERL_CPANM_OPT="--local-lib-contained $HOME/.local/share/perl/global"
-        export PERL_CPANM_HOME=$HOME/.local/share/perl/cpanm
-      fi
-
-      if test -e $HOME/.cargo/env ; then
-        source $HOME/.cargo/env
-      fi
     '';
     initExtra = ''
       setopt auto_pushd
@@ -76,18 +64,8 @@
       setopt hist_reduce_blanks
       setopt hist_find_no_dups
 
-      function nix-clean() {
-        nix-store --gc
-        sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +14
-        sudo nix-store --optimize --verbose
-        sudo /run/current-system/bin/switch-to-configuration boot
-      }
-
-      function nix-clean-all() {
-        nix-store --gc
-        sudo nix-store --gc
-        sudo nix-collect-garbage -d
-        sudo nix-store --optimize --verbose
+      function nixos-clean() {
+        sudo nix-collect-garbage --delete-older-than 7d
         sudo /run/current-system/bin/switch-to-configuration boot
       }
 
@@ -102,44 +80,6 @@
         bindkey '^R' fzy-history
       fi
 
-      function __cd() {
-        local dir=''${1:-}
-
-        if test ! -s ~/.z ; then
-          z --add /etc/nixos
-          z --add ~/Programming/nixos-on-vps
-          z --add ~/Programming/WebSites
-          z --add ~/Programming/WebSites/kalaclista.hatenablog.com
-          z --add ~/Programming/WebSites/kalaclista.hatenablog.jp
-          z --add ~/Programming/WebSites/kalaclista.hatenadiary.jp
-
-          for d in $(\ls ~/); do
-            z --add "''${HOME}/''${d}"
-          done
-        fi
-
-        if test  "x''${dir}" = "x" ; then
-          local dir=$(z -l | sed 's/ \+/ /g' | cut -d\   -f2 | fzy | sed "s!~!$HOME!")
-          z --add "''${dir}"
-          \cd "''${dir}"
-        else
-          z --add "''${dir}"
-          \cd "''${dir}"
-        fi
-      }
-
-      function minil-release() {
-        touch .git/hooks/.disable-commitlint
-        touch .git/hooks/.disable-textlint
-
-        FAKE_RELEASE= minil release
-
-        rm .git/hooks/.disable-commitlint
-        rm .git/hooks/.disable-textlint
-      }
-
-      compdef __cd=cd
-
       unset -f has
     '';
   };
@@ -148,7 +88,6 @@
     fzy
     mmv-go
     ripgrep
-    shoreman
     tmux
     wcwidth-cjk
 

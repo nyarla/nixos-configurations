@@ -51,11 +51,7 @@
             hostname = "nixos";
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
-            patches = [
-              ./patches/godot-workaround.patch
-              ./patches/flaresolverr-unstable.patch
-              ./patches/fix-wine-yabridge-with-binutils-2.44.patch
-            ];
+            patches = [ ];
             overlays = [
               wayland.overlay
               (import ./pkgs/default.nix { inherit nixpkgs; })

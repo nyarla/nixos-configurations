@@ -46,4 +46,5 @@ _: {
   # stateVersion (same as NixOS)
   home.stateVersion = "24.11";
   home.enableNixpkgsReleaseCheck = false;
+  nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 }

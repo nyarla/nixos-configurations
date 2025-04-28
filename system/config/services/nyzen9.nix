@@ -27,6 +27,19 @@
 
   services.flaresolverr.enable = true;
 
+  services.calibre-web = {
+    enable = true;
+    user = "nyarla";
+    group = "users";
+    listen = {
+      ip = "127.0.0.1";
+      port = 40001;
+    };
+    options = {
+      calibreLibrary = "/persist/home/nyarla/Calibre";
+    };
+  };
+
   systemd.services.caddy.serviceConfig.ExecStartPre = toString (
     pkgs.writeShellScript "wait.sh" ''
       while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
@@ -46,6 +59,16 @@
         '';
         extraConfig = ''
           reverse_proxy 127.0.0.1:40000
+        '';
+      };
+      "ebooks.p.localhost.thotep.net" = {
+        listenAddresses = [ "100.103.65.77" ];
+        useACMEHost = "localhost.thotep.net";
+        logFormat = ''
+          output stdout
+        '';
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:40001
         '';
       };
 

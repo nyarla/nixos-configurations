@@ -138,6 +138,31 @@
   networking.interfaces."wlan0".mtu = 1472;
 
   # fan control
+  systemd.services.nvidia-kernel-modules = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    before = [ "ollama.service" ];
+    path = [ pkgs.kmod ];
+    serviceConfig = {
+      Type = "simple";
+      RemainAfterExit = "yes";
+      ExecStart = toString (
+        pkgs.writeShellScript "load-nvidia-kmod.sh" ''
+          set -euo pipefail
+          modprobe nvidia_uvm
+          modprobe nvidia
+        ''
+      );
+      ExecStop = toString (
+        pkgs.writeShellScript "unload-nvidia-kmod.sh" ''
+          set -euo pipefail
+          modprobe -r nvidia_uvm
+          modprobe -r nvidia
+        ''
+      );
+    };
+  };
+
   systemd.services.fan2go =
     let
       config = pkgs.writeText "fan2go.yaml" (

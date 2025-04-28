@@ -51,8 +51,7 @@ in
           set -xeuo pipefail
           export PATH=${PATH}:$PATH
 
-          modprobe -r nvidia_uvm
-          modprobe -r nvidia
+          systemctl stop nvidia-kernel-modules
 
           modprobe vfio_pci
           modprobe vfio
@@ -79,6 +78,8 @@ in
           modprobe -r vfio_pci
           modprobe -r vfio_iommu_type1
           modprobe -r vfio
+
+          systemctl start nvidia-kernel-modules
 
           set +x
         '';

@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   imports = [
     ../config/audio/pipewire.nix
@@ -142,7 +147,10 @@
     enable = true;
     wantedBy = [ "multi-user.target" ];
     before = [ "ollama.service" ];
-    path = [ pkgs.kmod ];
+    path = [
+      pkgs.kmod
+      config.hardware.nvidia.package.bin
+    ];
     serviceConfig = {
       Type = "simple";
       RemainAfterExit = "yes";
@@ -151,6 +159,9 @@
           set -euo pipefail
           modprobe nvidia_uvm
           modprobe nvidia
+          nvidia-smi -pm DISABLED
+          nvidia-smi -pm ENABLED
+          nvidia-smi -pl 200
         ''
       );
       ExecStop = toString (
@@ -198,7 +209,7 @@
 
           fans = [
             (fan "cpu" "cpu" 2)
-            (fan "case" "nvme" 1)
+            (fan "case" "case" 1)
             (fan "back" "cpu" 7)
           ];
           sensors = [
@@ -213,16 +224,16 @@
             })
             (curve "nvme-pci-0100" "nvme-pci-0100" {
               "30" = 100;
-              "70" = 255;
+              "65" = 255;
             })
             (curve "nvme-pci-0800" "nvme-pci-0800" {
               "30" = 100;
-              "70" = 255;
+              "65" = 255;
             })
             {
-              id = "nvme";
+              id = "case";
               function = {
-                type = "maximum";
+                type = "average";
                 curves = [
                   "cpu"
                   "nvme-pci-0100"

@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 let
-  nvidia = config.boot.kernelPackages.nvidiaPackages.latest;
+  nvidia = config.boot.kernelPackages.nvidiaPackages.production;
 in
 {
   boot = {
@@ -15,7 +15,6 @@ in
     initrd.kernelModules = [ "i915" ];
     kernelParams = [
       "i915.enable_guc=3"
-      "pcie_port_pm=off"
     ];
     kernelModules = [
       "nvidia_uvm"

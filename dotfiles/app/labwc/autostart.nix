@@ -8,6 +8,7 @@
   goreman,
   lxqt,
   networkmanagerapplet,
+  qpwgraph,
   xembed-sni-proxy,
 }:
 let
@@ -24,6 +25,7 @@ let
     nm-applet: ${networkmanagerapplet}/bin/nm-applet --indicator
     lxqt-panel: ${lxqt.lxqt-panel}/bin/lxqt-panel
     xembedsniproxy: ${xembed-sni-proxy}/bin/xembedsniproxy
+    qpwgraph: ${qpwgraph}/bin/qpwgraph -m
   '';
 in
 writeShellScript "autostart" ''

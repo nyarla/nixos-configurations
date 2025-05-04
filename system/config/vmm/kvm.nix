@@ -27,7 +27,6 @@ in
   boot.kernelParams = [
     "iommu=pt"
     "kvm.ignore_msrs=1"
-    "pcie_aspm=off"
   ];
 
   boot.extraModprobeConfig = ''
@@ -51,7 +50,8 @@ in
           set -xeuo pipefail
           export PATH=${PATH}:$PATH
 
-          systemctl stop nvidia-kernel-modules
+          modprobe -r nvidia_uvm
+          modprobe -r nvidia
 
           modprobe vfio_pci
           modprobe vfio
@@ -78,8 +78,6 @@ in
           modprobe -r vfio_pci
           modprobe -r vfio_iommu_type1
           modprobe -r vfio
-
-          systemctl start nvidia-kernel-modules
 
           set +x
         '';

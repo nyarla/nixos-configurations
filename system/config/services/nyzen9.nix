@@ -19,12 +19,6 @@
     };
   };
 
-  services.ollama.enable = true;
-  services.open-webui = {
-    enable = true;
-    port = 40000;
-  };
-
   services.flaresolverr.enable = true;
 
   services.calibre-web = {
@@ -51,16 +45,6 @@
     enable = true;
     virtualHosts = {
       # for private web services
-      "chat.p.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:40000
-        '';
-      };
       "ebooks.p.localhost.thotep.net" = {
         listenAddresses = [ "100.103.65.77" ];
         useACMEHost = "localhost.thotep.net";

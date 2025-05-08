@@ -146,7 +146,6 @@
   systemd.services.nvidia-kernel-modules = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
-    before = [ "ollama.service" ];
     path = [
       pkgs.kmod
       config.hardware.nvidia.package.bin
@@ -159,9 +158,6 @@
           set -euo pipefail
           modprobe nvidia_uvm
           modprobe nvidia
-          nvidia-smi -pm DISABLED
-          nvidia-smi -pm ENABLED
-          nvidia-smi -pl 200
         ''
       );
       ExecStop = toString (

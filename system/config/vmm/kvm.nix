@@ -1,8 +1,15 @@
 { pkgs, lib, ... }:
 let
   gpuIds = lib.concatStringsSep "," [
+    # RTX 5070
     "10de:2f04"
     "10de:2f80"
+
+    # RTX 2060
+    "10de:1e89"
+    "10de:10f8"
+    "10de:1ad8"
+    "10de:1ad9"
   ];
   usbId = "1022:149c";
   ids = lib.concatStringsSep "," [
@@ -43,12 +50,15 @@ in
           [
             libvirt
             kmod
+            systemd
           ]
         );
 
         loadVFIO = pkgs.writeShellScript "start.sh" ''
           set -xeuo pipefail
           export PATH=${PATH}:$PATH
+
+          systemctl stop nvidia-kernel-modules
 
           modprobe -r nvidia_uvm
           modprobe -r nvidia
@@ -57,6 +67,8 @@ in
           modprobe vfio
           modprobe vfio_iommu_type1
 
+          virsh nodedev-detach pci_0000_0b_00_3
+          virsh nodedev-detach pci_0000_0b_00_2
           virsh nodedev-detach pci_0000_0b_00_1
           virsh nodedev-detach pci_0000_0b_00_0
 
@@ -70,6 +82,8 @@ in
 
           export PATH=${PATH}:$PATH
 
+          virsh nodedev-reattach pci_0000_0b_00_3
+          virsh nodedev-reattach pci_0000_0b_00_2
           virsh nodedev-reattach pci_0000_0b_00_1
           virsh nodedev-reattach pci_0000_0b_00_0
 
@@ -78,6 +92,8 @@ in
           modprobe -r vfio_pci
           modprobe -r vfio_iommu_type1
           modprobe -r vfio
+
+          systemctl start nvidia-kernel-modules
 
           set +x
         '';

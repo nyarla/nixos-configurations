@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 let
-  nvidia = config.boot.kernelPackages.nvidiaPackages.production;
+  nvidia = config.boot.kernelPackages.nvidiaPackages.beta;
 in
 {
   boot = {
@@ -28,7 +28,11 @@ in
     nvidia = {
       modesetting.enable = false;
       package = nvidia;
-      open = true;
+      open = false;
+      nvidiaSettings = true;
+      nvidiaPersistenced = false;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
     };
 
     graphics = {

@@ -270,33 +270,37 @@
         "space_cache=v2"
         "x-gvfs-hide"
       ];
+
       btrfsNoExec = [
         "noexec"
         "nosuid"
         "nodev"
       ];
+
       btrfsRWOnly = btrfsOptions ++ btrfsNoExec;
 
-      subvolRW = path: {
+      subvolRW = neededForBoot: path: {
         "/persist/${path}" = {
           inherit device;
           fsType = "btrfs";
           options = btrfsRWOnly ++ [ "subvol=/persist/${path}" ];
-          neededForBoot = true;
+          inherit neededForBoot;
         };
       };
 
-      subvolEx = path: {
+      subvolEx = neededForBoot: path: {
         "/persist/${path}" = {
           inherit device;
           fsType = "btrfs";
           options = btrfsOptions ++ [ "subvol=/persist/${path}" ];
-          neededForBoot = true;
+          inherit neededForBoot;
         };
       };
 
-      subvolsEx = paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolEx);
-      subvolsRW = paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths subvolRW);
+      subvolsEx =
+        required: paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths (subvolEx required));
+      subvolsRW =
+        required: paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths (subvolRW required));
 
       backup = path: dest: {
         "/backup/${path}" = {
@@ -358,7 +362,7 @@
         neededForBoot = false;
       };
     }
-    // (subvolsRW [
+    // (subvolsRW true [
       # for boot
       "etc"
       "etc/nixos"
@@ -372,10 +376,10 @@
       # for accounts
       "home/nyarla"
     ])
-    // (subvolsEx [
-      # for boot
+    // (subvolsEx true [
       "var/lib/docker"
-
+    ])
+    // (subvolsEx false [
       # for accounts
       "home/nyarla/.cache/nvim"
       "home/nyarla/.config/audiogridder"

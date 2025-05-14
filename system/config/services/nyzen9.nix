@@ -21,6 +21,7 @@
 
   services.flaresolverr.enable = true;
 
+  systemd.services.calibre-web.after = [ "automount-encrypted-usb-device.service" ];
   services.calibre-web = {
     enable = true;
     user = "nyarla";
@@ -30,7 +31,7 @@
       port = 40001;
     };
     options = {
-      calibreLibrary = "/persist/home/nyarla/Calibre";
+      calibreLibrary = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre";
     };
   };
 

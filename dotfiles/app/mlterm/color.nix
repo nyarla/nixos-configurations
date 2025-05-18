@@ -14,6 +14,6 @@
   hl_yellow = "#ffd96e"; # 90
   hl_blue = "#abe4ff"; # 90
   hl_magenta = "#ffb7ff"; # 90
-  hl_cyan = "##00ffff"; # 95
+  hl_cyan = "#00ffff"; # 95
   hl_white = "#ffffff"; # 100
 }

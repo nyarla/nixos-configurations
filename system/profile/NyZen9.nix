@@ -616,11 +616,9 @@
           # data
           "Applications"
           "Archives"
-          "Calibre"
           "Development"
           "Documents"
           "Downloads"
-          "Music"
           "Pictures"
           "Programming"
           "Reports"

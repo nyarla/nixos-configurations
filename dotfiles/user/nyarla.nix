@@ -17,7 +17,7 @@ _: {
     ../config/tools/development.nix
 
     ../app/git
-    ../app/labwc
+    ../app/hyprland
     ../app/mlterm
     ../app/xdg
   ];

@@ -664,6 +664,7 @@
           ".config/gtk-3.0"
           ".config/gtk-4.0"
           ".config/gyazo"
+          ".config/hypr"
           ".config/inkscape"
           ".config/llm"
           ".config/lxqt"

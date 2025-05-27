@@ -15,6 +15,7 @@ in
     initrd.kernelModules = [ "i915" ];
     kernelParams = [
       "i915.enable_guc=3"
+      "idle=nomwait"
     ];
     kernelModules = [
       "nvidia_uvm"
@@ -28,7 +29,7 @@ in
     nvidia = {
       modesetting.enable = false;
       package = nvidia;
-      open = false;
+      open = true;
       nvidiaSettings = true;
       nvidiaPersistenced = false;
       powerManagement.enable = false;

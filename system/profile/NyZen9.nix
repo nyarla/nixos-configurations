@@ -156,6 +156,7 @@
       ExecStart = toString (
         pkgs.writeShellScript "load-nvidia-kmod.sh" ''
           set -euo pipefail
+          nvidia-smi -pm 1
           modprobe nvidia_uvm
           modprobe nvidia
         ''
@@ -163,6 +164,7 @@
       ExecStop = toString (
         pkgs.writeShellScript "unload-nvidia-kmod.sh" ''
           set -euo pipefail
+          nvidia-smi -pm 0
           modprobe -r nvidia_uvm
           modprobe -r nvidia
         ''

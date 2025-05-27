@@ -27,8 +27,7 @@ _: {
 
   # cpu
   powerManagement.enable = true;
-  powerManagement.powertop.enable = true;
-  powerManagement.cpuFreqGovernor = "powersave";
+  powerManagement.cpuFreqGovernor = "performance";
 
   # udev
   services.udev.extraRules = ''

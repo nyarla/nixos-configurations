@@ -1,14 +1,6 @@
-{ pkgs, ... }:
-{
-  virtualisation.docker = {
+_: {
+  virtualisation.podman = {
     enable = true;
-    storageDriver = "overlay2";
-    daemon.settings = {
-      dns = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
-    };
+    dockerCompat = true;
   };
-  environment.systemPackages = with pkgs; [ docker ];
 }

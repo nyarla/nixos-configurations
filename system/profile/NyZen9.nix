@@ -499,14 +499,12 @@
       # for accounts
       "home/nyarla"
     ])
-    // (subvolsEx true [
-      "var/lib/docker"
-    ])
     // (subvolsEx false [
       # for accounts
       "home/nyarla/.cache/nvim"
       "home/nyarla/.config/audiogridder"
       "home/nyarla/.fly"
+      "home/nyarla/.local/share/containers"
       "home/nyarla/.local/share/nvim"
       "home/nyarla/.local/share/waydroid"
       "home/nyarla/.mozilla"
@@ -570,6 +568,7 @@
     "/persist/home/nyarla/.cache/nvim"
     "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.fly"
+    "/persist/home/nyarla/.local/share/containers"
     "/persist/home/nyarla/.local/share/nvim"
     "/persist/home/nyarla/.local/share/waydroid"
     "/persist/home/nyarla/.mozilla"
@@ -579,7 +578,6 @@
 
     "/persist/var/db"
     "/persist/var/lib"
-    "/persist/var/lib/docker"
     "/persist/var/log"
 
     "/vm/main"
@@ -602,7 +600,6 @@
       "/var/db"
       "/var/lib"
       "/var/log"
-      "/var/lib/docker"
     ];
     files = [ "/etc/machine-id" ];
 
@@ -688,6 +685,7 @@
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
           ".local/share/applications"
+          ".local/share/containers"
           ".local/share/fcitx5"
           ".local/share/fonts"
           ".local/share/krita"

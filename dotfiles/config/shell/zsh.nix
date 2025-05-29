@@ -4,12 +4,14 @@
     enable = true;
     autocd = true;
     shellAliases = {
+      "docker" = "env DBUS_SESSION_BUS_ADDRESS= docker";
       "l" = "ls --color -F -la";
       "ls" = "ls --color -F";
       "nixos-apply" =
         ''sudo nixos-rebuild switch --flake "/etc/nixos#$(hostname)" ; sudo systemctl restart home-manager-$(id -n -u).service'';
       "nixos-build" = ''sudo nixos-rebuild build --flake "/etc/nixos/#$(hostname)"'';
       "nixos-upgrade" = ''sudo nixos-rebuild boot --flake "/etc/nixos#$(hostname)"'';
+      "podman" = "env DBUS_SESSION_BUS_ADDRESS= podman";
       "waydroid" = "env XDG_DATA_HOME=/persist/home/nyarla/.local/share waydroid";
     };
     sessionVariables = {

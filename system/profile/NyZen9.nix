@@ -121,10 +121,6 @@
   ];
   boot.kernelParams = [
     "amd_pstate=active"
-    # KVM
-    # "amd_iommu=force_enable"
-    # "vfio-pci.ids=1022:149c"
-    #"efifb:off"
   ];
   boot.blacklistedKernelModules = [ "acpi-cpufreq" ];
 

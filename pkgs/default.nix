@@ -17,6 +17,7 @@ in
   kaunas = require ./kaunas { };
   noise-suppression-for-voice = require ./noise-suppression-for-voice { };
   noto-fonts-jp = require ./noto-fonts-jp { };
+  nvidia-maximize = require ./nvidia-maximize { };
   nvim-run = require ./nvim-run { };
   openjtalk = require ./openjtalk { };
   perl-shell = require ./perl-shell { };

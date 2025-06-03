@@ -64,6 +64,7 @@ in
       nvidia_x11 = nvidia;
       cudaPackages = pkgs.cudaPackages_12_8;
     })
+    nvidia-maximize
     ddcui
     ddcutil
   ];

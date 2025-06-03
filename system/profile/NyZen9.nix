@@ -144,6 +144,7 @@
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.kmod
+      pkgs.nvidia-maximize
       config.hardware.nvidia.package.bin
     ];
     serviceConfig = {
@@ -153,6 +154,7 @@
         pkgs.writeShellScript "load-nvidia-kmod.sh" ''
           set -euo pipefail
           nvidia-smi -pm 1
+          nvidia-maximize set
           modprobe nvidia_uvm
           modprobe nvidia
         ''
@@ -161,6 +163,7 @@
         pkgs.writeShellScript "unload-nvidia-kmod.sh" ''
           set -euo pipefail
           nvidia-smi -pm 0
+          nvidia-maximize reset
           modprobe -r nvidia_uvm
           modprobe -r nvidia
         ''

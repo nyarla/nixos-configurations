@@ -61,8 +61,8 @@ writeScriptBin "nvidia-maximize" ''
 
       if ( $pl > 0 && $gc > 0 && $mc > 0 ) {
         print nvidia_smi("-pl ''${pl}");
-        print nvidia_smi("-lgc ''${gc}");
-        print nvidia_smi("-lmc ''${mc}");
+        print nvidia_smi("-lgc ''${gc},''${gc}");
+        print nvidia_smi("-lmc ''${mc},''${mc}");
       }
     }
     elsif ($action eq 'reset') {

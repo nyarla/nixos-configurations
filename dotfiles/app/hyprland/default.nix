@@ -82,7 +82,7 @@
       }
       trap cleanup INT TERM
 
-      dbus-launch --exit-with-session ${pkgs.hyprland}/bin/Hyprland
+      dbus-run-session ${pkgs.hyprland}/bin/Hyprland
       cleanup
     ''
   );

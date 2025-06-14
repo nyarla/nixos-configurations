@@ -138,23 +138,22 @@
   ## tcp optimize
   networking.interfaces."wlan0".mtu = 1472;
 
-  # fan control
+  ## for nvidia kernel modules
   systemd.services.nvidia-kernel-modules = {
     enable = true;
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.kmod
-      pkgs.nvidia-maximize
+      pkgs.systemd
       config.hardware.nvidia.package.bin
     ];
     serviceConfig = {
-      Type = "simple";
+      Type = "oneshot";
       RemainAfterExit = "yes";
       ExecStart = toString (
         pkgs.writeShellScript "load-nvidia-kmod.sh" ''
           set -euo pipefail
           nvidia-smi -pm 1
-          nvidia-maximize set
           modprobe nvidia_uvm
           modprobe nvidia
         ''
@@ -163,14 +162,59 @@
         pkgs.writeShellScript "unload-nvidia-kmod.sh" ''
           set -euo pipefail
           nvidia-smi -pm 0
-          nvidia-maximize reset
+          systemctl stop nvidia-powermizer
           modprobe -r nvidia_uvm
           modprobe -r nvidia
         ''
       );
     };
   };
+  systemd.services.nvidia-powermizer = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    path =
+      (with pkgs; [
+        bash
+        coreutils
+        findutils
+        kbd
+        config.hardware.nvidia.package.settings
+      ])
+      ++ (with pkgs.xorg; [
+        xauth
+        xorgserver
+      ]);
 
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = toString (
+        pkgs.writeShellScript "nvidia-powermizer" ''
+          set -xeuo pipefail
+
+          DVT=1
+
+          export DISPLAY
+          DISPLAY=$(find /dev -name 'tty**' | grep -P '\d\d' | sort -n | tail -n1)
+          DISPLAY=''${DISPLAY#/dev/tty}
+
+          SLEEP=$((60 * 60 * 24))
+
+          trap "DISPLAY=:''${DISPLAY} nvidia-settings -a 'GpuPowerMizerMode=1' -a 'GPUFanControlState=1' -a 'GPUTargetFanSpeed=50' & chvt ''${DVT} & (while true ; do sleep ''${SLEEP} ; done) & wait \''$!" USR1
+
+          export XAUTHORITY
+          XAUTHORITY=/tmp/.nvidia-powermizer-xauth
+          xauth add :''${DISPLAY} MIT-MAGIC-COOKIE-1 "$(od -An -N16 -tx /dev/urandom | tr -d ' ')"
+
+          (trap "" USR1 && exec Xorg :''${DISPLAY} vt''${DISPLAY} -keeptty -noreset -auth "''${XAUTHORITY}") &
+          waitPID=$!
+
+          wait $waitPID
+        ''
+      );
+    };
+  };
+
+  # fan control
   systemd.services.fan2go =
     let
       config = pkgs.writeText "fan2go.yaml" (
@@ -508,6 +552,7 @@
       "home/nyarla/.local/share/nvim"
       "home/nyarla/.local/share/waydroid"
       "home/nyarla/.mozilla"
+      "home/nyarla/.triton"
       "home/nyarla/Applications"
       "home/nyarla/Programming"
     ])

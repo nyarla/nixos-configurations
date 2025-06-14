@@ -49,10 +49,22 @@ in
     VDPAU_DRIVER = "va_gl";
   };
 
-  services.xserver.videoDrivers = [
-    "i915"
-    "nvidia"
-  ];
+  services.xserver = {
+    videoDrivers = [
+      "i915"
+      "nvidia"
+    ];
+
+    screenSection = ''
+      Option "AllowEmptyInitialConfiguration" "True"
+      Option "ConnectedMonitor"               "None"
+    '';
+
+    deviceSection = ''
+      BusID   "PCI:11:0:0"
+      Option  "Coolbits" "28"
+    '';
+  };
 
   environment.systemPackages = with pkgs; [
     igsc
@@ -69,6 +81,5 @@ in
     ddcutil
   ];
 
-  # hardware.nvidia-container-toolkit.enable = true;
-  services.ollama.acceleration = "cuda";
+  hardware.nvidia-container-toolkit.enable = true;
 }

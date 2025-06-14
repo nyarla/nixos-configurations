@@ -56,6 +56,16 @@
           reverse_proxy 127.0.0.1:40001
         '';
       };
+      "librechat.p.localhost.thotep.net" = {
+        listenAddresses = [ "100.103.65.77" ];
+        useACMEHost = "localhost.thotep.net";
+        logFormat = ''
+          output stdout
+        '';
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:40010
+        '';
+      };
 
       # for development
       "gts.f.localhost.thotep.net" = {

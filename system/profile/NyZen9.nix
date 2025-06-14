@@ -162,7 +162,6 @@
         pkgs.writeShellScript "unload-nvidia-kmod.sh" ''
           set -euo pipefail
           nvidia-smi -pm 0
-          systemctl stop nvidia-powermizer
           modprobe -r nvidia_uvm
           modprobe -r nvidia
         ''
@@ -170,7 +169,7 @@
     };
   };
   systemd.services.nvidia-powermizer = {
-    enable = true;
+    enable = false;
     wantedBy = [ "multi-user.target" ];
     path =
       (with pkgs; [

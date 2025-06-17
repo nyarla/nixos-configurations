@@ -20,6 +20,11 @@
     sha256 = "090gl7vmhvvcr4mw8ghx2wl03g2w86zf9x3c4730nnhqwi2zr5p8";
   }
   {
+    name = "SKK-JISYO.jinmei";
+    url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.jinmei";
+    sha256 = "09425krr0h2fdh7dppa8ns2pbaa2ji91pyiw94x9l3qpfxiaxaad";
+  }
+  {
     name = "SKK-JISYO.fullname";
     url = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.fullname";
     sha256 = "1cx8cd1ji9jks692x3sddbn5cs0kb0jxi4wdwvlax4cvwqpm0d5h";

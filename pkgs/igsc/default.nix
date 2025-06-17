@@ -6,14 +6,14 @@
   systemd,
 }:
 let
-  metee = stdenv.mkDerivation {
+  metee = stdenv.mkDerivation rec {
     pname = "metee";
-    version = "4.2.1";
+    version = "5.0.0";
     src = fetchFromGitHub {
       owner = "intel";
       repo = "metee";
-      rev = "bc8ffd2236b644ee1d62ae6afc6a6026ba784a90";
-      hash = "sha256-MYGHoRiNUcuCviu2mpFkErfYxm2JLB1qov6NPNtnRZs=";
+      rev = version;
+      hash = "sha256-LcAfsJsDSoHpzI5j0SJ9AyR5nFn0d2RrML02K0SOAEc=";
     };
 
     nativeBuildInputs = [
@@ -28,8 +28,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "intel";
     repo = "igsc";
-    rev = "fcfa86452b50f62e30393ba5e554d413c7b6dca9";
-    hash = "sha256-r6lJi21xiMnQDufrO+LHADhSaJXnD/rvc6+xWVjW2GE=";
+    rev = "ba6f2afbd96385fcb6b2a6e3c8e459727c8401fa";
+    hash = "sha256-vCOwCW6rDi1oQUPEGoZz7mqGr3rcRLDfqrbt9/LvYoA=";
   };
 
   buildInputs = [

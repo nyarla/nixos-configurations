@@ -16,14 +16,21 @@ out '['
 
 for weight in Black Bold DemiLight Medium Regular Thin; do
   name="NotoSansCJKjp-${weight}.otf"
-  url="https://github.com/googlefonts/noto-cjk/raw/main/Sans/OTF/Japanese/${name}"
+  url="https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/Japanese/${name}"
+
+  fetch $name $url
+done
+
+for weight in Bold Regular; do
+  name="NotoSansMonoCJKjp-${weight}.otf"
+  url="https://github.com/notofonts/noto-cjk/raw/main/Sans/Mono/${name}"
 
   fetch $name $url
 done
 
 for weight in Black Bold ExtraLight Light Medium Regular SemiBold; do
   name="NotoSerifCJKjp-${weight}.otf"
-  url="https://github.com/googlefonts/noto-cjk/raw/main/Serif/OTF/Japanese/${name}"
+  url="https://github.com/notofonts/noto-cjk/raw/main/Serif/OTF/Japanese/${name}"
 
   fetch $name $url
 done

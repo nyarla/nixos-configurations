@@ -4,14 +4,21 @@ _: _: prev: {
   });
 
   fluent-icon-theme = prev.fluent-icon-theme.overrideAttrs (_: {
-    version = "2025-03-27"; # last confirm date
+    version = "2025-06-15"; # last confirm date
     src = prev.fetchFromGitHub {
       owner = "vinceliuice";
       repo = "Fluent-icon-theme";
-      rev = "0ca5770bcf1e15019bccb877194f005bda53c6f9";
-      hash = "sha256-6m/PYE35GxKMHjaXvdhO49BHj+ipOBg0/QbUKxFAMgA=";
+      rev = "e8ac55a5eb7c785e7b27519a97fd7a3ca33e9974";
+      hash = "sha256-0WtjJ3B3qIgP0vfg7s6fy7Ygg8Gf2TOMARe/m+NxyM8=";
     };
 
+    preFixup = ''
+      ln -sf $out/share/icons/Fluent/22/actions/application-menu.svg \
+        $out/share/icons/Fluent/22/categories/preferences-other-symbolic.svg
+
+      ln -sf $out/share/icons/Fluent-dark/22/actions/application-menu.svg \
+        $out/share/icons/Fluent-dark/22/categories/preferences-other-symbolic.svg
+    '';
   });
 
   whipper =

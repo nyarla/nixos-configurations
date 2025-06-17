@@ -13,7 +13,7 @@ main() {
   test ! -e skk.nix || rm skk.nix
 
   out '['
-  for dict in S M ML L fullname geo law okinawa propernoun station; do
+  for dict in S M ML L jinmei fullname geo law okinawa propernoun station; do
     name="SKK-JISYO.${dict}"
     fetch $name "https://raw.githubusercontent.com/skk-dev/dict/master/${name}"
   done

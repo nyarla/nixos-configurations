@@ -39,7 +39,7 @@
   pcre2,
   sqlite,
   util-linux,
-  webkitgtk,
+  webkitgtk_4_1,
   xorg,
   zlib,
   vst2-sdk,
@@ -129,7 +129,7 @@ stdenv.mkDerivation rec {
       sqlite.out
       util-linux.dev
       util-linux.out
-      webkitgtk
+      webkitgtk_4_1
       zlib
     ]
     ++ (with xorg; [

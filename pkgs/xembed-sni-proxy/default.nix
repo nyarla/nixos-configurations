@@ -3,9 +3,9 @@
   fetchpatch,
   xorg,
 }:
-libsForQt5.plasma-workspace.overrideAttrs (old: rec {
+libsForQt5.plasma-workspace.overrideAttrs (old: {
   pname = "xembed-sni-proxy";
-  inherit (old) version;
+  inherit (old) version src;
 
   patches = [
     (fetchpatch {

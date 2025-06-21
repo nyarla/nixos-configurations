@@ -2,11 +2,11 @@
 {
   environment.systemPackages = with pkgs; [
     yubioath-flutter
-    yubikey-personalization
-    yubikey-personalization-gui
   ];
 
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = [
+    pkgs.yubioath-flutter
+  ];
   services.pcscd.enable = true;
 
   security.pam.u2f.settings.cue = true;

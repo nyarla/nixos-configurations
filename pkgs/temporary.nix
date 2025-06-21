@@ -1,4 +1,4 @@
-_: _: prev: {
+_: final: prev: {
   bristol = prev.bristol.overrideAttrs (_: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });
@@ -43,4 +43,8 @@ _: _: prev: {
         sed -i 's|cd-paranoia|${prev.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
       '';
     });
+
+  voicevox-engine = prev.voicevox-engine.override { python3Packages = prev.python312Packages; };
+  waydroid = prev.waydroid.override { python3Packages = prev.python312Packages; };
+  zrythm = prev.zrythm.override { carla = final.carla-with-wine; };
 }

@@ -630,6 +630,16 @@
     hash = "sha256-HGSGesUhWei4IE+jqGh85aokkIg7xufpVn+n1vOLoY4=";
   })
   (fetchNuGet {
+    pname = "Microsoft.AspNetCore.App.Runtime.linux-x64";
+    version = "9.0.3";
+    hash = "sha256-hN8R6IVR+takaeSxnErhPWS/6SGbhzLkNYs+fPmZTl0=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.AspNetCore.App.Runtime.linux-x64";
+    version = "9.0.5";
+    hash = "sha256-nnLCmUpx6HqBoCJihJbnRiwrYZwN2Lw3N3C27m6Vce4=";
+  })
+  (fetchNuGet {
     pname = "Microsoft.Bcl.AsyncInterfaces";
     version = "8.0.0";
     hash = "sha256-9aWmiwMJKrKr9ohD1KSuol37y+jdDxPGJct3m2/Bknw=";
@@ -1045,6 +1055,16 @@
     hash = "sha256-l8clUSsyExPwyZ7oO6Dl/K2Md1mnaNdVEe9G4716yCs=";
   })
   (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Runtime.linux-x64";
+    version = "9.0.3";
+    hash = "sha256-JjdZT5ZyiH+ElaCKF4XwP4UMxj+h+H29U4SNF1EGHsQ=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.NETCore.App.Runtime.linux-x64";
+    version = "9.0.5";
+    hash = "sha256-l7wGHrE68f3MxQb+FrfCWRKteNefgpZLfJp8Wfd1/lE=";
+  })
+  (fetchNuGet {
     pname = "Microsoft.NETCore.Platforms";
     version = "1.1.0";
     hash = "sha256-FeM40ktcObQJk4nMYShB61H/E8B7tIKfl9ObJ0IOcCM=";
@@ -1101,8 +1121,18 @@
   })
   (fetchNuGet {
     pname = "Microsoft.WindowsDesktop.App.Ref";
+    version = "9.0.3";
+    hash = "sha256-5hBff7l7uWwjF0aaT8dq+/5XWzlMZA5sFH1ziiFGppQ=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.WindowsDesktop.App.Ref";
     version = "9.0.5";
     hash = "sha256-zT4wHlKj0w5/hkP5rYbqwaGT18E4M4rcx5xR9xX8FqA=";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.WindowsDesktop.App.Ref";
+    version = "9.0.6";
+    hash = "sha256-iNZD1ywTikw6N2KTHznK02UIICua7dW8Dcfv5nHEhrE=";
   })
   (fetchNuGet {
     pname = "NETStandard.Library";

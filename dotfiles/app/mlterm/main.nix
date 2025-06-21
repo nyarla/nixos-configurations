@@ -40,7 +40,7 @@ let
   extraConfig = {
     x86_64-linux = {
       use_xim = false;
-      input_method = "ibus";
+      input_method = "fcitx";
     };
   };
 in

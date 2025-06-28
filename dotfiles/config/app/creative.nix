@@ -131,6 +131,6 @@
       freepats
     ]
     ++ [
-      blender
+      blender-hip
     ];
 }

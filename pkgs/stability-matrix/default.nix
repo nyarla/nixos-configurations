@@ -68,6 +68,7 @@ buildFHSEnv {
         xorg.libX11
         xorg.xorgproto
         zlib
+        zstd
       ]
       ++ python310Full.buildInputs
     )

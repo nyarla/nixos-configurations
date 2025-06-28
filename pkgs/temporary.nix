@@ -1,4 +1,9 @@
 _: final: prev: {
+  blender-hip = prev.blender-hip.overrideAttrs (old: {
+    buildInputs = old.buildInputs ++ [ prev.rocmPackages.hiprt ];
+    nativeBuildInputs = old.nativeBuildInputs ++ [ prev.rocmPackages.hiprt ];
+  });
+
   bristol = prev.bristol.overrideAttrs (_: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });

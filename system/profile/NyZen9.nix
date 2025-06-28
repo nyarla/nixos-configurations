@@ -48,7 +48,7 @@
     ../config/tools/git.nix
     ../config/user/nyarla.nix
     ../config/video/droidcam.nix
-    ../config/video/intel-with-nvidia.nix
+    ../config/video/intel-with-amd.nix
     ../config/vmm/kvm.nix
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix
@@ -140,7 +140,7 @@
 
   ## for nvidia kernel modules
   systemd.services.nvidia-kernel-modules = {
-    enable = true;
+    enable = false;
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.kmod
@@ -164,50 +164,6 @@
           nvidia-smi -pm 0
           modprobe -r nvidia_uvm
           modprobe -r nvidia
-        ''
-      );
-    };
-  };
-  systemd.services.nvidia-powermizer = {
-    enable = false;
-    wantedBy = [ "multi-user.target" ];
-    path =
-      (with pkgs; [
-        bash
-        coreutils
-        findutils
-        kbd
-        config.hardware.nvidia.package.settings
-      ])
-      ++ (with pkgs.xorg; [
-        xauth
-        xorgserver
-      ]);
-
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = toString (
-        pkgs.writeShellScript "nvidia-powermizer" ''
-          set -xeuo pipefail
-
-          DVT=1
-
-          export DISPLAY
-          DISPLAY=$(find /dev -name 'tty**' | grep -P '\d\d' | sort -n | tail -n1)
-          DISPLAY=''${DISPLAY#/dev/tty}
-
-          SLEEP=$((60 * 60 * 24))
-
-          trap "DISPLAY=:''${DISPLAY} nvidia-settings -a 'GpuPowerMizerMode=1' -a 'GPUFanControlState=1' -a 'GPUTargetFanSpeed=50' & chvt ''${DVT} & (while true ; do sleep ''${SLEEP} ; done) & wait \''$!" USR1
-
-          export XAUTHORITY
-          XAUTHORITY=/tmp/.nvidia-powermizer-xauth
-          xauth add :''${DISPLAY} MIT-MAGIC-COOKIE-1 "$(od -An -N16 -tx /dev/urandom | tr -d ' ')"
-
-          (trap "" USR1 && exec Xorg :''${DISPLAY} vt''${DISPLAY} -keeptty -noreset -auth "''${XAUTHORITY}") &
-          waitPID=$!
-
-          wait $waitPID
         ''
       );
     };

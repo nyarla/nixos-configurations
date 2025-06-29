@@ -5,6 +5,7 @@
     kernelParams = [
       "i915.enable_guc=3"
     ];
+    blacklistedKernelModules = [ "amdgpu" ];
   };
 
   hardware = {

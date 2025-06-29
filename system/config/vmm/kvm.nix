@@ -1,15 +1,9 @@
 { pkgs, lib, ... }:
 let
   gpuIds = lib.concatStringsSep "," [
-    # RTX 5070
-    "10de:2f04"
-    "10de:2f80"
-
-    # RTX 2060
-    "10de:1e89"
-    "10de:10f8"
-    "10de:1ad8"
-    "10de:1ad9"
+    # RX 9070
+    "1002:7550"
+    "1002:ab40"
   ];
   usbId = "1022:149c";
   ids = lib.concatStringsSep "," [
@@ -58,21 +52,21 @@ in
           set -xeuo pipefail
           export PATH=${PATH}:$PATH
 
-          systemctl stop nvidia-kernel-modules
+          echo "0000:0d:00.0" > /sys/bus/pci/drivers/amdgpu/unbind
+          sleep 2
+          echo 3 > /sys/bus/pci/devices/0000:0d:00.0/resource2_resize
+          sleep 2
 
-          modprobe -r nvidia_uvm
-          modprobe -r nvidia
+          modprobe -r amdgpu
+          systemctl stop amdgpu-kernel-modules.service
 
           modprobe vfio_pci
           modprobe vfio
           modprobe vfio_iommu_type1
 
-          virsh nodedev-detach pci_0000_0b_00_3
-          virsh nodedev-detach pci_0000_0b_00_2
-          virsh nodedev-detach pci_0000_0b_00_1
-          virsh nodedev-detach pci_0000_0b_00_0
-
-          virsh nodedev-detach pci_0000_0d_00_3
+          virsh nodedev-detach pci_0000_0d_00_0
+          virsh nodedev-detach pci_0000_0d_00_1
+          virsh nodedev-detach pci_0000_0f_00_3
 
           set +x
         '';
@@ -82,18 +76,16 @@ in
 
           export PATH=${PATH}:$PATH
 
-          virsh nodedev-reattach pci_0000_0b_00_3
-          virsh nodedev-reattach pci_0000_0b_00_2
-          virsh nodedev-reattach pci_0000_0b_00_1
-          virsh nodedev-reattach pci_0000_0b_00_0
-
-          virsh nodedev-reattach pci_0000_0d_00_3
+          virsh nodedev-reattach pci_0000_0d_00_0
+          virsh nodedev-reattach pci_0000_0d_00_1
+          virsh nodedev-reattach pci_0000_0f_00_3
 
           modprobe -r vfio_pci
           modprobe -r vfio_iommu_type1
           modprobe -r vfio
 
-          systemctl start nvidia-kernel-modules
+          modprobe amdgpu
+          systemctl start amdgpu-kernel-modules.service
 
           set +x
         '';

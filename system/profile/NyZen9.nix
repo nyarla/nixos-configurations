@@ -139,13 +139,11 @@
   networking.interfaces."wlan0".mtu = 1472;
 
   ## for nvidia kernel modules
-  systemd.services.nvidia-kernel-modules = {
-    enable = false;
+  systemd.services.amdgpu-kernel-modules = {
+    enable = true;
     wantedBy = [ "multi-user.target" ];
     path = [
       pkgs.kmod
-      pkgs.systemd
-      config.hardware.nvidia.package.bin
     ];
     serviceConfig = {
       Type = "oneshot";
@@ -153,17 +151,13 @@
       ExecStart = toString (
         pkgs.writeShellScript "load-nvidia-kmod.sh" ''
           set -euo pipefail
-          nvidia-smi -pm 1
-          modprobe nvidia_uvm
-          modprobe nvidia
+          modprobe amdgpu || exit 1
         ''
       );
       ExecStop = toString (
         pkgs.writeShellScript "unload-nvidia-kmod.sh" ''
           set -euo pipefail
-          nvidia-smi -pm 0
-          modprobe -r nvidia_uvm
-          modprobe -r nvidia
+          modprobe -r amdgpu || exit 1
         ''
       );
     };

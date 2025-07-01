@@ -1,5 +1,24 @@
 { pkgs, ... }:
 {
+  # for FreshRSS
+  services.flaresolverr.enable = true;
+
+  # calibre
+  systemd.services.calibre-web.after = [ "automount-encrypted-usb-device.service" ];
+  services.calibre-web = {
+    enable = true;
+    user = "nyarla";
+    group = "users";
+    listen = {
+      ip = "127.0.0.1";
+      port = 40001;
+    };
+    options = {
+      calibreLibrary = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre";
+    };
+  };
+
+  # httpd
   security.acme = {
     acceptTerms = true;
     defaults = {
@@ -16,22 +35,6 @@
         "*.p.localhost.thotep.net"
         "*.f.localhost.thotep.net"
       ];
-    };
-  };
-
-  services.flaresolverr.enable = true;
-
-  systemd.services.calibre-web.after = [ "automount-encrypted-usb-device.service" ];
-  services.calibre-web = {
-    enable = true;
-    user = "nyarla";
-    group = "users";
-    listen = {
-      ip = "127.0.0.1";
-      port = 40001;
-    };
-    options = {
-      calibreLibrary = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre";
     };
   };
 

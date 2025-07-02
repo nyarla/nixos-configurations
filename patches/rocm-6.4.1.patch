@@ -61,7 +61,7 @@ index 2b4db7be7..9ffc3a35c 100644
      wrapPythonProgramsIn $out
      rm $out/bin/amd-smi
 diff --git a/pkgs/development/rocm-modules/6/clr/default.nix b/pkgs/development/rocm-modules/6/clr/default.nix
-index dca39f5be..02534c0b7 100644
+index dca39f5be..558d373d5 100644
 --- a/pkgs/development/rocm-modules/6/clr/default.nix
 +++ b/pkgs/development/rocm-modules/6/clr/default.nix
 @@ -46,16 +46,17 @@ let
@@ -173,8 +173,30 @@ index dca39f5be..02534c0b7 100644
  
    postInstall = ''
      chmod +x $out/bin/*
+@@ -237,6 +225,8 @@ stdenv.mkDerivation (finalAttrs: {
+         "1100"
+         "1101"
+         "1102"
++        "1200"
++        "1201"
+       ] (target: "gfx${target}");
+ 
+       inherit hipClangPath;
+diff --git a/pkgs/development/rocm-modules/6/composable_kernel/base.nix b/pkgs/development/rocm-modules/6/composable_kernel/base.nix
+index 2ed9532ff..29fa699e9 100644
+--- a/pkgs/development/rocm-modules/6/composable_kernel/base.nix
++++ b/pkgs/development/rocm-modules/6/composable_kernel/base.nix
+@@ -25,6 +25,8 @@
+       "gfx1100"
+       "gfx1101"
+       "gfx1102"
++      "gfx1200"
++      "gfx1201"
+     ]
+   ),
+ }:
 diff --git a/pkgs/development/rocm-modules/6/default.nix b/pkgs/development/rocm-modules/6/default.nix
-index 0f4a83262..830829e24 100644
+index 0f4a83262..9a04f08e4 100644
 --- a/pkgs/development/rocm-modules/6/default.nix
 +++ b/pkgs/development/rocm-modules/6/default.nix
 @@ -92,6 +92,8 @@ let
@@ -186,6 +208,15 @@ index 0f4a83262..830829e24 100644
        # hsakmt was merged into rocm-runtime
        hsakmt = self.rocm-runtime;
  
+@@ -505,4 +507,8 @@ outer
+     "gfx1101"
+     "gfx1102"
+   ];
++  gfx12 = scopeForArches [
++    "gfx1200"
++    "gfx1201"
++  ];
+ }
 diff --git a/pkgs/development/rocm-modules/6/half/default.nix b/pkgs/development/rocm-modules/6/half/default.nix
 index 953152b37..7c77d2bcd 100644
 --- a/pkgs/development/rocm-modules/6/half/default.nix
@@ -1053,7 +1084,7 @@ index 785a2f467..19083935b 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocblas/default.nix b/pkgs/development/rocm-modules/6/rocblas/default.nix
-index 2b110e0f1..3d08f1823 100644
+index 2b110e0f1..044999d14 100644
 --- a/pkgs/development/rocm-modules/6/rocblas/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocblas/default.nix
 @@ -21,9 +21,12 @@
@@ -1071,7 +1102,15 @@ index 2b110e0f1..3d08f1823 100644
    # https://github.com/ROCm/Tensile/issues/1757
    # Allows gfx101* users to use rocBLAS normally.
    # Turn the below two values to `true` after the fix has been cherry-picked
-@@ -58,10 +61,11 @@
+@@ -52,16 +55,19 @@
+       "gfx1100"
+       "gfx1101"
+       "gfx1102"
++      "gfx1200"
++      "gfx1201"
+     ]
+   ),
+ }:
  
  let
    gpuTargets' = lib.concatStringsSep ";" gpuTargets;
@@ -1084,7 +1123,7 @@ index 2b110e0f1..3d08f1823 100644
  
    outputs = [
      "out"
-@@ -71,7 +75,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -71,7 +77,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocBLAS";
      rev = "rocm-${finalAttrs.version}";
@@ -1093,7 +1132,7 @@ index 2b110e0f1..3d08f1823 100644
    };
  
    nativeBuildInputs =
-@@ -89,7 +93,9 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -89,7 +95,9 @@ stdenv.mkDerivation (finalAttrs: {
    buildInputs =
      [
        python3
@@ -1103,7 +1142,7 @@ index 2b110e0f1..3d08f1823 100644
      ]
      ++ lib.optionals withHipBlasLt [
        hipblaslt
-@@ -116,12 +122,14 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -116,12 +124,14 @@ stdenv.mkDerivation (finalAttrs: {
  
    dontStrip = true;
    env.CXXFLAGS =
@@ -1122,7 +1161,7 @@ index 2b110e0f1..3d08f1823 100644
    env.TENSILE_ROCM_ASSEMBLER_PATH = "${stdenv.cc}/bin/clang++";
  
    cmakeFlags =
-@@ -149,6 +157,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -149,6 +159,7 @@ stdenv.mkDerivation (finalAttrs: {
        "-DCMAKE_INSTALL_BINDIR=bin"
        "-DCMAKE_INSTALL_INCLUDEDIR=include"
        "-DCMAKE_INSTALL_LIBDIR=lib"
@@ -1130,7 +1169,7 @@ index 2b110e0f1..3d08f1823 100644
      ]
      ++ lib.optionals buildTensile [
        "-DCPACK_SET_DESTDIR=OFF"
-@@ -175,8 +184,6 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -175,8 +186,6 @@ stdenv.mkDerivation (finalAttrs: {
    postPatch = ''
      substituteInPlace cmake/build-options.cmake \
        --replace-fail 'Tensile_CPU_THREADS ""' 'Tensile_CPU_THREADS "$ENV{NIX_BUILD_CORES}"'
@@ -1500,10 +1539,18 @@ index d0796c126..219c5eedd 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocsolver/default.nix b/pkgs/development/rocm-modules/6/rocsolver/default.nix
-index a9e06550a..34a2277b7 100644
+index a9e06550a..2d1fc9abd 100644
 --- a/pkgs/development/rocm-modules/6/rocsolver/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocsolver/default.nix
-@@ -33,7 +33,7 @@
+@@ -27,13 +27,15 @@
+       "gfx1100"
+       "gfx1101"
+       "gfx1102"
++      "gfx1200"
++      "gfx1201"
+     ]
+   ),
+ }:
  
  stdenv.mkDerivation (finalAttrs: {
    pname = "rocsolver${clr.gpuArchSuffix}";
@@ -1512,7 +1559,7 @@ index a9e06550a..34a2277b7 100644
  
    outputs =
      [
-@@ -50,7 +50,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -50,7 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocSOLVER";
      rev = "rocm-${finalAttrs.version}";

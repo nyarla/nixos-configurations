@@ -57,6 +57,7 @@ in
           echo 3 > /sys/bus/pci/devices/0000:0d:00.0/resource2_resize
           sleep 2
 
+          systemctl stop ollama
           modprobe -r amdgpu
           systemctl stop amdgpu-kernel-modules.service
 
@@ -86,6 +87,7 @@ in
 
           modprobe amdgpu
           systemctl start amdgpu-kernel-modules.service
+          systemctl start ollama
 
           set +x
         '';

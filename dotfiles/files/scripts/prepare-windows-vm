@@ -12,10 +12,10 @@ main() {
     sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/release/end/01_dealloc_hugepage.sh
   fi
 
-  sudo systemctl stop nvidia-kernel-modules
+  sudo systemctl stop ollama
+  sudo systemctl stop amdgpu-kernel-modules
 
-  sudo modprobe -r nvidia_uvm
-  sudo modprobe -r nvidia
+  sudo modprobe -r amdgpu
 }
 
 main

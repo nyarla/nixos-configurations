@@ -44,6 +44,12 @@
     };
   };
 
+  services.ollama = {
+    enable = true;
+    user = "ollama";
+    group = "ollama";
+  };
+
   # for FreshRSS
   services.flaresolverr.enable = true;
 

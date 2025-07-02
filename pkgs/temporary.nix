@@ -26,6 +26,35 @@ _: final: prev: {
     '';
   });
 
+  ollama-rocm =
+    let
+      inherit (prev.rocmPackages.rocm-merged-llvm) libgcc;
+    in
+    (prev.ollama.override {
+      acceleration = "rocm";
+      config = {
+        rocmSupport = true;
+        cudaSupport = false;
+      };
+      rocmGpuTargets = [ "gfx1201" ];
+    }).overrideDerivation
+      (old: {
+        CGO_CXXFLAGS = "-I${libgcc}/include/c++ -I${libgcc}/include/c++/x86_64-unknown-linux-gnu -I${libgcc}/include";
+        CGO_CPPFLAGS = "-I${libgcc}/include/c++ -I${libgcc}/include/c++/x86_64-unknown-linux-gnu -I${libgcc}/include";
+        CGO_LDFLAGS = "-no-pie --gcc-toolchain=${libgcc}";
+
+        preBuild = ''
+          cmake -B build \
+            -DCMAKE_SKIP_BUILD_RPATH=ON \
+            -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
+            -DCMAKE_HIP_COMPILER=${prev.rocmPackages.clr}/bin/amdclang++ \
+            -DAMDGPU_TARGETS="gfx1201" \
+          ;
+
+          cmake --build build -j $NIX_BUILD_CORES
+        '';
+      });
+
   whipper =
     let
       python3 =

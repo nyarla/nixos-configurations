@@ -67,4 +67,14 @@
       amdsmi
       rocm-smi
     ]);
+
+  services.ollama = {
+    acceleration = "rocm";
+    package = pkgs.ollama-rocm;
+    environmentVariables = {
+      "ROCM_PATH" = "/opt/rocm";
+      "HIP_VISIBLE_DEVICES" = "0";
+      "HSA_OVERRIDE_GFX_VERSION" = "12.0.1";
+    };
+  };
 }

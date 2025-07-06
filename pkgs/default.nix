@@ -67,34 +67,6 @@ in
     ];
   });
 
-  mlterm-custom = prev.mlterm.override {
-    enableGuis = {
-      xlib = true;
-      fb = true;
-      quartz = false;
-      wayland = true;
-      sdl2 = true;
-    };
-    enableFeatures = {
-      uim = false;
-      ibus = false;
-      fcitx = true;
-      m17n = true;
-      ssh2 = false;
-      bidi = true;
-      otl = true;
-    };
-    enableTools = {
-      mlclient = true;
-      mlconfig = false;
-      mlcc = true;
-      mlterm-menu = false;
-      mlimgloader = true;
-      registobmp = true;
-      mlfc = true;
-    };
-  };
-
   speechd-with-openjtalk = prev.speechd.overrideAttrs (old: {
     src = prev.fetchurl {
       url = "https://github.com/brailcom/speechd/releases/download/0.12.0-rc3/speech-dispatcher-0.12.0-rc3.tar.gz";
@@ -203,24 +175,7 @@ in
     wine = prev.wineWowPackages.yabridge;
   };
 
-  yabridge =
-    (prev.yabridge.override { wine = prev.wineWowPackages.yabridge; }).overrideAttrs
-      (old: rec {
-        src = prev.fetchFromGitHub {
-          inherit (old.src) owner repo;
-          rev = "918d24a16e8eda9ac2eac692704770dfed96f6ee";
-          hash = "sha256-pxQ+B4WF9iWNeLholSSqSMLJ3lz/Ub/PfgkAuacUAqc=";
-        };
-
-        patches = [
-          ../patches/hardcode-dependencies.patch
-          "${nixpkgs}/pkgs/tools/audio/yabridge/libyabridge-from-nix-profiles.patch"
-        ];
-
-        buildInputs = old.buildInputs ++ [
-          prev.pkgsi686Linux.xorg.libxcb
-        ];
-      });
+  yabridge = prev.yabridge.override { wine = prev.wineWowPackages.yabridge; };
   yabridgectl = prev.yabridgectl.override {
     inherit (final) yabridge;
     wine = prev.wineWowPackages.yabridge;

@@ -13,8 +13,8 @@ _: final: prev: {
     src = prev.fetchFromGitHub {
       owner = "vinceliuice";
       repo = "Fluent-icon-theme";
-      rev = "e8ac55a5eb7c785e7b27519a97fd7a3ca33e9974";
-      hash = "sha256-0WtjJ3B3qIgP0vfg7s6fy7Ygg8Gf2TOMARe/m+NxyM8=";
+      rev = "85596cd23bd30a068563a4ae6c2fe4a03de2b5e3";
+      hash = "sha256-Vqb+II/O/kfC7iUI1Bfsyx8Ex9rYrtVWYlSg04KMfW8=";
     };
 
     preFixup = ''

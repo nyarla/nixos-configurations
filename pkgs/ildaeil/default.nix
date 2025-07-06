@@ -29,8 +29,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "DISTRHO";
     repo = "Ildaeil";
-    rev = "c66bcccb678ce5eec7447674f3e69d9e777af5f8";
-    hash = "sha256-1HnFiQx6jzdVGmSXP6v1Gus6plPps8ZvYHFshOubVwQ=";
+    rev = "8c3aeec2a8c963f56e274ae472dad6767f29b495";
+    hash = "sha256-qq2o5dEXVoIn/t1qR+JQvTesTCuXz11ITJssPL3t4Lk=";
     fetchSubmodules = true;
   };
 

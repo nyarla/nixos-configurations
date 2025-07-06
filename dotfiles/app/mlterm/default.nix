@@ -9,7 +9,7 @@ let
 in
 {
   home = {
-    packages = with pkgs; [ mlterm-custom ];
+    packages = with pkgs; [ mlterm-wayland ];
     file = {
       ".mlterm/aafont".text = toKV aafont;
       ".mlterm/color".text = toKV color;

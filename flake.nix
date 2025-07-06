@@ -53,7 +53,6 @@
             system = "x86_64-linux";
             patches = [
               ./patches/rocm-6.4.1.patch
-              ./patches/fix-nodejs_24.patch
             ];
             overlays = [
               wayland.overlay

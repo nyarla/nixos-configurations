@@ -1,3 +1,3 @@
 {
-  "Control+p" = ''"proto:paste"'';
+  "Control+p" = ''"proto:paste clipboard"'';
 }

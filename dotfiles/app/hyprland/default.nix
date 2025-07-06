@@ -24,11 +24,6 @@
     libsecret
     mission-center
 
-    # apps
-    libsecret
-    mission-center
-    gyazo-diy
-
     # background services
     blueman
     networkmanagerapplet
@@ -42,6 +37,7 @@
     wlr-randr
     ydotool
 
+    wl-clip-persist
     wl-clipboard
     xclip
   ];

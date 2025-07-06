@@ -8,12 +8,12 @@
 let
   metee = stdenv.mkDerivation rec {
     pname = "metee";
-    version = "5.0.0";
+    version = "6.0.0";
     src = fetchFromGitHub {
       owner = "intel";
       repo = "metee";
       rev = version;
-      hash = "sha256-LcAfsJsDSoHpzI5j0SJ9AyR5nFn0d2RrML02K0SOAEc=";
+      hash = "sha256-XGHYwYVYPOASmKb7s8JeBbcA9SOIGXqL66I/ieAr+p8=";
     };
 
     nativeBuildInputs = [
@@ -28,8 +28,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "intel";
     repo = "igsc";
-    rev = "ba6f2afbd96385fcb6b2a6e3c8e459727c8401fa";
-    hash = "sha256-vCOwCW6rDi1oQUPEGoZz7mqGr3rcRLDfqrbt9/LvYoA=";
+    rev = "6abae21408bc36561baaade9fca9ae4a5173d2f0";
+    hash = "sha256-ecjcDYirbJC2s48+SOwFuJAJQ6eaabTrmgTjgb+dXrA=";
   };
 
   buildInputs = [

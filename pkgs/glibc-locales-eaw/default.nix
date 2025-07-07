@@ -7,8 +7,8 @@
 
 let
   UTF-8-EAW-CONSOLE = fetchurl {
-    url = "https://github.com/hamano/locale-eaw/raw/7623d45f9b87d9b44dca6ef8c46fc97b22690f50/dist/UTF-8-EAW-CONSOLE";
-    sha256 = "1jm54m7abyc0fvvavr2qilrbiilcp8fz5k9d4fp6pdqpq87k9irv";
+    url = "https://raw.githubusercontent.com/hamano/locale-eaw/6f8d5ddb29da3bde73e3d617ece5ba9fd16c335c/dist/UTF-8-EAW-CONSOLE";
+    sha256 = "1d2zmkvaydwf0ra22gg9fms90ja597mxvbd1b05k26mkd91ck675";
   };
 in
 

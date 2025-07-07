@@ -55,7 +55,7 @@
 
           if has wl-paste ; then
             function __bind-clipboard() {
-              BUFFER=$(wl-paste)
+              BUFFER="''${LBUFFER:-}$(wl-paste)"
               CURSOR=$#BUFFER
               zle -R -c
             }
@@ -84,7 +84,7 @@
         docker = podman;
         inherit podman;
 
-        nixos-apply = "${nixos-rebuild "apply"} && sudo systemctl restart home-manager-$(id -n -u).service";
+        nixos-apply = "${nixos-rebuild "switch"} && sudo systemctl restart home-manager-$(id -n -u).service";
         nixos-build = nixos-rebuild "build";
         nixos-upgrade = nixos-rebuild "boot";
 

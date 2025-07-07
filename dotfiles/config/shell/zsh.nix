@@ -82,6 +82,17 @@
         bindkey '^R' fzy-history
       fi
 
+      if has wl-paste ; then
+        function paste-clipboard() {
+          BUFFER=$(wl-paste)
+          CURSOR=$#BUFFER
+          zle -R -c
+        }
+
+        zle -N paste-clipboard
+        bindkey '^P' paste-clipboard
+      fi
+
       unset -f has
     '';
   };

@@ -12,10 +12,14 @@ main() {
     sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/release/end/01_dealloc_hugepage.sh
   fi
 
-  sudo systemctl stop ollama
-  sudo systemctl stop amdgpu-kernel-modules
+  echo "0000:0d:00.0" > sudo tee /sys/bus/pci/drivers/amdgpu/unbind
+  sleep 2
+  echo 3 > sudo tee /sys/bus/pci/devices/0000:0d:00.0/resource2_resize
+  sleep 2
 
+  sudo systemctl stop ollama
   sudo modprobe -r amdgpu
+  sudo systemctl stop amdgpu-kernel-modules.service
 }
 
 main

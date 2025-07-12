@@ -52,14 +52,11 @@ in
           set -xeuo pipefail
           export PATH=${PATH}:$PATH
 
-          echo "0000:0d:00.0" > /sys/bus/pci/drivers/amdgpu/unbind
-          sleep 2
-          echo 3 > /sys/bus/pci/devices/0000:0d:00.0/resource2_resize
-          sleep 2
 
-          systemctl stop ollama
-          modprobe -r amdgpu
-          systemctl stop amdgpu-kernel-modules.service
+          if [[ "$(lsmod | grep amdgpu)" != "" ]]; then
+            echo "amdgpu is loaded yet" >&2
+            exit 1
+          fi
 
           modprobe vfio_pci
           modprobe vfio

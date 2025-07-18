@@ -24,10 +24,11 @@
     nurl
 
     # editor
-    editorconfig-core-c
-    nvim-run
+    bun
     devenv
+    editorconfig-core-c
     nodejs
+    nvim-run
 
     # vcs
     git-lfs

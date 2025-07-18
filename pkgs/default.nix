@@ -22,6 +22,7 @@ in
   openjtalk = require ./openjtalk { };
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
+  rocm-shell = require ./rocm-shell { };
   shoreman = require ./shoreman { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   sononym-bin = require ./sononym-bin { };

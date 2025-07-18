@@ -48,6 +48,8 @@
     enable = true;
     user = "ollama";
     group = "ollama";
+    host = "0.0.0.0";
+    openFirewall = true;
   };
 
   # for FreshRSS

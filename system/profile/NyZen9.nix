@@ -492,6 +492,9 @@
       "home/nyarla"
     ])
     // (subvolsEx false [
+      "var/lib/flatpak"
+    ])
+    // (subvolsEx false [
       # for accounts
       "home/nyarla/.cache/nvim"
       "home/nyarla/.config/audiogridder"

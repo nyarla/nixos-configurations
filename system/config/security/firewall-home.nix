@@ -28,11 +28,18 @@ _: {
 
       "wlan0" = {
         allowedTCPPorts = [
+          # immsered-vr
+          21000
+
           # syncthing
           22000
         ];
 
         allowedUDPPorts = [
+          # immsered-vr
+          21000
+          21010
+
           # scanner
           8610
           8612

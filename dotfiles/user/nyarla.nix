@@ -6,6 +6,7 @@ _: {
     ../config/app/generative.nix
     ../config/app/multimedia.nix
     ../config/app/office.nix
+    ../config/app/vr.nix
     ../config/app/wine.nix
     ../config/desktop/theme.nix
     ../config/files/skk.nix

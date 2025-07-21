@@ -28,6 +28,7 @@ in
   sononym-bin = require ./sononym-bin { };
   stability-matrix = require ./stability-matrix { };
   wcwidth-cjk = require ./wcwidh-cjk { };
+  xdg-desktop-portal-hypr-remote = require ./xdg-desktop-portal-hypr-remote { };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
   # fcitx5 packages

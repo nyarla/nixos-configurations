@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+hyprctl output create headless HEADLESS-2
+
+env HOME=/persist/home/nyarla immersed
+
+hyprctl output remove HEADLESS-2

@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-hyprctl output create headless HEADLESS-2
+hyprctl dispatch workspace +1
 
 env HOME=/persist/home/nyarla immersed
 
-hyprctl output remove HEADLESS-2

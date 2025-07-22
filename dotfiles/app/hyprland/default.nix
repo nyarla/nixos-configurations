@@ -37,7 +37,6 @@
     wlr-randr
     ydotool
 
-    wl-clip-persist
     wl-clipboard
     xclip
   ];

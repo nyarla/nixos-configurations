@@ -14,6 +14,7 @@ in
   glibc-locales-eaw = require ./glibc-locales-eaw { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
+  immersed = require ./immersed { };
   kaunas = require ./kaunas { };
   noise-suppression-for-voice = require ./noise-suppression-for-voice { };
   noto-fonts-jp = require ./noto-fonts-jp { };

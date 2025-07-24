@@ -1,16 +1,35 @@
 {
   description = "NixOS configurations for my PCs";
   inputs = {
+    systems.url = "github:nix-systems/default";
+
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "systems";
+
+    flake-compat.url = "github:nix-community/flake-compat";
+
+    nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
+
+    lib-aggregate.url = "github:nix-community/lib-aggregate";
+    lib-aggregate.inputs.flake-utils.follows = "flake-utils";
+    lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+
     nixpkgs.url = "github:NixOS/nixpkgs/master";
-    nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     wayland.url = "github:nix-community/nixpkgs-wayland";
     wayland.inputs.nixpkgs.follows = "nixpkgs";
+    wayland.inputs.flake-compat.follows = "flake-compat";
+    wayland.inputs.lib-aggregate.follows = "lib-aggregate";
 
     impermanence.url = "github:nix-community/impermanence";
+
+    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+    nixpkgs-xr.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-xr.inputs.flake-compat.follows = "flake-compat";
+    nixpkgs-xr.inputs.flake-utils.follows = "flake-utils";
   };
   outputs =
     {
@@ -18,6 +37,7 @@
       home-manager,
       wayland,
       impermanence,
+      nixpkgs-xr,
       ...
     }:
     {
@@ -61,6 +81,7 @@
             ];
 
             modules = [
+              nixpkgs-xr.nixosModules.nixpkgs-xr
               impermanence.nixosModules.impermanence
               home-manager.nixosModules.home-manager
               (_: {

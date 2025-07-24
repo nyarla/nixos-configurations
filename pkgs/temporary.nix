@@ -1,4 +1,5 @@
-_: final: prev: {
+{ nixpkgs }:
+final: prev: {
   blender-hip = prev.blender-hip.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ prev.rocmPackages.hiprt ];
     nativeBuildInputs = old.nativeBuildInputs ++ [ prev.rocmPackages.hiprt ];
@@ -77,6 +78,8 @@ _: final: prev: {
         sed -i 's|cd-paranoia|${prev.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
       '';
     });
+
+  wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn;
 
   voicevox-engine = prev.voicevox-engine.override { python3Packages = prev.python312Packages; };
   waydroid = prev.waydroid.override { python3Packages = prev.python312Packages; };

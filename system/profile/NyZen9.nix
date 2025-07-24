@@ -6,8 +6,8 @@
 }:
 {
   imports = [
-    ../config/audio/pipewire.nix
     ../config/audio/daw.nix
+    ../config/audio/pipewire.nix
     ../config/cpu/amd.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
@@ -15,6 +15,8 @@
     ../config/desktop/xdg.nix
     ../config/desktop/xorg.nix
     ../config/gadgets/android.nix
+    ../config/gaming/steam.nix
+    ../config/gaming/xr.nix
     ../config/graphic/fonts.nix
     ../config/graphic/lodpi.nix
     ../config/hardware/firmware.nix
@@ -498,13 +500,14 @@
       # for accounts
       "home/nyarla/.cache/nvim"
       "home/nyarla/.config/audiogridder"
+      "home/nyarla/.config/protonfixes"
       "home/nyarla/.fly"
-      "home/nyarla/.lmstudio"
+      "home/nyarla/.local/share/Steam"
       "home/nyarla/.local/share/containers"
       "home/nyarla/.local/share/nvim"
       "home/nyarla/.local/share/waydroid"
       "home/nyarla/.mozilla"
-      "home/nyarla/.triton"
+      "home/nyarla/.steam"
       "home/nyarla/Applications"
       "home/nyarla/Programming"
     ])
@@ -564,12 +567,14 @@
 
     "/persist/home/nyarla/.cache/nvim"
     "/persist/home/nyarla/.config/audiogridder"
+    "/persist/home/nyarla/.config/protonfixes"
     "/persist/home/nyarla/.fly"
-    "/persist/home/nyarla/.lmstudio"
+    "/persist/home/nyarla/.local/share/Steam"
     "/persist/home/nyarla/.local/share/containers"
     "/persist/home/nyarla/.local/share/nvim"
     "/persist/home/nyarla/.local/share/waydroid"
     "/persist/home/nyarla/.mozilla"
+    "/persist/home/nyarla/.steam"
     "/persist/home/nyarla/.wrangler"
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
@@ -644,6 +649,7 @@
           ".config/OpenUtau"
           ".config/Sononym"
           ".config/Thunar"
+          ".config/Valve"
           ".config/Yubico"
           ".config/act"
           ".config/aseprite"
@@ -666,7 +672,9 @@
           ".config/llm"
           ".config/lmstudio"
           ".config/lxqt"
+          ".config/monado"
           ".config/nvim"
+          ".config/protonfixes"
           ".config/pulse"
           ".config/rclone"
           ".config/remmina"
@@ -676,11 +684,13 @@
           ".config/vlc"
           ".config/voicevox"
           ".config/whipper"
+          ".config/wivrn"
           ".config/xfce4"
 
           # .local
           ".local/share/DigitalSuburban"
           ".local/share/MuseScore"
+          ".local/share/Steam"
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
           ".local/share/applications"
@@ -708,6 +718,7 @@
           ".lmstudio"
           ".mozilla"
           ".pki"
+          ".steam"
           ".thunderbird"
           ".vst"
           ".vst3"

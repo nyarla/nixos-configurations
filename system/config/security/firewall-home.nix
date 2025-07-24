@@ -4,6 +4,16 @@ _: {
     allowPing = true;
     checkReversePath = "loose"; # for tailscale
     interfaces = {
+      "lo" = {
+        allowedTCPPorts = [
+          9757
+        ];
+        allowedUDPPorts = [
+          5353
+          9757
+        ];
+      };
+
       "tailscale0" = {
         allowedTCPPorts = [
           # calibre
@@ -28,18 +38,11 @@ _: {
 
       "wlan0" = {
         allowedTCPPorts = [
-          # immsered-vr
-          21000
-
           # syncthing
           22000
         ];
 
         allowedUDPPorts = [
-          # immsered-vr
-          21000
-          21010
-
           # scanner
           8610
           8612

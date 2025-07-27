@@ -2,4 +2,7 @@
 
 set -euo pipefail
 
+adb kill-server
+adb devices
+
 DRI_PRIME=1 wivrn-dashboard

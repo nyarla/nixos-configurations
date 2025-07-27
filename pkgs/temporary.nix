@@ -27,6 +27,15 @@ final: prev: {
     '';
   });
 
+  hyprland = prev.hyprland.overrideAttrs (_: {
+    patches = [
+      (prev.fetchpatch {
+        url = "https://patch-diff.githubusercontent.com/raw/hyprwm/Hyprland/pull/11136.patch";
+        hash = "sha256-eKgjG1rTqOMyzxSeXlWE2Hur6AvMtA3bw7cP7WsZA/g=";
+      })
+    ];
+  });
+
   ollama-rocm =
     let
       inherit (prev.rocmPackages.rocm-merged-llvm) libgcc;

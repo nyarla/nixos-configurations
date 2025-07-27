@@ -162,6 +162,16 @@ in
     ];
   };
 
+  winetricks = prev.winetricks.overrideAttrs (old: {
+    pname = "winetricks";
+    version = "git";
+    src = prev.fetchFromGitHub {
+      inherit (old.src) owner repo;
+      rev = "5eed63521781ffc2f0c4bbee7ec9e215b13a1243";
+      hash = "sha256-thEL36C2I/l4R5YAyfVg9H3FttsslVRK06Y8rPg+7Do=";
+    };
+  });
+
   wineasio = require ./wineasio { };
 
   carla-with-wine = require ./carla {

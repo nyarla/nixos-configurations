@@ -20,6 +20,7 @@ let
     fi
 
     export WINEPREFIX=$(pwd)
+    export WINE_BIN=$(which .wine)
     exec "''${@:-}"
   '';
 

@@ -9,6 +9,7 @@
     ../config/audio/daw.nix
     ../config/audio/pipewire.nix
     ../config/cpu/amd.nix
+    ../config/desktop/app.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
     ../config/desktop/wayland.nix
@@ -494,6 +495,8 @@
       "home/nyarla"
     ])
     // (subvolsEx false [
+      "home/nyarla/.cache/appimage-run"
+      "home/nyarla/.local/share/flatpak"
       "var/lib/flatpak"
     ])
     // (subvolsEx false [
@@ -565,12 +568,14 @@
     "/persist/etc"
     "/persist/etc/nixos"
 
+    "/persist/home/nyarla/.cache/appimage-run"
     "/persist/home/nyarla/.cache/nvim"
     "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.config/protonfixes"
     "/persist/home/nyarla/.fly"
     "/persist/home/nyarla/.local/share/Steam"
     "/persist/home/nyarla/.local/share/containers"
+    "/persist/home/nyarla/.local/share/flatpak"
     "/persist/home/nyarla/.local/share/nvim"
     "/persist/home/nyarla/.local/share/waydroid"
     "/persist/home/nyarla/.mozilla"
@@ -630,6 +635,7 @@
           # cache
           ".cache/act"
           ".cache/actcache"
+          ".cache/appimage-run"
           ".cache/nix"
           ".cache/nvim"
           ".cache/wine"
@@ -662,6 +668,7 @@
           ".config/easytag"
           ".config/falkTX"
           ".config/fcitx5"
+          ".config/flatpak"
           ".config/google-chrome"
           ".config/gtk-2.0"
           ".config/gtk-3.0"
@@ -681,6 +688,8 @@
           ".config/simple-scan"
           ".config/syncthing"
           ".config/tmux"
+          ".config/unity3d"
+          ".config/unityhub"
           ".config/vlc"
           ".config/voicevox"
           ".config/whipper"
@@ -688,12 +697,15 @@
           ".config/xfce4"
 
           # .local
+          ".local/share/ALCOM"
           ".local/share/DigitalSuburban"
           ".local/share/MuseScore"
           ".local/share/Steam"
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
+          ".local/share/VRChatCreatorCompanion"
           ".local/share/applications"
+          ".local/share/com.anatawa12.vrc-get-gui"
           ".local/share/containers"
           ".local/share/fcitx5"
           ".local/share/fonts"

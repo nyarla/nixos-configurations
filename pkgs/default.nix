@@ -110,6 +110,79 @@ in
     '';
   });
 
+  unityhub-shell = prev.buildFHSEnv {
+    name = "unityhub-shell";
+    targetPkgs =
+      p: with p; [
+        unityhub
+
+        fontconfig
+        freetype
+        gsettings-desktop-schemas
+        hicolor-icon-theme
+        lsb-release
+        xdg-utils
+        xorg.libXrandr
+      ];
+    multiPkgs =
+      p: with p; [
+        alsa-lib
+        at-spi2-core
+        atk
+        cairo
+        clang
+        cpio
+        cups
+        dbus
+        expat
+        gdk-pixbuf
+        git
+        glib
+        gnome2.GConf
+        gtk3
+        harfbuzz
+        icu
+        krb5
+        libappindicator
+        libcap
+        libdrm
+        libgbm
+        libglvnd
+        libnotify
+        libpulseaudio
+        libsecret
+        libuuid
+        libva
+        libxkbcommon
+        libxml2
+        lttng-ust_2_12
+        nspr
+        nss
+        openssl
+        pango
+        udev
+        vulkan-loader
+        wayland
+        xorg.libX11
+        xorg.libXScrnSaver
+        xorg.libXcomposite
+        xorg.libXcursor
+        xorg.libXdamage
+        xorg.libXext
+        xorg.libXfixes
+        xorg.libXi
+        xorg.libXrender
+        xorg.libXtst
+        xorg.libxcb
+        xorg.libxshmfence
+        zlib
+        (p.runCommand "libxml2-fake-abi" { } ''
+          mkdir -p $out/lib
+          ln -s "${pkgs.lib.getLib pkgs.libxml2}/lib/libxml2.so" $out/lib/libxml2.so.2
+        '')
+      ];
+  };
+
   weylus = prev.rustPlatform.buildRustPackage rec {
     pname = "weylus";
     version = "2025-02-24";

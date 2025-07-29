@@ -3,6 +3,9 @@ _: {
     enable = true;
     allowPing = true;
     checkReversePath = "loose"; # for tailscale
+    trustedInterfaces = [
+      "virbr0"
+    ];
     interfaces = {
       "lo" = {
         allowedTCPPorts = [

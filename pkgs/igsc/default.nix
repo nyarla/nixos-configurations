@@ -24,7 +24,7 @@ let
 in
 stdenv.mkDerivation {
   pname = "igsc";
-  version = "0.9.5";
+  version = "0.9.6";
   src = fetchFromGitHub {
     owner = "intel";
     repo = "igsc";

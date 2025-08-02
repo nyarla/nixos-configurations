@@ -25,11 +25,11 @@ in
   python3Packages = python312Packages;
 }).overrideAttrs
   (old: rec {
-    version = "2024-11-24"; # keep same version of ildaeil
+    version = "2025-08-02"; # keep same version of ildaeil
     src = fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "54ebc831f54d37b23a400f85cb3d44637718d52e";
-      hash = "sha256-TKEmUKRrtfyoL9/OpOOAMYO7kk5++351qJHJIXH36bI=";
+      rev = "ec1ee0f1f3703bc8a8ef64cff24a903d9168747f";
+      hash = "sha256-0JRRyEVi1ZZDQkl3dSaU9WmGerI5Kqd8WQtR9nxBY4A=";
       fetchSubmodules = true;
     };
 
@@ -48,17 +48,15 @@ in
 
     patches = [ ./nixos.patch ];
 
-    postPatch =
-      old.postPatch
-      + ''
-        export carla=$out
-        export wine=${wine}
+    postPatch = old.postPatch + ''
+      export carla=$out
+      export wine=${wine}
 
-        substituteAllInPlace source/jackbridge/Makefile
-        substituteAllInPlace source/modules/dgl/Makefile
-        substituteAllInPlace source/backend/CarlaStandalone.cpp
-        substituteAllInPlace source/backend/engine/CarlaEngineJack.cpp
-      '';
+      substituteAllInPlace source/jackbridge/Makefile
+      substituteAllInPlace source/modules/dgl/Makefile
+      substituteAllInPlace source/backend/CarlaStandalone.cpp
+      substituteAllInPlace source/backend/engine/CarlaEngineJack.cpp
+    '';
 
     postBuild = ''
       make win32 \
@@ -86,5 +84,9 @@ in
         CXX="winegcc" \
         CFLAGS="-I${glibc.dev}/include" \
         CXXFLAGS="-I${glibc.dev}/include"
+    '';
+
+    preFixup = ''
+      rm $out/share/carla/resources/ui_carla_about.py
     '';
   })

@@ -11,13 +11,12 @@
 
 multiStdenv.mkDerivation rec {
   pname = "wineasio";
-  version = "2024-03-02";
+  version = "1.3.0";
   src = fetchFromGitHub {
     owner = pname;
     repo = pname;
-    rev = "652964155dcee005078c7cb652656e8a0b995186";
-    hash = "sha256-2wMZ+TIuD8eECTfJ0rz5JmL4sdLGVm6GMxW9CAkvIoI=";
-    fetchSubmodules = true;
+    rev = "b5e668103ad13e6f51f4118ed7090592213e5ca2";
+    hash = "sha256-Yw07XBzllbZ7l1XZcCvEaxZieaHLVxM5cmBM+HAjtQ4=";
   };
 
   nativeBuildInputs = [
@@ -26,12 +25,14 @@ multiStdenv.mkDerivation rec {
     qt5.wrapQtAppsHook
     python3.pkgs.wrapPython
   ];
+
   buildInputs = [
     pkgsi686Linux.libjack2
     libjack2
     python3.pkgs.pyqt5
     qt5.qtbase
   ];
+
   pythonPath = with python3.pkgs; [ pyqt5 ];
 
   dontConfigure = true;

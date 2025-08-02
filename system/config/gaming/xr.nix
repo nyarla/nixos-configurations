@@ -9,16 +9,19 @@
     autoStart = true;
     defaultRuntime = true;
     monadoEnvironment = {
+      DRI_PRIME = "1002:7550!";
+      MESA_VK_DEVICE_SELECT = "1002:7550";
+      AMD_VULKAN_ICD = "RADV";
+      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+
       STEAMVR_LH_ENABLE = "1";
-      WMR_HANDTRACKING = "0";
-      XRT_COMPOSITOR_COMPUTE = "1";
-      XRT_COMPOSITOR_FORCE_GPU_INDEX = "1";
-      DRI_PRIME = "1";
+      WMR_HANDTRACKING = "1";
     };
     config = {
       enable = true;
       json = {
-        bitrate = 1000000000;
+        bitrate = 3000000000;
+        scale = 1;
         encoders = [
           {
             encoder = "vaapi";

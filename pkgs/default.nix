@@ -79,6 +79,21 @@ in
     configureFlags = old.configureFlags ++ [ "--with-openjtalk" ];
   });
 
+  steam = prev.steam.override (
+    {
+      extraLibraries ? _: [ ],
+      ...
+    }:
+    {
+      extraLibraries =
+        pkgs':
+        (extraLibraries pkgs')
+        ++ [
+          pkgs'.gperftools
+        ];
+    }
+  );
+
   thunderbird-bin-unwrapped = prev.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   tmux = prev.tmux.overrideAttrs (_: {

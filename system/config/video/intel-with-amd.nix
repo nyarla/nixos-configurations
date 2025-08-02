@@ -24,6 +24,11 @@
         libvdpau-va-gl
       ];
     };
+
+    amdgpu.amdvlk = {
+      enable = true;
+      support32Bit.enable = true;
+    };
   };
 
   systemd.tmpfiles.rules =

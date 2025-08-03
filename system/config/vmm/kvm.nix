@@ -84,7 +84,6 @@ in
 
           modprobe amdgpu
           systemctl start amdgpu-kernel-modules.service
-          systemctl start ollama
 
           set +x
         '';

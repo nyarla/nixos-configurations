@@ -8,6 +8,8 @@ main() {
     exit 1
   fi
 
+  sudo systemctl stop ollama
+
   if sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/prepare/begin/01_alloc_hugepage.sh; then
     sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/release/end/01_dealloc_hugepage.sh
   fi
@@ -17,7 +19,6 @@ main() {
   echo 3 > sudo tee /sys/bus/pci/devices/0000:0d:00.0/resource2_resize
   sleep 2
 
-  sudo systemctl stop ollama
   sudo modprobe -r amdgpu
   sudo systemctl stop amdgpu-kernel-modules.service
 }

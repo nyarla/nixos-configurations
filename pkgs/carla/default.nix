@@ -62,9 +62,9 @@ in
       make win32 \
         CC=i686-w64-mingw32-gcc \
         CXX=i686-w64-mingw32-g++ \
-        CFLAGS="-I${mingw32.windows.mingw_w64_pthreads}/include -I${mcfgthreadsw32.dev}/include" \
-        CXXFLAGS="-I${mingw32.windows.mingw_w64_pthreads}/include -I${mcfgthreadsw32.dev}/include" \
-        LDFLAGS="-L${mingw32.windows.mingw_w64_pthreads}/lib -L${mcfgthreadsw32}/lib"
+        CFLAGS="-I${mingw32.windows.pthreads}/include -I${mcfgthreadsw32.dev}/include" \
+        CXXFLAGS="-I${mingw32.windows.pthreads}/include -I${mcfgthreadsw32.dev}/include" \
+        LDFLAGS="-L${mingw32.windows.pthreads}/lib -L${mcfgthreadsw32}/lib"
 
       make wine32 \
         CC="winegcc -m32" \
@@ -75,9 +75,9 @@ in
       make win64 \
         CC=x86_64-w64-mingw32-gcc \
         CXX=x86_64-w64-mingw32-g++ \
-        CFLAGS="-I${mingwW64.windows.mingw_w64_pthreads}/include -I${mcfgthreadsW64.dev}/include" \
-        CXXFLAGS="-I${mingwW64.windows.mingw_w64_pthreads}/include -I${mcfgthreadsW64.dev}/include" \
-        LDFLAGS="-L${mingwW64.windows.mingw_w64_pthreads}/lib -L${mcfgthreadsW64}/lib"
+        CFLAGS="-I${mingwW64.windows.pthreads}/include -I${mcfgthreadsW64.dev}/include" \
+        CXXFLAGS="-I${mingwW64.windows.pthreads}/include -I${mcfgthreadsW64.dev}/include" \
+        LDFLAGS="-L${mingwW64.windows.pthreads}/lib -L${mcfgthreadsW64}/lib"
 
       make wine64 \
         CC="winegcc" \

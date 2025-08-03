@@ -789,12 +789,6 @@
   # Services
   # --------
 
-  # systemd
-  systemd.extraConfig = ''
-    DefaultTimeoutStartSec=90s
-    DefaultTimeoutStopSec=90s
-  '';
-
   # waydroid
   systemd.services.waydroid-container.environment = {
     XDG_DATA_HOME = "/persist/home/nyarla/.local/share";
@@ -887,7 +881,12 @@
 
   # Others
   # ------
-  nixpkgs.config.permittedInsecurePackages = [ ];
   system.stateVersion = "24.11";
   environment.systemPackages = with pkgs; [ wpa_supplicant ];
+
+  # Temporary workaround
+  # --------------------
+  nixpkgs.config.permittedInsecurePackages = [
+    "libsoup-2.74.3"
+  ];
 }

@@ -61,7 +61,7 @@ index 2b4db7be7aa6..55a344969450 100644
      wrapPythonProgramsIn $out
      rm $out/bin/amd-smi
 diff --git a/pkgs/development/rocm-modules/6/aotriton/default.nix b/pkgs/development/rocm-modules/6/aotriton/default.nix
-index a7e58f2952c0..cc70f77bca58 100644
+index ccadbbf9633e..959abe5c7c0b 100644
 --- a/pkgs/development/rocm-modules/6/aotriton/default.nix
 +++ b/pkgs/development/rocm-modules/6/aotriton/default.nix
 @@ -62,13 +62,13 @@ stdenv.mkDerivation (
@@ -81,7 +81,7 @@ index a7e58f2952c0..cc70f77bca58 100644
      };
      env.CXX = compiler;
 diff --git a/pkgs/development/rocm-modules/6/clr/default.nix b/pkgs/development/rocm-modules/6/clr/default.nix
-index 1644cd122c95..a51fd18749fc 100644
+index 566863dec35c..3703e47dba6e 100644
 --- a/pkgs/development/rocm-modules/6/clr/default.nix
 +++ b/pkgs/development/rocm-modules/6/clr/default.nix
 @@ -46,16 +46,17 @@ let
@@ -194,18 +194,18 @@ index 1644cd122c95..a51fd18749fc 100644
    postInstall = ''
      chmod +x $out/bin/*
 diff --git a/pkgs/development/rocm-modules/6/composable_kernel/base.nix b/pkgs/development/rocm-modules/6/composable_kernel/base.nix
-index 29fa699e97e4..2e399bed01d0 100644
+index 251efb63946d..6c48a1f1f124 100644
 --- a/pkgs/development/rocm-modules/6/composable_kernel/base.nix
 +++ b/pkgs/development/rocm-modules/6/composable_kernel/base.nix
 @@ -40,7 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
    pname = "composable_kernel_base";
    # Picked this version over 6.3 because much easier to get to build
    # and it matches the version torch 2.6 wants
--  version = "6.4.0-unstable-20241220";
-+  version = "rocm-6.4.2";
+-  version = "6.4.0-unstable-2024-12-20";
++  version = "6.4.2";
  
-   outputs =
-     [
+   outputs = [
+     "out"
 diff --git a/pkgs/development/rocm-modules/6/default.nix b/pkgs/development/rocm-modules/6/default.nix
 index c399061c1992..9a04f08e406f 100644
 --- a/pkgs/development/rocm-modules/6/default.nix
@@ -273,7 +273,7 @@ index 626c36833d63..4bdfdde2a2ea 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/hipblas/default.nix b/pkgs/development/rocm-modules/6/hipblas/default.nix
-index 22706ff562b5..8eac409549c6 100644
+index ca236f1b85ff..432051332fd3 100644
 --- a/pkgs/development/rocm-modules/6/hipblas/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipblas/default.nix
 @@ -2,7 +2,6 @@
@@ -291,9 +291,9 @@ index 22706ff562b5..8eac409549c6 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -43,18 +42,9 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -42,18 +41,9 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "hipBLAS";
      rev = "rocm-${finalAttrs.version}";
@@ -314,7 +314,7 @@ index 22706ff562b5..8eac409549c6 100644
      substituteInPlace library/CMakeLists.txt \
        --replace-fail "find_package(Git REQUIRED)" ""
 diff --git a/pkgs/development/rocm-modules/6/hipblaslt/default.nix b/pkgs/development/rocm-modules/6/hipblaslt/default.nix
-index a5ab8ff2ab21..9d95b712d875 100644
+index cbcca61af76f..7b25db202948 100644
 --- a/pkgs/development/rocm-modules/6/hipblaslt/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipblaslt/default.nix
 @@ -20,6 +20,7 @@
@@ -351,7 +351,7 @@ index a5ab8ff2ab21..9d95b712d875 100644
      env.ROCM_PATH = "${clr}";
      env.TENSILE_ROCM_ASSEMBLER_PATH = lib.getExe' clr "amdclang++";
      env.TENSILE_GEN_ASSEMBLY_TOOLCHAIN = lib.getExe' clr "amdclang++";
-@@ -107,7 +109,8 @@ stdenv.mkDerivation (
+@@ -106,7 +108,8 @@ stdenv.mkDerivation (
        substituteInPlace library/src/amd_detail/rocblaslt/src/CMakeLists.txt \
          --replace-fail 'TensileCreateExtOpLibraries("' '# skipping TensileCreateExtOpLibraries'
        substituteInPlace library/src/amd_detail/rocblaslt/src/kernels/compile_code_object.sh \
@@ -362,7 +362,7 @@ index a5ab8ff2ab21..9d95b712d875 100644
  
      # Apply patches to allow building without a target arch if we need to do that
 diff --git a/pkgs/development/rocm-modules/6/hipcub/default.nix b/pkgs/development/rocm-modules/6/hipcub/default.nix
-index d51b5b36bab9..0475896f0036 100644
+index c559760738aa..bf1df006ccc0 100644
 --- a/pkgs/development/rocm-modules/6/hipcub/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipcub/default.nix
 @@ -17,7 +17,7 @@
@@ -372,9 +372,9 @@ index d51b5b36bab9..0475896f0036 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -34,7 +34,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -33,7 +33,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "hipCUB";
      rev = "rocm-${finalAttrs.version}";
@@ -384,7 +384,7 @@ index d51b5b36bab9..0475896f0036 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/hipfft/default.nix b/pkgs/development/rocm-modules/6/hipfft/default.nix
-index 80c21f158a77..905d02c9c60f 100644
+index 21507e774c6d..3d0694b399bf 100644
 --- a/pkgs/development/rocm-modules/6/hipfft/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipfft/default.nix
 @@ -22,7 +22,7 @@
@@ -394,9 +394,9 @@ index 80c21f158a77..905d02c9c60f 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -42,7 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -41,7 +41,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "hipFFT";
      rev = "rocm-${finalAttrs.version}";
@@ -446,7 +446,7 @@ index 8747dba16b96..e72372025916 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/hiprand/default.nix b/pkgs/development/rocm-modules/6/hiprand/default.nix
-index f32f4e508a18..2ef4acc6e50a 100644
+index d39e01ac2a78..1c23b47debad 100644
 --- a/pkgs/development/rocm-modules/6/hiprand/default.nix
 +++ b/pkgs/development/rocm-modules/6/hiprand/default.nix
 @@ -14,7 +14,7 @@
@@ -456,9 +456,9 @@ index f32f4e508a18..2ef4acc6e50a 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -28,7 +28,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -27,7 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "hipRAND";
      rev = "rocm-${finalAttrs.version}";
@@ -540,7 +540,7 @@ index 000000000000..2c5ca2c272e9
 +  };
 +})
 diff --git a/pkgs/development/rocm-modules/6/hipsolver/default.nix b/pkgs/development/rocm-modules/6/hipsolver/default.nix
-index dbc0b0c43c3d..40368b1e5a03 100644
+index d87c58eb3dbf..598231473cff 100644
 --- a/pkgs/development/rocm-modules/6/hipsolver/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipsolver/default.nix
 @@ -21,7 +21,7 @@
@@ -550,9 +550,9 @@ index dbc0b0c43c3d..40368b1e5a03 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -41,7 +41,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -40,7 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "hipSOLVER";
      rev = "rocm-${finalAttrs.version}";
@@ -562,7 +562,7 @@ index dbc0b0c43c3d..40368b1e5a03 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/hipsparse/default.nix b/pkgs/development/rocm-modules/6/hipsparse/default.nix
-index 5a318c7fe1e2..58aec48f0b97 100644
+index 0a1795d3ab16..09d6ac1625d3 100644
 --- a/pkgs/development/rocm-modules/6/hipsparse/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipsparse/default.nix
 @@ -20,7 +20,7 @@
@@ -572,9 +572,9 @@ index 5a318c7fe1e2..58aec48f0b97 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -37,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -36,7 +36,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "hipSPARSE";
      rev = "rocm-${finalAttrs.version}";
@@ -621,7 +621,7 @@ index 000000000000..32b97e18a033
 +   INTERCEPT_FUNCTION(fopen);
 +   INTERCEPT_FUNCTION(fread);
 diff --git a/pkgs/development/rocm-modules/6/llvm/default.nix b/pkgs/development/rocm-modules/6/llvm/default.nix
-index 9a1011671a5e..619655ed82d5 100644
+index c8fb82fa0235..ca85e0cd3630 100644
 --- a/pkgs/development/rocm-modules/6/llvm/default.nix
 +++ b/pkgs/development/rocm-modules/6/llvm/default.nix
 @@ -1,7 +1,7 @@
@@ -749,9 +749,9 @@ index 9a1011671a5e..619655ed82d5 100644
 -              # FIXME: Config file in rocmcxx instead of GCC_INSTALL_PREFIX?
 -              "-DGCC_INSTALL_PREFIX=${gcc-prefix}"
              ];
-           postFixup =
-             (old.postFixup or "")
-@@ -435,14 +451,28 @@ rec {
+           postFixup = (old.postFixup or "") + ''
+             find $lib -type f -exec remove-references-to -t ${stdenvToBuildRocmLlvm.cc} {} +
+@@ -431,14 +447,28 @@ rec {
      inherit clang-unwrapped clang;
    };
    compiler-rt-libc = llvmPackagesRocm.compiler-rt-libc.overrideAttrs (old: {
@@ -788,30 +788,29 @@ index 9a1011671a5e..619655ed82d5 100644
    });
    compiler-rt = compiler-rt-libc;
    bintools = wrapBintoolsWith {
-@@ -454,44 +484,48 @@ rec {
+@@ -450,43 +480,47 @@ rec {
    clang = rocmcxx;
  
    # Emulate a monolithic ROCm LLVM build to support building ROCm's in-tree LLVM projects
 -  rocm-merged-llvm = symlinkJoin {
 -    name = "rocm-llvm-merge";
--    paths =
--      [
--        llvm
--        llvm.dev
--        lld
--        lld.lib
--        lld.dev
--        libunwind
--        libunwind.dev
--        compiler-rt
--        compiler-rt.dev
--        rocmcxx
--      ]
--      ++ lib.optionals useLibcxx [
--        libcxx
--        libcxx.out
--        libcxx.dev
--      ];
+-    paths = [
+-      llvm
+-      llvm.dev
+-      lld
+-      lld.lib
+-      lld.dev
+-      libunwind
+-      libunwind.dev
+-      compiler-rt
+-      compiler-rt.dev
+-      rocmcxx
+-    ]
+-    ++ lib.optionals useLibcxx [
+-      libcxx
+-      libcxx.out
+-      libcxx.dev
+-    ];
 -    postBuild = builtins.unsafeDiscardStringContext ''
 -      found_files=$(find $out -name '*.cmake')
 -      if [ -z "$found_files" ]; then
@@ -827,24 +826,23 @@ index 9a1011671a5e..619655ed82d5 100644
 +  rocm-merged-llvm =
 +    symlinkJoin {
 +      name = "rocm-llvm-merge";
-+      paths =
-+        [
-+          llvm
-+          llvm.dev
-+          lld
-+          lld.lib
-+          lld.dev
-+          libunwind
-+          libunwind.dev
-+          compiler-rt
-+          compiler-rt.dev
-+          rocmcxx
-+        ]
-+        ++ lib.optionals useLibcxx [
-+          libcxx
-+          libcxx.out
-+          libcxx.dev
-+        ];
++      paths = [
++        llvm
++        llvm.dev
++        lld
++        lld.lib
++        lld.dev
++        libunwind
++        libunwind.dev
++        compiler-rt
++        compiler-rt.dev
++        rocmcxx
++      ]
++      ++ lib.optionals useLibcxx [
++        libcxx
++        libcxx.out
++        libcxx.dev
++      ];
 +      postBuild = builtins.unsafeDiscardStringContext ''
 +        found_files=$(find $out -name '*.cmake')
 +        if [ -z "$found_files" ]; then
@@ -874,7 +872,7 @@ index 9a1011671a5e..619655ed82d5 100644
  
    rocmClangStdenv = overrideCC (
      if useLibcxx then llvmPackagesRocm.libcxxStdenv else llvmPackagesRocm.stdenv
-@@ -530,5 +564,6 @@ rec {
+@@ -525,5 +559,6 @@ rec {
            libxml2
            libffi
          ];
@@ -958,7 +956,7 @@ index 000000000000..b24948386b46
 +   (pthread_mutex_init && pthread_mutex_lock && pthread_mutex_unlock &&         \
 +    pthread_mutex_destroy && pthread_mutexattr_init &&                          \
 diff --git a/pkgs/development/rocm-modules/6/migraphx/default.nix b/pkgs/development/rocm-modules/6/migraphx/default.nix
-index 54620d320076..164362774c8b 100644
+index b1b88b1c170c..191434d07b4a 100644
 --- a/pkgs/development/rocm-modules/6/migraphx/default.nix
 +++ b/pkgs/development/rocm-modules/6/migraphx/default.nix
 @@ -63,7 +63,7 @@ let
@@ -968,9 +966,9 @@ index 54620d320076..164362774c8b 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -80,7 +80,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -79,7 +79,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "AMDMIGraphX";
      rev = "rocm-${finalAttrs.version}";
@@ -978,9 +976,9 @@ index 54620d320076..164362774c8b 100644
 +    hash = "sha256-DI77FUBs5fhlDTp2DjjhNT+LpM8L2oppRlEsja9FR1c=";
    };
  
-   nativeBuildInputs =
+   nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/miopen/default.nix b/pkgs/development/rocm-modules/6/miopen/default.nix
-index b8e072b9c3fb..2954f2b09392 100644
+index 3a24c267ffaf..29cecac837e7 100644
 --- a/pkgs/development/rocm-modules/6/miopen/default.nix
 +++ b/pkgs/development/rocm-modules/6/miopen/default.nix
 @@ -54,13 +54,13 @@
@@ -1000,7 +998,7 @@ index b8e072b9c3fb..2954f2b09392 100644
      fetchSubmodules = true;
      # WORKAROUND: .lfsconfig is incorrectly set to exclude everything upstream
 diff --git a/pkgs/development/rocm-modules/6/mivisionx/default.nix b/pkgs/development/rocm-modules/6/mivisionx/default.nix
-index 34d1fadc2c36..1d0b03534bb8 100644
+index 0008b69f404a..69b87dc3c618 100644
 --- a/pkgs/development/rocm-modules/6/mivisionx/default.nix
 +++ b/pkgs/development/rocm-modules/6/mivisionx/default.nix
 @@ -42,13 +42,13 @@ stdenv.mkDerivation (finalAttrs: {
@@ -1033,7 +1031,7 @@ index b7fa373e80a7..b6d879df733e 100644
      owner = "microsoft";
      repo = "mscclpp";
 diff --git a/pkgs/development/rocm-modules/6/rccl/default.nix b/pkgs/development/rocm-modules/6/rccl/default.nix
-index c74c6287cf21..3e617280272b 100644
+index 4e7d32bd4bc4..63149eac45fe 100644
 --- a/pkgs/development/rocm-modules/6/rccl/default.nix
 +++ b/pkgs/development/rocm-modules/6/rccl/default.nix
 @@ -34,7 +34,7 @@ in
@@ -1043,9 +1041,9 @@ index c74c6287cf21..3e617280272b 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -54,7 +54,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -53,7 +53,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rccl";
      rev = "rocm-${finalAttrs.version}";
@@ -1055,7 +1053,7 @@ index c74c6287cf21..3e617280272b 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rdc/default.nix b/pkgs/development/rocm-modules/6/rdc/default.nix
-index a19f2c9aa51f..06c4a43b307e 100644
+index 36f85f90c3dc..57e671f2947e 100644
 --- a/pkgs/development/rocm-modules/6/rdc/default.nix
 +++ b/pkgs/development/rocm-modules/6/rdc/default.nix
 @@ -48,7 +48,7 @@ let
@@ -1065,9 +1063,9 @@ index a19f2c9aa51f..06c4a43b307e 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -65,7 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -64,7 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rdc";
      rev = "rocm-${finalAttrs.version}";
@@ -1075,9 +1073,9 @@ index a19f2c9aa51f..06c4a43b307e 100644
 +    hash = "sha256-zILZPW9Lx5T+cMDqTg/zWy3ro+Nypzc9bDNTupZjt4s=";
    };
  
-   nativeBuildInputs =
+   nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocalution/default.nix b/pkgs/development/rocm-modules/6/rocalution/default.nix
-index 785a2f4676a2..4568738a1e85 100644
+index c0b7222747fd..7298110a1db7 100644
 --- a/pkgs/development/rocm-modules/6/rocalution/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocalution/default.nix
 @@ -23,7 +23,7 @@
@@ -1087,9 +1085,9 @@ index 785a2f4676a2..4568738a1e85 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -43,7 +43,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -42,7 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocALUTION";
      rev = "rocm-${finalAttrs.version}";
@@ -1099,7 +1097,7 @@ index 785a2f4676a2..4568738a1e85 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocblas/default.nix b/pkgs/development/rocm-modules/6/rocblas/default.nix
-index 110b96ec118b..931580647f53 100644
+index 350e8bfc3fcf..c09247634b17 100644
 --- a/pkgs/development/rocm-modules/6/rocblas/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocblas/default.nix
 @@ -21,9 +21,12 @@
@@ -1138,18 +1136,8 @@ index 110b96ec118b..931580647f53 100644
 +    hash = "sha256-FCzo/BOk4xLEFkdOdqcCXh4a9t3/OIIBEy8oz6oOMWg=";
    };
  
-   nativeBuildInputs =
-@@ -91,7 +95,9 @@ stdenv.mkDerivation (finalAttrs: {
-   buildInputs =
-     [
-       python3
-+      libdrm
-       hipblas-common
-+      roctracer
-     ]
-     ++ lib.optionals withHipBlasLt [
-       hipblaslt
-@@ -118,12 +124,14 @@ stdenv.mkDerivation (finalAttrs: {
+   nativeBuildInputs = [
+@@ -116,12 +120,14 @@ stdenv.mkDerivation (finalAttrs: {
  
    dontStrip = true;
    env.CXXFLAGS =
@@ -1167,16 +1155,16 @@ index 110b96ec118b..931580647f53 100644
 +    ) "-Wl,--as-needed -L${amd-blis}/lib -lblis-mt -lcblas";
    env.TENSILE_ROCM_ASSEMBLER_PATH = "${stdenv.cc}/bin/clang++";
  
-   cmakeFlags =
-@@ -151,6 +159,7 @@ stdenv.mkDerivation (finalAttrs: {
-       "-DCMAKE_INSTALL_BINDIR=bin"
-       "-DCMAKE_INSTALL_INCLUDEDIR=include"
-       "-DCMAKE_INSTALL_LIBDIR=lib"
-+      "-DROCTX_PATH=${roctracer}"
-     ]
-     ++ lib.optionals buildTensile [
-       "-DCPACK_SET_DESTDIR=OFF"
-@@ -177,8 +186,6 @@ stdenv.mkDerivation (finalAttrs: {
+   cmakeFlags = [
+@@ -148,6 +154,7 @@ stdenv.mkDerivation (finalAttrs: {
+     "-DCMAKE_INSTALL_BINDIR=bin"
+     "-DCMAKE_INSTALL_INCLUDEDIR=include"
+     "-DCMAKE_INSTALL_LIBDIR=lib"
++    "-DROCTX_PATH=${roctracer}"
+   ]
+   ++ lib.optionals buildTensile [
+     "-DCPACK_SET_DESTDIR=OFF"
+@@ -174,8 +181,6 @@ stdenv.mkDerivation (finalAttrs: {
    postPatch = ''
      substituteInPlace cmake/build-options.cmake \
        --replace-fail 'Tensile_CPU_THREADS ""' 'Tensile_CPU_THREADS "$ENV{NIX_BUILD_CORES}"'
@@ -1186,19 +1174,19 @@ index 110b96ec118b..931580647f53 100644
  
    passthru.updateScript = rocmUpdateScript {
 diff --git a/pkgs/development/rocm-modules/6/rocdbgapi/default.nix b/pkgs/development/rocm-modules/6/rocdbgapi/default.nix
-index 8226f62bf0f3..1b6bd80e9438 100644
+index cd07af5d4cdf..df59af490066 100644
 --- a/pkgs/development/rocm-modules/6/rocdbgapi/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocdbgapi/default.nix
-@@ -43,7 +43,7 @@ let
+@@ -52,7 +52,7 @@ let
  in
  stdenv.mkDerivation (finalAttrs: {
    pname = "rocdbgapi";
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -57,7 +57,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -65,7 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "ROCdbgapi";
      rev = "rocm-${finalAttrs.version}";
@@ -1206,9 +1194,9 @@ index 8226f62bf0f3..1b6bd80e9438 100644
 +    hash = "sha256-Rr8+SNeFps0rjk4Jn2+rFmtRJfL42l0tNOz13oZQy+I=";
    };
  
-   nativeBuildInputs =
+   # FIXME: remove once https://github.com/doxygen/doxygen/issues/11634 is resolved
 diff --git a/pkgs/development/rocm-modules/6/rocfft/default.nix b/pkgs/development/rocm-modules/6/rocfft/default.nix
-index d8ae87d509c1..c6d13de76e76 100644
+index dc64f6bf3e93..115b4db74a12 100644
 --- a/pkgs/development/rocm-modules/6/rocfft/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocfft/default.nix
 @@ -19,13 +19,13 @@
@@ -1441,7 +1429,7 @@ index 19d1f76dbbc6..3f312812067c 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocmlir/default.nix b/pkgs/development/rocm-modules/6/rocmlir/default.nix
-index 13ffe4ada1bd..9ef1009e0d7d 100644
+index 480b9d2fa48d..b7bcdc030099 100644
 --- a/pkgs/development/rocm-modules/6/rocmlir/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocmlir/default.nix
 @@ -41,7 +41,7 @@ let
@@ -1451,9 +1439,9 @@ index 13ffe4ada1bd..9ef1009e0d7d 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -55,7 +55,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -54,7 +54,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocMLIR";
      rev = "rocm-${finalAttrs.version}";
@@ -1463,7 +1451,7 @@ index 13ffe4ada1bd..9ef1009e0d7d 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocprim/default.nix b/pkgs/development/rocm-modules/6/rocprim/default.nix
-index 87505bee0d7a..d20b390a2537 100644
+index 1b92663403c4..7e41652c6bfe 100644
 --- a/pkgs/development/rocm-modules/6/rocprim/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocprim/default.nix
 @@ -15,7 +15,7 @@
@@ -1473,9 +1461,9 @@ index 87505bee0d7a..d20b390a2537 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -32,7 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -31,7 +31,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocPRIM";
      rev = "rocm-${finalAttrs.version}";
@@ -1545,7 +1533,7 @@ index 7fbf0a04da09..6ff42d92eeda 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocrand/default.nix b/pkgs/development/rocm-modules/6/rocrand/default.nix
-index d0796c1267b8..3225ecb2d081 100644
+index d58e596d97a8..8351e81a29f1 100644
 --- a/pkgs/development/rocm-modules/6/rocrand/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocrand/default.nix
 @@ -15,7 +15,7 @@
@@ -1555,9 +1543,9 @@ index d0796c1267b8..3225ecb2d081 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -32,7 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -31,7 +31,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocRAND";
      rev = "rocm-${finalAttrs.version}";
@@ -1567,7 +1555,7 @@ index d0796c1267b8..3225ecb2d081 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocsolver/default.nix b/pkgs/development/rocm-modules/6/rocsolver/default.nix
-index 317690b40e8b..34284b2367e1 100644
+index b2f3764d2e0b..4123187737fa 100644
 --- a/pkgs/development/rocm-modules/6/rocsolver/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocsolver/default.nix
 @@ -35,7 +35,7 @@
@@ -1577,9 +1565,9 @@ index 317690b40e8b..34284b2367e1 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -52,7 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -51,7 +51,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocSOLVER";
      rev = "rocm-${finalAttrs.version}";
@@ -1587,9 +1575,9 @@ index 317690b40e8b..34284b2367e1 100644
 +    hash = "sha256-JthNY5rkrrm9bf1fgkO9HnARdX6H0kiF9EW1jMbBmj4=";
    };
  
-   nativeBuildInputs =
+   nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocsparse/default.nix b/pkgs/development/rocm-modules/6/rocsparse/default.nix
-index b4a1ead7608a..fdc9215193a1 100644
+index ee7fd4d96f15..9a7e500cbb14 100644
 --- a/pkgs/development/rocm-modules/6/rocsparse/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocsparse/default.nix
 @@ -20,7 +20,7 @@
@@ -1599,9 +1587,9 @@ index b4a1ead7608a..fdc9215193a1 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -37,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -36,7 +36,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocSPARSE";
      rev = "rocm-${finalAttrs.version}";
@@ -1611,7 +1599,7 @@ index b4a1ead7608a..fdc9215193a1 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocthrust/default.nix b/pkgs/development/rocm-modules/6/rocthrust/default.nix
-index 06cd7a552aeb..724622e9b3b3 100644
+index 0a5254f60b95..fcdd1c5262ee 100644
 --- a/pkgs/development/rocm-modules/6/rocthrust/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocthrust/default.nix
 @@ -15,7 +15,7 @@
@@ -1621,9 +1609,9 @@ index 06cd7a552aeb..724622e9b3b3 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -32,7 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -31,7 +31,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocThrust";
      rev = "rocm-${finalAttrs.version}";
@@ -1633,7 +1621,7 @@ index 06cd7a552aeb..724622e9b3b3 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/roctracer/default.nix b/pkgs/development/rocm-modules/6/roctracer/default.nix
-index c0fe6456df95..dcf955073316 100644
+index e45b340c9a63..140f6feb360b 100644
 --- a/pkgs/development/rocm-modules/6/roctracer/default.nix
 +++ b/pkgs/development/rocm-modules/6/roctracer/default.nix
 @@ -12,6 +12,7 @@
@@ -1651,9 +1639,9 @@ index c0fe6456df95..dcf955073316 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -36,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -35,7 +36,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "roctracer";
      rev = "rocm-${finalAttrs.version}";
@@ -1661,25 +1649,38 @@ index c0fe6456df95..dcf955073316 100644
 +    hash = "sha256-Dwk5cBZLysmsVA2kwpQM0FQt2KXOGcaZcAw/d8VUaXw=";
    };
  
-   nativeBuildInputs =
-@@ -71,8 +72,15 @@ stdenv.mkDerivation (finalAttrs: {
+   nativeBuildInputs = [
+@@ -68,13 +69,21 @@ stdenv.mkDerivation (finalAttrs: {
+     "-Wno-error=array-bounds"
    ];
  
-   postPatch =
+-  postPatch = ''
+-    export HIP_DEVICE_LIB_PATH=${rocm-device-libs}/amdgcn/bitcode
+-  ''
+-  + lib.optionalString (!buildTests) ''
+-    substituteInPlace CMakeLists.txt \
+-      --replace "add_subdirectory(test)" ""
+-  '';
++  postPatch =
 +    let
 +      cxxflags = "-I${rocm-merged-llvm.libgcc}/include/c++ -I${rocm-merged-llvm.libgcc}/include/c++/x86_64-unknown-linux-gnu -I${rocm-merged-llvm.libgcc}/include";
 +    in
-     ''
-       export HIP_DEVICE_LIB_PATH=${rocm-device-libs}/amdgcn/bitcode
++    ''
++      export HIP_DEVICE_LIB_PATH=${rocm-device-libs}/amdgcn/bitcode
 +
 +      substituteInPlace src/CMakeLists.txt \
 +        --replace-fail "$<SEMICOLON>-I" "-D__HIP_PLATFORM_AMD__=1" \
 +        --replace-fail "-o " "${cxxflags} -o "
-     ''
-     + lib.optionalString (!buildTests) ''
-       substituteInPlace CMakeLists.txt \
++    ''
++    + lib.optionalString (!buildTests) ''
++      substituteInPlace CMakeLists.txt \
++        --replace "add_subdirectory(test)" ""
++    '';
+ 
+   # Tests always fail, probably need GPU
+   # doCheck = buildTests;
 diff --git a/pkgs/development/rocm-modules/6/rocwmma/default.nix b/pkgs/development/rocm-modules/6/rocwmma/default.nix
-index 623e6878a283..eb1a250869a3 100644
+index 718f45b18519..eb189f04b5de 100644
 --- a/pkgs/development/rocm-modules/6/rocwmma/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocwmma/default.nix
 @@ -19,7 +19,7 @@
@@ -1689,9 +1690,9 @@ index 623e6878a283..eb1a250869a3 100644
 -  version = "6.3.3";
 +  version = "6.4.2";
  
-   outputs =
-     [
-@@ -39,7 +39,7 @@ stdenv.mkDerivation (finalAttrs: {
+   outputs = [
+     "out"
+@@ -38,7 +38,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocWMMA";
      rev = "rocm-${finalAttrs.version}";
@@ -1701,7 +1702,7 @@ index 623e6878a283..eb1a250869a3 100644
  
    patches = lib.optionals (buildTests || buildBenchmarks) [
 diff --git a/pkgs/development/rocm-modules/6/rpp/default.nix b/pkgs/development/rocm-modules/6/rpp/default.nix
-index 64fd8af1cba6..b8c23f86624a 100644
+index 4185c91e079f..cb222af4d40a 100644
 --- a/pkgs/development/rocm-modules/6/rpp/default.nix
 +++ b/pkgs/development/rocm-modules/6/rpp/default.nix
 @@ -29,13 +29,13 @@ stdenv.mkDerivation (finalAttrs: {
@@ -1719,9 +1720,9 @@ index 64fd8af1cba6..b8c23f86624a 100644
 +    hash = "sha256-S6pT+c68D+CQmDdB7zrFkoNSeUmCE+X7PYZndEt8aAU=";
    };
  
-   nativeBuildInputs =
+   nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/tensile/default.nix b/pkgs/development/rocm-modules/6/tensile/default.nix
-index 6d66513bd402..7a81549a8f05 100644
+index 9446452692f2..215a34985002 100644
 --- a/pkgs/development/rocm-modules/6/tensile/default.nix
 +++ b/pkgs/development/rocm-modules/6/tensile/default.nix
 @@ -6,6 +6,7 @@
@@ -1760,9 +1761,9 @@ index 6d66513bd402..7a81549a8f05 100644
 +    distro
 +  ];
  
-   propagatedBuildInputs =
-     [
-@@ -83,8 +87,7 @@ buildPythonPackage rec {
+   propagatedBuildInputs = [
+     pyyaml
+@@ -82,8 +86,7 @@ buildPythonPackage rec {
        url = "https://github.com/GZGavinZhao/Tensile/commit/855cb15839849addb0816a6dde45772034a3e41f.patch";
      })
      ++ lib.optional isTensileLite ./tensilelite-create-library-dont-copy-twice.diff

@@ -8,8 +8,6 @@
   # Librechat by podman compose
   systemd.user.services.librechat = {
     enable = true;
-    wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
       Type = "forking";
       RemainAfterExit = "yes";

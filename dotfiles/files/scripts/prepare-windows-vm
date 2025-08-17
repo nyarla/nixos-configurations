@@ -14,9 +14,9 @@ main() {
     sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/release/end/01_dealloc_hugepage.sh
   fi
 
-  echo "0000:0d:00.0" > sudo tee /sys/bus/pci/drivers/amdgpu/unbind
+  echo "0000:0d:00.0" | sudo tee /sys/bus/pci/drivers/amdgpu/unbind
   sleep 2
-  echo 3 > sudo tee /sys/bus/pci/devices/0000:0d:00.0/resource2_resize
+  echo 3 | sudo tee /sys/bus/pci/devices/0000:0d:00.0/resource2_resize
   sleep 2
 
   sudo modprobe -r amdgpu

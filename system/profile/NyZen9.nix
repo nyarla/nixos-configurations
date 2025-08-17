@@ -761,11 +761,11 @@
         TIMELINE_CREATE = true;
         TIMELINE_CLEANUP = true;
         TIMETINE_MIN_AGE = 1800;
-        TIMELINE_LIMIT_HOURLY = 6;
+        TIMELINE_LIMIT_HOURLY = 1;
         TIMELIME_DAILY = 7;
-        TIMELINE_WEEKLY = 2;
-        TIMELINE_MONTHLY = 1;
-        TIMELINE_YEARLY = 1;
+        TIMELINE_WEEKLY = 0;
+        TIMELINE_MONTHLY = 0;
+        TIMELINE_YEARLY = 0;
       };
 
       snapshots = paths: lib.attrsets.concatMapAttrs (n: v: { "${n}" = snapshot v; }) paths;

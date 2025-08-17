@@ -669,6 +669,7 @@
           ".config/falkTX"
           ".config/fcitx5"
           ".config/flatpak"
+          ".config/gh"
           ".config/google-chrome"
           ".config/gtk-2.0"
           ".config/gtk-3.0"

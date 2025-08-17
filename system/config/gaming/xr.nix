@@ -2,6 +2,11 @@
 {
   nixpkgs.xr.enable = true;
 
+  # for ntsync
+  boot.kernelModules = [
+    "ntsync"
+  ];
+
   # wivrn
   services.wivrn = {
     package = pkgs.wivrn-stable;
@@ -14,18 +19,17 @@
       AMD_VULKAN_ICD = "RADV";
       VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
 
-      STEAMVR_LH_ENABLE = "1";
       WMR_HANDTRACKING = "1";
     };
     config = {
       enable = true;
       json = {
-        bitrate = 3000000000;
+        bitrate = 4096000000;
         scale = 1;
         encoders = [
           {
             encoder = "vaapi";
-            codec = "av1";
+            codec = "h265";
             width = 1.0;
             height = 1.0;
             offset_x = 0.0;

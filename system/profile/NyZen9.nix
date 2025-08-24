@@ -329,8 +329,15 @@
           }
 
           mount-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7
+
+          backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Archives
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Calibre
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Music
+          backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Pictures
+          backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Sources/AI
+          backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Sources/Games
+          backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Sources/ISO
+          backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Sources/Learn
         ''
       );
 
@@ -520,10 +527,6 @@
         dest = "/persist/home/nyarla/Applications";
       }
       {
-        name = "Archives";
-        dest = "/persist/home/nyarla/Archives";
-      }
-      {
         name = "Development";
         dest = "/persist/home/nyarla/Development";
       }
@@ -536,16 +539,12 @@
         dest = "/persist/etc/nixos";
       }
       {
-        name = "Pictures";
-        dest = "/persist/home/nyarla/Pictures";
-      }
-      {
         name = "Programming";
         dest = "/persist/home/nyarla/Programming";
       }
       {
-        name = "Sources";
-        dest = "/persist/home/nyarla/Sources";
+        name = "Sources/DAW";
+        dest = "/persist/home/nyarla/Sources/DAW";
       }
       {
         name = "Sync";
@@ -622,11 +621,9 @@
         [
           # data
           "Applications"
-          "Archives"
           "Development"
           "Documents"
           "Downloads"
-          "Pictures"
           "Programming"
           "Reports"
           "Sources"

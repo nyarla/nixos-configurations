@@ -12,7 +12,6 @@
       kdePackages.fcitx5-qt
       kdePackages.fcitx5-skk-qt
       libsForQt5.fcitx5-qt
-      libsForQt5.fcitx5-skk-qt
     ];
     fcitx5.waylandFrontend = true;
   };

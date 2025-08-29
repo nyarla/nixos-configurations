@@ -70,6 +70,8 @@ in
     ];
   });
 
+  ollama-rocm = prev.ollama-rocm.override { rocmPackages = prev.rocmPackages.gfx12; };
+
   speechd-with-openjtalk = prev.speechd.overrideAttrs (old: {
     src = prev.fetchurl {
       url = "https://github.com/brailcom/speechd/releases/download/0.12.0-rc3/speech-dispatcher-0.12.0-rc3.tar.gz";

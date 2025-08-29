@@ -1,11 +1,12 @@
 {
   carla,
-  python312Packages,
+  python312,
   glibc,
   pkgsCross,
   wine,
   multiStdenv,
   fetchFromGitHub,
+  fetchpatch,
 }:
 let
   pkgsMinGW = bit: if bit == 32 then pkgsCross.mingw32 else pkgsCross.mingwW64;
@@ -19,10 +20,25 @@ let
   mcfgthreadsW64 = mingwW64.windows.mcfgthreads.overrideAttrs (_: {
     dontDisableStatic = true;
   });
+
+  # temporary workaround for fix to build error of pyliblo3
+  python3Packages =
+    (python312.override {
+      packageOverrides = _: prev: {
+        pyliblo3 = prev.pyliblo3.overrideAttrs (_: rec {
+          patches = [
+            (fetchpatch {
+              url = "https://patch-diff.githubusercontent.com/raw/gesellkammer/pyliblo3/pull/15.patch";
+              sha256 = "1mir24mzfmmrha5qf08hp7d2g1f47ykgr59j2ybjwvyy7fd2jmg0";
+            })
+          ];
+        });
+      };
+    }).pkgs;
 in
 (carla.override {
   stdenv = multiStdenv;
-  python3Packages = python312Packages;
+  inherit python3Packages;
 }).overrideAttrs
   (old: rec {
     version = "2025-08-02"; # keep same version of ildaeil

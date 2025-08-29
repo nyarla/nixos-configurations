@@ -17,12 +17,12 @@
 }:
 stdenv.mkDerivation rec {
   pname = "fcitx5-cskk";
-  version = "v1.2.0";
+  version = "6d4407c";
   src = fetchFromGitHub {
     owner = "fcitx";
     repo = "fcitx5-cskk";
-    rev = "223c99a5dde7362f51059a15849edceb4a030d0a";
-    hash = "sha256-NSYtVX7XE9WkI8g1s+pC4/7QHEbQ3GO87ZZA9oMo090=";
+    rev = "6d4407c64df46423c378afeefa71bda3282a7cec";
+    hash = "sha256-UfEmRenWiX2xbIirkDRbix1YQrDz1/sVg6yut8ZRJ0k=";
   };
 
   nativeBuildInputs = [
@@ -30,17 +30,17 @@ stdenv.mkDerivation rec {
     extra-cmake-modules
     pkg-config
     gettext
-  ] ++ lib.optional enableQt wrapQtAppsHook;
+  ]
+  ++ lib.optional enableQt wrapQtAppsHook;
 
-  buildInputs =
-    [
-      fcitx5
-      cskk
-    ]
-    ++ lib.optionals enableQt [
-      fcitx5-qt
-      qtbase
-    ];
+  buildInputs = [
+    fcitx5
+    cskk
+  ]
+  ++ lib.optionals enableQt [
+    fcitx5-qt
+    qtbase
+  ];
 
   cmakeFlags = [
     "-DENABLE_QT=${toString enableQt}"

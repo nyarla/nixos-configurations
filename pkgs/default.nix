@@ -5,6 +5,7 @@ let
 in
 {
   # custom packages
+  amd-run = require ./amd-run { gpuId = null; };
   aria-misskey = require ./aria-misskey { };
   audiogridder = require ./audiogridder { };
   cskk = require ./cskk { };

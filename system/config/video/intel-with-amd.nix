@@ -65,6 +65,7 @@
       ddcutil
       igsc
       nvtopPackages.full
+      (amd-run.override { gpuId = "1002:7550"; })
     ]
     ++ (with pkgs.rocmPackages.gfx12; [
       amdsmi

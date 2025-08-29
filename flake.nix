@@ -71,7 +71,9 @@
             hostname = "nixos";
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
-            patches = [ ];
+            patches = [
+              ./patches/rocm-6.4.2-2025-08-28.patch
+            ];
             overlays = [
               wayland.overlay
               (import ./pkgs/temporary.nix { inherit nixpkgs; })

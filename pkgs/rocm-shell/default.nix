@@ -32,7 +32,7 @@ buildFHSEnv {
       # for comfyUI
       sentencepiece
     ]
-    ++ (with rocmPackages; [
+    ++ (with rocmPackages.gfx12; [
       llvm.libcxx
     ]);
 

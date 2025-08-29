@@ -35,7 +35,7 @@
     let
       rocmEnv = pkgs.symlinkJoin {
         name = "rocm-combined";
-        paths = with pkgs.rocmPackages; [
+        paths = with pkgs.rocmPackages.gfx12; [
           clr
           hipblas
           rocblas
@@ -66,7 +66,7 @@
       igsc
       nvtopPackages.full
     ]
-    ++ (with pkgs.rocmPackages; [
+    ++ (with pkgs.rocmPackages.gfx12; [
       amdsmi
       rocm-smi
     ]);

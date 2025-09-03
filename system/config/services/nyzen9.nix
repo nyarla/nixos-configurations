@@ -68,6 +68,19 @@
     };
   };
 
+  # FreshRSS on local machine
+  services.freshrss = {
+    enable = true;
+    baseUrl = "https://freshrss.p.localhost.thotep.net";
+    virtualHost = "freshrss.p.localhost.thotep.net";
+
+    defaultUser = "nyarla";
+    passwordFile = "/var/lib/freshrss/password";
+
+    language = "ja";
+    webserver = "caddy";
+  };
+
   # httpd
   security.acme = {
     acceptTerms = true;
@@ -120,6 +133,13 @@
         '';
       };
 
+      "freshrss.p.localhost.thotep.net" = {
+        listenAddresses = [ "100.103.65.77" ];
+        useACMEHost = "localhost.thotep.net";
+        logFormat = ''
+          output stdout
+        '';
+      };
       # for development
       "gts.f.localhost.thotep.net" = {
         listenAddresses = [ "100.103.65.77" ];

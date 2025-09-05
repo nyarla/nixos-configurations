@@ -135,7 +135,7 @@ in
       in
       {
         DAW = toString qemuHooks;
-        Development = toString qemuHooks;
+        VR = toString qemuHooks;
       };
 
     qemu = {

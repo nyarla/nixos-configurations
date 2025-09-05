@@ -199,6 +199,10 @@ in
           ln -s "${pkgs.lib.getLib pkgs.libxml2}/lib/libxml2.so" $out/lib/libxml2.so.2
         '')
       ];
+
+    profile = ''
+      export LD_LIBRARY_PATH=/usr/lib
+    '';
   };
 
   weylus = prev.rustPlatform.buildRustPackage rec {

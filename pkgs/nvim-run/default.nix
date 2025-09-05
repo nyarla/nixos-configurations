@@ -13,6 +13,7 @@ let
       hadolint
       shellcheck
       statix
+      actionlint
 
       # formatter
       go

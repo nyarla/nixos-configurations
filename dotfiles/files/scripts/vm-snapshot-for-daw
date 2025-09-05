@@ -4,7 +4,7 @@ set -euo pipefail
 
 main() {
   local name
-  name=$(zenity --entry --text="Snapshot名を入れてください")
+  name=$(zenity --entry --text="DAW VMのSnapshot名を入れてください")
 
   local prefix
   prefix=$(date +%Y.%m)

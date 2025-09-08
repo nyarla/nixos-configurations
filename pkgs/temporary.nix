@@ -9,17 +9,9 @@ final: prev: {
     src = prev.fetchFromGitHub {
       owner = "vinceliuice";
       repo = "Fluent-icon-theme";
-      rev = "85596cd23bd30a068563a4ae6c2fe4a03de2b5e3";
-      hash = "sha256-Vqb+II/O/kfC7iUI1Bfsyx8Ex9rYrtVWYlSg04KMfW8=";
+      rev = "3749c9b4715edf28f8f937c5786cce04d8e51cb2";
+      hash = "sha256-sKeeXI/2FXOIXP81hLPMbaVoCuD72zR6TrODS2HaeVU=";
     };
-
-    preFixup = ''
-      ln -sf $out/share/icons/Fluent/22/actions/application-menu.svg \
-        $out/share/icons/Fluent/22/categories/preferences-other-symbolic.svg
-
-      ln -sf $out/share/icons/Fluent-dark/22/actions/application-menu.svg \
-        $out/share/icons/Fluent-dark/22/categories/preferences-other-symbolic.svg
-    '';
   });
 
   hyprland = prev.hyprland.overrideAttrs (_: {

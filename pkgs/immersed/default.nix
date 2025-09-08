@@ -11,7 +11,7 @@ let
 
   src = fetchurl {
     url = "https://static.immersed.com/dl/Immersed-x86_64.AppImage";
-    hash = "sha256-plGcvZRpV+nhQ4FoYiIuLmyOg/SHJ8ZjT4Fh6UyH9W0=";
+    sha256 = "0vgmhx6fjqc19xiwc9w7yj1qwv1f5qi64s418ghyjmv9jjyrqld6";
   };
 
   src' = appimageTools.extract {

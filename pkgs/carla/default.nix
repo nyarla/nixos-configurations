@@ -44,8 +44,8 @@ in
     version = "2025-08-02"; # keep same version of ildaeil
     src = fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "ec1ee0f1f3703bc8a8ef64cff24a903d9168747f";
-      hash = "sha256-0JRRyEVi1ZZDQkl3dSaU9WmGerI5Kqd8WQtR9nxBY4A=";
+      rev = "12bc40fd6c9c5b36481c7df55086b27ba9ae8a80";
+      hash = "sha256-CXfL67k02jMarc89mj6fggPvIJo4ZoQvUx7NqDWJkh4=";
       fetchSubmodules = true;
     };
 

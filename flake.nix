@@ -30,6 +30,7 @@
     nixpkgs-xr.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-xr.inputs.flake-compat.follows = "flake-compat";
     nixpkgs-xr.inputs.flake-utils.follows = "flake-utils";
+    nixpkgs-xr.inputs.systems.follows = "systems";
   };
   outputs =
     {
@@ -72,7 +73,7 @@
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
             patches = [
-              ./patches/rocm-6.4.2-2025-08-28.patch
+              ./patches/rocm-6.4.3-2025-09-08.patch
             ];
             overlays = [
               wayland.overlay

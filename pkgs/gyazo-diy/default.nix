@@ -27,7 +27,7 @@ let
     source ~/.config/gyazo/env
 
     fn() {
-      echo ~/Pictures/Screenshots/$(date +%Y-%m-%dT%H-%M-%S).png
+      echo /backup/Pictures/Screenshots/$(date +%Y-%m-%dT%H-%M-%S).png
     }
 
     upload() {

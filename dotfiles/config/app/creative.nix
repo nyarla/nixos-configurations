@@ -14,7 +14,7 @@
     with pkgs;
     [
       # graphics
-      gimp
+      gimp3
       inkscape
       krita
 

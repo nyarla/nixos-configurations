@@ -73,7 +73,7 @@
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
             patches = [
-              ./patches/rocm-6.4.3-2025-09-08.patch
+              ./patches/rocm-6.4.3.patch
             ];
             overlays = [
               wayland.overlay

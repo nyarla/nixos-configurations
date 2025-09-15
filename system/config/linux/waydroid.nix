@@ -2,7 +2,6 @@
 {
   virtualisation = {
     waydroid.enable = true;
-    lxd.enable = true;
   };
 
   environment.etc."gbinder.d/waydroid.conf".source = lib.mkForce (

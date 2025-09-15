@@ -1,24 +1,24 @@
 # This patch taken from https://github.com/NixOS/nixpkgs/pull/427944
-From 264620b74d68d971468e16a122cb21a619d5b815 Mon Sep 17 00:00:00 2001
+From dd3135902f0f7f98ae18312f8e303c74abdc4764 Mon Sep 17 00:00:00 2001
 From: Luna Nova <git@lunnova.dev>
-Date: Sun, 7 Sep 2025 19:57:43 -0700
-Subject: [PATCH 1/5] rocmPackages: 6.3.3 -> 6.4.2
+Date: Fri, 12 Sep 2025 21:30:04 -0700
+Subject: [PATCH 01/11] rocmPackages: 6.3.3 -> 6.4.2
 
 ---
  .../rocm-modules/6/amdsmi/default.nix         |  15 +-
  .../rocm-modules/6/aotriton/default.nix       |   2 +-
  .../rocm-modules/6/aqlprofile/default.nix     |  36 ++
  .../update.nix                                |   0
- .../rocm-modules/6/clr/default.nix            | 131 ++++--
+ .../rocm-modules/6/clr/default.nix            | 133 ++++--
  .../avoid-extra-host-compile.patch            |  40 ++
  .../rocm-modules/6/composable_kernel/base.nix |  53 ++-
- .../6/composable_kernel/default.nix           | 177 +++++----
- pkgs/development/rocm-modules/6/default.nix   |  72 ++--
+ .../6/composable_kernel/default.nix           | 177 +++++---
+ pkgs/development/rocm-modules/6/default.nix   |  81 ++--
  .../rocm-modules/6/half/default.nix           |   2 +-
  .../rocm-modules/6/hip-common/default.nix     |   4 +-
  .../rocm-modules/6/hipblas-common/default.nix |   4 +-
- .../rocm-modules/6/hipblas/default.nix        |  15 +-
- .../rocm-modules/6/hipblaslt/default.nix      | 374 +++++++++---------
+ .../rocm-modules/6/hipblas/default.nix        |  24 +-
+ .../rocm-modules/6/hipblaslt/default.nix      | 373 ++++++++--------
  .../messagepack-compression-support.patch     |  56 +++
  .../parallel-buildSourceCodeObjectFile.diff   |  12 +
  .../rocm-modules/6/hipcub/default.nix         |   4 +-
@@ -29,21 +29,21 @@ Subject: [PATCH 1/5] rocmPackages: 6.3.3 -> 6.4.2
  .../rocm-modules/6/hipsolver/default.nix      |   4 +-
  .../rocm-modules/6/hipsparse/default.nix      |   4 +-
  .../6/hsa-amd-aqlprofile-bin/default.nix      |  53 ---
- .../rocm-modules/6/llvm/default.nix           | 335 +++++++---------
- .../opt-offload-compress-on-by-default.patch  |  22 ++
+ .../rocm-modules/6/llvm/default.nix           | 422 +++++++++---------
+ .../opt-offload-compress-on-by-default.patch  |  22 +
  .../llvm/perf-increase-namestring-size.patch  |  28 ++
  .../perf-shorten-gcclib-include-paths.patch   |  57 +++
  .../rocm-modules/6/migraphx/default.nix       |  10 +-
- .../rocm-modules/6/miopen/default.nix         |  44 ++-
+ .../rocm-modules/6/miopen/default.nix         |  44 +-
  .../rocm-modules/6/miopen/fix-isnan.patch     |  31 --
- .../rocm-modules/6/mivisionx/default.nix      |  40 +-
- .../rocm-modules/6/rccl/default.nix           |  24 +-
+ .../rocm-modules/6/mivisionx/default.nix      |  41 +-
+ .../rocm-modules/6/rccl/default.nix           |  30 +-
  .../6/rccl/fix-mainline-support-and-ub.diff   |   8 +-
  .../6/rccl/fix_hw_reg_hw_id_gt_gfx10.patch    |  33 ++
  .../rocm-modules/6/rdc/default.nix            |   5 +-
  .../rocm-modules/6/rocalution/default.nix     |   8 +-
- .../rocm-modules/6/rocblas/default.nix        |  69 ++--
- .../6/rocblas/hiplaslt-unstable-compat.patch  |  99 +++++
+ .../rocm-modules/6/rocblas/default.nix        |  70 +--
+ .../6/rocblas/hiplaslt-unstable-compat.patch  |  99 ++++
  .../rocm-modules/6/rocdbgapi/default.nix      |   7 +-
  .../rocm-modules/6/rocfft/default.nix         |  42 +-
  .../6/rocfft/log-every-n-aot-jobs.patch       |  35 ++
@@ -53,8 +53,7 @@ Subject: [PATCH 1/5] rocmPackages: 6.3.3 -> 6.4.2
  .../rocm-modules/6/rocm-core/default.nix      |   4 +-
  .../rocm-modules/6/rocm-docs-core/default.nix |   4 +-
  .../rocm-modules/6/rocm-runtime/default.nix   |  22 +-
- .../rocm-modules/6/rocm-smi/default.nix       |  16 +-
- .../6/rocm-smi/propagate-libdrm-dep.patch     |  39 ++
+ .../rocm-modules/6/rocm-smi/default.nix       |  35 +-
  .../rocm-modules/6/rocminfo/default.nix       |  16 +-
  .../rocm-modules/6/rocmlir/default.nix        |  16 +-
  .../6/rocmlir/initparamdata-sort-const.patch  |  13 -
@@ -62,7 +61,7 @@ Subject: [PATCH 1/5] rocmPackages: 6.3.3 -> 6.4.2
  .../6/rocprofiler-register/default.nix        |   4 +-
  .../0000-dont-install-tests-hsaco.patch       |  15 -
  .../rocm-modules/6/rocprofiler/default.nix    |  25 +-
- .../6/rocprofiler/optional-aql-in-cmake.patch | 147 -------
+ .../6/rocprofiler/optional-aql-in-cmake.patch | 147 ------
  .../6/rocr-debug-agent/default.nix            |   4 +-
  .../rocm-modules/6/rocrand/default.nix        |   4 +-
  .../rocm-modules/6/rocsolver/default.nix      |   4 +-
@@ -71,11 +70,11 @@ Subject: [PATCH 1/5] rocmPackages: 6.3.3 -> 6.4.2
  .../rocm-modules/6/roctracer/default.nix      |   4 +-
  .../rocm-modules/6/rocwmma/default.nix        |   7 +-
  .../rocm-modules/6/rpp/default.nix            |   9 +-
- .../rocm-modules/6/tensile/default.nix        |  66 ++--
- .../6/tensile/tensilelite-compression.diff    | 345 ----------------
+ .../rocm-modules/6/tensile/default.nix        |  66 +--
+ .../6/tensile/tensilelite-compression.diff    | 345 --------------
  ...lelite-create-library-dont-copy-twice.diff |  37 --
  ...lelite-gen_assembly-venv-err-handling.diff |  36 --
- 70 files changed, 1324 insertions(+), 1514 deletions(-)
+ 69 files changed, 1390 insertions(+), 1542 deletions(-)
  create mode 100644 pkgs/development/rocm-modules/6/aqlprofile/default.nix
  rename pkgs/development/rocm-modules/6/{hsa-amd-aqlprofile-bin => aqlprofile}/update.nix (100%)
  create mode 100644 pkgs/development/rocm-modules/6/composable_kernel/avoid-extra-host-compile.patch
@@ -89,7 +88,6 @@ Subject: [PATCH 1/5] rocmPackages: 6.3.3 -> 6.4.2
  create mode 100644 pkgs/development/rocm-modules/6/rccl/fix_hw_reg_hw_id_gt_gfx10.patch
  create mode 100644 pkgs/development/rocm-modules/6/rocblas/hiplaslt-unstable-compat.patch
  create mode 100644 pkgs/development/rocm-modules/6/rocfft/log-every-n-aot-jobs.patch
- create mode 100644 pkgs/development/rocm-modules/6/rocm-smi/propagate-libdrm-dep.patch
  delete mode 100644 pkgs/development/rocm-modules/6/rocmlir/initparamdata-sort-const.patch
  delete mode 100644 pkgs/development/rocm-modules/6/rocprofiler/0000-dont-install-tests-hsaco.patch
  delete mode 100644 pkgs/development/rocm-modules/6/rocprofiler/optional-aql-in-cmake.patch
@@ -146,7 +144,7 @@ index 2b4db7be7aa69c..e9b60959eb07b5 100644
    ];
  
 diff --git a/pkgs/development/rocm-modules/6/aotriton/default.nix b/pkgs/development/rocm-modules/6/aotriton/default.nix
-index 26b22e61d8c1f7..6e6b53523e2a31 100644
+index 26b22e61d8c1f7..cda06eb3c4cdff 100644
 --- a/pkgs/development/rocm-modules/6/aotriton/default.nix
 +++ b/pkgs/development/rocm-modules/6/aotriton/default.nix
 @@ -11,7 +11,7 @@
@@ -154,7 +152,7 @@ index 26b22e61d8c1f7..6e6b53523e2a31 100644
    writableTmpDirAsHomeHook,
    pkg-config,
 -  gpuTargets ? clr.localGpuTargets or clr.gpuTargets,
-+  gpuTargets ? clr.localGpuTargetsWithGenericFallback or clr.gpuTargetsWithGenericFallback,
++  gpuTargets ? clr.localGpuTargetsNoGenerics or clr.gpuTargetsNoGenerics,
    # for passthru.tests
    aotriton,
    hello,
@@ -205,10 +203,10 @@ similarity index 100%
 rename from pkgs/development/rocm-modules/6/hsa-amd-aqlprofile-bin/update.nix
 rename to pkgs/development/rocm-modules/6/aqlprofile/update.nix
 diff --git a/pkgs/development/rocm-modules/6/clr/default.nix b/pkgs/development/rocm-modules/6/clr/default.nix
-index 566863dec35c50..451fdbf845557c 100644
+index 11a8cd2447430a..8eca3f07bb5936 100644
 --- a/pkgs/development/rocm-modules/6/clr/default.nix
 +++ b/pkgs/development/rocm-modules/6/clr/default.nix
-@@ -47,26 +47,72 @@ let
+@@ -47,26 +47,73 @@ let
      "--set ROCM_PATH $out"
    ];
    amdclang = writeShellScriptBin "amdclang" ''
@@ -228,7 +226,8 @@ index 566863dec35c50..451fdbf845557c 100644
 +      "gfx90a"
 +    ];
 +    "gfx9-4-generic" = [
-+      "gfx942" # 7.x "gfx950"
++      "gfx942"
++      # 7.x "gfx950"
 +    ];
 +    "gfx10-1-generic" = [
 +      "gfx1010"
@@ -285,7 +284,7 @@ index 566863dec35c50..451fdbf845557c 100644
    };
  
    nativeBuildInputs = [
-@@ -99,8 +145,10 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -99,8 +146,10 @@ stdenv.mkDerivation (finalAttrs: {
      rocminfo
    ];
  
@@ -297,7 +296,7 @@ index 566863dec35c50..451fdbf845557c 100644
      "-DCMAKE_POLICY_DEFAULT_CMP0072=NEW" # Prefer newer OpenGL libraries
      "-DCLR_BUILD_HIP=ON"
      "-DCLR_BUILD_OCL=ON"
-@@ -124,27 +172,15 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -124,27 +173,15 @@ stdenv.mkDerivation (finalAttrs: {
  
    patches = [
      ./cmake-find-x11-libgl.patch
@@ -331,7 +330,7 @@ index 566863dec35c50..451fdbf845557c 100644
      })
      (fetchpatch {
        # [PATCH] SWDEV-507104 - Removes alignment requirement for Semaphore class to resolve runtime misaligned memory issues
-@@ -207,6 +243,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -207,6 +244,7 @@ stdenv.mkDerivation (finalAttrs: {
      ln -s ${rocm-core}/.info/ $out/.info
  
      ln -s ${hipClang} $out/llvm
@@ -339,7 +338,7 @@ index 566863dec35c50..451fdbf845557c 100644
    '';
  
    disallowedRequisites = [
-@@ -217,29 +254,38 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -217,30 +255,38 @@ stdenv.mkDerivation (finalAttrs: {
      # All known and valid general GPU targets
      # We cannot use this for each ROCm library, as each defines their own supported targets
      # See: https://github.com/ROCm/ROCm/blob/77cbac4abab13046ee93d8b5bf410684caf91145/README.md#library-target-matrix
@@ -372,6 +371,7 @@ index 566863dec35c50..451fdbf845557c 100644
 -      "1100"
 -      "1101"
 -      "1102"
+-      "1151" # Strix Halo
 -      "1200" # RX 9070
 -      "1201" # RX 9070 XT
 +      "942" # MI300A/X, MI325X
@@ -386,22 +386,22 @@ index 566863dec35c50..451fdbf845557c 100644
 +      # "1101"
 +      # "1102"
 +      # "1150"
-+      # "1151" # strix halo
++      # "1151" # Strix Halo
 +      "12-generic" # will handle 9060
 +      # "1200" # RX 9060
 +      # "1201" # RX 9070 + XT
      ] (target: "gfx${target}");
  
-+    gpuTargetsWithGenericFallback = expandFallbackTargets finalAttrs.passthru.gpuTargets;
++    gpuTargetsNoGenerics = expandFallbackTargets finalAttrs.passthru.gpuTargets;
 +
      inherit hipClangPath;
  
      updateScript = rocmUpdateScript {
-@@ -268,6 +314,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -269,6 +315,7 @@ stdenv.mkDerivation (finalAttrs: {
    }
    // lib.optionalAttrs (localGpuTargets != null) {
      inherit localGpuTargets;
-+    localGpuTargetsWithGenericFallback = expandFallbackTargets localGpuTargets;
++    localGpuTargetsNoGenerics = expandFallbackTargets localGpuTargets;
      gpuArchSuffix = "-" + (builtins.concatStringsSep "-" localGpuTargets);
      selectGpuTargets =
        {
@@ -452,7 +452,7 @@ index 00000000000000..b1ba9929b64f66
 + 
 + //
 diff --git a/pkgs/development/rocm-modules/6/composable_kernel/base.nix b/pkgs/development/rocm-modules/6/composable_kernel/base.nix
-index 6856b337857619..7c26d817c51475 100644
+index 6856b337857619..e978a7b3d347bf 100644
 --- a/pkgs/development/rocm-modules/6/composable_kernel/base.nix
 +++ b/pkgs/development/rocm-modules/6/composable_kernel/base.nix
 @@ -16,7 +16,7 @@
@@ -460,7 +460,7 @@ index 6856b337857619..7c26d817c51475 100644
    buildExamples ? false,
    gpuTargets ? (
 -    clr.localGpuTargets or [
-+    clr.localGpuTargetsWithGenericFallback or [
++    clr.localGpuTargetsNoGenerics or [
        "gfx900"
        "gfx906"
        "gfx908"
@@ -573,10 +573,10 @@ index 6856b337857619..7c26d817c51475 100644
    };
  })
 diff --git a/pkgs/development/rocm-modules/6/composable_kernel/default.nix b/pkgs/development/rocm-modules/6/composable_kernel/default.nix
-index 0ec02b962cc1e3..b07e27d31b2e16 100644
+index 0ec02b962cc1e3..42c634f0aa9422 100644
 --- a/pkgs/development/rocm-modules/6/composable_kernel/default.nix
 +++ b/pkgs/development/rocm-modules/6/composable_kernel/default.nix
-@@ -17,61 +17,91 @@ let
+@@ -17,61 +17,90 @@ let
        targets = [
          "device_mha_instance"
        ];
@@ -607,9 +607,13 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
 +    };
 +    grouped_conv_bwd = {
        targets = [
--        "device_grouped_conv1d_bwd_weight_instance"
--        "device_grouped_conv2d_bwd_data_instance"
--        "device_grouped_conv2d_bwd_weight_instance"
+         "device_grouped_conv1d_bwd_weight_instance"
+         "device_grouped_conv2d_bwd_data_instance"
+         "device_grouped_conv2d_bwd_weight_instance"
++      ];
++    };
++    grouped_conv_fwd = {
++      targets = [
          "device_grouped_conv1d_fwd_instance"
          "device_grouped_conv2d_fwd_instance"
 +        "device_grouped_conv2d_fwd_bias_relu_instance"
@@ -618,14 +622,6 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
 -      requiredSystemFeatures = [ "big-parallel" ];
      };
 -    grouped_conv_bwd_3d = {
-+    grouped_conv_fwd = {
-+      targets = [
-+        "device_grouped_conv1d_fwd_instance"
-+        "device_grouped_conv2d_fwd_instance"
-+        "device_grouped_conv2d_fwd_bias_relu_instance"
-+        "device_grouped_conv2d_fwd_dynamic_op_instance"
-+      ];
-+    };
 +    grouped_conv_bwd_3d1 = {
        targets = [
          "device_grouped_conv3d_bwd_data_instance"
@@ -680,20 +676,26 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
          "device_batched_gemm_softmax_gemm_permute_instance"
          "device_grouped_gemm_instance"
          "device_grouped_gemm_bias_instance"
-@@ -80,7 +110,6 @@ let
+@@ -80,27 +109,33 @@ let
          "device_grouped_gemm_fixed_nk_multi_abd_instance"
          "device_grouped_gemm_tile_loop_instance"
        ];
 -      requiredSystemFeatures = [ "big-parallel" ];
      };
-     gemm_universal = {
+-    gemm_universal = {
++    gemm_universal1 = {
        targets = [
-@@ -89,18 +118,22 @@ let
+         "device_gemm_universal_instance"
+         "device_gemm_universal_batched_instance"
++      ];
++    };
++    gemm_universal2 = {
++      targets = [
          "device_gemm_universal_reduce_instance"
          "device_gemm_universal_streamk_instance"
        ];
 -      requiredSystemFeatures = [ "big-parallel" ];
-       extraCmakeFlags = [ "-DHIP_CLANG_NUM_PARALLEL_JOBS=2" ];
+-      extraCmakeFlags = [ "-DHIP_CLANG_NUM_PARALLEL_JOBS=2" ];
      };
 -    gemm_other = {
 +    gemm_other1 = {
@@ -713,7 +715,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
          "device_gemm_add_relu_add_layernorm_instance"
          "device_gemm_add_silu_instance"
          "device_gemm_bias_add_reduce_instance"
-@@ -112,7 +145,6 @@ let
+@@ -112,7 +147,6 @@ let
          "device_gemm_splitk_instance"
          "device_gemm_streamk_instance"
        ];
@@ -721,7 +723,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
      };
      conv = {
        targets = [
-@@ -123,7 +155,6 @@ let
+@@ -123,7 +157,6 @@ let
          "device_conv2d_fwd_bias_relu_add_instance"
          "device_conv3d_bwd_data_instance"
        ];
@@ -729,7 +731,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
      };
      pool = {
        targets = [
-@@ -141,11 +172,7 @@ let
+@@ -141,11 +174,7 @@ let
          "device_contraction_scale_instance"
          "device_elementwise_instance"
          "device_elementwise_normalization_instance"
@@ -741,7 +743,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
      };
      other2 = {
        targets = [
-@@ -154,10 +181,16 @@ let
+@@ -154,10 +183,16 @@ let
          "device_permute_scale_instance"
          "device_quantization_instance"
          "device_reduce_instance"
@@ -759,7 +761,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
      };
    };
    tensorOpBuilder =
-@@ -165,51 +198,59 @@ let
+@@ -165,51 +200,59 @@ let
        part,
        targets,
        extraCmakeFlags ? [ ],
@@ -862,7 +864,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
    composable_kernel_parts = builtins.mapAttrs (
      part: targets: tensorOpBuilder (targets // { inherit part; })
    ) parts;
-@@ -218,8 +259,8 @@ in
+@@ -218,8 +261,8 @@ in
  composable_kernel_base.overrideAttrs (
    finalAttrs: old: {
      pname = "composable_kernel${clr.gpuArchSuffix}";
@@ -873,7 +875,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
      preBuild = ''
        for dir in $parts_dirs; do
          find "$dir" -type f -name "*.o" | while read -r file; do
-@@ -240,7 +281,7 @@ composable_kernel_base.overrideAttrs (
+@@ -240,7 +283,7 @@ composable_kernel_base.overrideAttrs (
        parts = composable_kernel_parts;
      };
      meta = old.meta // {
@@ -883,7 +885,7 @@ index 0ec02b962cc1e3..b07e27d31b2e16 100644
      };
    }
 diff --git a/pkgs/development/rocm-modules/6/default.nix b/pkgs/development/rocm-modules/6/default.nix
-index 73e1b0cb1c2087..5706990855ae22 100644
+index 81954e88bb25af..3d3c4628934fec 100644
 --- a/pkgs/development/rocm-modules/6/default.nix
 +++ b/pkgs/development/rocm-modules/6/default.nix
 @@ -6,15 +6,12 @@
@@ -964,9 +966,7 @@ index 73e1b0cb1c2087..5706990855ae22 100644
 +      rocminfo = self.callPackage ./rocminfo {
 +        inherit stdenv;
 +      };
- 
--      # Unfree
--      hsa-amd-aqlprofile-bin = self.callPackage ./hsa-amd-aqlprofile-bin { };
++
 +      amdsmi = pyPackages.callPackage ./amdsmi {
 +        inherit (self) rocmUpdateScript;
 +      };
@@ -974,7 +974,9 @@ index 73e1b0cb1c2087..5706990855ae22 100644
 +      rocm-smi = pyPackages.callPackage ./rocm-smi {
 +        inherit (self) rocmUpdateScript;
 +      };
-+
+ 
+-      # Unfree
+-      hsa-amd-aqlprofile-bin = self.callPackage ./hsa-amd-aqlprofile-bin { };
 +      aqlprofile = self.callPackage ./aqlprofile {
 +        stdenv = rocmClangStdenv;
 +      };
@@ -1015,7 +1017,21 @@ index 73e1b0cb1c2087..5706990855ae22 100644
        roctracer = self.callPackage ./roctracer { };
  
        rocgdb = self.callPackage ./rocgdb { };
-@@ -194,7 +209,9 @@ let
+@@ -128,13 +143,6 @@ let
+ 
+       rccl = self.callPackage ./rccl { };
+ 
+-      # RCCL with sanitizers and tests
+-      # Can't have with sanitizer build as dep of other packages without
+-      # runtime crashes due to ASAN not loading first
+-      rccl-tests = self.callPackage ./rccl {
+-        buildTests = true;
+-      };
+-
+       hipcub = self.callPackage ./hipcub { };
+ 
+       hipsparse = self.callPackage ./hipsparse { };
+@@ -194,7 +202,9 @@ let
  
        miopen-hip = self.miopen;
  
@@ -1026,7 +1042,7 @@ index 73e1b0cb1c2087..5706990855ae22 100644
  
        rpp = self.callPackage ./rpp { };
  
-@@ -214,10 +231,8 @@ let
+@@ -214,10 +224,8 @@ let
        };
  
        mivisionx = self.callPackage ./mivisionx {
@@ -1038,7 +1054,7 @@ index 73e1b0cb1c2087..5706990855ae22 100644
          # Unfortunately, rocAL needs a custom libjpeg-turbo until further notice
          # See: https://github.com/ROCm/MIVisionX/issues/1051
          libjpeg_turbo = libjpeg_turbo.overrideAttrs {
-@@ -275,7 +290,7 @@ let
+@@ -275,7 +283,7 @@ let
          rocm-developer-tools = symlinkJoin {
            name = "rocm-developer-tools-meta";
            paths = [
@@ -1047,7 +1063,7 @@ index 73e1b0cb1c2087..5706990855ae22 100644
              rocm-core
              rocr-debug-agent
              roctracer
-@@ -298,7 +313,6 @@ let
+@@ -298,7 +306,6 @@ let
            name = "rocm-ml-libraries-meta";
            paths = [
              llvm.clang
@@ -1055,7 +1071,7 @@ index 73e1b0cb1c2087..5706990855ae22 100644
              llvm.openmp
              rocm-core
              miopen-hip
-@@ -357,7 +371,6 @@ let
+@@ -357,7 +364,6 @@ let
            paths = [
              rocm-core
              llvm.clang
@@ -1063,7 +1079,7 @@ index 73e1b0cb1c2087..5706990855ae22 100644
              llvm.openmp # openmp-extras-devel (https://github.com/ROCm/aomp)
              rocm-language-runtime
            ];
-@@ -389,7 +402,6 @@ let
+@@ -389,7 +395,6 @@ let
              hipify
              rocm-cmake
              llvm.clang
@@ -1071,7 +1087,7 @@ index 73e1b0cb1c2087..5706990855ae22 100644
              llvm.openmp
              rocm-runtime
              rocm-hip-runtime
-@@ -440,6 +452,10 @@ let
+@@ -440,6 +445,10 @@ let
        };
      }
      // lib.optionalAttrs config.allowAliases {
@@ -1082,6 +1098,15 @@ index 73e1b0cb1c2087..5706990855ae22 100644
        triton = throw ''
          'rocmPackages.triton' has been removed. Please use python3Packages.triton
        ''; # Added 2025-08-24
+@@ -481,7 +490,7 @@ outer
+   builtins.map (arch: {
+     name = arch;
+     value = scopeForArches [ arch ];
+-  }) outer.clr.gpuTargets
++  }) (outer.clr.gpuTargets ++ outer.clr.gpuTargetsNoGenerics)
+ )
+ // {
+   gfx9 = scopeForArches [
 diff --git a/pkgs/development/rocm-modules/6/half/default.nix b/pkgs/development/rocm-modules/6/half/default.nix
 index 953152b37e0ff5..7df8c90d026d12 100644
 --- a/pkgs/development/rocm-modules/6/half/default.nix
@@ -1136,18 +1161,17 @@ index 626c36833d6363..4bdfdde2a2ea69 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/hipblas/default.nix b/pkgs/development/rocm-modules/6/hipblas/default.nix
-index ca236f1b85ffc2..fe091a9146e56b 100644
+index ca236f1b85ffc2..0062c81be51766 100644
 --- a/pkgs/development/rocm-modules/6/hipblas/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipblas/default.nix
-@@ -2,7 +2,6 @@
-   lib,
-   stdenv,
-   fetchFromGitHub,
--  fetchpatch,
-   rocmUpdateScript,
-   cmake,
-   rocm-cmake,
-@@ -23,7 +22,7 @@
+@@ -18,12 +18,14 @@
+   buildTests ? false,
+   buildBenchmarks ? false,
+   buildSamples ? false,
++  # for passthru.tests
++  hipblas,
+ }:
+ 
  # Can also use cuBLAS
  stdenv.mkDerivation (finalAttrs: {
    pname = "hipblas";
@@ -1156,7 +1180,7 @@ index ca236f1b85ffc2..fe091a9146e56b 100644
  
    outputs = [
      "out"
-@@ -42,18 +41,9 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -42,15 +44,16 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "hipBLAS";
      rev = "rocm-${finalAttrs.version}";
@@ -1164,19 +1188,31 @@ index ca236f1b85ffc2..fe091a9146e56b 100644
 +    hash = "sha256-lQv8Ik6+0ldqyeJ05CSGB0309nIpzlRL3CRYeQxVfd0=";
    };
  
--  patches = [
+   patches = [
 -    # https://github.com/ROCm/hipBLAS/pull/952
--    (fetchpatch {
+     (fetchpatch {
 -      name = "transitively-depend-hipblas-common.patch";
 -      url = "https://github.com/ROCm/hipBLAS/commit/54220fdaebf0fb4fd0921ee9e418ace5b143ec8f.patch";
 -      hash = "sha256-MFEhv8Bkrd2zD0FFIDg9oJzO7ztdyMAF+R9oYA0rmwQ=";
--    })
--  ];
--
-   postPatch = ''
-     substituteInPlace library/CMakeLists.txt \
-       --replace-fail "find_package(Git REQUIRED)" ""
-@@ -91,6 +81,7 @@ stdenv.mkDerivation (finalAttrs: {
++      # Subject: [PATCH] Add gfx1150, gfx1150, gfx1200, gfx1201 support (#1055)
++      # This was merged to release/rocm-rel-6.4 but AMD forgot to tag it for 6.4.3
++      name = "release-6.4-arch-extra.patch";
++      url = "https://github.com/ROCm/hipBLAS/commit/0100b32ccff9a0f12134694315b4e44884e25a8e.patch";
++      hash = "sha256-BmktlLJpYaTcogHzEKpZdCnksIIysEO47WMezXoxvCs=";
+     })
+   ];
+ 
+@@ -83,7 +86,8 @@ stdenv.mkDerivation (finalAttrs: {
+ 
+   cmakeFlags = [
+     "-DCMAKE_BUILD_TYPE=Release"
+-    "-DCMAKE_CXX_COMPILER=${lib.getExe' clr "hipcc"}"
++    # "-DCMAKE_CXX_COMPILER=${lib.getExe' clr "hipcc"}"
++    "-DCMAKE_CXX_COMPILER=${lib.getExe' clr "amdclang++"}"
+     # Upstream is migrating to amdclang++, it is likely this will be correct in next version bump
+     #"-DCMAKE_CXX_COMPILER=${lib.getBin clr}/bin/amdclang++"
+     # Manually define CMAKE_INSTALL_<DIR>
+@@ -91,6 +95,7 @@ stdenv.mkDerivation (finalAttrs: {
      "-DCMAKE_INSTALL_BINDIR=bin"
      "-DCMAKE_INSTALL_LIBDIR=lib"
      "-DCMAKE_INSTALL_INCLUDEDIR=include"
@@ -1184,16 +1220,29 @@ index ca236f1b85ffc2..fe091a9146e56b 100644
      "-DAMDGPU_TARGETS=${rocblas.amdgpu_targets}"
    ]
    ++ lib.optionals buildTests [
+@@ -125,6 +130,11 @@ stdenv.mkDerivation (finalAttrs: {
+     inherit (finalAttrs.src) owner;
+     inherit (finalAttrs.src) repo;
+   };
++  passthru.tests.hipblas-tested = hipblas.override {
++    buildTests = true;
++    buildBenchmarks = true;
++    buildSamples = true;
++  };
+ 
+   meta = with lib; {
+     description = "ROCm BLAS marshalling library";
 diff --git a/pkgs/development/rocm-modules/6/hipblaslt/default.nix b/pkgs/development/rocm-modules/6/hipblaslt/default.nix
-index cbcca61af76f64..d5f26045172477 100644
+index cbcca61af76f64..01f008d5352473 100644
 --- a/pkgs/development/rocm-modules/6/hipblaslt/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipblaslt/default.nix
-@@ -1,232 +1,218 @@
+@@ -1,232 +1,225 @@
  {
    lib,
    stdenv,
 -  fetchpatch,
    fetchFromGitHub,
++  writableTmpDirAsHomeHook,
    cmake,
    rocm-cmake,
 +  rocm-smi,
@@ -1212,7 +1261,6 @@ index cbcca61af76f64..d5f26045172477 100644
    lapack-reference,
    ncurses,
 +  ninja,
-+  libdrm,
    libffi,
    zlib,
    zstd,
@@ -1227,7 +1275,7 @@ index cbcca61af76f64..d5f26045172477 100644
 -  gpuTargets ? (
 -    clr.localGpuTargets or [
 -      # "gfx908" FIXME: confirm MFMA on MI100 works
-+  gpuTargets ? (clr.localGpuTargetsWithGenericFallback or clr.gpuTargetsWithGenericFallback),
++  gpuTargets ? (clr.localGpuTargetsNoGenerics or clr.gpuTargetsNoGenerics),
 +}:
 +
 +let
@@ -1259,12 +1307,13 @@ index cbcca61af76f64..d5f26045172477 100644
 +    ps.joblib
 +    ps.msgpack
 +  ]);
-+  # HACK: build for one working target if no targets are supported to satisfy torch
++  # workaround: build for one working target if no targets are supported
++  # a few CXX files are still build for the device
 +  gpuTargets' =
-+    if supportsTargetArches then (lib.concatStringsSep ";" supportedTargets) else "gfx90a";
++    if supportsTargetArches then (lib.concatStringsSep ";" supportedTargets) else "gfx1200";
 +  compiler = "amdclang++";
 +  # no-switch due to spammy warnings on some cases with fixme messages
-+  cFlags = "-Wno-switch -fopenmp -I${zstd.dev}/include -I${amd-blis}/include/blis/ -I${msgpack}/include -I${libdrm.dev}/include"; # FIXME: cmake files need patched to include this properly
++  cFlags = "-Wno-switch -fopenmp -I${zstd.dev}/include -I${amd-blis}/include/blis/ -I${msgpack}/include"; # FIXME: cmake files need patched to include this properly
 +in
 +stdenv.mkDerivation (finalAttrs: {
 +  pname = "hipblaslt${clr.gpuArchSuffix}";
@@ -1323,17 +1372,8 @@ index cbcca61af76f64..d5f26045172477 100644
 -    # Some tensile scripts look for this as an env var rather than a cmake flag
 -    env.CMAKE_CXX_COMPILER = lib.getExe' clr "amdclang++";
 -    requiredSystemFeatures = [ "big-parallel" ];
-+  outputs = [
-+    "out"
-+    # benchmarks are non-optional
-+    "benchmark"
-+  ]
-+  ++ lib.optionals buildTests [
-+    "test"
-+  ]
-+  ++ lib.optionals buildSamples [
-+    "sample"
-+  ];
++  __structuredAttrs = true;
++  strictDeps = true;
  
 -    outputs = [
 -      "out"
@@ -1347,14 +1387,16 @@ index cbcca61af76f64..d5f26045172477 100644
 -    ++ lib.optionals buildSamples [
 -      "sample"
 -    ];
-+  patches = [
-+    # Upstream issue requesting properly specifying
-+    # parallel-jobs for these invocations
-+    # https://github.com/ROCm/rocm-libraries/issues/1242
-+    ./parallel-buildSourceCodeObjectFile.diff
-+    # Support loading zstd compressed .dat files, required to keep output under
-+    # hydra size limit
-+    ./messagepack-compression-support.patch
++  outputs = [
++    "out"
++    # benchmarks are non-optional
++    "benchmark"
++  ]
++  ++ lib.optionals buildTests [
++    "test"
++  ]
++  ++ lib.optionals buildSamples [
++    "sample"
 +  ];
  
 -    postPatch = ''
@@ -1375,13 +1417,15 @@ index cbcca61af76f64..d5f26045172477 100644
 -      substituteInPlace library/src/amd_detail/rocblaslt/src/kernels/compile_code_object.sh \
 -        --replace-fail '${"\${rocm_path}"}/bin/' ""
 -    '';
-+  postPatch = ''
-+    # git isn't needed and we have no .git
-+    substituteInPlace cmake/dependencies.cmake \
-+      --replace-fail "find_package(Git REQUIRED)" ""
-+    substituteInPlace CMakeLists.txt \
-+      --replace-fail " LANGUAGES CXX" " LANGUAGES CXX C ASM"
-+  '';
++  patches = [
++    # Upstream issue requesting properly specifying
++    # parallel-jobs for these invocations
++    # https://github.com/ROCm/rocm-libraries/issues/1242
++    ./parallel-buildSourceCodeObjectFile.diff
++    # Support loading zstd compressed .dat files, required to keep output under
++    # hydra size limit
++    ./messagepack-compression-support.patch
++  ];
  
 -    # Apply patches to allow building without a target arch if we need to do that
 -    patches = lib.optionals (!supportsTargetArches) [
@@ -1396,20 +1440,18 @@ index cbcca61af76f64..d5f26045172477 100644
 -        url = "https://raw.githubusercontent.com/gentoo/gentoo/refs/heads/master/sci-libs/hipBLASLt/files/hipBLASLt-6.3.0-no-arch-extra.patch";
 -      })
 -    ];
-+  doCheck = false;
-+  doInstallCheck = false;
++  postPatch = ''
++    # git isn't needed and we have no .git
++    substituteInPlace cmake/dependencies.cmake \
++      --replace-fail "find_package(Git REQUIRED)" ""
++    substituteInPlace CMakeLists.txt \
++      --replace-fail " LANGUAGES CXX" " LANGUAGES CXX C ASM"
++  '';
  
 -    doCheck = false;
 -    doInstallCheck = false;
-+  nativeBuildInputs = [
-+    cmake
-+    rocm-cmake
-+    py
-+    clr
-+    gfortran
-+    pkg-config
-+    ninja
-+  ];
++  doCheck = false;
++  doInstallCheck = false;
  
 -    nativeBuildInputs = [
 -      cmake
@@ -1420,14 +1462,16 @@ index cbcca61af76f64..d5f26045172477 100644
 -      # need make to get streaming console output so nix knows build is still running
 -      # so deliberately not using ninja
 -    ];
-+  buildInputs = [
-+    hipblas-common
-+    amd-blis
++  nativeBuildInputs = [
++    cmake
++    rocm-cmake
++    py
++    clr
++    gfortran
++    pkg-config
++    ninja
 +    rocm-smi
-+    openmp
-+    libffi
-+    ncurses
-+    lapack-reference
++  ];
  
 -    buildInputs = [
 -      hipblas-common
@@ -1435,17 +1479,16 @@ index cbcca61af76f64..d5f26045172477 100644
 -      openmp
 -      libffi
 -      ncurses
-+    # Tensile deps - not optional, building without tensile isn't actually supported
-+    msgpack # FIXME: not included in cmake!
-+    libxml2
-+    python3Packages.msgpack
-+    python3Packages.joblib
-+    zlib
-+    zstd
-+  ]
-+  ++ lib.optionals buildTests [
-+    gtest
-+  ];
++  buildInputs = [
++    clr
++    rocm-cmake
++    hipblas-common
++    amd-blis
++    rocm-smi
++    openmp
++    libffi
++    ncurses
++    lapack-reference
  
 -      # Tensile deps - not optional, building without tensile isn't actually supported
 -      msgpack # FIXME: not included in cmake!
@@ -1461,35 +1504,16 @@ index cbcca61af76f64..d5f26045172477 100644
 -    ++ lib.optionals (buildTests || buildBenchmarks) [
 -      lapack-reference
 -    ];
-+  cmakeFlags = [
-+    "-Wno-dev"
-+    (lib.cmakeFeature "GPU_TARGETS" gpuTargets')
-+    (lib.cmakeBool "BUILD_TESTING" buildTests)
-+    (lib.cmakeBool "HIPBLASLT_ENABLE_BLIS" true)
-+    (lib.cmakeBool "HIPBLASLT_BUILD_TESTING" buildTests)
-+    (lib.cmakeBool "HIPBLASLT_ENABLE_SAMPLES" buildSamples)
-+    (lib.cmakeBool "HIPBLASLT_ENABLE_DEVICE" true)
-+    # (lib.cmakeBool "HIPBLASLT_ENABLE_BENCHMARKS" buildBenchmarks)
-+    # FIXME: Enable for ROCm 7.x
-+    (lib.cmakeBool "HIPBLASLT_ENABLE_ROCROLLER" false)
-+    "-DCMAKE_C_COMPILER=amdclang"
-+    "-DCMAKE_HIP_COMPILER=${compiler}"
-+    "-DCMAKE_CXX_COMPILER=${compiler}"
-+    "-DROCM_FOUND=ON"
-+    "-DBLIS_ROOT=${amd-blis}"
-+    "-DBLIS_LIB=${amd-blis}/lib/libblis-mt.so"
-+    "-DBLIS_INCLUDE_DIR=${amd-blis}/include/blis/"
-+    "-DBLA_PREFER_PKGCONFIG=ON"
-+    "-DFETCHCONTENT_SOURCE_DIR_NANOBIND=${python3Packages.nanobind.src}"
-+    # Manually define CMAKE_INSTALL_<DIR>
-+    # See: https://github.com/NixOS/nixpkgs/pull/197838
-+    "-DCMAKE_INSTALL_BINDIR=bin"
-+    "-DCMAKE_INSTALL_LIBDIR=lib"
-+    "-DCMAKE_INSTALL_INCLUDEDIR=include"
-+    "-DHIPBLASLT_ENABLE_MARKER=Off"
++    # Tensile deps - not optional, building without tensile isn't actually supported
++    msgpack # FIXME: not included in cmake!
++    libxml2
++    python3Packages.msgpack
++    python3Packages.joblib
++    zlib
++    zstd
 +  ]
-+  ++ lib.optionals (!supportsTargetArches) [
-+    "-DBUILD_WITH_TENSILE=OFF"
++  ++ lib.optionals buildTests [
++    gtest
 +  ];
  
 -    cmakeFlags = [
@@ -1526,37 +1550,60 @@ index cbcca61af76f64..d5f26045172477 100644
 -    ++ lib.optionals buildSamples [
 -      "-DBUILD_CLIENTS_SAMPLES=ON"
 -    ];
-+  postInstall = ''
-+    # Compress msgpack .dat files to stay under hydra output size limit
-+    # Relies on messagepack-compression-support.patch
-+    for file in $out/lib/hipblaslt/library/*.dat; do
-+      zstd -19 --long -f "$file" -o "$file.tmp" && mv "$file.tmp" "$file"
-+    done
-+    mkdir -p $benchmark/bin
-+    mv $out/bin/hipblaslt-{api-overhead,sequence,bench*} $out/bin/*.yaml $out/bin/*.py $benchmark/bin
-+    ${lib.optionalString buildTests ''
-+      mkdir -p $test/bin
-+      mv $out/bin/hipblas-test $test/bin
-+    ''}
-+    ${lib.optionalString buildSamples ''
-+      mkdir -p $sample/bin
-+      mv $out/bin/example-* $sample/bin
-+    ''}
-+    rmdir $out/bin
-+  '';
++  cmakeFlags = [
++    "-Wno-dev"
++    (lib.cmakeFeature "GPU_TARGETS" gpuTargets')
++    (lib.cmakeBool "BUILD_TESTING" buildTests)
++    (lib.cmakeBool "HIPBLASLT_ENABLE_BLIS" true)
++    (lib.cmakeBool "HIPBLASLT_BUILD_TESTING" buildTests)
++    (lib.cmakeBool "HIPBLASLT_ENABLE_SAMPLES" buildSamples)
++    (lib.cmakeBool "HIPBLASLT_ENABLE_DEVICE" supportsTargetArches)
++    # FIXME: Enable for ROCm 7.x
++    (lib.cmakeBool "HIPBLASLT_ENABLE_ROCROLLER" false)
++    "-DCMAKE_C_COMPILER=amdclang"
++    "-DCMAKE_HIP_COMPILER=${compiler}"
++    "-DCMAKE_CXX_COMPILER=${compiler}"
++    "-DROCM_FOUND=ON" # hipblaslt tries to download rocm-cmake if this isn't set
++    "-DBLIS_ROOT=${amd-blis}"
++    "-DBLIS_LIB=${amd-blis}/lib/libblis-mt.so"
++    "-DBLIS_INCLUDE_DIR=${amd-blis}/include/blis/"
++    "-DBLA_PREFER_PKGCONFIG=ON"
++    "-DFETCHCONTENT_SOURCE_DIR_NANOBIND=${python3Packages.nanobind.src}"
++    # Manually define CMAKE_INSTALL_<DIR>
++    # See: https://github.com/NixOS/nixpkgs/pull/197838
++    "-DCMAKE_INSTALL_BINDIR=bin"
++    "-DCMAKE_INSTALL_LIBDIR=lib"
++    "-DCMAKE_INSTALL_INCLUDEDIR=include"
++    "-DHIPBLASLT_ENABLE_MARKER=Off"
++  ];
  
 -    postInstall =
 -      lib.optionalString buildTests ''
--        mkdir -p $test/bin
--        mv $out/bin/hipblas-test $test/bin
++  postInstall =
++    # Compress msgpack .dat files to stay under hydra output size limit
++    # Relies on messagepack-compression-support.patch
++    ''
++      for file in $out/lib/hipblaslt/library/*.dat; do
++        zstd -19 --long -f "$file" -o "$file.tmp" && mv "$file.tmp" "$file"
++      done
++    ''
++    # Move binaries to appropriate outputs and delete leftover /bin
++    + ''
++      mkdir -p $benchmark/bin
++      mv $out/bin/hipblaslt-{api-overhead,sequence,bench*} $out/bin/*.yaml $out/bin/*.py $benchmark/bin
++      ${lib.optionalString buildTests ''
+         mkdir -p $test/bin
+         mv $out/bin/hipblas-test $test/bin
 -      ''
 -      + lib.optionalString buildBenchmarks ''
 -        mkdir -p $benchmark/bin
 -        mv $out/bin/hipblas-bench $benchmark/bin
 -      ''
 -      + lib.optionalString buildSamples ''
--        mkdir -p $sample/bin
--        mv $out/bin/example-* $sample/bin
++      ''}
++      ${lib.optionalString buildSamples ''
+         mkdir -p $sample/bin
+         mv $out/bin/example-* $sample/bin
 -      ''
 -      + lib.optionalString (buildTests || buildBenchmarks || buildSamples) ''
 -        rmdir $out/bin
@@ -1582,6 +1629,10 @@ index cbcca61af76f64..d5f26045172477 100644
 -    };
 -  }
 -)
++      ''}
++      rmdir $out/bin
++    '';
++
 +  # If this is false there are no kernels in the output lib
 +  # supporting the target device
 +  # so if it's an optional dep it's best to not depend on it
@@ -1891,14 +1942,17 @@ index 68d7a337f89d68..00000000000000
 -  };
 -})
 diff --git a/pkgs/development/rocm-modules/6/llvm/default.nix b/pkgs/development/rocm-modules/6/llvm/default.nix
-index c8fb82fa023570..c71ca4bb25e4f6 100644
+index c8fb82fa023570..321a61fb3b5945 100644
 --- a/pkgs/development/rocm-modules/6/llvm/default.nix
 +++ b/pkgs/development/rocm-modules/6/llvm/default.nix
-@@ -1,16 +1,14 @@
+@@ -1,16 +1,17 @@
  {
    lib,
    stdenv,
 -  llvmPackages_18,
++  # default LLVM version is used as stdenv to build our toolchain
++  llvmPackages,
++  # LLVM version closest to ROCm fork to override
 +  llvmPackages_20,
    overrideCC,
    rocm-device-libs,
@@ -1912,32 +1966,54 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
    zstd,
    zlib,
    gcc-unwrapped,
-@@ -25,29 +23,25 @@
+@@ -25,29 +26,46 @@
    # frame pointers for sampling profilers (-fno-omit-frame-pointer -momit-leaf-frame-pointer)
    # TODO: Should also apply to downstream packages which use rocmClangStdenv
    profilableStdenv ? false,
 -}:
++  # Whether to use LTO when building the ROCm toolchain
++  # Slows down this toolchain's build, for typical ROCm usecase
++  # time saved building composable_kernel and other heavy packages
++  # will outweight that. ~3-4% speedup multiplied by thousands
++  # of corehours.
++  withLto ? true,
 +  # whether rocm stdenv uses libcxx (clang c++ stdlib) instead of gcc stdlibc++
 +  withLibcxx ? false,
 +}@args:
  
  let
 -  llvmPackagesNoBintools = llvmPackages_18.override {
++  version = "6.4.2";
++  # major version of this should be the clang version ROCm forked from
++  rocmLlvmVersion = "19.0.0-rocm";
++  # llvmPackages_base version should be close to rocmLlvmVersion,
++  # may be one off because AMD backports a lot and the +1 patches
++  # may be easier to get to build
 +  llvmPackages_base = llvmPackages_20;
-+  llvmPackagesNoBintools = llvmPackages_base.override {
++  llvmPackagesNoBintools = llvmPackages.override {
      bootBintools = null;
      bootBintoolsNoLibc = null;
    };
 -  useLibcxx = false; # whether rocm stdenv uses libcxx (clang c++ stdlib) instead of gcc stdlibc++
  
-   llvmStdenv = overrideCC llvmPackagesNoBintools.libcxxStdenv llvmPackagesNoBintools.clangUseLLVM;
+-  llvmStdenv = overrideCC llvmPackagesNoBintools.libcxxStdenv llvmPackagesNoBintools.clangUseLLVM;
 -  llvmLibstdcxxStdenv = overrideCC llvmPackagesNoBintools.stdenv (
 -    llvmPackagesNoBintools.libstdcxxClang.override {
 -      inherit (llvmPackages_18) bintools;
 -    }
 -  );
 -  stdenvToBuildRocmLlvm = if useLibcxx then llvmStdenv else llvmLibstdcxxStdenv;
-+  stdenvToBuildRocmLlvm = if withLibcxx then llvmStdenv else stdenv;
++  stdenvToBuildRocmLlvm =
++    if withLibcxx then
++      overrideCC llvmPackagesNoBintools.libcxxStdenv llvmPackagesNoBintools.clangUseLLVM
++    else
++      # oddly fuse-ld=lld fails without this override
++      overrideCC llvmPackagesNoBintools.stdenv (
++        llvmPackagesNoBintools.libstdcxxClang.override {
++          inherit (llvmPackages) bintools;
++        }
++      );
++
    gcc-include = runCommand "gcc-include" { } ''
      mkdir -p $out
      ln -s ${gcc-unwrapped}/include/ $out/
@@ -1948,7 +2024,7 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
    disallowedRefsForToolchain = [
      stdenv.cc
      stdenv.cc.cc
-@@ -57,40 +51,50 @@ let
+@@ -57,40 +75,47 @@ let
      stdenvToBuildRocmLlvm.cc
      stdenvToBuildRocmLlvm.cc.cc
    ];
@@ -1998,6 +2074,8 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 -      '';
 -    };
 -  version = "6.3.1";
+-  # major version of this should be the clang version ROCm forked from
+-  rocmLlvmVersion = "18.0.0-${llvmSrc.rev}";
 +      mkdir /build/tmpout
 +      mv $out/* /build/tmpout
 +      cp -Lr --no-preserve=mode /build/tmpout/* $out/
@@ -2024,14 +2102,10 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 +      ln -s $out $out/x86_64-unknown-linux-gnu
 +    '';
 +  };
-+  version = "6.4.2";
-   # major version of this should be the clang version ROCm forked from
--  rocmLlvmVersion = "18.0.0-${llvmSrc.rev}";
-+  rocmLlvmVersion = "19.0.0-${llvmSrc.rev}";
    usefulOutputs =
      drv:
      builtins.filter (x: x != null) [
-@@ -100,19 +104,17 @@ let
+@@ -100,27 +125,24 @@ let
      ];
    listUsefulOutputs = builtins.concatMap usefulOutputs;
    llvmSrc = fetchFromGitHub {
@@ -2043,10 +2117,10 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 -    hash = "sha256-sPmYi1WiiAqnRnHVNba2nPUxGflBC01FWCTNLPlYF9c=";
 +    owner = "ROCm";
 +    repo = "llvm-project";
-+    rev = "rocm-6.4.2";
++    rev = "rocm-${version}";
 +    hash = "sha256-12ftH5fMPAsbcEBmhADwW1YY/Yxo/MAK1FafKczITMg=";
    };
-   llvmSrcFixed = llvmSrc;
+-  llvmSrcFixed = llvmSrc;
    llvmMajorVersion = lib.versions.major rocmLlvmVersion;
    # An llvmPackages (pkgs/development/compilers/llvm/) built from ROCm LLVM's source tree
    # optionally using LLVM libcxx
@@ -2057,7 +2131,17 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
  
      # not setting gitRelease = because that causes patch selection logic to use git patches
      # ROCm LLVM is closer to 18 official
-@@ -158,7 +160,8 @@ let
+     # gitRelease = {}; officialRelease = null;
+     officialRelease = { }; # Set but empty because we're overriding everything from it.
+     version = rocmLlvmVersion;
+-    src = llvmSrcFixed;
+-    monorepoSrc = llvmSrcFixed;
++    src = llvmSrc;
++    monorepoSrc = llvmSrc;
+     doCheck = false;
+   });
+   sysrootCompiler =
+@@ -158,82 +180,114 @@ let
          sed -i 's|set(CLANG_INCLUDE_DIRS.*$|set(CLANG_INCLUDE_DIRS "${cc.dev}/include")|g' $out/lib/cmake/clang/ClangConfig.cmake
          ${lib.getExe rdfind} -makesymlinks true $out/ # create links *within* the sysroot to save space
        '';
@@ -2067,43 +2151,82 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
      x:
      (
        (lib.strings.hasSuffix "add-nostdlibinc-flag.patch" (builtins.baseNameOf x))
-@@ -172,68 +175,73 @@ let
-     .${llvmStdenv.targetPlatform.parsed.cpu.name}
-       or (throw "Unsupported CPU architecture: ${llvmStdenv.targetPlatform.parsed.cpu.name}")
+       || (lib.strings.hasSuffix "clang-at-least-16-LLVMgold-path.patch" (builtins.baseNameOf x))
+     );
++  tablegenUsage = x: !(lib.strings.hasInfix "llvm-tblgen" x);
+   llvmTargetsFlag = "-DLLVM_TARGETS_TO_BUILD=AMDGPU;${
+     {
+       "x86_64" = "X86";
+       "aarch64" = "AArch64";
+     }
+-    .${llvmStdenv.targetPlatform.parsed.cpu.name}
+-      or (throw "Unsupported CPU architecture: ${llvmStdenv.targetPlatform.parsed.cpu.name}")
++    .${stdenv.targetPlatform.parsed.cpu.name}
++      or (throw "Unsupported CPU architecture: ${stdenv.targetPlatform.parsed.cpu.name}")
    }";
 -  # -ffat-lto-objects = emit LTO object files that are compatible with non-LTO-supporting builds too
 -  # FatLTO objects are a special type of fat object file that contain LTO compatible IR in addition to generated object code,
 -  # instead of containing object code for multiple target architectures. This allows users to defer the choice of whether to
 -  # use LTO or not to link-time, and has been a feature available in other compilers, like GCC, for some time.
--
-+  # LTO on for this toolchain to somewhat improve compiler performance,
-+  # Projects like composable_kernel build an incredible number of slow offload kernels
++  llvmMeta = {
++    # TODO(@LunNova): it would be nice to support aarch64 for rocmPackages
++    platforms = [ "x86_64-linux" ];
++  };
++  # TODO(@LunNova): Some of this might be worth supporting in llvmPackages, dropping from here
 +  commonCmakeFlags = [
 +    llvmTargetsFlag
++    # Compression support is required for compressed offload kernels
++    # Set FORCE_ON so that failure to find the compression libs will be a build error
 +    (lib.cmakeFeature "LLVM_ENABLE_ZSTD" "FORCE_ON")
 +    (lib.cmakeFeature "LLVM_ENABLE_ZLIB" "FORCE_ON")
++    # required for threaded ThinLTO to work
 +    (lib.cmakeBool "LLVM_ENABLE_THREADS" true)
-+    (lib.cmakeFeature "CLANG_VENDOR" "nixpkgs-AMD")
-+    (lib.cmakeFeature "CLANG_REPOSITORY_STRING" "https://github.com/ROCm/llvm-project/tree/rocm-${version}")
++    # LLVM tries to call git to embed VCS info if FORCE_VC_ aren't set
++    (lib.cmakeFeature "LLVM_FORCE_VC_REVISION" "rocm-${version}")
++    (lib.cmakeFeature "LLVM_FORCE_VC_REPOSITORY" "https://github.com/ROCm/llvm-project")
 +    (lib.cmakeFeature "LLVM_VERSION_SUFFIX" "")
 +    (lib.cmakeBool "LLVM_ENABLE_LIBCXX" withLibcxx)
 +    (lib.cmakeFeature "CLANG_DEFAULT_CXX_STDLIB" (if withLibcxx then "libc++" else "libstdc++"))
++    (lib.cmakeFeature "CLANG_VENDOR" "nixpkgs-AMD")
++    (lib.cmakeFeature "CLANG_REPOSITORY_STRING" "https://github.com/ROCm/llvm-project/tree/rocm-${version}")
 +  ]
 +  ++ lib.optionals withLibcxx [
 +    (lib.cmakeFeature "CLANG_DEFAULT_RTLIB" "compiler-rt")
 +  ]
-+  ++ lib.optionals stdenvToBuildRocmLlvm.cc.isClang [
-+    (lib.cmakeFeature "LLVM_ENABLE_LTO" "THIN")
++  ++ lib.optionals withLto [
++    (lib.cmakeBool "CMAKE_INTERPROCEDURAL_OPTIMIZATION" true)
++    (lib.cmakeBool "LLVM_ENABLE_FATLTO" false)
++  ]
++  ++ lib.optionals (withLto && stdenvToBuildRocmLlvm.cc.isClang) [
++    (lib.cmakeFeature "LLVM_ENABLE_LTO" "FULL")
 +    (lib.cmakeFeature "LLVM_USE_LINKER" "lld")
 +  ];
-   tablegenUsage = x: !(lib.strings.hasInfix "llvm-tblgen" x);
+ 
+-  tablegenUsage = x: !(lib.strings.hasInfix "llvm-tblgen" x);
 -  addGccLtoCmakeFlags = !llvmPackagesRocm.stdenv.cc.isClang;
-   llvmExtraCflags =
+-  llvmExtraCflags =
 -    "-O3 -DNDEBUG -march=skylake -mtune=znver3"
 -    + (lib.optionalString addGccLtoCmakeFlags " -D_GLIBCXX_USE_CXX11_ABI=0 -flto -ffat-lto-objects -flto-compression-level=19 -Wl,-flto")
 -    + (lib.optionalString llvmPackagesRocm.stdenv.cc.isClang " -flto=thin -ffat-lto-objects")
-+    (lib.optionalString stdenvToBuildRocmLlvm.cc.isClang " -flto=thin -ffat-lto-objects")
-     + (lib.optionalString profilableStdenv " -fno-omit-frame-pointer -momit-leaf-frame-pointer -gz -g1");
+-    + (lib.optionalString profilableStdenv " -fno-omit-frame-pointer -momit-leaf-frame-pointer -gz -g1");
++  llvmExtraCflags = lib.concatStringsSep " " (
++    lib.optionals (stdenv.hostPlatform.system == "x86_64-linux") [
++      # Unprincipled decision to build x86_64 ROCm clang for at least skylake and tune for zen3+
++      # In practice building the ROCm package set with anything earlier than zen3 is annoying
++      # and earlier than skylake is implausible due to too few cores and too little RAM
++      # Speeds up composable_kernel builds by ~4%
++      # If this causes trouble in practice we can drop this. Set since 2025-03-24.
++      "-march=skylake"
++      "-mtune=znver3"
++    ]
++    ++ lib.optionals profilableStdenv [
++      "-fno-omit-frame-pointer"
++      "-momit-leaf-frame-pointer"
++      # compressed line only debug info for profiling
++      "-gz"
++      "-g1"
++    ]
++  );
  in
  rec {
    inherit (llvmPackagesRocm) libunwind;
@@ -2135,19 +2258,17 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 +      # is used mostly for amdgpu
 +    ];
      dontStrip = profilableStdenv;
++    hardeningDisable = [ "all" ];
      nativeBuildInputs = old.nativeBuildInputs ++ [ removeReferencesTo ];
      buildInputs = old.buildInputs ++ [
        zstd
        zlib
      ];
 -    env.NIX_BUILD_ID_STYLE = "fast";
-+    env = (old.env or { }) // {
-+      NIX_CFLAGS_COMPILE = "${(old.env or { }).NIX_CFLAGS_COMPILE or ""} ${llvmExtraCflags}";
-+    };
-     postPatch = ''
-       ${old.postPatch or ""}
-       patchShebangs lib/OffloadArch/make_generated_offload_arch_h.sh
-     '';
+-    postPatch = ''
+-      ${old.postPatch or ""}
+-      patchShebangs lib/OffloadArch/make_generated_offload_arch_h.sh
+-    '';
 -    LDFLAGS = "-Wl,--build-id=sha1,--icf=all,--compress-debug-sections=zlib";
 -    cmakeFlags =
 -      (builtins.filter tablegenUsage old.cmakeFlags)
@@ -2179,21 +2300,30 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 -        '-DCMAKE_CXX_FLAGS_RELEASE=${llvmExtraCflags}'
 -      )
 -    '';
++    env = (old.env or { }) // {
++      NIX_CFLAGS_COMPILE = "${(old.env or { }).NIX_CFLAGS_COMPILE or ""} ${llvmExtraCflags}";
++    };
 +    cmakeFlags = (builtins.filter tablegenUsage old.cmakeFlags) ++ commonCmakeFlags;
      # Ensure we don't leak refs to compiler that was used to bootstrap this LLVM
      disallowedReferences = (old.disallowedReferences or [ ]) ++ disallowedRefsForToolchain;
      postFixup = ''
-@@ -247,7 +255,6 @@ rec {
+@@ -243,48 +297,26 @@ rec {
+       find $lib -type f -exec remove-references-to -t ${stdenvToBuildRocmLlvm.cc} {} +
+       find $lib -type f -exec remove-references-to -t ${stdenv.cc.bintools} {} +
+     '';
++    meta = old.meta // llvmMeta;
+   });
    lld =
      (llvmPackagesRocm.lld.override {
        libllvm = llvm;
 -      ninja = emptyDirectory;
      }).overrideAttrs
        (old: {
-         patches = builtins.filter (
-@@ -255,36 +262,16 @@ rec {
-         ) old.patches;
+-        patches = builtins.filter (
+-          x: !(lib.strings.hasSuffix "more-openbsd-program-headers.patch" (builtins.baseNameOf x))
+-        ) old.patches;
          dontStrip = profilableStdenv;
++        hardeningDisable = [ "all" ];
          nativeBuildInputs = old.nativeBuildInputs ++ [
 -          llvmPackagesNoBintools.lld
            removeReferencesTo
@@ -2232,7 +2362,7 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
          # Ensure we don't leak refs to compiler that was used to bootstrap this LLVM
          disallowedReferences = (old.disallowedReferences or [ ]) ++ disallowedRefsForToolchain;
          postFixup = ''
-@@ -292,36 +279,43 @@ rec {
+@@ -292,36 +324,40 @@ rec {
            find $lib -type f -exec remove-references-to -t ${stdenv.cc.cc} {} +
            find $lib -type f -exec remove-references-to -t ${stdenv.cc.bintools} {} +
          '';
@@ -2243,6 +2373,7 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 -            '-DCMAKE_CXX_FLAGS_RELEASE=${llvmExtraCflags}'
 -          )
 -        '';
++        meta = old.meta // llvmMeta;
        });
    clang-unwrapped =
      (
@@ -2257,14 +2388,14 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 +          filteredPatches = builtins.filter (x: !(removeInapplicablePatches x)) old.patches;
          in
          {
+-          meta.platforms = [
+-            "x86_64-linux"
+-          ];
+-          pname = "${old.pname}-rocm";
+-          patches = filteredPatches ++ [
 +          passthru = old.passthru // {
 +            inherit gcc-prefix;
 +          };
-           meta.platforms = [
-             "x86_64-linux"
-           ];
-           pname = "${old.pname}-rocm";
--          patches = filteredPatches ++ [
 +          patches = [
 +            (fetchpatch {
 +              # [PATCH] [clang] Install scan-build-py into plain "lib" directory
@@ -2286,9 +2417,11 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
              (fetchpatch {
                # [ClangOffloadBundler]: Add GetBundleIDsInFile to OffloadBundler
                sha256 = "sha256-G/mzUdFfrJ2bLJgo4+mBcR6Ox7xGhWu5X+XxT4kH2c8=";
-@@ -335,18 +329,16 @@ rec {
+@@ -334,65 +370,41 @@ rec {
+               libllvmLibdir = "${llvm.lib}/lib";
              })
            ];
++          hardeningDisable = [ "all" ];
            nativeBuildInputs = old.nativeBuildInputs ++ [
 -            llvmPackagesNoBintools.lld
              removeReferencesTo
@@ -2307,7 +2440,8 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
            # Ensure we don't leak refs to compiler that was used to bootstrap this LLVM
            disallowedReferences = (old.disallowedReferences or [ ]) ++ disallowedRefsForToolchain;
            # Enable structured attrs for separateDebugInfo, because it is required with disallowedReferences set
-@@ -355,44 +347,21 @@ rec {
+           __structuredAttrs = true;
+-          requiredSystemFeatures = (old.requiredSystemFeatures or [ ]) ++ [ "big-parallel" ];
            # https://github.com/llvm/llvm-project/blob/6976deebafa8e7de993ce159aa6b82c0e7089313/clang/cmake/caches/DistributionExample-stage2.cmake#L9-L11
            cmakeFlags =
              (builtins.filter tablegenUsage old.cmakeFlags)
@@ -2355,10 +2489,11 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 -              '-DCMAKE_CXX_FLAGS_RELEASE=${llvmExtraCflags}'
 -            )
 -          '';
++          meta = old.meta // llvmMeta;
          }
        )
      )
-@@ -409,11 +378,12 @@ rec {
+@@ -409,11 +421,12 @@ rec {
            clang-unwrapped
            bintools
            compiler-rt
@@ -2373,7 +2508,7 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
            gcc-include
            glibc
            glibc.dev
-@@ -438,6 +408,12 @@ rec {
+@@ -438,7 +451,14 @@ rec {
          hash = "sha256-Db+L1HFMWVj4CrofsGbn5lnMoCzEcU+7q12KKFb17/g=";
          relative = "compiler-rt";
        })
@@ -2384,9 +2519,19 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
 +        relative = "compiler-rt";
 +      })
      ];
++    meta = old.meta // llvmMeta;
    });
    compiler-rt = compiler-rt-libc;
-@@ -464,7 +440,7 @@ rec {
+   bintools = wrapBintoolsWith {
+@@ -450,6 +470,7 @@ rec {
+   clang = rocmcxx;
+ 
+   # Emulate a monolithic ROCm LLVM build to support building ROCm's in-tree LLVM projects
++  # TODO(@LunNova): destroy this
+   rocm-merged-llvm = symlinkJoin {
+     name = "rocm-llvm-merge";
+     paths = [
+@@ -464,7 +485,7 @@ rec {
        compiler-rt.dev
        rocmcxx
      ]
@@ -2395,7 +2540,7 @@ index c8fb82fa023570..c71ca4bb25e4f6 100644
        libcxx
        libcxx.out
        libcxx.dev
-@@ -489,37 +465,32 @@ rec {
+@@ -489,37 +510,32 @@ rec {
    };
  
    rocmClangStdenv = overrideCC (
@@ -2625,7 +2770,7 @@ index b1b88b1c170c24..878191b30adeca 100644
      cd ../doc/pdf
      make -j$NIX_BUILD_CORES
 diff --git a/pkgs/development/rocm-modules/6/miopen/default.nix b/pkgs/development/rocm-modules/6/miopen/default.nix
-index 3a24c267ffaf62..f42093af5a9338 100644
+index 3a24c267ffaf62..6af388338f4a2b 100644
 --- a/pkgs/development/rocm-modules/6/miopen/default.nix
 +++ b/pkgs/development/rocm-modules/6/miopen/default.nix
 @@ -34,33 +34,42 @@
@@ -2634,7 +2779,7 @@ index 3a24c267ffaf62..f42093af5a9338 100644
    python3Packages,
 -  # FIXME: should be able to use all clr targets
 -  gpuTargets ? [
-+  gpuTargets ? clr.localGpuTargetsWithGenericFallback or clr.gpuTargetsWithGenericFallback,
++  gpuTargets ? clr.localGpuTargetsNoGenerics or clr.gpuTargetsNoGenerics,
 +  buildDocs ? false, # Needs internet because of rocm-docs-core
 +  buildTests ? false,
 +  withComposableKernel ? composable_kernel.anyMfmaTarget,
@@ -2752,7 +2897,7 @@ index 71c140d57c8edb..00000000000000
 -                 val = 0.0f;
 -             }
 diff --git a/pkgs/development/rocm-modules/6/mivisionx/default.nix b/pkgs/development/rocm-modules/6/mivisionx/default.nix
-index 0008b69f404af4..83f59d0f61ba08 100644
+index 0008b69f404af4..dfb0c241c86704 100644
 --- a/pkgs/development/rocm-modules/6/mivisionx/default.nix
 +++ b/pkgs/development/rocm-modules/6/mivisionx/default.nix
 @@ -5,7 +5,6 @@
@@ -2802,10 +2947,11 @@ index 0008b69f404af4..83f59d0f61ba08 100644
      openmp
      half
      protobuf
-@@ -84,27 +82,31 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -83,28 +81,31 @@ stdenv.mkDerivation (finalAttrs: {
+     rapidjson
      python3Packages.pybind11
      python3Packages.numpy
-     python3Packages.torchWithRocm
+-    python3Packages.torchWithRocm
 +  ]
 +  ++ lib.optionals (!useOpenCL && !useCPU) [
 +    miopen
@@ -2839,7 +2985,7 @@ index 0008b69f404af4..83f59d0f61ba08 100644
    ]
    ++ lib.optionals (useOpenCL && !useCPU) [
      "-DBACKEND=OCL"
-@@ -114,17 +116,17 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -114,17 +115,17 @@ stdenv.mkDerivation (finalAttrs: {
    ];
  
    postPatch = ''
@@ -2865,7 +3011,7 @@ index 0008b69f404af4..83f59d0f61ba08 100644
  
    postBuild = lib.optionalString buildDocs ''
 diff --git a/pkgs/development/rocm-modules/6/rccl/default.nix b/pkgs/development/rocm-modules/6/rccl/default.nix
-index b4c24708eeced0..23c9eb30595631 100644
+index b4c24708eeced0..75fffb9993990d 100644
 --- a/pkgs/development/rocm-modules/6/rccl/default.nix
 +++ b/pkgs/development/rocm-modules/6/rccl/default.nix
 @@ -7,6 +7,7 @@
@@ -2876,16 +3022,22 @@ index b4c24708eeced0..23c9eb30595631 100644
    clr,
    mscclpp,
    perl,
-@@ -14,6 +15,8 @@
+@@ -14,11 +15,14 @@
    python3,
    gtest,
    chrpath,
-+  libdrm,
 +  roctracer,
    rocprofiler,
    rocprofiler-register,
    autoPatchelfHook,
-@@ -35,7 +38,7 @@ in
+   buildTests ? false,
+   gpuTargets ? (clr.localGpuTargets or [ ]),
++  # for passthru.tests
++  rccl,
+ }:
+ 
+ let
+@@ -35,7 +39,7 @@ in
  # infiniband ib_peer_mem support isn't in the mainline kernel but is carried by some distros
  stdenv.mkDerivation (finalAttrs: {
    pname = "rccl${clr.gpuArchSuffix}";
@@ -2894,7 +3046,7 @@ index b4c24708eeced0..23c9eb30595631 100644
  
    outputs = [
      "out"
-@@ -48,13 +51,14 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -48,13 +52,14 @@ stdenv.mkDerivation (finalAttrs: {
      ./fix-mainline-support-and-ub.diff
      ./enable-mscclpp-on-all-gfx9.diff
      ./rccl-test-missing-iomanip.diff
@@ -2910,7 +3062,7 @@ index b4c24708eeced0..23c9eb30595631 100644
    };
  
    nativeBuildInputs = [
-@@ -64,12 +68,15 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -64,12 +69,14 @@ stdenv.mkDerivation (finalAttrs: {
      perl
      hipify
      python3
@@ -2921,7 +3073,6 @@ index b4c24708eeced0..23c9eb30595631 100644
    buildInputs = [
      rocm-smi
      gtest
-+    libdrm
 +    roctracer
      rocprofiler
      rocprofiler-register
@@ -2956,6 +3107,19 @@ index b4c24708eeced0..23c9eb30595631 100644
    '';
  
    postInstall =
+@@ -130,6 +142,12 @@ stdenv.mkDerivation (finalAttrs: {
+     inherit (finalAttrs.src) repo;
+   };
+ 
++  # This package with sanitizers + manual integration test binaries built
++  # must be ran manually
++  passthru.tests.rccl = rccl.override {
++    buildTests = true;
++  };
++
+   meta = with lib; {
+     description = "ROCm communication collectives library";
+     homepage = "https://github.com/ROCm/rccl";
 diff --git a/pkgs/development/rocm-modules/6/rccl/fix-mainline-support-and-ub.diff b/pkgs/development/rocm-modules/6/rccl/fix-mainline-support-and-ub.diff
 index 15efac82c5abdd..e65b23940c4cfe 100644
 --- a/pkgs/development/rocm-modules/6/rccl/fix-mainline-support-and-ub.diff
@@ -3079,14 +3243,21 @@ index c0b7222747fd4e..5475b6d01974e9 100644
      "-DHIP_ROOT_DIR=${clr}"
      "-DSUPPORT_HIP=ON"
 diff --git a/pkgs/development/rocm-modules/6/rocblas/default.nix b/pkgs/development/rocm-modules/6/rocblas/default.nix
-index 350e8bfc3fcf42..560aeae333bbba 100644
+index b155bfebcc86be..f8675cb5fc4b34 100644
 --- a/pkgs/development/rocm-modules/6/rocblas/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocblas/default.nix
-@@ -17,45 +17,20 @@
+@@ -4,6 +4,7 @@
+   fetchFromGitHub,
+   fetchpatch,
+   rocmUpdateScript,
++  writableTmpDirAsHomeHook,
+   cmake,
+   rocm-cmake,
+   clr,
+@@ -17,46 +18,19 @@
    git,
    amd-blis,
    zstd,
-+  libdrm,
 +  roctracer,
    hipblas-common,
    hipblaslt,
@@ -3124,15 +3295,16 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
 -      "gfx1100"
 -      "gfx1101"
 -      "gfx1102"
+-      "gfx1151"
 -      "gfx1200"
 -      "gfx1201"
 -    ]
 -  ),
-+  gpuTargets ? (clr.localGpuTargetsWithGenericFallback or clr.gpuTargetsWithGenericFallback),
++  gpuTargets ? (clr.localGpuTargetsNoGenerics or clr.gpuTargetsNoGenerics),
  }:
  
  let
-@@ -63,7 +38,7 @@ let
+@@ -64,7 +38,7 @@ let
  in
  stdenv.mkDerivation (finalAttrs: {
    pname = "rocblas${clr.gpuArchSuffix}";
@@ -3141,7 +3313,7 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
  
    outputs = [
      "out"
-@@ -73,7 +48,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -74,7 +48,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocBLAS";
      rev = "rocm-${finalAttrs.version}";
@@ -3150,7 +3322,7 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
    };
  
    nativeBuildInputs = [
-@@ -82,6 +57,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -83,6 +57,7 @@ stdenv.mkDerivation (finalAttrs: {
      rocm-cmake
      clr
      git
@@ -3158,18 +3330,17 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
    ]
    ++ lib.optionals buildTensile [
      tensile
-@@ -90,6 +66,10 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -91,6 +66,9 @@ stdenv.mkDerivation (finalAttrs: {
    buildInputs = [
      python3
      hipblas-common
 +    roctracer
 +    openmp
 +    amd-blis
-+    libdrm
    ]
    ++ lib.optionals withHipBlasLt [
      hipblaslt
-@@ -106,26 +86,20 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -107,27 +85,20 @@ stdenv.mkDerivation (finalAttrs: {
    ]
    ++ lib.optionals (buildTests || buildBenchmarks) [
      gfortran
@@ -3191,17 +3362,18 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
 -  ) "-Wl,--as-needed -L${amd-blis}/lib -lblis-mt -lcblas";
 +  separateDebugInfo = true;
 +  cmakeBuildType = "RelWithDebInfo";
-+  env.CXXFLAGS = "-g1 -gz -fopenmp -I${hipblas-common}/include -I${libdrm.dev}/include -I${roctracer}/include";
++  env.CXXFLAGS = "-g1 -gz -fopenmp -I${hipblas-common}/include -I${roctracer}/include";
 +  # Fails to link tests with undefined symbol: cblas_*
 +  env.LDFLAGS = lib.optionalString (buildTests || buildBenchmarks) "-Wl,--as-needed -lcblas";
    env.TENSILE_ROCM_ASSEMBLER_PATH = "${stdenv.cc}/bin/clang++";
  
    cmakeFlags = [
 -    (lib.cmakeFeature "CMAKE_BUILD_TYPE" "Release")
-     (lib.cmakeBool "CMAKE_VERBOSE_MAKEFILE" true)
+-    (lib.cmakeBool "CMAKE_VERBOSE_MAKEFILE" true)
      (lib.cmakeFeature "CMAKE_EXECUTE_PROCESS_COMMAND_ECHO" "STDERR")
      (lib.cmakeFeature "CMAKE_Fortran_COMPILER" "${lib.getBin gfortran}/bin/gfortran")
-@@ -143,8 +117,8 @@ stdenv.mkDerivation (finalAttrs: {
+     (lib.cmakeFeature "CMAKE_Fortran_COMPILER_AR" "${lib.getBin gfortran}/bin/ar")
+@@ -144,8 +115,8 @@ stdenv.mkDerivation (finalAttrs: {
      (lib.cmakeBool "BUILD_CLIENTS_BENCHMARKS" buildBenchmarks)
      (lib.cmakeBool "BUILD_CLIENTS_SAMPLES" buildBenchmarks)
      (lib.cmakeBool "BUILD_OFFLOAD_COMPRESS" true)
@@ -3212,7 +3384,7 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
      "-DCMAKE_INSTALL_BINDIR=bin"
      "-DCMAKE_INSTALL_INCLUDEDIR=include"
      "-DCMAKE_INSTALL_LIBDIR=lib"
-@@ -152,6 +126,9 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -153,6 +124,9 @@ stdenv.mkDerivation (finalAttrs: {
    ++ lib.optionals buildTensile [
      "-DCPACK_SET_DESTDIR=OFF"
      "-DLINK_BLIS=ON"
@@ -3222,7 +3394,7 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
      "-DTensile_CODE_OBJECT_VERSION=default"
      "-DTensile_LOGIC=asm_full"
      "-DTensile_LIBRARY_FORMAT=msgpack"
-@@ -168,6 +145,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -169,6 +143,7 @@ stdenv.mkDerivation (finalAttrs: {
        url = "https://github.com/GZGavinZhao/rocBLAS/commit/89b75ff9cc731f71f370fad90517395e117b03bb.patch";
        hash = "sha256-W/ohOOyNCcYYLOiQlPzsrTlNtCBdJpKVxO8s+4G7sjo=";
      })
@@ -3230,7 +3402,7 @@ index 350e8bfc3fcf42..560aeae333bbba 100644
    ];
  
    # Pass $NIX_BUILD_CORES to Tensile
-@@ -175,7 +153,8 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -176,7 +151,8 @@ stdenv.mkDerivation (finalAttrs: {
      substituteInPlace cmake/build-options.cmake \
        --replace-fail 'Tensile_CPU_THREADS ""' 'Tensile_CPU_THREADS "$ENV{NIX_BUILD_CORES}"'
      substituteInPlace CMakeLists.txt \
@@ -3690,10 +3862,10 @@ index c40f270699ce0e..adb2d9752e1b80 100644
    ];
  
 diff --git a/pkgs/development/rocm-modules/6/rocm-smi/default.nix b/pkgs/development/rocm-modules/6/rocm-smi/default.nix
-index 981c3ca6f892c5..993e0aaedf6fc9 100644
+index 981c3ca6f892c5..6ede672c563aa1 100644
 --- a/pkgs/development/rocm-modules/6/rocm-smi/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocm-smi/default.nix
-@@ -3,26 +3,36 @@
+@@ -3,26 +3,35 @@
    stdenv,
    fetchFromGitHub,
    rocmUpdateScript,
@@ -3719,7 +3891,6 @@ index 981c3ca6f892c5..993e0aaedf6fc9 100644
 -  patches = [ ./cmake.patch ];
 +  patches = [
 +    ./cmake.patch
-+    ./propagate-libdrm-dep.patch
 +  ];
 +
 +  propagatedBuildInputs = [
@@ -3733,51 +3904,33 @@ index 981c3ca6f892c5..993e0aaedf6fc9 100644
    ];
  
    cmakeFlags = [
-diff --git a/pkgs/development/rocm-modules/6/rocm-smi/propagate-libdrm-dep.patch b/pkgs/development/rocm-modules/6/rocm-smi/propagate-libdrm-dep.patch
-new file mode 100644
-index 00000000000000..007743abf0ae6b
---- /dev/null
-+++ b/pkgs/development/rocm-modules/6/rocm-smi/propagate-libdrm-dep.patch
-@@ -0,0 +1,39 @@
-+diff --git a/CMakeLists.txt b/CMakeLists.txt
-+index d91c7bf..158bdd3 100755
-+--- a/CMakeLists.txt
-++++ b/CMakeLists.txt
-+@@ -331,8 +331,13 @@ if(DEFINED ENV{CPACK_DEBIAN_PACKAGE_RELEASE})
-+ else()
-+    set(CPACK_DEBIAN_PACKAGE_RELEASE "local")
-+ endif()
-+-set(CPACK_DEBIAN_PACKAGE_SUGGESTS "sudo, libdrm-dev, libdrm-amdgpu-dev")
-+-set(CPACK_RPM_PACKAGE_SUGGESTS "sudo, libdrm-dev, libdrm-amdgpu-dev")
-++set(CPACK_DEBIAN_PACKAGE_SUGGESTS "sudo")
-++set(CPACK_RPM_PACKAGE_SUGGESTS "sudo")
-++# Add libdrm as hard dependencies since headers directly include libdrm files
-++string(APPEND CPACK_DEBIAN_PACKAGE_DEPENDS ", libdrm-dev, libdrm-amdgpu-dev")
-++string(APPEND CPACK_DEBIAN_ASAN_PACKAGE_DEPENDS ", libdrm-dev, libdrm-amdgpu-dev")
-++string(APPEND CPACK_RPM_PACKAGE_REQUIRES ", libdrm-devel, libdrm-amdgpu-devel")
-++string(APPEND CPACK_RPM_ASAN_PACKAGE_REQUIRES ", libdrm-devel, libdrm-amdgpu-devel")
-+ 
-+ ## Process the Debian install/remove scripts to update the CPACK variables
-+ configure_file(
-+diff --git a/rocm_smi-config.cmake.in b/rocm_smi-config.cmake.in
-+index 83a8871..1561eac 100644
-+--- a/rocm_smi-config.cmake.in
-++++ b/rocm_smi-config.cmake.in
-+@@ -7,9 +7,13 @@
-+ @PACKAGE_INIT@
-+ get_filename_component(ROCM_SMI_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-+ 
-++# Find required dependencies
-++find_package(PkgConfig REQUIRED)
-++pkg_check_modules(LIBDRM REQUIRED libdrm)
-++
-+ set_and_check( rocm_smi_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@" )
-+ set_and_check( ROCM_SMI_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@" )
-+-set_and_check( ROCM_SMI_INCLUDE_DIRS "@PACKAGE_INCLUDE_INSTALL_DIR@" )
-++set( ROCM_SMI_INCLUDE_DIRS "@PACKAGE_INCLUDE_INSTALL_DIR@;${LIBDRM_INCLUDE_DIRS}" )
-+ set_and_check( rocm_smi_LIB_DIR "@PACKAGE_LIB_INSTALL_DIR@" )
-+ set_and_check( ROCM_SMI_LIB_DIR "@PACKAGE_LIB_INSTALL_DIR@" )
-+ set_and_check( ROCM_SMI_LIB_DIRS "@PACKAGE_LIB_INSTALL_DIR@" )
+@@ -33,11 +42,21 @@ stdenv.mkDerivation (finalAttrs: {
+     "-DCMAKE_INSTALL_INCLUDEDIR=include"
+   ];
+ 
+-  postInstall = ''
+-    wrapPythonProgramsIn $out
+-    mv $out/libexec/rocm_smi/.rsmiBindingsInit.py-wrapped $out/libexec/rocm_smi/rsmiBindingsInit.py
+-    mv $out/libexec/rocm_smi/.rsmiBindings.py-wrapped $out/libexec/rocm_smi/rsmiBindings.py
+-  '';
++  postInstall =
++    # wrap python programs, but undo two that need to be importable at that path
++    ''
++      wrapPythonProgramsIn $out
++      mv $out/libexec/rocm_smi/.rsmiBindingsInit.py-wrapped $out/libexec/rocm_smi/rsmiBindingsInit.py
++      mv $out/libexec/rocm_smi/.rsmiBindings.py-wrapped $out/libexec/rocm_smi/rsmiBindings.py
++    ''
++    # workaround: propagate libdrm/ manually
++    # rocmcxx doesn't automatically add buildInputs to isystem include path like
++    # wrapper based toolchains, cmake files often don't find_package(rocm-smi) so
++    # can't rely on cmake propagated interface
++    # upstream have been shipping libdrm copied into /opt/rocm
++    + ''
++      ln -s ${libdrm.dev}/include/libdrm/ $out/include/
++    '';
+ 
+   passthru.updateScript = rocmUpdateScript {
+     name = finalAttrs.pname;
 diff --git a/pkgs/development/rocm-modules/6/rocminfo/default.nix b/pkgs/development/rocm-modules/6/rocminfo/default.nix
 index 18166bc780df0b..fd5bb7c08b80cc 100644
 --- a/pkgs/development/rocm-modules/6/rocminfo/default.nix
@@ -4245,10 +4398,10 @@ index d58e596d97a80e..8351e81a29f148 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocsolver/default.nix b/pkgs/development/rocm-modules/6/rocsolver/default.nix
-index b2f3764d2e0b4a..4123187737fa1b 100644
+index f5daea4de5db56..674b85622d4293 100644
 --- a/pkgs/development/rocm-modules/6/rocsolver/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocsolver/default.nix
-@@ -35,7 +35,7 @@
+@@ -36,7 +36,7 @@
  
  stdenv.mkDerivation (finalAttrs: {
    pname = "rocsolver${clr.gpuArchSuffix}";
@@ -4257,7 +4410,7 @@ index b2f3764d2e0b4a..4123187737fa1b 100644
  
    outputs = [
      "out"
-@@ -51,7 +51,7 @@ stdenv.mkDerivation (finalAttrs: {
+@@ -52,7 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
      owner = "ROCm";
      repo = "rocSOLVER";
      rev = "rocm-${finalAttrs.version}";
@@ -4267,7 +4420,7 @@ index b2f3764d2e0b4a..4123187737fa1b 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/rocsparse/default.nix b/pkgs/development/rocm-modules/6/rocsparse/default.nix
-index ee7fd4d96f15c5..2c29f0e8071b34 100644
+index ee7fd4d96f15c5..6100788ccf398e 100644
 --- a/pkgs/development/rocm-modules/6/rocsparse/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocsparse/default.nix
 @@ -15,12 +15,12 @@
@@ -4275,7 +4428,7 @@ index ee7fd4d96f15c5..2c29f0e8071b34 100644
    buildTests ? false,
    buildBenchmarks ? false, # Seems to depend on tests
 -  gpuTargets ? clr.localGpuTargets or clr.gpuTargets,
-+  gpuTargets ? clr.localGpuTargetsWithGenericFallback or clr.gpuTargetsWithGenericFallback,
++  gpuTargets ? clr.localGpuTargetsNoGenerics or clr.gpuTargetsNoGenerics,
  }:
  
  stdenv.mkDerivation (finalAttrs: {
@@ -4960,10 +5113,10 @@ index 0667599a583919..00000000000000
 -+    deactivate
 -+fi
 
-From ea118372c4e9b48c6f58f70da606f0413fc2f7f3 Mon Sep 17 00:00:00 2001
+From 69ae57fc650e37e9d1a78b360beedd9356f7bc24 Mon Sep 17 00:00:00 2001
 From: Luna Nova <git@lunnova.dev>
-Date: Sun, 7 Sep 2025 19:56:42 -0700
-Subject: [PATCH 2/5] magma: set -fopenmp for rocm, use modern rocm c/xx
+Date: Fri, 12 Sep 2025 21:30:04 -0700
+Subject: [PATCH 02/11] magma: set -fopenmp for rocm, use modern rocm c/xx
 
 ---
  pkgs/by-name/ma/magma/package.nix | 11 ++++++-----
@@ -5006,10 +5159,10 @@ index 9c5d762fd8eb72..06fbe93a003dc7 100644
  
    # Magma doesn't have a test suite we can easily run, just loose executables, all of which require a GPU.
 
-From 89b58d798cc7a0745c318cda72ad1f5c6e6d0f30 Mon Sep 17 00:00:00 2001
+From 39705c387452b37338ce376e6fc0c5d65942b8a2 Mon Sep 17 00:00:00 2001
 From: Luna Nova <git@lunnova.dev>
-Date: Sun, 7 Sep 2025 19:57:04 -0700
-Subject: [PATCH 3/5] ucx: drop no longer needed rocm stdenv workaround
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 03/11] ucx: drop no longer needed rocm stdenv workaround
 
 ---
  pkgs/by-name/uc/ucx/package.nix | 5 +----
@@ -5033,107 +5186,118 @@ index 393842b7b07bea..b3a10fc8454e35 100644
    version = "1.19.0";
  
 
-From 83202e298222c5c4eedd3ae027970f720224952a Mon Sep 17 00:00:00 2001
+From 4159b03e5f55ecea48d0d686358a2969e812918f Mon Sep 17 00:00:00 2001
 From: Luna Nova <git@lunnova.dev>
-Date: Sun, 7 Sep 2025 20:02:36 -0700
-Subject: [PATCH 4/5] python3Packages.torch: fix gfx908 blas selection and
- -generic arches
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 04/11] python3Packages.torchWithRocm: don't try to use
+ -generic targets
 
+torch doesn't yet build with -generic targets
 ---
- .../python-modules/torch/source/default.nix   | 21 ++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ pkgs/development/python-modules/torch/source/default.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/pkgs/development/python-modules/torch/source/default.nix b/pkgs/development/python-modules/torch/source/default.nix
-index ba0878589bf8f8..727baae93efdb6 100644
+index aa6de6c0a2aa52..6521d9585272cd 100644
 --- a/pkgs/development/python-modules/torch/source/default.nix
 +++ b/pkgs/development/python-modules/torch/source/default.nix
-@@ -183,11 +183,16 @@ let
-     else if rocmSupport then
-       # Remove RDNA1 gfx101x archs from default ROCm support list to avoid
-       # use of undeclared identifier 'CK_BUFFER_RESOURCE_3RD_DWORD'
--      # TODO: Retest after ROCm 6.4 or torch 2.8
--      lib.lists.subtractLists [
--        "gfx1010"
--        "gfx1012"
+@@ -191,7 +191,7 @@ let
+         # Strix Halo seems to be broken as well, see
+         # https://github.com/NixOS/nixpkgs/pull/440359.
+         "gfx1151"
 -      ] (rocmPackages.clr.localGpuTargets or rocmPackages.clr.gpuTargets)
-+      # TODO: Remove after Ck backend UX refactor https://github.com/pytorch/pytorch/pull/152951
-+      lib.lists.subtractLists
-+        [
-+          "gfx1010"
-+          "gfx1012"
-+        ]
-+        (
-+          rocmPackages.clr.localGpuTargetsWithGenericFallback
-+            or rocmPackages.clr.gpuTargetsWithGenericFallback
-+        )
++      ] rocmPackages.clr.localGpuTargetsNoGenerics or rocmPackages.clr.gpuTargetsNoGenerics
      else
        throw "No GPU targets specified"
    );
-@@ -312,6 +317,12 @@ buildPythonPackage rec {
-     ./fix-cmake-cuda-toolkit.patch
-     ./nvtx3-hpp-path-fix.patch
-   ]
-+  ++ lib.optional rocmSupport (fetchpatch {
-+    # [PATCH] [ROCm] enable hipblaslt on gfx908 for ROCm >= 6.3 (#159092)
-+    name = "enable-hipblaslt-gfx908.patch";
-+    url = "https://github.com/pytorch/pytorch/commit/1fced0c7d51cf03e0bb6b40a1db7b24e9d7ff5aa.patch";
-+    hash = "sha256-BhjO7Acn86GIXtilg/uZ8deqRP+QjKR5I6zuSXjdmEo=";
-+  })
-   ++ lib.optionals stdenv.hostPlatform.isLinux [
-     # Propagate CUPTI to Kineto by overriding the search path with environment variables.
-     # https://github.com/pytorch/pytorch/pull/108847
+@@ -412,7 +412,7 @@ buildPythonPackage rec {
+       export ROCM_PATH=${rocmtoolkit_joined}
+       export ROCM_SOURCE_DIR=${rocmtoolkit_joined}
+       export PYTORCH_ROCM_ARCH="${gpuTargetString}"
+-      export CMAKE_CXX_FLAGS="-I${rocmtoolkit_joined}/include -I${rocmtoolkit_joined}/include/rocblas"
++      export CMAKE_CXX_FLAGS="-I${rocmtoolkit_joined}/include"
+       python tools/amd_build/build_amd.py
+     '';
+ 
 
-From f3c590d0f4f7113b825ea9edcaa4ef5dc37b1c73 Mon Sep 17 00:00:00 2001
+From 04f908eb0cb0ac50ef511e91cd519b539f6e0bdc Mon Sep 17 00:00:00 2001
 From: Luna Nova <git@lunnova.dev>
-Date: Sun, 7 Sep 2025 20:30:13 -0700
-Subject: [PATCH 5/5] rocmPackages: 6.4.2 -> 6.4.3
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 05/11] python3Packages.torchWithRocm: allow gfx1151 (Strix
+ Halo)
+
+gfx1151 support in torch was fixed by the ROCm 6.4 bump
+---
+ pkgs/development/python-modules/torch/source/default.nix | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/pkgs/development/python-modules/torch/source/default.nix b/pkgs/development/python-modules/torch/source/default.nix
+index 6521d9585272cd..9f8c4996e13ebf 100644
+--- a/pkgs/development/python-modules/torch/source/default.nix
++++ b/pkgs/development/python-modules/torch/source/default.nix
+@@ -187,10 +187,6 @@ let
+         # TODO: Retest after ROCm 6.4 or torch 2.8
+         "gfx1010"
+         "gfx1012"
+-
+-        # Strix Halo seems to be broken as well, see
+-        # https://github.com/NixOS/nixpkgs/pull/440359.
+-        "gfx1151"
+       ] rocmPackages.clr.localGpuTargetsNoGenerics or rocmPackages.clr.gpuTargetsNoGenerics
+     else
+       throw "No GPU targets specified"
+
+From 39e439b8d6e5110d893452c22f888ae141d1c5be Mon Sep 17 00:00:00 2001
+From: Luna Nova <git@lunnova.dev>
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 06/11] rocmPackages: 6.4.2 -> 6.4.3
 
 ---
- .../rocm-modules/6/amdsmi/default.nix            |  2 +-
- .../rocm-modules/6/aqlprofile/default.nix        |  2 +-
- pkgs/development/rocm-modules/6/clr/default.nix  |  2 +-
- .../6/composable_kernel/ck4inductor.nix          |  2 +-
- pkgs/development/rocm-modules/6/half/default.nix |  2 +-
- .../rocm-modules/6/hip-common/default.nix        |  2 +-
- .../rocm-modules/6/hipblas-common/default.nix    |  2 +-
- .../rocm-modules/6/hipblas/default.nix           |  2 +-
- .../rocm-modules/6/hipcub/default.nix            |  2 +-
- .../rocm-modules/6/hipfft/default.nix            |  2 +-
- .../rocm-modules/6/hipfort/default.nix           |  2 +-
- .../rocm-modules/6/hipify/default.nix            |  2 +-
- .../rocm-modules/6/hiprand/default.nix           |  2 +-
- .../rocm-modules/6/hipsolver/default.nix         |  2 +-
- .../rocm-modules/6/hipsparse/default.nix         |  2 +-
- pkgs/development/rocm-modules/6/llvm/default.nix | 16 +++++++++-------
- .../rocm-modules/6/migraphx/default.nix          |  4 ++--
- .../rocm-modules/6/miopen/default.nix            |  2 +-
- .../rocm-modules/6/mivisionx/default.nix         |  2 +-
- pkgs/development/rocm-modules/6/rccl/default.nix |  2 +-
- pkgs/development/rocm-modules/6/rdc/default.nix  |  2 +-
- .../rocm-modules/6/rocalution/default.nix        |  2 +-
- .../rocm-modules/6/rocblas/default.nix           |  2 +-
- .../rocm-modules/6/rocdbgapi/default.nix         |  2 +-
- .../rocm-modules/6/rocfft/default.nix            |  2 +-
- .../rocm-modules/6/rocgdb/default.nix            |  2 +-
- .../rocm-modules/6/rocm-cmake/default.nix        |  2 +-
- .../rocm-modules/6/rocm-core/default.nix         |  2 +-
- .../rocm-modules/6/rocm-docs-core/default.nix    |  4 ++--
- .../rocm-modules/6/rocm-runtime/default.nix      |  2 +-
- .../rocm-modules/6/rocm-smi/default.nix          |  4 ++--
- .../rocm-modules/6/rocminfo/default.nix          |  2 +-
- .../rocm-modules/6/rocmlir/default.nix           |  2 +-
- .../rocm-modules/6/rocprim/default.nix           |  2 +-
- .../6/rocprofiler-register/default.nix           |  2 +-
- .../rocm-modules/6/rocprofiler/default.nix       |  2 +-
- .../rocm-modules/6/rocr-debug-agent/default.nix  |  2 +-
- .../rocm-modules/6/rocrand/default.nix           |  2 +-
- .../rocm-modules/6/rocsolver/default.nix         |  2 +-
- .../rocm-modules/6/rocsparse/default.nix         |  2 +-
- .../rocm-modules/6/rocthrust/default.nix         |  2 +-
- .../rocm-modules/6/roctracer/default.nix         |  2 +-
- .../rocm-modules/6/rocwmma/default.nix           |  2 +-
- pkgs/development/rocm-modules/6/rpp/default.nix  |  2 +-
- 44 files changed, 55 insertions(+), 53 deletions(-)
+ pkgs/development/rocm-modules/6/amdsmi/default.nix            | 2 +-
+ pkgs/development/rocm-modules/6/aqlprofile/default.nix        | 2 +-
+ pkgs/development/rocm-modules/6/clr/default.nix               | 2 +-
+ .../rocm-modules/6/composable_kernel/ck4inductor.nix          | 2 +-
+ pkgs/development/rocm-modules/6/half/default.nix              | 2 +-
+ pkgs/development/rocm-modules/6/hip-common/default.nix        | 2 +-
+ pkgs/development/rocm-modules/6/hipblas-common/default.nix    | 2 +-
+ pkgs/development/rocm-modules/6/hipblas/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/hipcub/default.nix            | 2 +-
+ pkgs/development/rocm-modules/6/hipfft/default.nix            | 2 +-
+ pkgs/development/rocm-modules/6/hipfort/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/hipify/default.nix            | 2 +-
+ pkgs/development/rocm-modules/6/hiprand/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/hipsolver/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/hipsparse/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/llvm/default.nix              | 2 +-
+ pkgs/development/rocm-modules/6/migraphx/default.nix          | 4 ++--
+ pkgs/development/rocm-modules/6/miopen/default.nix            | 2 +-
+ pkgs/development/rocm-modules/6/mivisionx/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/rccl/default.nix              | 2 +-
+ pkgs/development/rocm-modules/6/rdc/default.nix               | 2 +-
+ pkgs/development/rocm-modules/6/rocalution/default.nix        | 2 +-
+ pkgs/development/rocm-modules/6/rocblas/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/rocdbgapi/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/rocfft/default.nix            | 2 +-
+ pkgs/development/rocm-modules/6/rocgdb/default.nix            | 2 +-
+ pkgs/development/rocm-modules/6/rocm-cmake/default.nix        | 2 +-
+ pkgs/development/rocm-modules/6/rocm-core/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/rocm-docs-core/default.nix    | 4 ++--
+ pkgs/development/rocm-modules/6/rocm-runtime/default.nix      | 2 +-
+ pkgs/development/rocm-modules/6/rocm-smi/default.nix          | 4 ++--
+ pkgs/development/rocm-modules/6/rocminfo/default.nix          | 2 +-
+ pkgs/development/rocm-modules/6/rocmlir/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/rocprim/default.nix           | 2 +-
+ .../rocm-modules/6/rocprofiler-register/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/rocprofiler/default.nix       | 2 +-
+ pkgs/development/rocm-modules/6/rocr-debug-agent/default.nix  | 2 +-
+ pkgs/development/rocm-modules/6/rocrand/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/rocsolver/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/rocsparse/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/rocthrust/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/roctracer/default.nix         | 2 +-
+ pkgs/development/rocm-modules/6/rocwmma/default.nix           | 2 +-
+ pkgs/development/rocm-modules/6/rpp/default.nix               | 2 +-
+ 44 files changed, 47 insertions(+), 47 deletions(-)
 
 diff --git a/pkgs/development/rocm-modules/6/amdsmi/default.nix b/pkgs/development/rocm-modules/6/amdsmi/default.nix
 index e9b60959eb07b5..edd104749f3642 100644
@@ -5162,10 +5326,10 @@ index 29e9764a068969..6f25eaf09acb80 100644
    src = fetchFromGitHub {
      # TODO: Will move to rocm-systems repo and have proper tags in 7.x
 diff --git a/pkgs/development/rocm-modules/6/clr/default.nix b/pkgs/development/rocm-modules/6/clr/default.nix
-index 451fdbf845557c..da4b43c42839d4 100644
+index 8eca3f07bb5936..5e4cc50428792c 100644
 --- a/pkgs/development/rocm-modules/6/clr/default.nix
 +++ b/pkgs/development/rocm-modules/6/clr/default.nix
-@@ -98,7 +98,7 @@ let
+@@ -99,7 +99,7 @@ let
  in
  stdenv.mkDerivation (finalAttrs: {
    pname = "clr";
@@ -5227,10 +5391,10 @@ index 4bdfdde2a2ea69..8763e916c034eb 100644
    src = fetchFromGitHub {
      owner = "ROCm";
 diff --git a/pkgs/development/rocm-modules/6/hipblas/default.nix b/pkgs/development/rocm-modules/6/hipblas/default.nix
-index fe091a9146e56b..5d11dee98a25d6 100644
+index 0062c81be51766..14bef41d78134b 100644
 --- a/pkgs/development/rocm-modules/6/hipblas/default.nix
 +++ b/pkgs/development/rocm-modules/6/hipblas/default.nix
-@@ -22,7 +22,7 @@
+@@ -25,7 +25,7 @@
  # Can also use cuBLAS
  stdenv.mkDerivation (finalAttrs: {
    pname = "hipblas";
@@ -5331,55 +5495,18 @@ index 09d6ac1625d328..f10280335ba0d8 100644
    outputs = [
      "out"
 diff --git a/pkgs/development/rocm-modules/6/llvm/default.nix b/pkgs/development/rocm-modules/6/llvm/default.nix
-index c71ca4bb25e4f6..adee93c430e66b 100644
+index 321a61fb3b5945..3df1d8bad712c4 100644
 --- a/pkgs/development/rocm-modules/6/llvm/default.nix
 +++ b/pkgs/development/rocm-modules/6/llvm/default.nix
-@@ -28,6 +28,12 @@
+@@ -37,7 +37,7 @@
  }@args:
  
  let
-+  version = "6.4.3";
-+  # major version of this should be the clang version ROCm forked from
-+  rocmLlvmVersion = "19.0.0-${llvmSrc.rev}";
-+  # llvmPackages_base version should be close to rocmLlvmVersion,
-+  # may be one off because AMD backports a lot and the +1 patches
-+  # may be easier to get to build
-   llvmPackages_base = llvmPackages_20;
-   llvmPackagesNoBintools = llvmPackages_base.override {
-     bootBintools = null;
-@@ -92,9 +98,6 @@ let
-       ln -s $out $out/x86_64-unknown-linux-gnu
-     '';
-   };
 -  version = "6.4.2";
--  # major version of this should be the clang version ROCm forked from
--  rocmLlvmVersion = "19.0.0-${llvmSrc.rev}";
-   usefulOutputs =
-     drv:
-     builtins.filter (x: x != null) [
-@@ -106,10 +109,9 @@ let
-   llvmSrc = fetchFromGitHub {
-     owner = "ROCm";
-     repo = "llvm-project";
--    rev = "rocm-6.4.2";
-+    rev = "rocm-${version}";
-     hash = "sha256-12ftH5fMPAsbcEBmhADwW1YY/Yxo/MAK1FafKczITMg=";
-   };
--  llvmSrcFixed = llvmSrc;
-   llvmMajorVersion = lib.versions.major rocmLlvmVersion;
-   # An llvmPackages (pkgs/development/compilers/llvm/) built from ROCm LLVM's source tree
-   # optionally using LLVM libcxx
-@@ -121,8 +123,8 @@ let
-     # gitRelease = {}; officialRelease = null;
-     officialRelease = { }; # Set but empty because we're overriding everything from it.
-     version = rocmLlvmVersion;
--    src = llvmSrcFixed;
--    monorepoSrc = llvmSrcFixed;
-+    src = llvmSrc;
-+    monorepoSrc = llvmSrc;
-     doCheck = false;
-   });
-   sysrootCompiler =
++  version = "6.4.3";
+   # major version of this should be the clang version ROCm forked from
+   rocmLlvmVersion = "19.0.0-rocm";
+   # llvmPackages_base version should be close to rocmLlvmVersion,
 diff --git a/pkgs/development/rocm-modules/6/migraphx/default.nix b/pkgs/development/rocm-modules/6/migraphx/default.nix
 index 878191b30adeca..8e08db59fc8424 100644
 --- a/pkgs/development/rocm-modules/6/migraphx/default.nix
@@ -5403,7 +5530,7 @@ index 878191b30adeca..8e08db59fc8424 100644
  
    nativeBuildInputs = [
 diff --git a/pkgs/development/rocm-modules/6/miopen/default.nix b/pkgs/development/rocm-modules/6/miopen/default.nix
-index f42093af5a9338..b2e1d609852b7e 100644
+index 6af388338f4a2b..7cba9949c2c985 100644
 --- a/pkgs/development/rocm-modules/6/miopen/default.nix
 +++ b/pkgs/development/rocm-modules/6/miopen/default.nix
 @@ -43,7 +43,7 @@
@@ -5416,7 +5543,7 @@ index f42093af5a9338..b2e1d609852b7e 100644
    # Targets outside this list will get
    # error: use of undeclared identifier 'CK_BUFFER_RESOURCE_3RD_DWORD'
 diff --git a/pkgs/development/rocm-modules/6/mivisionx/default.nix b/pkgs/development/rocm-modules/6/mivisionx/default.nix
-index 83f59d0f61ba08..61d0955a62419d 100644
+index dfb0c241c86704..324f8d884acf05 100644
 --- a/pkgs/development/rocm-modules/6/mivisionx/default.nix
 +++ b/pkgs/development/rocm-modules/6/mivisionx/default.nix
 @@ -41,7 +41,7 @@ stdenv.mkDerivation (finalAttrs: {
@@ -5429,10 +5556,10 @@ index 83f59d0f61ba08..61d0955a62419d 100644
    src = fetchFromGitHub {
      owner = "ROCm";
 diff --git a/pkgs/development/rocm-modules/6/rccl/default.nix b/pkgs/development/rocm-modules/6/rccl/default.nix
-index 23c9eb30595631..15be14d7b47ace 100644
+index 75fffb9993990d..32c096c475e5df 100644
 --- a/pkgs/development/rocm-modules/6/rccl/default.nix
 +++ b/pkgs/development/rocm-modules/6/rccl/default.nix
-@@ -38,7 +38,7 @@ in
+@@ -39,7 +39,7 @@ in
  # infiniband ib_peer_mem support isn't in the mainline kernel but is carried by some distros
  stdenv.mkDerivation (finalAttrs: {
    pname = "rccl${clr.gpuArchSuffix}";
@@ -5468,7 +5595,7 @@ index 5475b6d01974e9..0fbf4025bf3fb4 100644
    outputs = [
      "out"
 diff --git a/pkgs/development/rocm-modules/6/rocblas/default.nix b/pkgs/development/rocm-modules/6/rocblas/default.nix
-index 560aeae333bbba..be8ee182fa1d62 100644
+index f8675cb5fc4b34..2fce1de0fa5c9b 100644
 --- a/pkgs/development/rocm-modules/6/rocblas/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocblas/default.nix
 @@ -38,7 +38,7 @@ let
@@ -5580,7 +5707,7 @@ index adb2d9752e1b80..2bc797759af30c 100644
    src = fetchFromGitHub {
      owner = "ROCm";
 diff --git a/pkgs/development/rocm-modules/6/rocm-smi/default.nix b/pkgs/development/rocm-modules/6/rocm-smi/default.nix
-index 993e0aaedf6fc9..2ce91b8dec9e37 100644
+index 6ede672c563aa1..f146d6f9fb43e8 100644
 --- a/pkgs/development/rocm-modules/6/rocm-smi/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocm-smi/default.nix
 @@ -11,13 +11,13 @@
@@ -5691,10 +5818,10 @@ index 8351e81a29f148..f0219f66955b9e 100644
    outputs = [
      "out"
 diff --git a/pkgs/development/rocm-modules/6/rocsolver/default.nix b/pkgs/development/rocm-modules/6/rocsolver/default.nix
-index 4123187737fa1b..7d3741f0dd88eb 100644
+index 674b85622d4293..c055e5abf735d8 100644
 --- a/pkgs/development/rocm-modules/6/rocsolver/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocsolver/default.nix
-@@ -35,7 +35,7 @@
+@@ -36,7 +36,7 @@
  
  stdenv.mkDerivation (finalAttrs: {
    pname = "rocsolver${clr.gpuArchSuffix}";
@@ -5704,7 +5831,7 @@ index 4123187737fa1b..7d3741f0dd88eb 100644
    outputs = [
      "out"
 diff --git a/pkgs/development/rocm-modules/6/rocsparse/default.nix b/pkgs/development/rocm-modules/6/rocsparse/default.nix
-index 2c29f0e8071b34..4a14fe22648b56 100644
+index 6100788ccf398e..643f02d49c6361 100644
 --- a/pkgs/development/rocm-modules/6/rocsparse/default.nix
 +++ b/pkgs/development/rocm-modules/6/rocsparse/default.nix
 @@ -20,7 +20,7 @@
@@ -5768,3 +5895,269 @@ index 04194708eb99e8..41cbf54089e091 100644
  
    src = fetchFromGitHub {
      owner = "ROCm";
+
+From 1e6f5a8c22c6dcc36e5b924a3b20f1349430111e Mon Sep 17 00:00:00 2001
+From: Luna Nova <git@lunnova.dev>
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 07/11] rocmPackages.aotriton: correctness and build perf
+ improvements
+
+---
+ .../rocm-modules/6/aotriton/default.nix           | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/pkgs/development/rocm-modules/6/aotriton/default.nix b/pkgs/development/rocm-modules/6/aotriton/default.nix
+index cda06eb3c4cdff..f435ad6a0ef1f4 100644
+--- a/pkgs/development/rocm-modules/6/aotriton/default.nix
++++ b/pkgs/development/rocm-modules/6/aotriton/default.nix
+@@ -23,17 +23,21 @@ let
+     "gfx90a"
+     "gfx942"
+     "gfx950"
++    # some gfx1100 kernels fail with error: branch size exceeds simm16
++    # but build proceeds and those ops will fallback so it's ok
+     "gfx1100"
+     "gfx1151"
+     "gfx1150"
+     "gfx1201"
+     "gfx1200"
+   ] gpuTargets;
+-  supportedTargets' = lib.concatStringsSep ";" supportedTargets;
+   anySupportedTargets = supportedTargets != [ ];
++  # Pick a single arbitrary target to speed up shim build when we can't support our target
++  supportedTargets' =
++    if anySupportedTargets then lib.concatStringsSep ";" supportedTargets else "gfx1200";
+ in
+ stdenv.mkDerivation (finalAttrs: {
+-  pname = "aotriton";
++  pname = "aotriton${lib.optionalString (!anySupportedTargets) "-shim"}";
+   version = "0.10b";
+ 
+   src = fetchFromGitHub {
+@@ -132,13 +136,16 @@ stdenv.mkDerivation (finalAttrs: {
+     (lib.cmakeBool "AOTRITON_NOIMAGE_MODE" (!anySupportedTargets))
+     # Use preinstalled triton from our python's site-packages
+     (lib.cmakeBool "AOTRITON_INHERIT_SYSTEM_SITE_TRITON" true)
++    # FP32 kernels are optional, turn them off to speed up builds and save space
++    # Perf sensitive code should be using BF16 or F16
++    (lib.cmakeBool "AOTRITON_ENABLE_FP32_INPUTS" false)
++    # Avoid kernels being skipped if build host is overloaded
++    (lib.cmakeFeature "AOTRITON_GPU_BUILD_TIMEOUT" "0")
+     # Manually define CMAKE_INSTALL_<DIR>
+     # See: https://github.com/NixOS/nixpkgs/pull/197838
+     (lib.cmakeFeature "CMAKE_INSTALL_BINDIR" "bin")
+     (lib.cmakeFeature "CMAKE_INSTALL_LIBDIR" "lib")
+     (lib.cmakeFeature "CMAKE_INSTALL_INCLUDEDIR" "include")
+-  ]
+-  ++ lib.optionals anySupportedTargets [
+     # Note: build will warn "AMDGPU_TARGETS was not set, and system GPU detection was unsuccsesful."
+     # but this can safely be ignored, aotriton uses a different approach to pass targets
+     (lib.cmakeFeature "AOTRITON_TARGET_ARCH" supportedTargets')
+
+From dfdf4259722d18d07bc6e78042fc1094205d573c Mon Sep 17 00:00:00 2001
+From: Luna Nova <git@lunnova.dev>
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 08/11] python3Packages.torchWithRocm: use vendored
+ composable_kernel when no supported targets are set
+
+Allows building torchWithRocm with clr's localGpuTargets set to gfx906
+and other arches which composable_kernel does not support.
+---
+ .../python-modules/torch/source/default.nix   | 74 ++++++++++---------
+ 1 file changed, 41 insertions(+), 33 deletions(-)
+
+diff --git a/pkgs/development/python-modules/torch/source/default.nix b/pkgs/development/python-modules/torch/source/default.nix
+index 9f8c4996e13ebf..57c593a8c6a603 100644
+--- a/pkgs/development/python-modules/torch/source/default.nix
++++ b/pkgs/development/python-modules/torch/source/default.nix
+@@ -192,40 +192,47 @@ let
+       throw "No GPU targets specified"
+   );
+ 
++  # Use vendored CK as header only dep if rocmPackages' CK doesn't properly support targets
++  vendorComposableKernel = rocmSupport && !rocmPackages.composable_kernel.anyMfmaTarget;
++
+   rocmtoolkit_joined = symlinkJoin {
+     name = "rocm-merged";
+ 
+-    paths = with rocmPackages; [
+-      rocm-core
+-      clr
+-      rccl
+-      miopen
+-      aotriton
+-      composable_kernel
+-      rocrand
+-      rocblas
+-      rocsparse
+-      hipsparse
+-      rocthrust
+-      rocprim
+-      hipcub
+-      roctracer
+-      rocfft
+-      rocsolver
+-      hipfft
+-      hiprand
+-      hipsolver
+-      hipblas-common
+-      hipblas
+-      hipblaslt
+-      rocminfo
+-      rocm-comgr
+-      rocm-device-libs
+-      rocm-runtime
+-      rocm-smi
+-      clr.icd
+-      hipify
+-    ];
++    paths =
++      with rocmPackages;
++      [
++        rocm-core
++        clr
++        rccl
++        miopen
++        aotriton
++        rocrand
++        rocblas
++        rocsparse
++        hipsparse
++        rocthrust
++        rocprim
++        hipcub
++        roctracer
++        rocfft
++        rocsolver
++        hipfft
++        hiprand
++        hipsolver
++        hipblas-common
++        hipblas
++        hipblaslt
++        rocminfo
++        rocm-comgr
++        rocm-device-libs
++        rocm-runtime
++        rocm-smi
++        clr.icd
++        hipify
++      ]
++      ++ lib.optionals (!vendorComposableKernel) [
++        composable_kernel
++      ];
+ 
+     # Fix `setuptools` not being found
+     postBuild = ''
+@@ -369,8 +376,9 @@ buildPythonPackage rec {
+     # Doesn't pick up the environment variable?
+     substituteInPlace third_party/kineto/libkineto/CMakeLists.txt \
+       --replace-fail "\''$ENV{ROCM_SOURCE_DIR}" "${rocmtoolkit_joined}"
+-
+-    # Use composable kernel as dependency, rather than built-in third-party
++  ''
++  # When possible, composable kernel as dependency, rather than built-in third-party
++  + lib.optionalString (rocmSupport && !vendorComposableKernel) ''
+     substituteInPlace aten/src/ATen/CMakeLists.txt \
+       --replace-fail "list(APPEND ATen_HIP_INCLUDE \''${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/composable_kernel/include)" "" \
+       --replace-fail "list(APPEND ATen_HIP_INCLUDE \''${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/composable_kernel/library/include)" ""
+
+From 6b666d67a8b8242784b47c740a3d02813651752e Mon Sep 17 00:00:00 2001
+From: Luna Nova <git@lunnova.dev>
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 09/11] rocmPackages.miopen: note that the broken lfsconfig
+ workaround is really bad
+
+---
+ pkgs/development/rocm-modules/6/miopen/default.nix | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/pkgs/development/rocm-modules/6/miopen/default.nix b/pkgs/development/rocm-modules/6/miopen/default.nix
+index 7cba9949c2c985..1c911621a80a71 100644
+--- a/pkgs/development/rocm-modules/6/miopen/default.nix
++++ b/pkgs/development/rocm-modules/6/miopen/default.nix
+@@ -74,10 +74,10 @@ let
+     fetchSubmodules = true;
+     # WORKAROUND: .lfsconfig is incorrectly set to exclude everything upstream
+     leaveDotGit = true;
++    # FIXME: if someone can reduce the level of awful here that would be really nice
+     postFetch = ''
+       export HOME=$(mktemp -d)
+       cd $out
+-      set -x
+       git remote add origin $url
+       git fetch origin +refs/tags/rocm-${version}:refs/tags/rocm-${version}
+       git clean -fdx
+@@ -86,8 +86,8 @@ let
+       rm .lfsconfig
+       git lfs install
+       git lfs track "*.kdb.bz2"
+-      GIT_TRACE=1 git lfs fetch --include="src/kernels/**"
+-      GIT_TRACE=1 git lfs pull --include="src/kernels/**"
++      git lfs fetch --include="src/kernels/**"
++      git lfs pull --include="src/kernels/**"
+       git lfs checkout
+ 
+       rm -rf .git
+
+From 0cf3e9c2ac4ed7b1e5a54a10e8c59494bc4fceaa Mon Sep 17 00:00:00 2001
+From: Luna Nova <git@lunnova.dev>
+Date: Fri, 12 Sep 2025 21:30:05 -0700
+Subject: [PATCH 10/11] rocmPackages.clr: backport cmake_minimum_required patch
+
+Will be required for CMake 4 bump which is hopefully happening in nixpkgs soon
+---
+ pkgs/development/rocm-modules/6/clr/default.nix | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/pkgs/development/rocm-modules/6/clr/default.nix b/pkgs/development/rocm-modules/6/clr/default.nix
+index 5e4cc50428792c..bf4d99fb6aa78e 100644
+--- a/pkgs/development/rocm-modules/6/clr/default.nix
++++ b/pkgs/development/rocm-modules/6/clr/default.nix
+@@ -188,6 +188,12 @@ stdenv.mkDerivation (finalAttrs: {
+       sha256 = "sha256-nStJ22B/CM0fzQTvYjbHDbQt0GlE8DXxVK+UDU9BAx4=";
+       url = "https://github.com/ROCm/clr/commit/21d764518363d74187deaef2e66c1a127bc5aa64.patch";
+     })
++    (fetchpatch {
++      # CMake 4 compat
++      # [PATCH] SWDEV-509213 - make cmake_minimum_required consistent across clr
++      url = "https://github.com/ROCm/clr/commit/fcaefe97b862afe12aaac0147f1004e6dc595fce.patch";
++      hash = "sha256-hRZXbASbIOOETe+T4mDyyiRWLXd6RDKRieN2ns1w/rs=";
++    })
+   ];
+ 
+   postPatch = ''
+
+From 29c2885bdfb8f144b7c220f83faace3c51af1c3b Mon Sep 17 00:00:00 2001
+From: Luna Nova <git@lunnova.dev>
+Date: Sat, 13 Sep 2025 12:02:31 -0700
+Subject: [PATCH 11/11] llama-cpp: use local target override and don't use
+ -generic arches
+
+---
+ pkgs/by-name/ll/llama-cpp/package.nix | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/ll/llama-cpp/package.nix b/pkgs/by-name/ll/llama-cpp/package.nix
+index c3ae8e1dc0c78e..f47a432532395e 100644
+--- a/pkgs/by-name/ll/llama-cpp/package.nix
++++ b/pkgs/by-name/ll/llama-cpp/package.nix
+@@ -12,7 +12,8 @@
+ 
+   rocmSupport ? config.rocmSupport,
+   rocmPackages ? { },
+-  rocmGpuTargets ? builtins.concatStringsSep ";" rocmPackages.clr.gpuTargets,
++  rocmGpuTargets ?
++    rocmPackages.clr.localGpuTargetsNoGenerics or rocmPackages.clr.gpuTargetsNoGenerics,
+ 
+   openclSupport ? false,
+   clblast,
+@@ -150,7 +151,7 @@ effectiveStdenv.mkDerivation (finalAttrs: {
+   ]
+   ++ optionals rocmSupport [
+     (cmakeFeature "CMAKE_HIP_COMPILER" "${rocmPackages.clr.hipClangPath}/clang++")
+-    (cmakeFeature "CMAKE_HIP_ARCHITECTURES" rocmGpuTargets)
++    (cmakeFeature "CMAKE_HIP_ARCHITECTURES" (builtins.concatStringsSep ";" rocmGpuTargets))
+   ]
+   ++ optionals metalSupport [
+     (cmakeFeature "CMAKE_C_FLAGS" "-D__ARM_FEATURE_DOTPROD=1")

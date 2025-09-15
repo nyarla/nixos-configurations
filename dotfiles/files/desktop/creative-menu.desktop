@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Type=Application
-Version=1.0
-Name=Creative
-Exec=sh -c "ydotool mousemove -a 0 12; ydotool key 56:1 60:1 60:0 56:0"
-Icon=gnome-paint
-Terminal=false

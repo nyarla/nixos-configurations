@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-cd "$HOME/Applications/Programs/Synthesizer V Studio Pro" && nix-shell

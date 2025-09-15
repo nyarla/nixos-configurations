@@ -48,6 +48,5 @@
     gtk-engine-murrine
     gtk_engines
     hicolor-icon-theme
-    kaunas
   ];
 }

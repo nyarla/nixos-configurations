@@ -28,7 +28,6 @@
       "render"
 
       # development
-      "docker"
       "plugdev"
 
       # vmm

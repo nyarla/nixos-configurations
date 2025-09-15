@@ -6,7 +6,6 @@
 }:
 {
   imports = [
-    ../config/audio/daw.nix
     ../config/audio/pipewire.nix
     ../config/cpu/amd.nix
     ../config/desktop/app.nix
@@ -21,13 +20,12 @@
     ../config/graphic/fonts.nix
     ../config/graphic/lodpi.nix
     ../config/hardware/firmware.nix
-    ../config/hardware/weylus.nix
     ../config/i18n/fcitx5.nix
     ../config/i18n/locales.nix
     ../config/keyboard/us.nix
     ../config/keyboard/zinc.nix
     ../config/linux/console.nix
-    ../config/linux/docker.nix
+    ../config/linux/containers.nix
     ../config/linux/filesystem.nix
     ../config/linux/hardware.nix
     ../config/linux/lodpi.nix
@@ -509,9 +507,7 @@
     // (subvolsEx false [
       # for accounts
       "home/nyarla/.cache/nvim"
-      "home/nyarla/.config/audiogridder"
       "home/nyarla/.config/protonfixes"
-      "home/nyarla/.fly"
       "home/nyarla/.local/share/Steam"
       "home/nyarla/.local/share/containers"
       "home/nyarla/.local/share/nvim"
@@ -569,9 +565,7 @@
 
     "/persist/home/nyarla/.cache/appimage-run"
     "/persist/home/nyarla/.cache/nvim"
-    "/persist/home/nyarla/.config/audiogridder"
     "/persist/home/nyarla/.config/protonfixes"
-    "/persist/home/nyarla/.fly"
     "/persist/home/nyarla/.local/share/Steam"
     "/persist/home/nyarla/.local/share/containers"
     "/persist/home/nyarla/.local/share/flatpak"
@@ -640,30 +634,20 @@
 
           # .config
           ".config/Bitwarden"
-          ".config/ChowdhuryDSP"
-          ".config/FamiStudio"
           ".config/GIMP"
-          ".config/Helio"
-          ".config/Jean Pierre Cimalando"
           ".config/Kvantum"
-          ".config/LibreArp"
-          ".config/MuseScore"
           ".config/MusicBrainz"
-          ".config/OpenUtau"
-          ".config/Sononym"
           ".config/Thunar"
           ".config/Valve"
           ".config/Yubico"
           ".config/act"
           ".config/aseprite"
-          ".config/audiogridder"
           ".config/blender"
           ".config/blogsync"
           ".config/calibre"
           ".config/dconf"
           ".config/deadbeef"
           ".config/easytag"
-          ".config/falkTX"
           ".config/fcitx5"
           ".config/flatpak"
           ".config/gh"
@@ -683,24 +667,16 @@
           ".config/simple-scan"
           ".config/syncthing"
           ".config/tmux"
-          ".config/unity3d"
-          ".config/unityhub"
           ".config/vlc"
-          ".config/voicevox"
           ".config/whipper"
           ".config/wivrn"
           ".config/xfce4"
 
           # .local
-          ".local/share/ALCOM"
-          ".local/share/DigitalSuburban"
-          ".local/share/MuseScore"
           ".local/share/Steam"
           ".local/share/TelegramDesktop"
           ".local/share/Trash"
-          ".local/share/VRChatCreatorCompanion"
           ".local/share/applications"
-          ".local/share/com.anatawa12.vrc-get-gui"
           ".local/share/containers"
           ".local/share/fcitx5"
           ".local/share/fonts"
@@ -708,7 +684,6 @@
           ".local/share/libcskk"
           ".local/share/mime"
           ".local/share/nvim"
-          ".local/share/odin2"
           ".local/share/pixelorama"
           ".local/share/remmina"
           ".local/share/vlc"
@@ -719,15 +694,11 @@
           ".local/state/wireplumber"
 
           # application
-          ".BitwigStudio"
           ".android"
-          ".helm"
           ".mozilla"
           ".pki"
           ".steam"
           ".thunderbird"
-          ".vst"
-          ".vst3"
 
           # credentials
           (secure ".gnupg")
@@ -738,12 +709,10 @@
       files = [
         # development
         ".npmrc"
-        ".zynaddsubfx-bank-cache.xml"
 
         # creative
         ".config/kritadisplayrc"
         ".config/kritarc"
-        ".config/snn.conf"
       ];
     };
   };
@@ -880,8 +849,5 @@
 
   # Temporary workaround
   # --------------------
-  nixpkgs.config.permittedInsecurePackages = [
-    "libsoup-2.74.3"
-    "libxml2-2.13.8"
-  ];
+  nixpkgs.config.permittedInsecurePackages = [ ];
 }

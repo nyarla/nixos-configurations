@@ -15,5 +15,6 @@
   home.packages = with pkgs; [
     bitwarden
     thunderbird-bin
+    tdesktop
   ];
 }

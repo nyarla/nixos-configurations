@@ -1,9 +1,7 @@
 { pkgs, config, ... }:
 {
   home.packages = with pkgs; [
-    alcom
     immersed
-    unityhub-shell
   ];
 
   xdg.configFile."openvr/openvrpaths.vrpath".text = ''

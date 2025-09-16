@@ -7,10 +7,11 @@
 
   home.packages = with pkgs; [
     # wayland compositor
-    hyprland
     hypridle
+    hyprland
     hyprlock
     hyprnotify
+    hyprshot
 
     hyprlandPlugins.hyprbars
     hyprlandPlugins.hyprexpo
@@ -24,6 +25,7 @@
     wofi
 
     gyazo-diy
+    libnotify
     libsecret
     mission-center
 

@@ -14,6 +14,25 @@ final: prev: {
     };
   });
 
+  hyprlandPlugins =
+    let
+      src = prev.fetchFromGitHub {
+        owner = "hyprwm";
+        repo = "hyprland-plugins";
+        rev = "5ff379f4e525183cc6766ea95764b52ec97d8966";
+        hash = "sha256-6jAtMjnWq8kty/dpPbIKxIupUG+WAE2AKMIKhxdLYNo=";
+      };
+    in
+    {
+      hyprbars = prev.hyprlandPlugins.hyprbars.overrideAttrs (old: {
+        src = "${src}/${old.pname}";
+      });
+
+      hyprexpo = prev.hyprlandPlugins.hyprexpo.overrideAttrs (old: {
+        src = "${src}/${old.pname}";
+      });
+    };
+
   whipper =
     let
       python3 =

@@ -2,9 +2,7 @@
 {
   imports = [
     ../../config/desktop/desktop-session.nix
-    ../../config/desktop/dunst.nix
     ../../config/desktop/theme.nix
-    ../../config/desktop/ydotoold.nix
   ];
 
   home.packages = with pkgs; [
@@ -12,6 +10,11 @@
     hyprland
     hypridle
     hyprlock
+    hyprnotify
+
+    hyprlandPlugins.hyprbars
+    hyprlandPlugins.hyprexpo
+
     swaylock-effects # TODO: switch to hyprlock
 
     xwayland

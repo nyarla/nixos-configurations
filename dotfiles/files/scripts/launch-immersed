@@ -4,10 +4,5 @@ set -euo pipefail
 
 hyprctl dispatch workspace +1
 
-env \
-  DRI_PRIME=1002:7550! \
-  MESA_VK_DEVICE_SELECT=1002:7550 \
-  AMD_VULKAN_ICD=RADV \
-  VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json \
-  HOME=/persist/home/nyarla \
-  immersed
+amd-run \
+  env HOME=/persist/home/nyarla immersed

@@ -1,74 +1,53 @@
 {
-  runCommand,
   lib,
-  writeShellScript,
+  writeShellScriptBin,
+
   coreutils,
   curl,
-  grim,
   jq,
-  slurp,
+  libnotify,
   xdg-utils,
 }:
-let
-  gyazoScript = writeShellScript "gyazo.sh" ''
-    set -euo pipefail
+writeShellScriptBin "gyazo" ''
+  export PATH=${
+    lib.makeBinPath [
+      coreutils
+      curl
+      jq
+      libnotify
+      xdg-utils
+    ]
+  }:$PATH
 
-    export PATH=${
-      lib.makeBinPath [
-        coreutils
-        curl
-        grim
-        slurp
-        jq
-        xdg-utils
-      ]
-    }:$PATH
+  source $HOME/.config/gyazo/env
 
-    source ~/.config/gyazo/env
+  main() {
+    local fn
+    fn="''${1:-1}"
 
-    fn() {
-      echo /backup/Pictures/Screenshots/$(date +%Y-%m-%dT%H-%M-%S).png
-    }
+    if [[ -z "''${fn}" ]]; then
+      notify-send -u critical -t 5000 "ファイル名が空です" 
+      exit 1
+    fi
 
-    upload() {
-      local file=$1
-      xdg-open $(curl -s \
-        -F access_token=''${ACCESS_TOKEN} \
-        -F imagedata=@$file \
-        -F created_at=$(date +%s) \
-        -F collection_id=''${COLLECTION_ID} \
-        https://upload.gyazo.com/api/upload \
-        | jq -r .permalink_url)
-    }
+    local href
+    href=$(curl -s \
+      -F access_token=''${ACCESS_TOKEN} \
+      -F imagedata=@''${fn} \
+      -F created_at=$(date +%s) \
+      -F collection_id=''${COLLECTION_ID} \
+      https://upload.gyazo.com/api/upload | jq -r .permalink_url)
+    
+    if [[ -z "''${href}" ]]; then
+      notify-send -u critical -t 5000 "アップロードに失敗しました"
+      exit 1
+    else
+      notify-send -u low -t 3000 "アップロード成功！"
+      xdg-open $href &
+    fi
 
-    capture() {
-      local filename=$(fn)
-      slurp | grim -g - -t png $filename
-      upload $filename
-    }
+    exit 0
+  }
 
-    screenshot() {
-      local filename=$(fn)
-      grim -t png $filename
-      upload $filename
-    }
-
-    main() {
-      case "''${1:-}" in
-        capture)
-            capture
-          ;;
-        screenshot)
-          screenshot
-          ;;
-      esac
-    }
-
-    main $@
-  '';
-in
-runCommand "gyazo.sh" { } ''
-  mkdir -p $out/bin/
-  cp ${gyazoScript} $out/bin/gyazo
-  chmod +x $out/bin/gyazo
+  main "''${@:-}" 
 ''

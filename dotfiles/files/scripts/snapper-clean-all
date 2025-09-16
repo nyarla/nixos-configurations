@@ -8,12 +8,11 @@ cleanup-snapshot() {
   cd $path && \ls | xargs -I{} snapper -c $config delete {}
 }
 
-cleanup-snapshot nixos /persist/etc/nixos/.snapshots
-cleanup-snapshot varlib /persist/var/lib/.snapshots
-cleanup-snapshot usrshare /persist/usr/share/.snapshots
-cleanup-snapshot nyarla /persist/home/nyarla/.snapshots
-cleanup-snapshot apps /persist/home/nyarla/Applications/.snapshots
-cleanup-snapshot program /persist/home/nyarla/Programming/.snapshots
+cleanup-snapshot etc-nixos /persist/etc/nixos/.snapshots
+cleanup-snapshot home-nyarla /persist/home/nyarla/.snapshots
+cleanup-snapshot home-nyarla-applications /persist/home/nyarla/Applications/.snapshots
+cleanup-snapshot home-nyarla-programming /persist/home/nyarla/Programming/.snapshots
+cleanup-snapshot var-lib /persist/var/lib/.snapshots
 
 sudo mkdir -p /tmp/btrfs
 sudo mount /dev/mapper/nixos /tmp/btrfs

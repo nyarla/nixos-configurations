@@ -19,28 +19,40 @@
 
       btrfsRWOnly = btrfsOptions ++ btrfsNoExec;
 
-      subvolRW = neededForBoot: path: {
-        "/persist/${path}" = {
-          inherit device;
-          fsType = "btrfs";
-          options = btrfsRWOnly ++ [ "subvol=/persist/${path}" ];
-          inherit neededForBoot;
+      subvol =
+        {
+          device,
+          path,
+          neededForBoot,
+          options,
+        }:
+        {
+          "${path}" = {
+            inherit device;
+            fsType = "btrfs";
+            options = options ++ [ "subvol=${path}" ];
+            inherit neededForBoot;
+          };
         };
-      };
 
-      subvolEx = neededForBoot: path: {
-        "/persist/${path}" = {
-          inherit device;
-          fsType = "btrfs";
-          options = btrfsOptions ++ [ "subvol=/persist/${path}" ];
-          inherit neededForBoot;
-        };
-      };
-
-      subvolsEx =
-        required: paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths (subvolEx required));
-      subvolsRW =
-        required: paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths (subvolRW required));
+      persist =
+        {
+          device,
+          neededForBoot,
+          options,
+          paths,
+        }:
+        lib.attrsets.mergeAttrsList (
+          lib.lists.forEach paths (
+            path:
+            subvol {
+              inherit device;
+              inherit neededForBoot;
+              inherit options;
+              path = "/persist/${path}";
+            }
+          )
+        );
 
       backup = path: dest: {
         "/backup/${path}" = {
@@ -73,16 +85,6 @@
         ];
       };
 
-      "/nix" = {
-        inherit device;
-        fsType = "btrfs";
-        options = btrfsOptions ++ [
-          "subvol=/nix"
-          "noatime"
-        ];
-        neededForBoot = true;
-      };
-
       "/vm/main" = {
         inherit device;
         fsType = "btrfs";
@@ -102,38 +104,55 @@
         neededForBoot = false;
       };
     }
-    // (subvolsRW true [
-      # for boot
-      "etc"
-      "etc/nixos"
-      "var/db"
-      "var/lib"
-      "var/log"
+    // subvol {
+      inherit device;
+      path = "/nix";
+      neededForBoot = true;
+      options = btrfsOptions ++ [ "noatime" ];
+    }
+    // persist {
+      inherit device;
+      neededForBoot = true;
+      options = btrfsRWOnly;
+      paths = [
+        # for boot
+        "etc"
+        "etc/nixos"
+        "var/db"
+        "var/lib"
+        "var/log"
 
-      # for vm
-      "var/lib/libvirt/images"
+        # for vm
+        "var/lib/libvirt/images"
 
-      # for accounts
-      "home/nyarla"
-    ])
-    // (subvolsEx false [
-      "home/nyarla/.cache/appimage-run"
-      "home/nyarla/.local/share/flatpak"
-      "var/lib/flatpak"
-    ])
-    // (subvolsEx false [
-      # for accounts
-      "home/nyarla/.cache/nvim"
-      "home/nyarla/.config/protonfixes"
-      "home/nyarla/.local/share/Steam"
-      "home/nyarla/.local/share/containers"
-      "home/nyarla/.local/share/nvim"
-      "home/nyarla/.local/share/waydroid"
-      "home/nyarla/.mozilla"
-      "home/nyarla/.steam"
-      "home/nyarla/Applications"
-      "home/nyarla/Programming"
-    ])
+        # for accounts
+        "home/nyarla"
+      ];
+    }
+    // persist {
+      inherit device;
+      neededForBoot = false;
+      options = btrfsOptions;
+      paths = [
+        # for flatpak
+        "var/lib/flatpak"
+
+        # for accounts
+        "home/nyarla/.cache/appimage-run"
+        "home/nyarla/.cache/nvim"
+        "home/nyarla/.config/protonfixes"
+        "home/nyarla/.local/share/Steam"
+        "home/nyarla/.local/share/containers"
+        "home/nyarla/.local/share/flatpak"
+        "home/nyarla/.local/share/nvim"
+        "home/nyarla/.local/share/waydroid"
+        "home/nyarla/.mozilla"
+        "home/nyarla/.steam"
+        "home/nyarla/Applications"
+        "home/nyarla/Programming"
+      ];
+    }
+
     // (backups [
       {
         name = "Applications";

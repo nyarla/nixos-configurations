@@ -61,8 +61,7 @@
         };
       };
 
-      backups =
-        paths: lib.attrsets.mergeAttrsList (lib.lists.forEach paths ({ name, dest }: backup name dest));
+      backups = paths: lib.attrsets.concatMapAttrs (path: dest: backup path dest) paths;
     in
     {
       # for boot
@@ -152,41 +151,16 @@
         "home/nyarla/Programming"
       ];
     }
-
-    // (backups [
-      {
-        name = "Applications";
-        dest = "/persist/home/nyarla/Applications";
-      }
-      {
-        name = "Development";
-        dest = "/persist/home/nyarla/Development";
-      }
-      {
-        name = "Documents";
-        dest = "/persist/home/nyarla/Documents";
-      }
-      {
-        name = "NixOS";
-        dest = "/persist/etc/nixos";
-      }
-      {
-        name = "Programming";
-        dest = "/persist/home/nyarla/Programming";
-      }
-      {
-        name = "Sources/DAW";
-        dest = "/persist/home/nyarla/Sources/DAW";
-      }
-      {
-        name = "Sync";
-        dest = "/persist/home/nyarla/Sync/Backup";
-      }
-      {
-        name = "Thunderbird";
-        dest = "/persist/home/nyarla/.thunderbird";
-      }
-    ]);
+    // backups {
+      "Applications" = "/persist/home/nyarla/Applications";
+      "Development" = "/persist/home/nyarla/Development";
+      "Documents" = "/persist/home/nyarla/Documents";
+      "NixOS" = "/persist/etc/nixos";
+      "Programming" = "/persist/home/nyarla/Programming";
+      "Sources/DAW" = "/persist/home/nyarla/Sources/DAW";
+      "Sync" = "/persist/home/nyarla/Sync/Backup";
+      "Thunderbird" = "/persist/home/nyarla/.thunderbird";
+    };
 
   # btrfs settings
   services.btrfs.autoScrub.enable = true;

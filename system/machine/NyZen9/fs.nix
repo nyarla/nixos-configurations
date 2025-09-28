@@ -244,6 +244,7 @@
 
           # .config
           ".config/Bitwarden"
+          ".config/EDRLab.ThoriumReader"
           ".config/GIMP"
           ".config/Kvantum"
           ".config/MusicBrainz"

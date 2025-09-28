@@ -6,6 +6,7 @@
     easytag
     glib.out
     picard
+    thorium-reader
     vlc
   ];
 }

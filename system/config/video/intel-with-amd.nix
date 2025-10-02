@@ -58,15 +58,22 @@
   };
 
   environment.systemPackages =
-    with pkgs;
+    let
+      amd-run = pkgs.amd-run.override { gpuId = "1002:7550"; };
+      unityhub-amd = pkgs.unityhub-amd.override { inherit amd-run; };
+    in
     [
+      amd-run
+      unityhub-amd
+      unityhub-amd.unity-run
+    ]
+    ++ (with pkgs; [
       clinfo
       ddcui
       ddcutil
       igsc
       nvtopPackages.full
-      (amd-run.override { gpuId = "1002:7550"; })
-    ]
+    ])
     ++ (with pkgs.rocmPackages.gfx12; [
       amdsmi
       rocm-smi

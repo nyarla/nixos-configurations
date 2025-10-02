@@ -21,6 +21,7 @@ in
   rocm-shell = require ./rocm-shell { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   thorium-reader = require ./thorium-reader { };
+  unityhub-amd = require ./unityhub-amd { };
   wcwidth-cjk = require ./wcwidh-cjk { };
   xdg-desktop-portal-hypr-remote = require ./xdg-desktop-portal-hypr-remote { };
   xembed-sni-proxy = require ./xembed-sni-proxy { };

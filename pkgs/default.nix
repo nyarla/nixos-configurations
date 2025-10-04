@@ -37,7 +37,9 @@ in
 
   # customized packages
   calibre = prev.calibre.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [ prev.python3Packages.pycrypto ];
+    buildInputs = old.buildInputs ++ [
+      prev.python3Packages.pycrypto
+    ];
     doInstallCheck = false;
   });
 

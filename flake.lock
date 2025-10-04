@@ -165,6 +165,7 @@
         "nixpkgs-lib": "nixpkgs-lib",
         "nixpkgs-xr": "nixpkgs-xr",
         "systems": "systems",
+        "waybar": "waybar",
         "wayland": "wayland"
       }
     },
@@ -201,6 +202,29 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "waybar": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759321777,
+        "narHash": "sha256-0ga4VYnrCoCBq9ofMemlNbhVP5XirltvsxlbWbvP94s=",
+        "owner": "Alexays",
+        "repo": "Waybar",
+        "rev": "18a9835b7cf03ce116c0da03939e1cfef7796f7e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Alexays",
+        "repo": "Waybar",
         "type": "github"
       }
     },

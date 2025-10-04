@@ -95,7 +95,7 @@
       EDITOR = "nvim";
 
       # development
-      GOPATH = "$HOME/Applications/Development/go";
+      GOPATH = "/home/nyarla/Applications/Development/go";
       FAKE_RELEASE = 1;
 
       # nixpkgs

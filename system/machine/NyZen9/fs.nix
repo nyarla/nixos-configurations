@@ -355,7 +355,7 @@
     in
     snapshots {
       data-music = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Music";
-      data-calibre = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Music";
+      data-calibre = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre";
 
       etc-nixos = "/persist/etc/nixos";
 

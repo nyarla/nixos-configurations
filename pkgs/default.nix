@@ -6,6 +6,7 @@ in
 {
   # custom packages
   amd-run = require ./amd-run { gpuId = null; };
+  calibre = require ./calibre { inherit (prev) calibre; };
   cskk = require ./cskk { };
   deadbeef-fb = require ./deadbeef-fb { };
   fluent-kde = require ./fluent-kde { };
@@ -36,13 +37,6 @@ in
   };
 
   # customized packages
-  calibre = prev.calibre.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [
-      prev.python3Packages.pycrypto
-    ];
-    doInstallCheck = false;
-  });
-
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
   steam = prev.steam.override (

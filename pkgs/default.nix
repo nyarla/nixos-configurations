@@ -45,8 +45,6 @@ in
 
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  ollama-rocm = prev.ollama-rocm.override { rocmPackages = prev.rocmPackages.gfx12; };
-
   steam = prev.steam.override (
     {
       extraLibraries ? _: [ ],

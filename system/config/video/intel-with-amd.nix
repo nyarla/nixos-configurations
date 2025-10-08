@@ -24,18 +24,13 @@
         libvdpau-va-gl
       ];
     };
-
-    amdgpu.amdvlk = {
-      enable = true;
-      support32Bit.enable = true;
-    };
   };
 
   systemd.tmpfiles.rules =
     let
       rocmEnv = pkgs.symlinkJoin {
         name = "rocm-combined";
-        paths = with pkgs.rocmPackages.gfx12; [
+        paths = with pkgs.rocmPackages; [
           clr
           hipblas
           rocblas

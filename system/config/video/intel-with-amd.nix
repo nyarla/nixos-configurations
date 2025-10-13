@@ -30,7 +30,7 @@
     let
       rocmEnv = pkgs.symlinkJoin {
         name = "rocm-combined";
-        paths = with pkgs.rocmPackages; [
+        paths = with pkgs.rocmPackages.gfx12; [
           clr
           hipblas
           rocblas
@@ -67,7 +67,10 @@
       ddcui
       ddcutil
       igsc
-      nvtopPackages.full
+      (nvtopPackages.full.override {
+        amd = true;
+        intel = true;
+      })
     ])
     ++ (with pkgs.rocmPackages.gfx12; [
       amdsmi
@@ -76,7 +79,7 @@
 
   services.ollama = {
     acceleration = "rocm";
-    package = pkgs.ollama-rocm;
+    package = pkgs.ollama-rocm.override { rocmPackages = pkgs.rocmPackages.gfx12; };
     environmentVariables = {
       "ROCM_PATH" = "/opt/rocm";
       "HIP_VISIBLE_DEVICES" = "0";

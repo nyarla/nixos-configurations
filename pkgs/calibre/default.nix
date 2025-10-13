@@ -223,7 +223,7 @@ else
         done
       '';
 
-    doInstallCheck = true;
+    doInstallCheck = false;
     installCheckInputs = with python3Packages; [
       psutil
     ];

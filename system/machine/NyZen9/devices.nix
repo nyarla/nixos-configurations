@@ -78,6 +78,8 @@
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Calibre
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Music
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Pictures
+          backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 eBooks
+
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Sources/AI
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Sources/Games
           backup-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7 Sources/ISO
@@ -117,8 +119,16 @@
             return 0
           }
 
+          unbind-if-exists Archives
           unbind-if-exists Calibre
           unbind-if-exists Music
+          unbind-if-exists Pictures
+          unbind-if-exists eBooks
+
+          unbind-if-exists Sources/AI
+          unbind-if-exists Sources/Games
+          unbind-if-exists Sources/ISO
+          unbind-if-exists Sources/Learn
 
           unmount-if-exists 14887bd8-3e3c-4675-9e81-9027a050cdf7
 

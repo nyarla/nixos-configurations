@@ -169,6 +169,7 @@
 
     "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre"
     "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Music"
+    "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/eBooks"
 
     "/persist/etc"
     "/persist/etc/nixos"
@@ -356,6 +357,7 @@
     snapshots {
       data-music = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Music";
       data-calibre = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre";
+      data-ebooks = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/eBooks";
 
       etc-nixos = "/persist/etc/nixos";
 

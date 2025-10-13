@@ -142,8 +142,6 @@ in
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
-      ovmf.enable = true;
-      ovmf.packages = [ pkgs.OVMFFull.fd ];
 
       verbatimConfig = ''
         user = "root"
@@ -236,6 +234,18 @@ in
 
       Sources = {
         path = "/persist/home/nyarla/Sources/DAW";
+        browsable = "yes";
+        "create mask" = "0774";
+        "force create mask" = "0774";
+        "directory mask" = "0755";
+        "force group" = "users";
+        "force user" = "nyarla";
+        "guest ok" = "false";
+        "read only" = "no";
+      };
+
+      Sync = {
+        path = "/persist/home/nyarla/Sync/Backup/VR";
         browsable = "yes";
         "create mask" = "0774";
         "force create mask" = "0774";

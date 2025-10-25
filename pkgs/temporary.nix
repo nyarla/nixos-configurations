@@ -10,7 +10,11 @@ final: prev: {
     '';
   });
 
-  wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn;
+  wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      sed -i 's/Gui QuickControls2 Widgets Network/Gui QuickControls2 Widgets Network GuiPrivate QmlPrivate/' CMakeLists.txt
+    '';
+  });
 
   voicevox-engine = prev.voicevox-engine.override { python3Packages = prev.python312Packages; };
   waydroid = prev.waydroid.override { python3Packages = prev.python312Packages; };

@@ -77,9 +77,7 @@
             hostname = "nixos";
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
-            patches = [
-              ./patches/reduce-build-storage-hipblaslt.patch
-            ];
+            patches = [ ];
             overlays = [
               wayland.overlay
               waybar.overlays.default

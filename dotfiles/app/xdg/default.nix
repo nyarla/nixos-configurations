@@ -1,5 +1,17 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
+  xdg.desktopEntries = {
+    thorium-reader = {
+      name = "Thorium Reader";
+      genericName = "ePub/PDF Reader";
+      exec = "thorium-reader %U";
+      terminal = false;
+      mimeType = [
+        "application/pdf"
+        "application/epub+zip"
+      ];
+    };
+  };
   xdg.mimeApps = {
     enable = true;
     defaultApplications =
@@ -21,6 +33,11 @@
           # schema
           "x-scheme-handler/http"
           "x-scheme-handler/https"
+        ];
+
+        # ebooks
+        "thorium-reader.desktop" = [
+          "application/epub+zip"
         ];
 
         # files

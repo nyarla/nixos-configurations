@@ -15,7 +15,7 @@
         "${config.xdg.dataHome}/Steam/logs"
       ],
       "runtime": [
-        "${pkgs.opencomposite}/lib/opencomposite"
+        "${pkgs.xrizer}/lib/xrizer"
       ],
       "version": 1
     }

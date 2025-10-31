@@ -30,12 +30,24 @@ _: {
 
           # ssh
           22
+
+          # NetBIOS
+          137
+          138
+          139
+          445
         ];
 
         allowedUDPPorts = [
           # http
           80
           443
+
+          # NetBIOS
+          137
+          138
+          139
+          445
         ];
       };
 

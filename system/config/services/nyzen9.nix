@@ -55,6 +55,7 @@
 
   # calibre
   systemd.services.calibre-web.after = [ "automount-encrypted-usb-device.service" ];
+  systemd.services.calibre-web.environment.CACHE_DIR = lib.mkForce "/home/nyarla/.cache/calibre-web";
   services.calibre-web = {
     enable = true;
     user = "nyarla";
@@ -110,75 +111,78 @@
   );
   services.caddy = {
     enable = true;
-    virtualHosts = {
-      # for private web services
-      "ebooks.p.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:40001
-        '';
-      };
-      "librechat.p.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:40010
-        '';
-      };
+    virtualHosts =
+      let
+        devhost = domain: {
+          "${domain}" = {
+            listenAddresses = [ "100.103.65.77" ];
+            useACMEHost = "localhost.thotep.net";
+            logFormat = ''
+              output stdout
+            '';
+            extraConfig = ''
+              reverse_proxy 127.0.0.1:21515
+            '';
+          };
+        };
 
-      "freshrss.p.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-      };
-      # for development
-      "gts.f.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:50000
-        '';
-      };
+        devhosts = domains: lib.attrsets.mergeAttrsList (lib.lists.forEach domains devhost);
+      in
+      {
+        # for private web services
+        "calibre.p.localhost.thotep.net" = {
+          listenAddresses = [ "100.103.65.77" ];
+          useACMEHost = "localhost.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8085
+          '';
+        };
+        "ebooks.p.localhost.thotep.net" = {
+          listenAddresses = [ "100.103.65.77" ];
+          useACMEHost = "localhost.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:40001
+          '';
+        };
+        "librechat.p.localhost.thotep.net" = {
+          listenAddresses = [ "100.103.65.77" ];
+          useACMEHost = "localhost.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:40010
+          '';
+        };
+        "contents.p.localhost.thotep.net" = {
+          listenAddresses = [ "100.103.65.77" ];
+          useACMEHost = "localhost.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:40020
+          '';
+        };
 
-      "masto.f.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          handle /api/v1/streaming* {
-            reverse_proxy 127.0.0.1:50021
-          }
-
-          handle {
-            reverse_proxy 127.0.0.1:50020
-          }
-        '';
-      };
-
-      "misskey.f.localhost.thotep.net" = {
-        listenAddresses = [ "100.103.65.77" ];
-        useACMEHost = "localhost.thotep.net";
-        logFormat = ''
-          output stdout
-        '';
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:50030
-        '';
-      };
-    };
+        "freshrss.p.localhost.thotep.net" = {
+          listenAddresses = [ "100.103.65.77" ];
+          useACMEHost = "localhost.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+        };
+      }
+      // devhosts [
+        "gts.f.localhost.thotep.net"
+        "misskey.f.localhost.thotep.net"
+        "mstdn.f.localhost.thotep.net"
+      ];
   };
 }

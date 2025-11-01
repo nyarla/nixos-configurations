@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    aria
+    aria2
     bind
     curlFull
     rclone

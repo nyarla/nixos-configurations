@@ -30,8 +30,10 @@ _: {
   # -----------
 
   # git
-  programs.git.userName = "nyarla";
-  programs.git.userEmail = "nyarla@kalaclista.com";
+  programs.git.settings.user = {
+    name = "nyarla";
+    email = "nyarla@kalaclista.com";
+  };
 
   # keychain (ssh)
   programs.keychain.keys = [ "id_ed25519" ];

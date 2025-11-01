@@ -13,8 +13,8 @@
   };
 
   home.packages = with pkgs; [
-    bitwarden
+    bitwarden-desktop
+    telegram-desktop
     thunderbird-bin
-    tdesktop
   ];
 }

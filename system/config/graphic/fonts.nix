@@ -5,8 +5,7 @@
       # basical fonts
       noto-fonts
       noto-fonts-jp
-      noto-fonts-extra
-      noto-fonts-emoji
+      noto-fonts-color-emoji
 
       # monospace
       hackgen-font

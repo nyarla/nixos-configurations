@@ -4,16 +4,16 @@
     enable = true;
     lfs.enable = true;
     package = pkgs.gitFull;
-    aliases = {
-      ci = "commit";
-      cleanup = "!git branch --merged | grep -v main | grep -v master | xargs -I{} git branch -d {}";
-      co = "checkout";
-      force-push = "push -f --force-with-lease --force-if-includes";
-      rr = "restore";
-      rs = "restore --staged";
-      st = "status";
-    };
-    extraConfig = {
+    settings = {
+      alias = {
+        ci = "commit";
+        cleanup = "!git branch --merged | grep -v main | grep -v master | xargs -I{} git branch -d {}";
+        co = "checkout";
+        force-push = "push -f --force-with-lease --force-if-includes";
+        rr = "restore";
+        rs = "restore --staged";
+        st = "status";
+      };
       color = {
         ui = true;
       };

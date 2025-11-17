@@ -4,17 +4,23 @@
   runCommand,
   fetchFromGitHub,
 
-  flutter329,
+  flutter335,
   rustPlatform,
   cargo,
   yq,
+
+  libepoxy,
+  mdk-sdk,
 }:
 let
+  pname = "aria";
+  version = "v1.4.0-beta.1";
+
   source = fetchFromGitHub {
     owner = "poppingmoon";
-    repo = "aria";
-    rev = "7a6ec27c9c2f1a5bef0cc4ebff67833c76908478";
-    hash = "sha256-akIAJmeb4jiYhRCmf3XDrS8h8R3wdfOcpMJ5a9+XB3U=";
+    repo = pname;
+    rev = version;
+    hash = "sha256-42yTf6kZMLZwL1aQ0/CYeaYjEtK8rmt4x9vtNhXMCe8=";
     fetchSubmodules = true;
   };
 
@@ -26,11 +32,33 @@ let
     cd $out
     patch -p1 -i ${./rust_lib_aria.patch}
   '';
+
+  customSourceBuilders = {
+    fvp =
+      { version, src, ... }:
+      stdenv.mkDerivation rec {
+        pname = "fvp";
+        inherit version src;
+        inherit (src) passthru;
+
+        postPatch = ''
+          sed -i 's|.*libc++.so.1.*|${mdk-sdk}/lib/libc++.so.1|' ./linux/CMakeLists.txt
+          substituteInPlace ./linux/CMakeLists.txt \
+            --replace-fail "fvp_setup_deps()" "include(${mdk-sdk}/lib/cmake/FindMDK.cmake)"
+        '';
+
+        installPhase = ''
+          runHook preInstall
+
+          cp -r . $out
+
+          runHook postInstall
+        '';
+      };
+  };
 in
-flutter329.buildFlutterApplication rec {
-  pname = "aria";
-  version = "v1.0.0-beta.9";
-  inherit src;
+flutter335.buildFlutterApplication rec {
+  inherit pname version src;
 
   pubspecLock =
     let
@@ -40,19 +68,22 @@ flutter329.buildFlutterApplication rec {
     in
     lib.importJSON "${lockfile}";
 
+  inherit customSourceBuilders;
+
   gitHashes = {
-    "flutter_apns_only" = "sha256-5KlICoKqekSE4LCzd1MP+o8Ezq0xLZmzeAQZExXBalM=";
-    "flutter_highlighting" = "sha256-YtCAFbFrSwjW4WRqMXWty60Q4GFVX0OTIBqn2GsLRj4=";
-    "flutter_html" = "sha256-/BrcXZ6im/Sb3UVbdlfjYV3R3lOzKdmoAWY4ikgoVRg=;";
-    "highlighting" = "sha256-IedjKNGFBSbU4vu5x8GI28WL4uJ8B/kvw6iGkX2+uGg=";
-    "image_compression" = "sha256-9RBjKId8TYdx3O0wT2We8FbCiJYkqJlyBY7TYDUxsMg=";
-    "material_off_icons" = "sha256-jMO1abOm1YgFAAbFaTFgTjrmQGW6d7Z1J4o2wTynto4=";
-    "mfm_parser" = "sha256-GJUTuX3cPYe3Weo5VzYVXJuvc0EmrLmxCGgStYfH1lk=";
-    "misskey_dart" = "sha256-SXHpV8ZeKAojgongzIyf28Yj2aK7s1j1cQoJ9lmojp8=";
-    "receive_sharing_intent" = "sha256-8D5ZENARPZ7FGrdIErxOoV3Ao35/XoQ2tleegI42ZUY=";
-    "tinycolor2" = "sha256-RGjhuX6487TJ2ofNdJS1FCMl6ciKU0qkGKg4yfkPE+w=";
-    "twemoji_v2" = "sha256-Gi9PIMpw4NWkk357X+iZPUhzIKMDg5WdzTPHvJDBzSg=";
-    "webcrypto" = "sha256-KXPJk/Da9LiM0q8URqGz5zAioHpJALlqbUNeZLNrNMY=";
+    flutter_apns_only = "sha256-5KlICoKqekSE4LCzd1MP+o8Ezq0xLZmzeAQZExXBalM=";
+    flutter_cache_manager = "sha256-4sMjeSMOsEicIVLdY+evnl0HbvMcm4PLG8JL4e4yxBE=";
+    flutter_highlighting = "sha256-5t4hXvqkhwohTuFoeVycwb9HKZDDug+HjkGPeItVrTk=";
+    highlighting = "sha256-r2rMvgHt312F64dy4aIRr+eD9Q0sJ7eGe6DGP57t50M=";
+    image_compression = "sha256-9RBjKId8TYdx3O0wT2We8FbCiJYkqJlyBY7TYDUxsMg=";
+    material_off_icons = "sha256-jMO1abOm1YgFAAbFaTFgTjrmQGW6d7Z1J4o2wTynto4=";
+    mfm_parser = "sha256-ntDalOugbrtRiKIpbE7JY2+QlmnmTqGwCIvm3l2EiAY=";
+    misskey_dart = "sha256-X7TsVFyktcVTVQj6Ls8qPxjhm/Ufuq9EbYnU8VD1JiM=";
+    receive_sharing_intent = "sha256-8D5ZENARPZ7FGrdIErxOoV3Ao35/XoQ2tleegI42ZUY=";
+    tinycolor2 = "sha256-RGjhuX6487TJ2ofNdJS1FCMl6ciKU0qkGKg4yfkPE+w=";
+    twemoji_v2 = "sha256-5Z0tUfrRRN9/vXJRNXt8IZaKMFYFXTnvAvy3lo5M3wQ=";
+    unifiedpush_android = "sha256-n7G0r2TIIpp1E0bC/FGl95fTAxtOf1K8fjCXEK5fndo=";
+    webcrypto = "sha256-Bjm3ouci5W636hiZthMEvxoImqf3L4ZGzkeAIiZJhHE=";
   };
 
   targetFlutterPlatform = "linux";
@@ -61,7 +92,7 @@ flutter329.buildFlutterApplication rec {
   cargoDeps = rustPlatform.importCargoLock {
     lockFile = src + /rust/Cargo.lock;
     outputHashes = {
-      "aiscript-0.1.0" = "sha256-4OGaYbMlQn/Ejh8Ff2uhJbHTkf85CwoGOPdr9m5/B0U=";
+      "aiscript-0.1.0" = "sha256-GJccX0YHBpvLL0YElQIaJ6ooIIvKRIA426OlJeHrrN4=";
     };
   };
 
@@ -76,6 +107,12 @@ flutter329.buildFlutterApplication rec {
     mv ./target/*/release/librust_lib_aria.* ./target/release/
     cd ..
   '';
+
+  CXXFLAGS = [ "-Wno-deprecated-literal-operator" ];
+
+  buildInputs = [
+    libepoxy.dev
+  ];
 
   nativeBuildInputs = [
     cargo

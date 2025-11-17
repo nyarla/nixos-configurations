@@ -294,6 +294,7 @@
           ".local/share/VRChatCreatorCompanion"
           ".local/share/applications"
           ".local/share/com.anatawa12.vrc-get-gui"
+          ".local/share/com.poppingmoon.aria"
           ".local/share/containers"
           ".local/share/fcitx5"
           ".local/share/fonts"

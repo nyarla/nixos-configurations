@@ -6,6 +6,7 @@ in
 {
   # custom packages
   amd-run = require ./amd-run { gpuId = null; };
+  aria-misskey = require ./aria-misskey { };
   calibre = require ./calibre { inherit (prev) calibre; };
   cskk = require ./cskk { };
   deadbeef-fb = require ./deadbeef-fb { };

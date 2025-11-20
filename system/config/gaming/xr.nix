@@ -24,16 +24,13 @@
     config = {
       enable = true;
       json = {
-        bitrate = 4096000000;
+        bitrate = 50000000;
         scale = 1;
+        tcp-only = true;
         encoders = [
           {
             encoder = "vaapi";
             codec = "h265";
-            width = 1.0;
-            height = 1.0;
-            offset_x = 0.0;
-            offset_y = 0.0;
           }
         ];
       };

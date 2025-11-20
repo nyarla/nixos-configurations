@@ -55,6 +55,13 @@ _: {
         allowedTCPPorts = [
           # syncthing
           22000
+
+          # wivrn
+          9757
+
+          # steam link
+          27036
+          27037
         ];
 
         allowedUDPPorts = [
@@ -65,6 +72,16 @@ _: {
           # syncthing
           22000
           21027
+
+          # wivrn
+          5353
+          9757
+
+          # steam link
+          10400
+          10401
+          27031
+          27036
         ];
       };
 

@@ -84,6 +84,14 @@ unityhub.overrideAttrs (old: rec {
         # Unity Bug Reporter specific dependencies
         xorg.libICE
         xorg.libSM
+
+        # fonts
+        noto-fonts
+        noto-fonts-jp
+        noto-fonts-color-emoji
+        hackgen-font
+        nerd-fonts.hack
+        dejavu_fonts
       ];
   };
 

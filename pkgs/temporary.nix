@@ -1,5 +1,7 @@
-{ nixpkgs }:
+{ nixpkgs, stable, ... }:
 final: prev: {
+  inherit (stable.legacyPackages.x86_64-linux.pkgs) deadbeef ddcutil ddcui;
+
   bristol = prev.bristol.overrideAttrs (_: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });

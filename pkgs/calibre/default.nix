@@ -39,16 +39,16 @@
   calibre,
 }:
 
-if calibre.version != "8.13.0" then
+if calibre.version != "8.14.0" then
   abort "calibre is updated on upstream: ${calibre.version}"
 else
   stdenv.mkDerivation (finalAttrs: {
     pname = "calibre";
-    version = "8.13.0";
+    version = "8.14.0";
 
     src = fetchurl {
       url = "https://download.calibre-ebook.com/${finalAttrs.version}/calibre-${finalAttrs.version}.tar.xz";
-      hash = "sha256-31CFoVkXXks1NdePNOvFklfJFT36kmLL4vsgDnTaXyQ=";
+      hash = "sha256-97kkjzjbrdmiWpNaz9nSt6BbgVvczsxunLrKVJvqxVQ=";
     };
 
     patches =

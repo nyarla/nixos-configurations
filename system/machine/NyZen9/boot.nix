@@ -33,7 +33,7 @@
   ];
 
   # kernel configuration
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ahci"

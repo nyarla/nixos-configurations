@@ -15,6 +15,7 @@
     lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
 
     nixpkgs.url = "github:NixOS/nixpkgs/master";
+    stable.url = "github:NixOS/nixpkgs/nixos-22.05";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +40,7 @@
   outputs =
     {
       nixpkgs,
+      stable,
       home-manager,
       wayland,
       impermanence,
@@ -46,12 +48,12 @@
       waybar,
       ...
     }:
-    {
+    rec {
       legacyPackages.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.extend (
         final: prev:
         prev
         // (import ./pkgs/default.nix { inherit nixpkgs; } final prev)
-        // (import ./pkgs/temporary.nix { inherit nixpkgs; } final prev)
+        // (import ./pkgs/temporary.nix { inherit nixpkgs stable; } final prev)
       );
 
       ## test
@@ -81,7 +83,7 @@
             overlays = [
               wayland.overlay
               waybar.overlays.default
-              (import ./pkgs/temporary.nix { inherit nixpkgs; })
+              (import ./pkgs/temporary.nix { inherit nixpkgs stable; })
               (import ./pkgs/default.nix { inherit nixpkgs; })
             ];
 

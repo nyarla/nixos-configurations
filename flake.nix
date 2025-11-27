@@ -15,7 +15,7 @@
     lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
 
     nixpkgs.url = "github:NixOS/nixpkgs/master";
-    stable.url = "github:NixOS/nixpkgs/nixos-22.05";
+    stable.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

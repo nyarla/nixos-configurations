@@ -14,7 +14,6 @@
 
   home.packages = with pkgs; [
     aria-misskey
-    bitwarden-desktop
     telegram-desktop
     thunderbird-bin
   ];

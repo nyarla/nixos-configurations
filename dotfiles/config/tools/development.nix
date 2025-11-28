@@ -33,6 +33,9 @@
     # vcs
     git-lfs
 
+    # linter
+    ghalint
+
     # misc
     openssl
   ];

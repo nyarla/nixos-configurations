@@ -12,6 +12,7 @@ in
   deadbeef-fb = require ./deadbeef-fb { };
   fluent-kde = require ./fluent-kde { };
   galendae = require ./galendae { };
+  ghalint = require ./ghalint { };
   glibc-locales-eaw = require ./glibc-locales-eaw { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };

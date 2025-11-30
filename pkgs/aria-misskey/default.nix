@@ -4,7 +4,7 @@
   runCommand,
   fetchFromGitHub,
 
-  flutter335,
+  flutter338,
   rustPlatform,
   cargo,
   yq,
@@ -14,13 +14,13 @@
 }:
 let
   pname = "aria";
-  version = "v1.4.0-beta.1";
+  version = "v1.4.0-beta.2";
 
   source = fetchFromGitHub {
     owner = "poppingmoon";
     repo = pname;
     rev = version;
-    hash = "sha256-42yTf6kZMLZwL1aQ0/CYeaYjEtK8rmt4x9vtNhXMCe8=";
+    hash = "sha256-tdLrxWf+0EKfLLB7ll0p0oXUI3PvtV9Eo3+Atl+tlJw=";
     fetchSubmodules = true;
   };
 
@@ -57,7 +57,7 @@ let
       };
   };
 in
-flutter335.buildFlutterApplication rec {
+flutter338.buildFlutterApplication rec {
   inherit pname version src;
 
   pubspecLock =
@@ -74,16 +74,17 @@ flutter335.buildFlutterApplication rec {
     flutter_apns_only = "sha256-5KlICoKqekSE4LCzd1MP+o8Ezq0xLZmzeAQZExXBalM=";
     flutter_cache_manager = "sha256-4sMjeSMOsEicIVLdY+evnl0HbvMcm4PLG8JL4e4yxBE=";
     flutter_highlighting = "sha256-5t4hXvqkhwohTuFoeVycwb9HKZDDug+HjkGPeItVrTk=";
+    fvp = "sha256-PgxJVEr0oOtuP3xf0ybw3wyIpzz8zKGt3ASl1psp+1Y=";
     highlighting = "sha256-r2rMvgHt312F64dy4aIRr+eD9Q0sJ7eGe6DGP57t50M=";
     image_compression = "sha256-9RBjKId8TYdx3O0wT2We8FbCiJYkqJlyBY7TYDUxsMg=";
     material_off_icons = "sha256-jMO1abOm1YgFAAbFaTFgTjrmQGW6d7Z1J4o2wTynto4=";
-    mfm_parser = "sha256-ntDalOugbrtRiKIpbE7JY2+QlmnmTqGwCIvm3l2EiAY=";
-    misskey_dart = "sha256-X7TsVFyktcVTVQj6Ls8qPxjhm/Ufuq9EbYnU8VD1JiM=";
+    mfm_parser = "sha256-fwhKTPbuuEtimWhtUxsDNqHb0TDBqjdsNQN0RIq7Rq0=";
+    misskey_dart = "sha256-npX0jI4x7E9u1X5R4qRxRyAMReIhmRG2vqtnB4b/fP8=";
     receive_sharing_intent = "sha256-8D5ZENARPZ7FGrdIErxOoV3Ao35/XoQ2tleegI42ZUY=";
     tinycolor2 = "sha256-RGjhuX6487TJ2ofNdJS1FCMl6ciKU0qkGKg4yfkPE+w=";
-    twemoji_v2 = "sha256-5Z0tUfrRRN9/vXJRNXt8IZaKMFYFXTnvAvy3lo5M3wQ=";
-    unifiedpush_android = "sha256-n7G0r2TIIpp1E0bC/FGl95fTAxtOf1K8fjCXEK5fndo=";
-    webcrypto = "sha256-Bjm3ouci5W636hiZthMEvxoImqf3L4ZGzkeAIiZJhHE=";
+    twemoji_v2 = "sha256-liX5FrM5lgJUXo6HfgIgiY4MnnvCNRYIY7nOTkrSt6k=";
+    unifiedpush_android = "sha256-NDnQYBAjQC+fI3a9sdqmr/4Er+nGtG3caCZM6C1cXAk=";
+    webcrypto = "sha256-AELwdBRSBcjHNlprlFXoP5rKOG6J5PG3cwTa+gZps6U=";
   };
 
   targetFlutterPlatform = "linux";

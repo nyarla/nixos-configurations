@@ -66,6 +66,15 @@ in
   });
 
   # custom wine-related packages
+  carla-with-wine = require ./carla {
+    wine = prev.wineWowPackages.yabridge;
+  };
+
+  wine-vst-run = require ./wine-run {
+    pname = "wine-vst";
+    paths = prev.lib.makeBinPath [ prev.wineWowPackages.yabridge ];
+  };
+
   wine-staging-run = require ./wine-run {
     pname = "wine-staging";
     paths = prev.lib.makeBinPath [ prev.wineWowPackages.stagingFull ];
@@ -76,8 +85,8 @@ in
     version = "git";
     src = prev.fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "5eed63521781ffc2f0c4bbee7ec9e215b13a1243";
-      hash = "sha256-thEL36C2I/l4R5YAyfVg9H3FttsslVRK06Y8rPg+7Do=";
+      rev = "533f41704766765cfb3706fb2aa197acbb05df32";
+      hash = "sha256-Bt5wo7zEAN9Mh9dwbGPsSW8pt1ruBrn0Br9BdprtIRY=";
     };
   });
 

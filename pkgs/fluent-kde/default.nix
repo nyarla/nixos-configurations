@@ -8,8 +8,8 @@ stdenvNoCC.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "vinceliuice";
     repo = "Fluent-kde";
-    rev = "9d6b7d4733707c38f72e8a614528f1df591419f3";
-    hash = "sha256-eRAM4f2scGLSDNljI3qjyn5XF7zjrsp8ArIGswNyimY=";
+    rev = "44794f29c89de994b0179aebabd2f5776c90d236";
+    hash = "sha256-Ejr2wDs3tr36YN2mWSd9ZKp5e6gH/whcuhauN/2Y15I=";
   };
 
   installPhase = ''

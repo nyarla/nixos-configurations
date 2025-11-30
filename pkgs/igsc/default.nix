@@ -8,12 +8,12 @@
 let
   metee = stdenv.mkDerivation rec {
     pname = "metee";
-    version = "6.0.2";
+    version = "6.1.0";
     src = fetchFromGitHub {
       owner = "intel";
       repo = "metee";
-      rev = "93784f62070b2bc4e84b51e23c9add61f7600444";
-      hash = "sha256-eQpw0VdO+JGtgW4FGduoxY0Gji4hFPSONcEzDRcgWGU=";
+      rev = version;
+      hash = "sha256-ybTi4pFZAkoO6FAyUOLK+ZbTQb7uwu/sqhYxo06SE9A=";
     };
 
     nativeBuildInputs = [

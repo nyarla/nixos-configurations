@@ -1,7 +1,9 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    winetricks
+    carla-with-wine
     wine-staging-run
+    wine-vst-run
+    winetricks
   ];
 }

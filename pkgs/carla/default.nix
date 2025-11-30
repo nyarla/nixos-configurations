@@ -20,32 +20,16 @@ let
   mcfgthreadsW64 = mingwW64.windows.mcfgthreads.overrideAttrs (_: {
     dontDisableStatic = true;
   });
-
-  # temporary workaround for fix to build error of pyliblo3
-  python3Packages =
-    (python312.override {
-      packageOverrides = _: prev: {
-        pyliblo3 = prev.pyliblo3.overrideAttrs (_: rec {
-          patches = [
-            (fetchpatch {
-              url = "https://patch-diff.githubusercontent.com/raw/gesellkammer/pyliblo3/pull/15.patch";
-              sha256 = "1mir24mzfmmrha5qf08hp7d2g1f47ykgr59j2ybjwvyy7fd2jmg0";
-            })
-          ];
-        });
-      };
-    }).pkgs;
 in
 (carla.override {
   stdenv = multiStdenv;
-  inherit python3Packages;
 }).overrideAttrs
   (old: rec {
-    version = "2025-08-02"; # keep same version of ildaeil
+    version = "2025-10-09"; # keep same version of ildaeil
     src = fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "12bc40fd6c9c5b36481c7df55086b27ba9ae8a80";
-      hash = "sha256-CXfL67k02jMarc89mj6fggPvIJo4ZoQvUx7NqDWJkh4=";
+      rev = "1d8dcb5aab5e0c30352e9f928ce3e40cbc86a439";
+      hash = "sha256-jLEwzp2mpHKXwu8zvz7eNPTNoH5UdhGt1lB10/YLCcg=";
       fetchSubmodules = true;
     };
 

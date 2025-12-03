@@ -60,9 +60,9 @@ in
 
   tmux = prev.tmux.overrideAttrs (_: {
     preConfigure = ''
-      cp ${../patches/utf8_force_wide.h} utf8_force_wide.h
+      cp ${../patches/tmux-3.6-utf8.h} utf8_default_width_cache.h
     '';
-    patches = [ ../patches/tmux3.5a-utf8.patch ];
+    patches = [ ../patches/tmux-3.6-utf8.patch ];
   });
 
   # custom wine-related packages

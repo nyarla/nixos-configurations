@@ -127,14 +127,6 @@
             ];
           };
         };
-        "90-pacmd" = {
-          "pulse.cmd" = [
-            {
-              cmd = "load-module";
-              args = "module-native-protocol-tcp listen=192.168.122.1";
-            }
-          ];
-        };
       };
     };
   };

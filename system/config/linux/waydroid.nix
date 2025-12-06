@@ -1,7 +1,8 @@
 { lib, pkgs, ... }:
 {
-  virtualisation = {
-    waydroid.enable = true;
+  virtualisation.waydroid = {
+    enable = true;
+    package = pkgs.waydroid-nftables;
   };
 
   environment.etc."gbinder.d/waydroid.conf".source = lib.mkForce (

@@ -25,7 +25,6 @@
 
     # editor
     bun
-    devenv
     editorconfig-core-c
     nodejs
     nvim-run

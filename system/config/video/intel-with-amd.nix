@@ -72,14 +72,13 @@
         intel = true;
       })
     ])
-    ++ (with pkgs.rocmPackages.gfx12; [
+    ++ (with pkgs.rocmPackages; [
       amdsmi
       rocm-smi
     ]);
 
   services.ollama = {
-    acceleration = "rocm";
-    package = pkgs.ollama-rocm.override { rocmPackages = pkgs.rocmPackages.gfx12; };
+    package = pkgs.ollama-rocm;
     environmentVariables = {
       "ROCM_PATH" = "/opt/rocm";
       "HIP_VISIBLE_DEVICES" = "0";

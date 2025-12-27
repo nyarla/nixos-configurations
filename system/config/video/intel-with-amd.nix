@@ -30,7 +30,7 @@
     let
       rocmEnv = pkgs.symlinkJoin {
         name = "rocm-combined";
-        paths = with pkgs.rocmPackages.gfx12; [
+        paths = with pkgs.rocmPackages; [
           clr
           hipblas
           rocblas

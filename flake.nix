@@ -32,10 +32,6 @@
     nixpkgs-xr.inputs.flake-compat.follows = "flake-compat";
     nixpkgs-xr.inputs.flake-utils.follows = "flake-utils";
     nixpkgs-xr.inputs.systems.follows = "systems";
-
-    waybar.url = "github:Alexays/Waybar";
-    waybar.inputs.nixpkgs.follows = "nixpkgs";
-    waybar.inputs.flake-compat.follows = "flake-compat";
   };
   outputs =
     {
@@ -45,7 +41,6 @@
       wayland,
       impermanence,
       nixpkgs-xr,
-      waybar,
       ...
     }:
     rec {
@@ -82,7 +77,6 @@
             patches = [ ];
             overlays = [
               wayland.overlay
-              waybar.overlays.default
               (import ./pkgs/temporary.nix { inherit nixpkgs stable; })
               (import ./pkgs/default.nix { inherit nixpkgs; })
             ];

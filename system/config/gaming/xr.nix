@@ -13,6 +13,7 @@
     enable = true;
     autoStart = true;
     defaultRuntime = true;
+    highPriority = true;
     monadoEnvironment = {
       DRI_PRIME = "1002:7550!";
       MESA_VK_DEVICE_SELECT = "1002:7550";
@@ -24,7 +25,7 @@
     config = {
       enable = true;
       json = {
-        bitrate = 50000000;
+        bitrate = 25000000;
         scale = 1;
         tcp-only = true;
         encoders = [

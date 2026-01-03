@@ -10,6 +10,8 @@
   yq,
 
   libepoxy,
+  libva,
+  libvdpau,
   mdk-sdk,
 }:
 let
@@ -126,7 +128,12 @@ flutter338.buildFlutterApplication rec {
     rm $out/bin/aria
     cat <<EOF >$out/bin/aria
     #!${stdenv.shell}
-    export LD_LIBRARY_PATH=$out/app/aria/lib
+    export LD_LIBRARY_PATH=$out/app/aria/lib:${
+      lib.makeLibraryPath [
+        libva
+        libvdpau
+      ]
+    }
     exec $out/app/aria/aria
     EOF
 

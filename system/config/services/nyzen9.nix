@@ -42,17 +42,6 @@
     };
   };
 
-  services.ollama = {
-    enable = true;
-    user = "ollama";
-    group = "ollama";
-    host = "0.0.0.0";
-    openFirewall = true;
-  };
-
-  # for FreshRSS
-  services.flaresolverr.enable = true;
-
   # calibre
   systemd.services.calibre-web.after = [ "automount-encrypted-usb-device.service" ];
   systemd.services.calibre-web.environment.CACHE_DIR = lib.mkForce "/home/nyarla/.cache/calibre-web";

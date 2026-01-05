@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+systemctl --user stop pipewire-pulse.socket
+systemctl --user stop pipewire.socket
+systemctl --user stop pipewire-pulse.service
+systemctl --user stop pipewire.service
+systemctl --user stop wireplumber.service
+
+GDK_BACKEND=x11 deadbeef
+
+systemctl --user start pipewire.socket
+systemctl --user start pipewire-pulse.socket
+systemctl --user start pipewire.service
+systemctl --user start pipewire-pulse.service
+systemctl --user start wireplumber.service

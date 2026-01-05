@@ -13,7 +13,6 @@
   };
 
   home.packages = with pkgs; [
-    appflowy
     aria-misskey
     telegram-desktop
     thunderbird-bin

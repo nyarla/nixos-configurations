@@ -298,7 +298,6 @@
           ".local/share/containers"
           ".local/share/fcitx5"
           ".local/share/fonts"
-          ".local/share/io.appflowy.appflowy"
           ".local/share/krita"
           ".local/share/libcskk"
           ".local/share/mime"

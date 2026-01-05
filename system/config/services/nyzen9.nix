@@ -42,6 +42,42 @@
     };
   };
 
+  # appflowy
+  systemd.user.services.appflowy = {
+    enable = true;
+    serviceConfig = {
+      Type = "forking";
+      RemainAfterExit = "yes";
+      WorkingDirectory = "/home/nyarla/Applications/Programs/AppflowyCloud";
+      ExecStart = toString (
+        pkgs.writeShellScript "appflowy-start" ''
+          export PATH=${
+            lib.makeBinPath [
+              config.virtualisation.podman.package
+              pkgs.podman-compose
+            ]
+          }:/run/wrappers/bin:$PATH
+
+          export XDG_RUNTIME_DIR=/run/user/$(id -u)
+          env DBUS_SESSION_BUS_ADDRESS= podman compose up -d
+        ''
+      );
+      ExecStop = toString (
+        pkgs.writeShellScript "appflowy-stop" ''
+          export PATH=${
+            lib.makeBinPath [
+              config.virtualisation.podman.package
+              pkgs.podman-compose
+            ]
+          }:/run/wrappers/bin:$PATH
+          export XDG_RUNTIME_DIR=/run/user/$(id -u)
+
+          env DBUS_SESSION_BUS_ADDRESS= podman compose down
+        ''
+      );
+    };
+  };
+
   # calibre
   systemd.services.calibre-web.after = [ "automount-encrypted-usb-device.service" ];
   systemd.services.calibre-web.environment.CACHE_DIR = lib.mkForce "/home/nyarla/.cache/calibre-web";
@@ -159,7 +195,16 @@
             reverse_proxy 127.0.0.1:40020
           '';
         };
-
+        "appflowy.p.localhost.thotep.net" = {
+          listenAddresses = [ "100.103.65.77" ];
+          useACMEHost = "localhost.thotep.net";
+          logFormat = ''
+            output stdout
+          '';
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:40030
+          '';
+        };
         "freshrss.p.localhost.thotep.net" = {
           listenAddresses = [ "100.103.65.77" ];
           useACMEHost = "localhost.thotep.net";

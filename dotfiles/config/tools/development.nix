@@ -33,7 +33,9 @@
     git-lfs
 
     # linter
+    actionlint
     ghalint
+    zizmor
 
     # misc
     openssl

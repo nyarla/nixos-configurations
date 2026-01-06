@@ -1,7 +1,6 @@
 {
   appimageTools,
   fetchurl,
-  lib,
   libgpg-error,
 }:
 
@@ -11,7 +10,7 @@ let
 
   src = fetchurl {
     url = "https://static.immersed.com/dl/Immersed-x86_64.AppImage";
-    sha256 = "1md4bvqja15h7plgp5ym4nb8fzd19555aknayz5xwqghcwr58gl5";
+    sha256 = "0jpf0vvs708z7q98rh4my9y6xyvq6167vlqb2p7vzywaymkj9dqr";
   };
 
   src' = appimageTools.extract {

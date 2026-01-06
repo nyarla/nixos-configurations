@@ -1,20 +1,20 @@
 {
   lib,
   fetchFromGitHub,
-  buildGo125Module,
+  buildGo126Module,
 }:
-buildGo125Module rec {
+buildGo126Module rec {
   pname = "ghalint";
-  version = "v1.5.3";
+  version = "v1.5.4";
 
   src = fetchFromGitHub {
     owner = "suzuki-shunsuke";
     repo = pname;
     rev = version;
-    hash = "sha256-zll71vSqSKIij/TUi4LnGtVqmLhK9UViFDkpnuEvmz8=";
+    hash = "sha256-pfLXnMbrxXAMpfmjctah85z5GHfI/+NZDrIu1LcBH8M=";
   };
 
-  vendorHash = "sha256-pCrVBgS7eLCYlfY6FyAGAeEhpV2dYQowtE/BoRUju0o=";
+  vendorHash = "sha256-VCv5ZCeUWHld+q7tkHSUyeVagMhSN9893vYHyO/VlAI=";
 
   subPackages = [
     "cmd/ghalint"

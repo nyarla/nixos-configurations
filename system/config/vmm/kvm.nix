@@ -31,7 +31,7 @@ in
   ];
 
   boot.extraModprobeConfig = ''
-    options vfio_pci ids=${ids}
+    options vfio_pci ids=${ids} disable_vga=1
   '';
 
   # libvirtd configurations
@@ -48,26 +48,53 @@ in
           ]
         );
 
-        loadVFIO = pkgs.writeShellScript "start.sh" ''
-          set -xeuo pipefail
-          export PATH=${PATH}:$PATH
+        loadVFIO =
+          let
+            gpuId = "0000:0d:00.0";
+          in
+          pkgs.writeShellScript "start.sh" ''
+            set -x
+            export PATH=${PATH}:$PATH
 
+            echo "Unbind GPU from amdgpu driver..."
+            if ! (echo "${gpuId}" | tee /sys/bus/pci/drivers/amdgpu/unbind) ; then
+              echo "cannot unbind ${gpuId}"
+              exit 1
+            fi
 
-          if [[ "$(lsmod | grep amdgpu)" != "" ]]; then
-            echo "amdgpu is loaded yet" >&2
-            exit 1
-          fi
+            echo "Wait for unbinding..."
+            while test -e /sys/bus/pci/drivers/amdgpu/${gpuId}; do
+              sleep 1
+            done
 
-          modprobe vfio_pci
-          modprobe vfio
-          modprobe vfio_iommu_type1
+            echo "Resize to resource2..."
+            echo 3 | tee /sys/bus/pci/devices/${gpuId}/resource2_resize
+            sleep 3
 
-          virsh nodedev-detach pci_0000_0d_00_0
-          virsh nodedev-detach pci_0000_0d_00_1
-          virsh nodedev-detach pci_0000_0f_00_3
+            echo "Unload amdgpu kernel module..."
+            if ! modprobe -r amdgpu ; then
+              echo "failed to unload amdgpu. restoring..."
+              echo ${gpuId} | tee /sys/bus/pci/drivers/amdgpu/bind
+              exit 1
+            fi
 
-          set +x
-        '';
+            systemctl stop amdgpu-kernel-modules.service
+
+            if [[ "$(lsmod | grep amdgpu)" != "" ]]; then
+              echo "amdgpu is loaded yet"
+              exit 1
+            fi
+
+            modprobe vfio_pci
+            modprobe vfio
+            modprobe vfio_iommu_type1
+
+            virsh nodedev-detach pci_0000_0d_00_0
+            virsh nodedev-detach pci_0000_0d_00_1
+            virsh nodedev-detach pci_0000_0f_00_3
+
+            set +x
+          '';
 
         unloadVFIO = pkgs.writeShellScript "stop.sh" ''
           set -x
@@ -82,54 +109,64 @@ in
           modprobe -r vfio_iommu_type1
           modprobe -r vfio
 
-          modprobe amdgpu
-          systemctl start amdgpu-kernel-modules.service
+          sleep 2
 
           set +x
         '';
 
-        allocHugePage = pkgs.writeShellScript "alloc.sh" ''
-          set -xeuo pipefail
+        allocHugePage =
+          let
+            memSize = "65536";
+          in
+          pkgs.writeShellScript "alloc.sh" ''
+            set -xeuo pipefail
 
-          export PATH=${pkgs.gawk}/bin:$PATH
+            export PATH=${pkgs.gawk}/bin:$PATH
 
-          MEMORY=65536
-          HUGEPAGES="$(($MEMORY / $(( $(grep Hugepagesize /proc/meminfo | awk '{print $2}') / 1024))))"
+            if ! systemctl stop cleanup-memory-cache.timer; then
+              echo "failed to stop memory-cache cleaner timer"
+              exit 1
+            fi
 
-          echo $HUGEPAGES > /proc/sys/vm/nr_hugepages
-          ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
-
-          TRIES=0
-          while (( $ALLOC_PAGES != $HUGEPAGES && $TRIES < 100 )) ; do
-            echo 1 > /proc/sys/vm/compact_memory
+            MEMORY=${memSize}
+            HUGEPAGES="$(($MEMORY / $(( $(grep Hugepagesize /proc/meminfo | awk '{print $2}') / 1024))))"
 
             echo $HUGEPAGES > /proc/sys/vm/nr_hugepages
             ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
 
-            let TRIES+=1
-          done
+            TRIES=0
+            while (( $ALLOC_PAGES != $HUGEPAGES && $TRIES < 100 )) ; do
+              echo 3 > /proc/sys/vm/drop_caches
+              echo 1 > /proc/sys/vm/compact_memory
 
-          if test "$ALLOC_PAGES" -ne "$HUGEPAGES"; then
-            echo 0 >/proc/sys/vm/nr_hugepages
-            exit 1
-          fi
+              echo $HUGEPAGES > /proc/sys/vm/nr_hugepages
+              ALLOC_PAGES=$(cat /proc/sys/vm/nr_hugepages)
 
-          set +x
-          exit 0
-        '';
+              let TRIES+=1
+            done
+
+            if test "$ALLOC_PAGES" -ne "$HUGEPAGES"; then
+              echo 0 > /proc/sys/vm/nr_hugepages
+              echo 3 > /proc/sys/vm/drop_caches
+              exit 1
+            fi
+
+            set +x
+            exit 0
+          '';
 
         deallocHugePage = pkgs.writeShellScript "dealloc.sh" ''
-          echo 0 >/proc/sys/vm/nr_hugepages
+          echo 0 > /proc/sys/vm/nr_hugepages
         '';
 
         qemuHooks = pkgs.runCommand "qemu-hooks" { } ''
           mkdir -p $out/prepare/begin
           mkdir -p $out/release/end
 
-          cp ${loadVFIO} $out/prepare/begin/00_load_vfio.sh
-          cp ${unloadVFIO} $out/release/end/00_unload_vfio.sh
+          cp ${allocHugePage} $out/prepare/begin/00_alloc_hugepage.sh
+          cp ${loadVFIO} $out/prepare/begin/01_load_vfio.sh
 
-          cp ${allocHugePage} $out/prepare/begin/01_alloc_hugepage.sh
+          cp ${unloadVFIO} $out/release/end/00_unload_vfio.sh
           cp ${deallocHugePage} $out/release/end/01_dealloc_hugepage.sh
         '';
       in

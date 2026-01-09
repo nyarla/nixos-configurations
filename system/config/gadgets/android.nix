@@ -1,1 +1,4 @@
-_: { programs.adb.enable = true; }
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [ android-tools ];
+}

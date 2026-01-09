@@ -82,7 +82,7 @@
       }
       trap cleanup INT TERM
 
-      dbus-run-session ${pkgs.hyprland}/bin/Hyprland
+      dbus-run-session ${pkgs.hyprland}/bin/start-hyprland
       cleanup
     ''
   );

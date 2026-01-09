@@ -18,7 +18,7 @@ let
       # formatter
       go
       gotools
-      nixfmt-rfc-style
+      nixfmt
       nodePackages.prettier
       perlPackages.PerlTidy
       stylua

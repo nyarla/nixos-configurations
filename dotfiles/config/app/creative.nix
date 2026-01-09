@@ -12,6 +12,6 @@
 
     # for 3D modeling
     alcom
-    blender-hip
+    pkgsRocm.blender
   ];
 }

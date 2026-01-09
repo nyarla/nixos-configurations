@@ -26,6 +26,8 @@
     wayland.inputs.lib-aggregate.follows = "lib-aggregate";
 
     impermanence.url = "github:nix-community/impermanence";
+    impermanence.inputs.nixpkgs.follows = "nixpkgs";
+    impermanence.inputs.home-manager.follows = "home-manager";
 
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
     nixpkgs-xr.inputs.nixpkgs.follows = "nixpkgs";
@@ -74,7 +76,9 @@
             hostname = "nixos";
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
-            patches = [ ];
+            patches = [
+              ./patches/cnijfilter2.patch
+            ];
             overlays = [
               wayland.overlay
               (import ./pkgs/temporary.nix { inherit nixpkgs stable; })

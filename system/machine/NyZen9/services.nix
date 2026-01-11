@@ -78,10 +78,15 @@
   # backup by restic
   systemd.services.backup = {
     enable = true;
-    path = with pkgs; [
-      restic-run
-      rclone
-    ];
+    path =
+      (with pkgs; [
+        restic-run
+        rclone
+        sec
+      ])
+      ++ [
+        "/run/wrappers"
+      ];
     description = "Automatic backup by restic and rclone";
     requires = [ "network-online.target" ];
     after = [ "network-online.target" ];
@@ -94,6 +99,12 @@
 
           if test -d /backup ; then
             cd /backup
+            
+            export RESTIC_PASSWORD=$(sudo -u nyarla env \
+            DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
+            SEC_ENV=deployment \
+              sec /bin/sh -c 'echo $RESTIC_PASSWORD')
+
             restic-backup .
           fi
 

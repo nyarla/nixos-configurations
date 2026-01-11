@@ -39,5 +39,6 @@
 
     # misc
     openssl
+    sec
   ];
 }

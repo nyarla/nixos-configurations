@@ -1,9 +1,10 @@
 {
+  lib,
   runCommand,
   writeShellScriptBin,
-  restic,
+
   rclone,
-  lib,
+  restic,
 }:
 let
   restic-run = writeShellScriptBin "restic-run" ''
@@ -18,7 +19,6 @@ let
 
     export HOME=/home/nyarla
 
-    export RESTIC_PASSWORD_FILE=$HOME/.config/rclone/restic
     export RESTIC_REPOSITORY=rclone:Teracloud:Backup/NixOS
 
     exec "''${@}"

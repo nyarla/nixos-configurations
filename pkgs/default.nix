@@ -22,6 +22,7 @@ in
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
   rocm-shell = require ./rocm-shell { };
+  sec = require ./sec { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   thorium-reader = require ./thorium-reader { };
   unityhub-amd = require ./unityhub-amd { };

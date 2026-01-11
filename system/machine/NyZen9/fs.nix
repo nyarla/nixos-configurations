@@ -160,6 +160,8 @@
       "Sources/DAW" = "/persist/home/nyarla/Sources/DAW";
       "Sync" = "/persist/home/nyarla/Sync/Backup";
       "Thunderbird" = "/persist/home/nyarla/.thunderbird";
+
+      ".env.bws" = "/persist/home/nyarla/.config/rclone/env.bws";
     };
 
   # btrfs settings
@@ -255,7 +257,6 @@
           ".config/act"
           ".config/aseprite"
           ".config/blender"
-          ".config/blogsync"
           ".config/calibre"
           ".config/dconf"
           ".config/deadbeef"
@@ -267,7 +268,6 @@
           ".config/gtk-2.0"
           ".config/gtk-3.0"
           ".config/gtk-4.0"
-          ".config/gyazo"
           ".config/hypr"
           ".config/inkscape"
           ".config/lxqt"

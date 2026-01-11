@@ -1,6 +1,6 @@
 _: {
   # mtu
-  networking.interfaces."wlan0".mtu = 1472;
+  networking.interfaces."wlan0".mtu = 1500;
 
   # avahi
   services.avahi.allowInterfaces = [ "wlan0" ];

@@ -123,11 +123,6 @@ in
 
             export PATH=${pkgs.gawk}/bin:$PATH
 
-            if ! systemctl stop cleanup-memory-cache.timer; then
-              echo "failed to stop memory-cache cleaner timer"
-              exit 1
-            fi
-
             MEMORY=${memSize}
             HUGEPAGES="$(($MEMORY / $(( $(grep Hugepagesize /proc/meminfo | awk '{print $2}') / 1024))))"
 

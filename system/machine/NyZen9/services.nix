@@ -51,16 +51,6 @@
   };
 
   # auto-purge memory cache
-  systemd.timers.cleanup-memory-cache = {
-    enable = true;
-    description = "Auto memory cache cleaner";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*:10,30,50:0";
-      RandomizedDelaySec = "2m";
-      Persistent = true;
-    };
-  };
   systemd.services.cleanup-memory-cache = {
     enable = true;
     description = "Auto memory cache cleaner";

@@ -25,7 +25,7 @@
     config = {
       enable = true;
       json = {
-        bitrate = 25000000;
+        bitrate = 50000000;
         scale = 1;
         tcp-only = true;
         encoders = [
@@ -34,6 +34,7 @@
             codec = "h265";
           }
         ];
+        openvr-compat-path = "${pkgs.xrizer}/lib/xrizer";
       };
     };
   };

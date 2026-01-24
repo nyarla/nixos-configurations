@@ -6,11 +6,26 @@ final: prev: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });
 
-  whipper = prev.whipper.overrideAttrs (_: {
-    postPatch = ''
-      sed -i 's|cd-paranoia|${prev.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
-    '';
-  });
+  whipper =
+    let
+      python3 =
+        let
+          packageOverrides = _: before: {
+            pycdio = before.pycdio.overridePythonAttrs (_: {
+              disabledTests = [
+                "ISO9660"
+                "CdioTest"
+              ];
+            });
+          };
+        in
+        prev.python3.override { inherit packageOverrides; };
+    in
+    (prev.whipper.override { inherit python3; }).overrideAttrs (_: {
+      postPatch = ''
+        sed -i 's|cd-paranoia|${prev.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
+      '';
+    });
 
   wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn;
 

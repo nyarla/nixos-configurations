@@ -17,11 +17,10 @@ in
   inherit locales;
 }).overrideAttrs
   (old: {
-    preBuild =
-      ''
-        cp ${UTF-8-EAW-CONSOLE} $(find .. -type d -name 'glibc-2*' | head -n1)/localedata/charmaps/UTF-8-EAW-CONSOLE
-        echo 'ja_JP.UTF-8/UTF-8-EAW-CONSOLE \' >> ../glibc-2*/localedata/SUPPORTED
-        echo 'en_US.UTF-8/UTF-8-EAW-CONSOLE \' >> ../glibc-2*/localedata/SUPPORTED
-      ''
-      + old.preBuild;
+    preBuild = ''
+      cp ${UTF-8-EAW-CONSOLE} ../localedata/charmaps/UTF-8-EAW-CONSOLE
+      echo 'ja_JP.UTF-8/UTF-8-EAW-CONSOLE \' >> ../localedata/SUPPORTED
+      echo 'en_US.UTF-8/UTF-8-EAW-CONSOLE \' >> ../localedata/SUPPORTED
+    ''
+    + old.preBuild;
   })

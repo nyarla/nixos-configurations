@@ -80,6 +80,7 @@
       {
         inherit ls;
         l = "${ls} -l";
+        ll = "${ls} -la";
 
         docker = podman;
         inherit podman;

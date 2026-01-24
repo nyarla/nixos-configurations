@@ -8,37 +8,20 @@
   # Librechat by podman compose
   systemd.user.services.librechat = {
     enable = true;
+    path = [
+      config.virtualisation.podman.package
+      pkgs.podman-compose
+      pkgs.sec
+      pkgs.gnumake
+      pkgs.bash
+      "/run/wrappers"
+    ];
     serviceConfig = {
       Type = "forking";
       RemainAfterExit = "yes";
       WorkingDirectory = "/home/nyarla/Applications/AI/Librechat";
-      ExecStart = toString (
-        pkgs.writeShellScript "librechat-start" ''
-          export PATH=${
-            lib.makeBinPath [
-              config.virtualisation.podman.package
-              pkgs.podman-compose
-            ]
-          }:/run/wrappers/bin:$PATH
-          export XDG_RUNTIME_DIR=/run/user/$(id -u)
-
-          env DBUS_SESSION_BUS_ADDRESS= podman compose up -d
-        ''
-      );
-
-      ExecStop = toString (
-        pkgs.writeShellScript "librechat-stop" ''
-          export PATH=${
-            lib.makeBinPath [
-              config.virtualisation.podman.package
-              pkgs.podman-compose
-            ]
-          }:/run/wrappers/bin:$PATH
-          export XDG_RUNTIME_DIR=/run/user/$(id -u)
-
-          env DBUS_SESSION_BUS_ADDRESS= podman compose down
-        ''
-      );
+      ExecStart = "${pkgs.gnumake}/bin/make up";
+      ExecStop = "${pkgs.gnumake}/bin/make down";
     };
   };
 

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v modprobe 1>/dev/null ; then
+  echo "modprobe command is not found!" >&2
+  exit 1
+fi
+
+sudo systemctl start cleanup-memory-cache
+
+if sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/prepare/begin/00_alloc_hugepage.sh; then
+  sudo bash -x /var/lib/libvirt/hooks/qemu.d/DAW/release/end/01_dealloc_hugepage.sh
+fi
+
+virsh -c qemu:///system start DAW

@@ -73,14 +73,7 @@
       })
     ])
     ++ (with pkgs.rocmPackages; [
-      (amdsmi.overrideAttrs (finalAttrs: {
-        patches = (finalAttrs.patches or [ ]) ++ [
-          (pkgs.fetchpatch {
-            url = "https://patch-diff.githubusercontent.com/raw/ROCm/amdsmi/pull/165.patch";
-            sha256 = "1w52rn4c43sw4iw58ns64zzc83vz350w5rfpsgbfv4mm0c654ks6";
-          })
-        ];
-      }))
+      amdsmi
       rocm-smi
     ]);
 

@@ -62,6 +62,9 @@ _: {
           # steam link
           27036
           27037
+
+          # vnc
+          5900
         ];
 
         allowedUDPPorts = [

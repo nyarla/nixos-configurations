@@ -124,6 +124,7 @@
       pkgs.nodejs_20
     ];
     serviceConfig = {
+      Restart = "always";
       ExecStart = toString (
         pkgs.writeShellScript "nsfw-detector" ''
           cd ~/Applications/Programs/GoToSocialModeration || exit 1

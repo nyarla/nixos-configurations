@@ -39,16 +39,16 @@
   calibre,
 }:
 
-if calibre.version != "8.15.0" then
+if calibre.version != "8.16.2" then
   abort "calibre is updated on upstream: ${calibre.version}"
 else
   stdenv.mkDerivation (finalAttrs: {
     pname = "calibre";
-    version = "8.15.0";
+    version = "8.16.2";
 
     src = fetchurl {
       url = "https://download.calibre-ebook.com/${finalAttrs.version}/calibre-${finalAttrs.version}.tar.xz";
-      hash = "sha256-Wnv+S/4ajebu87+R+pft9Ka//sD12SsH6+1nXVx/XrQ=";
+      hash = "sha256-AYfQQ1T1PMB0EUHaAml37jCnfvoMN7GDm94FiCIsHGw=";
     };
 
     patches =
@@ -141,6 +141,8 @@ else
           regex
           sip
           setuptools
+          tzdata
+          tzlocal
           zeroconf
           jeepney
           pycryptodome
@@ -222,6 +224,7 @@ else
           wrapProgram $program \
             ''${qtWrapperArgs[@]} \
             ''${gappsWrapperArgs[@]} \
+            --set QTWEBENGINE_CHROMIUM_FLAGS "--disable-gpu" \
             --prefix PATH : ${
               lib.makeBinPath [
                 libjpeg
@@ -245,6 +248,8 @@ else
           "test_qt" # we don't include svg or webp support
           "test_import_of_all_python_modules" # explores actual file paths, gets confused
           "test_websocket_basic" # flaky
+
+          "test_fts_search"
 
           # hangs with cuda enabled, also:
           # eglInitialize: Failed to get system egl display

@@ -81,15 +81,5 @@ in
     paths = prev.lib.makeBinPath [ prev.wineWowPackages.stagingFull ];
   };
 
-  winetricks = prev.winetricks.overrideAttrs (old: {
-    pname = "winetricks";
-    version = "git";
-    src = prev.fetchFromGitHub {
-      inherit (old.src) owner repo;
-      rev = "533f41704766765cfb3706fb2aa197acbb05df32";
-      hash = "sha256-Bt5wo7zEAN9Mh9dwbGPsSW8pt1ruBrn0Br9BdprtIRY=";
-    };
-  });
-
   wineasio = require ./wineasio { };
 }

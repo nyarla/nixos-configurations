@@ -314,6 +314,7 @@
 
           # application
           ".android"
+          ".flare"
           ".mozilla"
           ".pki"
           ".steam"

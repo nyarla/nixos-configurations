@@ -10,6 +10,7 @@ in
   calibre = require ./calibre { inherit (prev) calibre; };
   cskk = require ./cskk { };
   deadbeef-fb = require ./deadbeef-fb { };
+  flare-app = require ./flare-app { };
   fluent-kde = require ./fluent-kde { };
   galendae = require ./galendae { };
   ghalint = require ./ghalint { };

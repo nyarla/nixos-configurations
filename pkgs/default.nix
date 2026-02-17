@@ -18,6 +18,7 @@ in
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
   immersed = require ./immersed { };
+  kaunas = require ./kaunas { };
   noto-fonts-jp = require ./noto-fonts-jp { };
   nvim-run = require ./nvim-run { };
   perl-shell = require ./perl-shell { };

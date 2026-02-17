@@ -270,6 +270,7 @@
           ".config/gtk-4.0"
           ".config/hypr"
           ".config/inkscape"
+          ".config/labwc"
           ".config/lxqt"
           ".config/nvim"
           ".config/protonfixes"

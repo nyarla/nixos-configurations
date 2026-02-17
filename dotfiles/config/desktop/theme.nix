@@ -3,6 +3,8 @@
   gtk = {
     enable = true;
 
+    colorScheme = "light";
+
     iconTheme = {
       name = "Fluent-light";
       package = pkgs.fluent-icon-theme;

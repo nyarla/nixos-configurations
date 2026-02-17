@@ -5,6 +5,16 @@
     yubioath-flutter
   ];
 
+  systemd.services."polkit-agent-helper@".serviceConfig = {
+    ProtectHome = "read-only";
+    StandardError = "journal";
+    PrivateDevices = "no";
+    DeviceAllow = [
+      "/dev/urandom r"
+      "char-hidraw rw"
+    ];
+  };
+
   services.udev.packages = [
     pkgs.yubioath-flutter
   ];

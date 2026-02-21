@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  mateApps = with pkgs.mate; [
+  mateApps = with pkgs; [
     atril
     engrampa
     eom

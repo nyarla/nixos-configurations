@@ -1,12 +1,10 @@
 {
   carla,
-  python312,
   glibc,
   pkgsCross,
   wine,
   multiStdenv,
   fetchFromGitHub,
-  fetchpatch,
 }:
 let
   pkgsMinGW = bit: if bit == 32 then pkgsCross.mingw32 else pkgsCross.mingwW64;
@@ -59,31 +57,10 @@ in
     '';
 
     postBuild = ''
-      make win32 \
-        CC=i686-w64-mingw32-gcc \
-        CXX=i686-w64-mingw32-g++ \
-        CFLAGS="-I${mingw32.windows.pthreads}/include -I${mcfgthreadsw32.dev}/include" \
-        CXXFLAGS="-I${mingw32.windows.pthreads}/include -I${mcfgthreadsw32.dev}/include" \
-        LDFLAGS="-L${mingw32.windows.pthreads}/lib -L${mcfgthreadsw32}/lib"
-
-      make wine32 \
-        CC="winegcc -m32" \
-        CXX="winegcc -m32" \
+      make wine64 \
         CFLAGS="-I${glibc.dev}/include" \
         CXXFLAGS="-I${glibc.dev}/include" \
-
-      make win64 \
-        CC=x86_64-w64-mingw32-gcc \
-        CXX=x86_64-w64-mingw32-g++ \
-        CFLAGS="-I${mingwW64.windows.pthreads}/include -I${mcfgthreadsW64.dev}/include" \
-        CXXFLAGS="-I${mingwW64.windows.pthreads}/include -I${mcfgthreadsW64.dev}/include" \
-        LDFLAGS="-L${mingwW64.windows.pthreads}/lib -L${mcfgthreadsW64}/lib"
-
-      make wine64 \
-        CC="winegcc" \
-        CXX="winegcc" \
-        CFLAGS="-I${glibc.dev}/include" \
-        CXXFLAGS="-I${glibc.dev}/include"
+        LDFLAGS="-L${wine}/lib/wine/x86_64-windows"
     '';
 
     preFixup = ''

@@ -11,7 +11,7 @@
       Type = "simple";
       Restart = "on-failure";
       ExecStart = ''
-        ${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1
+        ${pkgs.mate-polkit}/libexec/polkit-mate-authentication-agent-1
       '';
       Environment = [
         "WAYLAND_DISPLAY=wayland-0"

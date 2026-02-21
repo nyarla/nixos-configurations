@@ -47,7 +47,7 @@
 
   services.xserver = {
     videoDrivers = [
-      "i915"
+      "intel"
       "amdgpu"
     ];
   };

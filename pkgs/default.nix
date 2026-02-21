@@ -70,17 +70,17 @@ in
 
   # custom wine-related packages
   carla-with-wine = require ./carla {
-    wine = prev.wineWowPackages.yabridge;
+    wine = prev.wineWow64Packages.yabridge;
   };
 
   wine-vst-run = require ./wine-run {
     pname = "wine-vst";
-    paths = prev.lib.makeBinPath [ prev.wineWowPackages.yabridge ];
+    paths = prev.lib.makeBinPath [ prev.wineWow64Packages.yabridge ];
   };
 
   wine-staging-run = require ./wine-run {
     pname = "wine-staging";
-    paths = prev.lib.makeBinPath [ prev.wineWowPackages.stagingFull ];
+    paths = prev.lib.makeBinPath [ prev.wineWow64Packages.stagingFull ];
   };
 
   wineasio = require ./wineasio { };

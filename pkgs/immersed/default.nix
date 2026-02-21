@@ -41,8 +41,8 @@ appimageTools.wrapAppImage {
       libva
       pipewire
       wayland
-      xorg.libSM
-      xorg.libX11
+      libsm
+      libx11
       zlib
     ];
 }

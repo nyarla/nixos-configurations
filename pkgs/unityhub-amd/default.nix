@@ -12,7 +12,7 @@ unityhub.overrideAttrs (old: rec {
     targetPkgs =
       p: with p; [
         # Unity Hub binary dependencies
-        xorg.libXrandr
+        libxrandr
         xdg-utils
 
         # GTK filepicker
@@ -43,14 +43,14 @@ unityhub.overrideAttrs (old: rec {
         dbus
         at-spi2-core
         pango
-        xorg.libXcomposite
-        xorg.libXext
-        xorg.libXdamage
-        xorg.libXfixes
-        xorg.libxcb
-        xorg.libxshmfence
-        xorg.libXScrnSaver
-        xorg.libXtst
+        libxcomposite
+        libxext
+        libxdamage
+        libxfixes
+        libxcb
+        libxshmfence
+        libxscrnsaver
+        libxtst
 
         # Unity Hub additional dependencies
         libva
@@ -68,8 +68,8 @@ unityhub.overrideAttrs (old: rec {
 
         # Unity Editor dependencies
         libglvnd # provides ligbl
-        xorg.libX11
-        xorg.libXcursor
+        libx11
+        libxcursor
         glib
         gdk-pixbuf
         libxml2_13
@@ -82,8 +82,8 @@ unityhub.overrideAttrs (old: rec {
         vulkan-loader
 
         # Unity Bug Reporter specific dependencies
-        xorg.libICE
-        xorg.libSM
+        libice
+        libsm
 
         # fonts
         noto-fonts

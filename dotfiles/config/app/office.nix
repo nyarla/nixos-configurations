@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     gucharmap
     libreoffice
-    mate.mate-calc
+    mate-calc
     simple-scan
   ];
 }

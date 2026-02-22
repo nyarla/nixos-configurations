@@ -17,5 +17,8 @@
     flare-app
     telegram-desktop
     thunderbird-bin
+
+    proton-authenticator
+    proton-pass
   ];
 }

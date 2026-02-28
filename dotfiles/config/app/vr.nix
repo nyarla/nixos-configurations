@@ -1,8 +1,8 @@
 { pkgs, config, ... }:
 {
   home.packages = with pkgs; [
-    immersed
     wayvr
+    cage
     wivrn-stable
   ];
 

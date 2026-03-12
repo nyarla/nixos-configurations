@@ -44,6 +44,17 @@ in
   # customized packages
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
+  labwc-hdr = (prev.labwc.override { wlroots_0_19 = prev.wlroots; }).overrideAttrs (finalAttrs: {
+    pname = "${finalAttrs.pname}-hdr";
+    version = "0.9.4";
+    src = prev.fetchFromGitHub {
+      owner = "kode54";
+      repo = "labwc";
+      tag = "hdr-support";
+      hash = "sha256-+CBYXzQAnB0+jhMqAmLk53krxl/Yqy4KStQyACgjFf8=";
+    };
+  });
+
   steam = prev.steam.override (
     {
       extraLibraries ? _: [ ],

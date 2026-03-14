@@ -1,4 +1,4 @@
 _: {
-  fonts.fontconfig.hinting.style = "full";
+  fonts.fontconfig.hinting.style = "slight";
   fonts.fontconfig.subpixel.lcdfilter = "default";
 }

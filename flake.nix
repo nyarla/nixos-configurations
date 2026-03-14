@@ -14,8 +14,12 @@
     lib-aggregate.inputs.flake-utils.follows = "flake-utils";
     lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
 
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
+
     nixpkgs.url = "github:NixOS/nixpkgs/master";
-    stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    stable.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -34,6 +38,13 @@
     nixpkgs-xr.inputs.flake-compat.follows = "flake-compat";
     nixpkgs-xr.inputs.flake-utils.follows = "flake-utils";
     nixpkgs-xr.inputs.systems.follows = "systems";
+
+    hyprland.url = "github:hyprwm/Hyprland/8685fd7b";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
+    hyprland-plugins.inputs.hyprland.follows = "hyprland";
   };
   outputs =
     {
@@ -43,6 +54,8 @@
       wayland,
       impermanence,
       nixpkgs-xr,
+      hyprland,
+      hyprland-plugins,
       ...
     }:
     rec {
@@ -76,8 +89,12 @@
             hostname = "nixos";
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
-            patches = [ ];
+            patches = [
+              ./patches/hyprland-plugins-v0.54.0.patch
+            ];
             overlays = [
+              hyprland.overlays.default
+              hyprland-plugins.overlays.default
               wayland.overlay
               (import ./pkgs/temporary.nix { inherit nixpkgs stable; })
               (import ./pkgs/default.nix { inherit nixpkgs; })

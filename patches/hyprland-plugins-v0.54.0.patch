@@ -1,0 +1,19 @@
+--- a/pkgs/applications/window-managers/hyprwm/hyprland-plugins/hyprland-plugins.nix	2026-03-12 15:45:14.049676449 +0900
++++ b/pkgs/applications/window-managers/hyprwm/hyprland-plugins/hyprland-plugins.nix	2026-03-12 15:48:21.984076441 +0900
+@@ -13,13 +13,13 @@
+             mkHyprlandPlugin,
+           }:
+           let
+-            version = "0.53.0";
++            version = "0.54.0";
+ 
+             hyprland-plugins-src = fetchFromGitHub {
+               owner = "hyprwm";
+               repo = "hyprland-plugins";
+-              tag = "v${version}";
+-              hash = "sha256-BSRT1Uu1ot4WfMfZc6KW0nwpmt2xl9wpUqmH/JoMTfk=";
++              rev = "e03c34ccd51280a44ea6d1f5c040cd81ecca25ed";
++              hash = "sha256-UBrWjh0DR8db60aLNkTnZTJ9F4kWK0Y7rUDNJC88W7A=";
+             };
+           in
+           mkHyprlandPlugin {

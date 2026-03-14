@@ -18,6 +18,7 @@ _: {
     ../config/tools/development.nix
 
     ../app/git
+    ../app/hyprland
     ../app/labwc
     ../app/mlterm
     ../app/xdg

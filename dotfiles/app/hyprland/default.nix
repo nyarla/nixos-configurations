@@ -14,7 +14,6 @@
     hyprshot
 
     hyprlandPlugins.hyprbars
-    hyprlandPlugins.hyprexpo
 
     swaylock-effects # TODO: switch to hyprlock
 

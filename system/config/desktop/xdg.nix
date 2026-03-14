@@ -2,7 +2,8 @@
 let
   xdgPortalApps = with pkgs; [
     xdg-desktop-portal-gtk
-    xdg-desktop-portal-luminous
+    xdg-desktop-portal-hypr-remote
+    xdg-desktop-portal-hyprland
     xdg-desktop-portal-wlr
   ];
 in
@@ -14,12 +15,13 @@ in
     extraPortals = xdgPortalApps;
     configPackages = with pkgs; [
       gnome-keyring
+      hyprland
     ];
     config = {
       common = {
         default = [
           "gtk"
-          "luminous"
+          "hyprland"
         ];
 
         # gtk
@@ -30,9 +32,9 @@ in
 
         # luminous
         "org.freedesktop.impl.portal.InputCapture" = [ "luminous" ];
-        "org.freedesktop.impl.portal.RemoteDesktop" = [ "luminous" ];
-        "org.freedesktop.impl.portal.ScreenCast" = [ "luminous" ];
-        "org.freedesktop.impl.portal.ScreenShot" = [ "luminous" ];
+        "org.freedesktop.impl.portal.RemoteDesktop" = [ "hypr-remote" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
+        "org.freedesktop.impl.portal.ScreenShot" = [ "hyprland" ];
         "org.freedesktop.impl.portal.Settings" = [ "luminous" ];
       };
     };

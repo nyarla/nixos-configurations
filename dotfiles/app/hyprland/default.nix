@@ -69,16 +69,14 @@
         exit 1
       fi
 
-      if hash dbus-update-activation-environment 2>/dev/null; then
-        dbus-update-activation-environment --systemd --all
-      fi
-
       systemctl --user reset-failed
 
       cleanup() {
         if systemctl --user -q is-active desktop-session.target ; then
           systemctl --user stop desktop-session.target
         fi
+
+        systemctl --user unset-environment WAYLAND_DISPLAY
       }
       trap cleanup INT TERM
 

@@ -29,7 +29,6 @@ final: prev: {
 
   wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn;
 
-  voicevox-engine = prev.voicevox-engine.override { python3Packages = prev.python312Packages; };
   waydroid = prev.waydroid.override { python3Packages = prev.python312Packages; };
   zrythm = prev.zrythm.override { carla = final.carla-with-wine; };
 }

@@ -38,13 +38,6 @@
     nixpkgs-xr.inputs.flake-compat.follows = "flake-compat";
     nixpkgs-xr.inputs.flake-utils.follows = "flake-utils";
     nixpkgs-xr.inputs.systems.follows = "systems";
-
-    hyprland.url = "github:hyprwm/Hyprland/8685fd7b";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
-    hyprland-plugins.inputs.hyprland.follows = "hyprland";
   };
   outputs =
     {
@@ -54,8 +47,6 @@
       wayland,
       impermanence,
       nixpkgs-xr,
-      hyprland,
-      hyprland-plugins,
       ...
     }:
     rec {
@@ -93,8 +84,6 @@
               ./patches/hyprland-plugins-v0.54.0.patch
             ];
             overlays = [
-              hyprland.overlays.default
-              hyprland-plugins.overlays.default
               wayland.overlay
               (import ./pkgs/temporary.nix { inherit nixpkgs stable; })
               (import ./pkgs/default.nix { inherit nixpkgs; })

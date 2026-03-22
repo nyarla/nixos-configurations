@@ -3,9 +3,6 @@
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
+    extraPackages = with pkgs; [ docker-compose ];
   };
-
-  environment.systemPackages = with pkgs; [
-    podman-compose
-  ];
 }

@@ -259,6 +259,7 @@
           ".config/aseprite"
           ".config/blender"
           ".config/calibre"
+          ".config/containers"
           ".config/dconf"
           ".config/deadbeef"
           ".config/easytag"

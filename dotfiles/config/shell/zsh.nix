@@ -64,9 +64,14 @@
             bindkey '^P' __bind-clipboard
           fi
         '';
+
+        exec = lib.mkOrder 510 ''
+          eval "$(keychain --eval ~/.ssh/nytra.key)"
+        '';
       in
       lib.mkMerge [
         options
+        exec
         functions
       ];
 

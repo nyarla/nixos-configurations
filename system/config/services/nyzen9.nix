@@ -5,42 +5,6 @@
   ...
 }:
 {
-  # Librechat by podman compose
-  systemd.user.services.librechat = {
-    enable = true;
-    path = [
-      config.virtualisation.podman.package
-      pkgs.podman-compose
-      pkgs.sec
-      pkgs.gnumake
-      pkgs.bash
-      "/run/wrappers"
-    ];
-    serviceConfig = {
-      Type = "forking";
-      RemainAfterExit = "yes";
-      WorkingDirectory = "/home/nyarla/Applications/AI/Librechat";
-      ExecStart = "${pkgs.gnumake}/bin/make up";
-      ExecStop = "${pkgs.gnumake}/bin/make down";
-    };
-  };
-
-  # calibre
-  systemd.services.calibre-web.after = [ "automount-encrypted-usb-device.service" ];
-  systemd.services.calibre-web.environment.CACHE_DIR = lib.mkForce "/home/nyarla/.cache/calibre-web";
-  services.calibre-web = {
-    enable = true;
-    user = "nyarla";
-    group = "users";
-    listen = {
-      ip = "127.0.0.1";
-      port = 40001;
-    };
-    options = {
-      calibreLibrary = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre";
-    };
-  };
-
   # FreshRSS on local machine
   services.freshrss = {
     enable = true;
@@ -101,47 +65,6 @@
         devhosts = domains: lib.attrsets.mergeAttrsList (lib.lists.forEach domains devhost);
       in
       {
-        # for private web services
-        "calibre.p.localhost.thotep.net" = {
-          listenAddresses = [ "100.103.65.77" ];
-          useACMEHost = "localhost.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:8085
-          '';
-        };
-        "ebooks.p.localhost.thotep.net" = {
-          listenAddresses = [ "100.103.65.77" ];
-          useACMEHost = "localhost.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:40001
-          '';
-        };
-        "librechat.p.localhost.thotep.net" = {
-          listenAddresses = [ "100.103.65.77" ];
-          useACMEHost = "localhost.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:40010
-          '';
-        };
-        "contents.p.localhost.thotep.net" = {
-          listenAddresses = [ "100.103.65.77" ];
-          useACMEHost = "localhost.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:40020
-          '';
-        };
         "freshrss.p.localhost.thotep.net" = {
           listenAddresses = [ "100.103.65.77" ];
           useACMEHost = "localhost.thotep.net";

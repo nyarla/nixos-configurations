@@ -87,7 +87,7 @@
       }
       trap cleanup INT TERM
 
-      eval "$(/run/wrappers/bin/gnome-keyring-daemon --components=secrets,ssh,pkcs11 --replace)"
+      eval "$(/run/wrappers/bin/gnome-keyring-daemon --components=secrets,pkcs11 --replace)"
       export GNOME_KEYRING_CONTROL
 
       ${pkgs.labwc-hdr}/bin/labwc

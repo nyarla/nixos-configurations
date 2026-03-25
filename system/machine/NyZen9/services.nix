@@ -105,7 +105,7 @@
   };
 
   systemd.timers.backup = {
-    enable = false;
+    enable = true;
     description = "Automatic backup by restic and rclone";
     wantedBy = [ "timers.target" ];
     timerConfig = {

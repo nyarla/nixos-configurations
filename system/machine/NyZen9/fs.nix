@@ -117,9 +117,11 @@
         # for boot
         "etc"
         "etc/nixos"
+
         "var/db"
         "var/lib"
         "var/log"
+        "var/tmp"
 
         # for vm
         "var/lib/libvirt/images"
@@ -147,19 +149,25 @@
         "home/nyarla/.local/share/waydroid"
         "home/nyarla/.mozilla"
         "home/nyarla/.steam"
+
         "home/nyarla/Applications"
         "home/nyarla/Programming"
       ];
     }
     // backups {
       "Applications" = "/persist/home/nyarla/Applications";
+      "Archives" = "/persist/home/nyarla/Archives";
+      "Calibre" = "/persist/home/nyarla/Calibre";
       "Development" = "/persist/home/nyarla/Development";
       "Documents" = "/persist/home/nyarla/Documents";
+      "Music" = "/persist/home/nyarla/Music";
       "NixOS" = "/persist/etc/nixos";
+      "Pictures" = "/persist/home/nyarla/Pictures";
       "Programming" = "/persist/home/nyarla/Programming";
-      "Sources/DAW" = "/persist/home/nyarla/Sources/DAW";
+      "Sources" = "/persist/home/nyarla/Sources";
       "Sync" = "/persist/home/nyarla/Sync/Backup";
       "Thunderbird" = "/persist/home/nyarla/.thunderbird";
+      "eBooks" = "/persist/home/nyarla/eBooks";
 
       ".env.bws" = "/persist/home/nyarla/.config/rclone/env.bws";
     };
@@ -168,10 +176,6 @@
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
     "/nix"
-
-    "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre"
-    "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Music"
-    "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/eBooks"
 
     "/persist/etc"
     "/persist/etc/nixos"
@@ -187,12 +191,14 @@
     "/persist/home/nyarla/.mozilla"
     "/persist/home/nyarla/.steam"
     "/persist/home/nyarla/.wrangler"
+
     "/persist/home/nyarla/Applications"
     "/persist/home/nyarla/Programming"
 
     "/persist/var/db"
     "/persist/var/lib"
     "/persist/var/log"
+    "/persist/var/tmp"
 
     "/vm/main"
     "/vm/main/DAW/images"
@@ -214,6 +220,7 @@
       "/var/db"
       "/var/lib"
       "/var/log"
+      "/var/tmp"
     ];
     files = [ "/etc/machine-id" ];
 
@@ -228,13 +235,18 @@
         [
           # data
           "Applications"
+          "Archives"
+          "Calibre"
           "Development"
           "Documents"
           "Downloads"
+          "Music"
+          "Pictures"
           "Programming"
           "Reports"
           "Sources"
           "Sync"
+          "eBooks"
 
           # cache
           ".cache/act"
@@ -313,7 +325,6 @@
           ".local/share/unity3d"
           ".local/share/vlc"
           ".local/share/waydroid"
-          ".local/share/zrythm"
 
           # state
           ".local/state/wireplumber"
@@ -363,10 +374,6 @@
       snapshots = paths: lib.attrsets.concatMapAttrs (n: v: { "${n}" = snapshot v; }) paths;
     in
     snapshots {
-      data-music = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Music";
-      data-calibre = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/Calibre";
-      data-ebooks = "/persist/data/14887bd8-3e3c-4675-9e81-9027a050cdf7/eBooks";
-
       etc-nixos = "/persist/etc/nixos";
 
       home-nyarla = "/persist/home/nyarla";

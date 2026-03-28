@@ -23,6 +23,7 @@
       "input"
       "networkmanager"
       "storage"
+      "uinput"
 
       # graphic
       "render"

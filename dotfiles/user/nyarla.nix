@@ -31,9 +31,12 @@ _: {
   # -----------
 
   # git
-  programs.git.settings.user = {
-    name = "nyarla";
-    email = "nyarla@kalaclista.com";
+  programs.git = {
+    signing.format = null;
+    settings.user = {
+      name = "nyarla";
+      email = "nyarla@kalaclista.com";
+    };
   };
 
   # keychain (ssh)

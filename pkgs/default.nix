@@ -7,7 +7,7 @@ in
   # custom packages
   amd-run = require ./amd-run { gpuId = null; };
   aria-misskey = require ./aria-misskey { };
-  calibre = require ./calibre { inherit (prev) calibre; };
+  calibre = require ./calibre { };
   cskk = require ./cskk { };
   deadbeef-fb = require ./deadbeef-fb { };
   flare-app = require ./flare-app { };
@@ -35,7 +35,10 @@ in
   # fcitx5 packages
   fcitx5-fbterm = require ./fcitx5-fbterm { };
   fcitx5-cskk = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { };
-  fcitx5-cskk-qt5 = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { enableQt = true; };
+  fcitx5-cskk-qt5 = prev.libsForQt5.callPackage (import ./fcitx5-cskk) {
+    enableQt = true;
+    useQt6 = false;
+  };
   fcitx5-cskk-qt6 = prev.qt6Packages.callPackage (import ./fcitx5-cskk) {
     enableQt = true;
     useQt6 = true;
@@ -44,9 +47,9 @@ in
   # customized packages
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  labwc-hdr = (prev.labwc.override { wlroots_0_19 = prev.wlroots; }).overrideAttrs (finalAttrs: {
+  labwc-hdr = (prev.labwc.override { wlroots_0_19 = final.wlroots_20; }).overrideAttrs (finalAttrs: {
     pname = "${finalAttrs.pname}-hdr";
-    version = "0.9.4";
+    version = "0.9.6";
     src = prev.fetchFromGitHub {
       owner = "kode54";
       repo = "labwc";
@@ -54,6 +57,19 @@ in
       hash = "sha256-+CBYXzQAnB0+jhMqAmLk53krxl/Yqy4KStQyACgjFf8=";
     };
   });
+
+  labwc-toplevel-capture =
+    (prev.labwc.override { wlroots_0_19 = final.wlroots_20; }).overrideAttrs
+      (finalAttrs: {
+        pname = "${finalAttrs.pname}-toplevel-capture";
+        version = "0.9.5";
+        src = prev.fetchFromGitHub {
+          owner = "Consolatis";
+          repo = "labwc";
+          rev = "feature/toplevel_capture";
+          hash = "sha256-c3KsmE6uY434+QG1L70BEaYGmnjN9EyY8am6AdFPHbE=";
+        };
+      });
 
   steam = prev.steam.override (
     {
@@ -77,6 +93,18 @@ in
       cp ${../patches/tmux-3.6-utf8.h} utf8_default_width_cache.h
     '';
     patches = [ ../patches/tmux-3.6-utf8.patch ];
+  });
+
+  wlroots_20 = prev.wlroots.overrideAttrs (finalAttrs: rec {
+    inherit (finalAttrs) pname;
+    version = "0.20";
+    src = prev.fetchFromGitLab {
+      domain = "gitlab.freedesktop.org";
+      owner = "wlroots";
+      repo = "wlroots";
+      tag = version;
+      hash = "sha256-hVJlJiJK6+9RkgkmQzUzb8ypVMqsNhbQG6KfeCvxtb0=";
+    };
   });
 
   # custom wine-related packages

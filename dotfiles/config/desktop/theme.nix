@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   gtk = {
     enable = true;
@@ -18,6 +18,26 @@
     font = {
       name = "Sans";
       size = 9;
+    };
+
+    gtk3 = {
+      inherit (config.gtk)
+        enable
+        colorScheme
+        iconTheme
+        theme
+        font
+        ;
+    };
+
+    gtk4 = {
+      inherit (config.gtk)
+        enable
+        colorScheme
+        iconTheme
+        theme
+        font
+        ;
     };
   };
 

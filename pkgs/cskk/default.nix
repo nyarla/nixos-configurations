@@ -7,13 +7,12 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "cskk";
-  version = "v3.2.1";
+  version = "v3.3.0";
   src = fetchFromGitHub {
     owner = "naokiri";
     repo = "cskk";
-    rev = "v3.2.1";
-    hash = "sha256-olQ0ru5JPx3F0nL+EVR5rmR7nAfceUPSzaATRACJUJU=";
-
+    rev = version;
+    hash = "sha256-F4sqyqD8Qdc/mhPpINCFjzuWiBOKSat5YIT1WnoEHck=";
   };
 
   useFetchVendor = true;
@@ -26,6 +25,16 @@ rustPlatform.buildRustPackage rec {
   ];
 
   postInstall = ''
-    cargo cinstall --prefix=$out
+    cargo cinstall \
+      --prefix=$out \
+      --libdir=$out/lib \
+      --includedir=$out/include \
+      --pkgconfigdir=$out/lib/pkgconfig \
+      --datarootdir=$out/share
+
+    cd $out/lib
+    for f in $(ls cskk); do
+      ln -sf $out/lib/cskk/$f $f
+    done
   '';
 }

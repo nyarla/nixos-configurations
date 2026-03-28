@@ -7,7 +7,7 @@
 
   home.packages = with pkgs; [
     # wayland compositor
-    labwc-hdr
+    labwc-toplevel-capture
 
     swaybg
     swayidle
@@ -90,7 +90,7 @@
       eval "$(/run/wrappers/bin/gnome-keyring-daemon --components=secrets,pkcs11 --replace)"
       export GNOME_KEYRING_CONTROL
 
-      ${pkgs.labwc-hdr}/bin/labwc
+      labwc
       cleanup
     ''
   );

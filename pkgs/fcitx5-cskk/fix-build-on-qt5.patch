@@ -1,0 +1,15 @@
+--- a/gui/dictmodel.cpp.orig	2026-03-28 17:37:50.248467847 +0900
++++ b/gui/dictmodel.cpp	2026-03-28 18:04:34.512054905 +0900
+@@ -31,10 +31,10 @@
+ void SkkDictModel::defaults() {
+ #if FCITX_HAS_STANDARDPATHS
+   auto path = StandardPaths::fcitxPath("pkgdatadir", config_path.c_str());
+-  QFile f(path);
++  QFile f(QString::fromStdString(path.string()));
+ #else
+   auto path = StandardPath::fcitxPath("pkgdatadir", config_path.c_str());
+-  QFile f(path.data());
++  QFile f(QString::fromStdString(path.string()));
+ #endif
+   if (f.open(QIODevice::ReadOnly)) {
+     load(f);

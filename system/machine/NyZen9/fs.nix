@@ -93,15 +93,6 @@
         ];
         neededForBoot = false;
       };
-
-      "/vm/special" = {
-        device = "/dev/disk/by-uuid/653bc854-edfe-4c73-a535-07b38da44f19";
-        fsType = "btrfs";
-        options = btrfsRWOnly ++ [
-          "nodatacow"
-        ];
-        neededForBoot = false;
-      };
     }
     // subvol {
       inherit device;

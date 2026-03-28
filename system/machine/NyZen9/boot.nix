@@ -5,17 +5,15 @@
   boot.loader.systemd-boot.consoleMode = "max";
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # for dualboot windows
+  boot.loader.systemd-boot.windows = {
+    "11".efiDeviceHandle = "HD2b";
+  };
+
   # encrypted boot devices
   boot.initrd.luks.devices = {
     nixos = {
       device = "/dev/disk/by-uuid/2b254558-0847-48f0-93c6-31a26d588d01";
-      preLVM = true;
-      allowDiscards = true;
-      bypassWorkqueues = true;
-    };
-
-    windows = {
-      device = "/dev/disk/by-uuid/c8810d52-8e8b-4dd9-a09a-4f1c21e56e54";
       preLVM = true;
       allowDiscards = true;
       bypassWorkqueues = true;

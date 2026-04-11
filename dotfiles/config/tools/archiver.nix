@@ -6,7 +6,7 @@
     # dmg2img
     gnutar
     lzip
-    nodePackages.asar
+    asar
     p7zip
     # pbzx
     unrar

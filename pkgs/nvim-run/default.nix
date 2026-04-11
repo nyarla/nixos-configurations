@@ -9,31 +9,31 @@ let
     with pkgs;
     [
       # linter
+      actionlint
       deadnix
       hadolint
       shellcheck
       statix
-      actionlint
 
       # formatter
       go
       gotools
       nixfmt
-      nodePackages.prettier
       perlPackages.PerlTidy
+      prettier
       stylua
 
       # language server
+      bash-language-server
       gopls
       lua-language-server
       nixd
-      nodePackages.bash-language-server
-      nodePackages.typescript-language-server
-      nodePackages.vscode-langservers-extracted
       perlnavigator
       sqls
       tailwindcss-language-server
       taplo
+      typescript-language-server
+      vscode-langservers-extracted
 
       # all-in-one toolchains
       biome

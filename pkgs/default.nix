@@ -66,8 +66,8 @@ in
         src = prev.fetchFromGitHub {
           owner = "Consolatis";
           repo = "labwc";
-          rev = "feature/toplevel_capture";
-          hash = "sha256-c3KsmE6uY434+QG1L70BEaYGmnjN9EyY8am6AdFPHbE=";
+          tag = "feature/toplevel_capture";
+          hash = "sha256-M7aHLHomqpjL03fpCVm9WcusoyOOpScf7IOyvmQjOTA=";
         };
       });
 

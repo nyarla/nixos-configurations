@@ -83,7 +83,8 @@ in
           owner = "Consolatis";
           repo = "labwc";
           tag = "feature/toplevel_capture";
-          hash = "sha256-M7aHLHomqpjL03fpCVm9WcusoyOOpScf7IOyvmQjOTA=";
+          hash = "sha256-8JBfpF05nCPra36BSGATGPQZ/pGCmoZzcApNdX3E2UE=";
+
         };
       });
 

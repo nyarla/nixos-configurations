@@ -25,13 +25,12 @@
   };
 
   xdg.configFile."wivrn/config.json".text = builtins.toJSON {
-    bitrate = 50000000;
     scale = 1;
-    tcp-only = true;
+    tcp-only = false;
     encoders = [
       {
         encoder = "vaapi";
-        codec = "h265";
+        codec = "av1";
       }
     ];
     openvr-compat-path = "${pkgs.xrizer}/lib/xrizer";

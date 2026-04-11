@@ -31,9 +31,8 @@ in
         # luminous
         "org.freedesktop.impl.portal.InputCapture" = [ "luminous" ];
         "org.freedesktop.impl.portal.RemoteDesktop" = [ "luminous" ];
-        "org.freedesktop.impl.portal.ScreenCast" = [ "luminous" ];
-        "org.freedesktop.impl.portal.ScreenShot" = [ "luminous" ];
-        "org.freedesktop.impl.portal.Settings" = [ "luminous" ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+        "org.freedesktop.impl.portal.ScreenShot" = [ "wlr" ];
       };
     };
   };

@@ -88,20 +88,11 @@ in
         };
       });
 
-  steam = prev.steam.override (
-    {
-      extraLibraries ? _: [ ],
-      ...
-    }:
-    {
-      extraLibraries =
-        pkgs':
-        (extraLibraries pkgs')
-        ++ [
-          pkgs'.gperftools
-        ];
-    }
-  );
+  steam = prev.steam.override {
+    extraProfile = ''
+      unset TZ
+    '';
+  };
 
   thunderbird-bin-unwrapped = prev.thunderbird-bin-unwrapped.override { systemLocale = "ja_JP"; };
 

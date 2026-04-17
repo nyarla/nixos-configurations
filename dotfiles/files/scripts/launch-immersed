@@ -2,7 +2,4 @@
 
 set -euo pipefail
 
-hyprctl dispatch workspace +1
-
-amd-run \
-  env HOME=/persist/home/nyarla immersed
+env HOME=/persist/home/nyarla immersed

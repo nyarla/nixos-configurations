@@ -7,4 +7,12 @@ adb devices
 
 systemctl --user stop wivrn
 
-amd-run wivrn-dashboard
+export XRT_COMPOSITOR_LOG="debug";
+export XRT_PRINT_OPTIONS="on";
+export IPC_EXIT_ON_DISCONNECT="off";
+export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1
+
+export U_PACING_APP_USE_MIN_FRAME_PERIOD=1
+export U_PACING_COMP_MIN_TIME_MS=5
+
+wivrn-dashboard

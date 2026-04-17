@@ -57,29 +57,4 @@
 
   zramSwap.enable = true;
   zramSwap.memoryPercent = 50;
-
-  # dynamic loading to kernel modules for amd
-  systemd.services.amdgpu-kernel-modules = {
-    enable = true;
-    wantedBy = [ "multi-user.target" ];
-    path = [
-      pkgs.kmod
-    ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
-      ExecStart = toString (
-        pkgs.writeShellScript "load-nvidia-kmod.sh" ''
-          set -euo pipefail
-          modprobe amdgpu || exit 1
-        ''
-      );
-      ExecStop = toString (
-        pkgs.writeShellScript "unload-nvidia-kmod.sh" ''
-          set -euo pipefail
-          modprobe -r amdgpu || exit 1
-        ''
-      );
-    };
-  };
 }

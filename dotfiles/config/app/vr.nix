@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     wayvr
     cage
-    wivrn-stable
+    wivrn
   ];
 
   xdg.configFile."openxr/1/active_runtime.json".source =
@@ -25,12 +25,10 @@
   };
 
   xdg.configFile."wivrn/config.json".text = builtins.toJSON {
-    scale = 1;
-    tcp-only = false;
     encoders = [
       {
-        encoder = "vaapi";
-        codec = "av1";
+        encoder = "raw";
+        codec = "raw";
       }
     ];
     openvr-compat-path = "${pkgs.xrizer}/lib/xrizer";

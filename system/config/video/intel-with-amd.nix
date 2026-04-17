@@ -1,11 +1,13 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   boot = {
-    initrd.kernelModules = [ "i915" ];
+    initrd.kernelModules = [
+      "i915"
+      "amdgpu"
+    ];
     kernelParams = [
       "i915.enable_guc=3"
     ];
-    blacklistedKernelModules = [ "amdgpu" ];
   };
 
   hardware = {
@@ -17,12 +19,58 @@
       extraPackages = with pkgs; [
         intel-media-driver
         libvdpau-va-gl
-        rocmPackages.clr.icd
       ];
       extraPackages32 = with pkgs.driversi686Linux; [
         intel-media-driver
         libvdpau-va-gl
       ];
+    };
+
+    amdgpu = {
+      overdrive = {
+        enable = true;
+        ppfeaturemask = "0xffffffff";
+      };
+      opencl.enable = true;
+    };
+  };
+
+  services.lact = {
+    enable = true;
+    settings = {
+      version = 5;
+
+      daemon = {
+        log_level = "info";
+        admin_group = "wheel";
+        disable_clocks_cleanup = false;
+      };
+
+      apply_settings_timer = 5;
+      current_profile = null;
+      auto_switch_profiles = true;
+
+      gpus = {
+        "1002:7550-148C:2436-0000:0d:00.0" = {
+          performance_level = "manual";
+          power_profile_mode_index = 2; # Power saving
+        };
+      };
+
+      profiles = {
+        VR = {
+          gpus = {
+            "1002:7550-148C:2436-0000:0d:00.0" = {
+              performance_level = "manual";
+              power_profile_mode_index = 4; # VR
+            };
+          };
+          rule = {
+            type = "process";
+            filter.name = "wivrn-server";
+          };
+        };
+      };
     };
   };
 

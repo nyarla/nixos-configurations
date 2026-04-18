@@ -49,17 +49,17 @@ in
 
   gemini-cli-pinned = prev.gemini-cli.overrideAttrs (finalAttrs: rec {
     pname = "gemini-cli-pinned";
-    version = "0.37.1";
+    version = "0.38.2";
     src = prev.fetchFromGitHub {
       inherit (finalAttrs.src) owner repo;
       rev = "v${version}";
-      hash = "sha256-1InZ8lJ1RgE4PbKR77rtJvGNQq6A1HDC+1nARfsVacs=";
+      hash = "sha256-DPJMpm+hOQQxG87/NyrCrlomeR4AD1WNfNoIsdaakaE=";
     };
 
     npmDeps = prev.fetchNpmDeps {
       inherit src;
       inherit (finalAttrs) postPatch;
-      hash = "sha256-Fj+kLCOJNLH/gQRlBN3QdCCgG4Q49o6Gq6VUmg8p/lY=";
+      hash = "sha256-6UnLSmKdnXwEXgGcyRTibDkEqvlRr75e3fRld0v6T2s=";
     };
   });
 

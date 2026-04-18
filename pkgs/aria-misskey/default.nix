@@ -5,7 +5,7 @@
   fetchFromGitHub,
   fetchurl,
 
-  flutter338,
+  flutter,
   rustPlatform,
   cargo,
   yq,
@@ -17,14 +17,13 @@
 }:
 let
   pname = "aria";
-  version = "v1.4.2";
+  version = "v1.4.9";
 
   source = fetchFromGitHub {
     owner = "poppingmoon";
     repo = pname;
     rev = version;
-    hash = "sha256-rf1vl8Bbu2srb8mE+Ia788K99Coihz3SA5uPbyK6MYo=";
-    fetchSubmodules = true;
+    hash = "sha256-U6Mz2gHKRm4Qazr2UOOYebm5m36qTIIYAao0a1WPD3Q=";
   };
 
   src = runCommand "aria-src" { } ''
@@ -63,8 +62,8 @@ let
       { version, src, ... }:
       let
         libisar = fetchurl {
-          url = "https://github.com/isar-community/isar-community/releases/download/3.2.1/libisar_linux_x64.so";
-          sha256 = "0kbabshlzxza8iq398x5hq0afrl761kz1k2fz79v7rjvw4fwdihg";
+          url = "https://github.com/isar-community/isar-community/releases/download/3.3.2/libisar_linux_x64.so";
+          sha256 = "0n8j4npinwxqbjjlhy671hpy66lacxj7f8g72gbgp8b2rkxj290l";
         };
       in
       stdenv.mkDerivation rec {
@@ -87,7 +86,7 @@ let
       };
   };
 in
-flutter338.buildFlutterApplication rec {
+flutter.buildFlutterApplication rec {
   inherit pname version src;
 
   pubspecLock =
@@ -101,22 +100,22 @@ flutter338.buildFlutterApplication rec {
   inherit customSourceBuilders;
 
   gitHashes = {
+    animated_image = "sha256-AMsx73y+rxftbr2HMbyEG2PMSGBxQsTkGej5q9Vmyww=";
     flutter_apns_only = "sha256-5KlICoKqekSE4LCzd1MP+o8Ezq0xLZmzeAQZExXBalM=";
     flutter_cache_manager = "sha256-4sMjeSMOsEicIVLdY+evnl0HbvMcm4PLG8JL4e4yxBE=";
     flutter_highlighting = "sha256-5t4hXvqkhwohTuFoeVycwb9HKZDDug+HjkGPeItVrTk=";
     fvp = "sha256-PCXmoZhrfavvX2W1hDtECh6KncHLam+JYAYMG7wjFZs=";
     highlighting = "sha256-r2rMvgHt312F64dy4aIRr+eD9Q0sJ7eGe6DGP57t50M=";
     image_compression = "sha256-9RBjKId8TYdx3O0wT2We8FbCiJYkqJlyBY7TYDUxsMg=";
-    isar_community_flutter_libs = "sha256-Ff8Y0K0djQP1AgnttZdNbnWCJl6svWLd1lt14/tsF/o=";
-    isar_community_generator = "sha256-t27LINKquVH8M9wc+NGwNm8dw1fkAAhvI+LBwLW2FVo=";
-    # material_off_icons = "sha256-jMO1abOm1YgFAAbFaTFgTjrmQGW6d7Z1J4o2wTynto4=";
+    isar_community_flutter_libs = "sha256-FPDIuBrEW7LnsPYS2rZq945lNbW/waPYBaIUOSVh+ZA=";
+    isar_community_generator = "sha256-FPDIuBrEW7LnsPYS2rZq945lNbW/waPYBaIUOSVh+ZA=";
     mfm_parser = "sha256-fwhKTPbuuEtimWhtUxsDNqHb0TDBqjdsNQN0RIq7Rq0=";
-    misskey_dart = "sha256-SLiSlQu08oGMrgKFbyjpWSh48BuvNxmps7BWqeM0Nrs=";
+    misskey_dart = "sha256-+qNkeB5RfUscxkUPW68oraCgRvYYAJEgCh9/sqtB4HQ=";
     receive_sharing_intent = "sha256-8D5ZENARPZ7FGrdIErxOoV3Ao35/XoQ2tleegI42ZUY=";
     tinycolor2 = "sha256-RGjhuX6487TJ2ofNdJS1FCMl6ciKU0qkGKg4yfkPE+w=";
     twemoji_v2 = "sha256-liX5FrM5lgJUXo6HfgIgiY4MnnvCNRYIY7nOTkrSt6k=";
     unifiedpush_android = "sha256-SXidD6t7xRA5bXma7UPbw331d9zjdU1Bp/H9I8VLLs4=";
-    webcrypto = "sha256-AELwdBRSBcjHNlprlFXoP5rKOG6J5PG3cwTa+gZps6U=";
+    webcrypto = "sha256-ghmBqp/TPFZTDqRyeS5wjwJMY6FVpcM+vdyLPSCUbSw=";
   };
 
   targetFlutterPlatform = "linux";

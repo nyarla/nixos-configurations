@@ -56,6 +56,7 @@
 
       backup = path: dest: {
         "/backup/${path}" = {
+          fsType = "auto";
           device = dest;
           options = [ "bind" ];
         };

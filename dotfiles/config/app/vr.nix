@@ -27,8 +27,8 @@
   xdg.configFile."wivrn/config.json".text = builtins.toJSON {
     encoders = [
       {
-        encoder = "raw";
-        codec = "raw";
+        encoder = "vulkan";
+        codec = "av1";
       }
     ];
     openvr-compat-path = "${pkgs.xrizer}/lib/xrizer";

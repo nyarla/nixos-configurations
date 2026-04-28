@@ -22,12 +22,12 @@ in
 (carla.override {
   stdenv = multiStdenv;
 }).overrideAttrs
-  (old: rec {
-    version = "2025-10-09"; # keep same version of ildaeil
+  (old: {
+    version = "2026-02-22"; # keep same version of ildaeil
     src = fetchFromGitHub {
       inherit (old.src) owner repo;
-      rev = "1d8dcb5aab5e0c30352e9f928ce3e40cbc86a439";
-      hash = "sha256-jLEwzp2mpHKXwu8zvz7eNPTNoH5UdhGt1lB10/YLCcg=";
+      rev = "294a80145e39c0755ab9073d90fd8b9524fbfc84";
+      hash = "sha256-rOjFxk0KbnnPpRJUWcN5W1A2pDGIdztwK4LL5hPb+sQ=";
       fetchSubmodules = true;
     };
 
@@ -46,7 +46,7 @@ in
 
     patches = [ ./nixos.patch ];
 
-    postPatch = old.postPatch + ''
+    postPatch = (old.postPatch or "") + ''
       export carla=$out
       export wine=${wine}
 

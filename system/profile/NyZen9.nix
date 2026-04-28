@@ -2,6 +2,7 @@ _: {
   imports = [
     ../machine/NyZen9/default.nix
 
+    ../config/audio/daw.nix
     ../config/audio/pipewire.nix
     ../config/cpu/amd.nix
     ../config/desktop/app.nix

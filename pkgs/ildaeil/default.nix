@@ -23,14 +23,14 @@
   xorg,
   zstd,
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "ildaeil";
-  version = "2025-08-02";
+  version = "2026-02-22";
   src = fetchFromGitHub {
     owner = "DISTRHO";
     repo = "Ildaeil";
-    rev = "ae243919d592055d1e7806c8e47d847771da39d0";
-    hash = "sha256-YPtA07+xipjOOgpPQ055nukvqT+UhhRz9W+U/SnmE08=";
+    rev = "af9fc9f73b1a1832da8d6dfa12f7d03c431293d6";
+    hash = "sha256-7oayKRqAHXEkf3PMsma3HfuHYXrNNR+xkrHyYrZ7s5I=";
     fetchSubmodules = true;
   };
 

@@ -254,8 +254,10 @@
           ".config/Bitwarden"
           ".config/EDRLab.ThoriumReader"
           ".config/GIMP"
+          ".config/Helio"
           ".config/Kvantum"
           ".config/MusicBrainz"
+          ".config/Plogue"
           ".config/Proton Pass"
           ".config/Thunar"
           ".config/Valve"
@@ -268,6 +270,7 @@
           ".config/dconf"
           ".config/deadbeef"
           ".config/easytag"
+          ".config/falkTX"
           ".config/fcitx5"
           ".config/flatpak"
           ".config/gh"
@@ -320,6 +323,7 @@
           ".local/share/waydroid"
 
           # state
+          ".local/state/syncthing"
           ".local/state/wireplumber"
 
           # application

@@ -32,6 +32,11 @@ in
   xdg-desktop-portal-hypr-remote = require ./xdg-desktop-portal-hypr-remote { };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 
+  # chipsynth
+  chipsynth = {
+    sfc = require ./chipsynth/sfc.nix { };
+  };
+
   # fcitx5 packages
   fcitx5-fbterm = require ./fcitx5-fbterm { };
   fcitx5-cskk = prev.libsForQt5.callPackage (import ./fcitx5-cskk) { };
@@ -117,6 +122,10 @@ in
 
   # custom wine-related packages
   carla-with-wine = require ./carla {
+    wine = prev.wineWow64Packages.yabridge;
+  };
+
+  ildaeil = require ./ildaeil {
     wine = prev.wineWow64Packages.yabridge;
   };
 

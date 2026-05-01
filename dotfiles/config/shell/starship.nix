@@ -1,7 +1,24 @@
-_: {
+{ pkgs, lib, ... }:
+let
+  starship-wrapped =
+    let
+      PATH = lib.makeBinPath (
+        with pkgs;
+        [
+          gitFull
+        ]
+      );
+    in
+    pkgs.writeShellScriptBin "starship" ''
+      export PATH=${PATH}:$PATH
+      exec -a starship ${lib.getExe pkgs.starship} "''${@:-}"
+    '';
+in
+{
   programs.bash.enable = true;
 
   programs.starship = {
+    package = starship-wrapped;
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;

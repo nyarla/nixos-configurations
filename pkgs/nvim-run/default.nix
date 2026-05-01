@@ -8,6 +8,9 @@ let
   PATH = lib.makeBinPath (
     with pkgs;
     [
+      # git
+      gitFull
+
       # linter
       actionlint
       deadnix

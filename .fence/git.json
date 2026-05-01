@@ -1,0 +1,39 @@
+{
+  "extends": "@base",
+  "filesystem": {
+    "allowGitConfig": true,
+    "allowRead": [
+      "~/.config/fence/sgit.json",
+      "~/.config/git/",
+      "~/.ssh/id_ed25519.pub",
+      "./dotfiles/",
+      "./lib/",
+      "./patches/",
+      "./pkgs/",
+      "./system",
+      ".fence.json",
+      ".gitignore",
+      ".secretlintrc.json",
+      "flake.lock",
+      "flake.nix"
+    ],
+    "allowWrite": [".git", "~/.ssh/known_hosts", "~/.ssh/known_hosts.old"],
+    "defaultReadDeny": true
+  },
+  "network": {
+    "allowedDomains": [
+      "github.com",
+      "gitlab.com",
+      "codeberg.org",
+      "api.github.com",
+      "codeload.github.com",
+      "lfs.github.com",
+      "objects.githubusercontent.com"
+    ],
+    "allowedUnixSockets": ["/run/user/*/gnupg/S.gpg-agent.ssh"]
+  },
+  "ssh": {
+    "allowAllCommands": true,
+    "allowedHosts": ["github.com", "gitlab.com", "codeberg.org"]
+  }
+}

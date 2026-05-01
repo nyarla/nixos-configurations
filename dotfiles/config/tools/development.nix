@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    # sandboxed app
+    fence-sandboxed
+
     # container toolchain
     act
 
@@ -27,7 +30,6 @@
     bun
     editorconfig-core-c
     nodejs
-    nvim-run
 
     # vcs
     git-lfs

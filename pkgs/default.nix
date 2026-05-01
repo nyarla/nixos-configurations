@@ -10,6 +10,7 @@ in
   calibre = require ./calibre { };
   cskk = require ./cskk { };
   deadbeef-fb = require ./deadbeef-fb { };
+  fence-sandboxed = require ./fence-sandboxed { };
   flare-app = require ./flare-app { };
   fluent-kde = require ./fluent-kde { };
   galendae = require ./galendae { };

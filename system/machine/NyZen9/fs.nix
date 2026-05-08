@@ -317,6 +317,7 @@
           ".local/share/nvim"
           ".local/share/pixelorama"
           ".local/share/proton-authenticator"
+          ".local/share/proton-pass-cli"
           ".local/share/remmina"
           ".local/share/unity3d"
           ".local/share/vlc"

@@ -4,6 +4,9 @@
     # sandboxed app
     fence-sandboxed
 
+    # credential manager
+    proton-pass-cli
+
     # container toolchain
     act
 
@@ -27,9 +30,7 @@
     nurl
 
     # editor
-    bun
     editorconfig-core-c
-    nodejs
 
     # vcs
     git-lfs

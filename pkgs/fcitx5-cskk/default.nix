@@ -3,7 +3,6 @@
   lib,
   fetchFromGitHub,
   cmake,
-  extra-cmake-modules,
   pkg-config,
   gettext,
   fcitx5,
@@ -14,6 +13,7 @@
   skkDictionaries,
   enableQt ? false,
   useQt6 ? true,
+  kdePackages,
 }:
 stdenv.mkDerivation rec {
   pname = "fcitx5-cskk";
@@ -31,9 +31,9 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
-    extra-cmake-modules
     pkg-config
     gettext
+    kdePackages.extra-cmake-modules
   ]
   ++ lib.optional enableQt wrapQtAppsHook;
 

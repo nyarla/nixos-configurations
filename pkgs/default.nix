@@ -88,10 +88,13 @@ in
         src = prev.fetchFromGitHub {
           owner = "Consolatis";
           repo = "labwc";
-          tag = "feature/toplevel_capture";
-          hash = "sha256-8JBfpF05nCPra36BSGATGPQZ/pGCmoZzcApNdX3E2UE=";
-
+          tag = "backup/feature_toplevel_capture";
+          hash = "sha256-9gdflM5HkQgod9/FwYF661fbsV1aleBQef5Sq7uJAaQ=";
         };
+
+        mesonFlags = (finalAttrs.mesonFlags or [ ]) ++ [
+          "-Dsystemd-session=disabled"
+        ];
       });
 
   steam = prev.steam.override {

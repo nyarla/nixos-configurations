@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ lib, ... }:
 let
   theme = import ../../../lib/theme.nix;
 in
@@ -23,6 +23,4 @@ in
       cyan95
       gray100
     ] (x: lib.strings.replaceString "#" "" x);
-
-  console.earlySetup = true;
 }

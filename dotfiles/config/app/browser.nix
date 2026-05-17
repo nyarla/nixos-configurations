@@ -14,7 +14,6 @@
 
   home.packages = with pkgs; [
     aria-misskey
-    flare-app
     telegram-desktop
     thunderbird-bin
 

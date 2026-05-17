@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     wayvr
     cage
-    wivrn
+    wivrn-stable
   ];
 
   xdg.configFile."openxr/1/active_runtime.json".source =

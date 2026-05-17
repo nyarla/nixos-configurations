@@ -1,23 +1,5 @@
+{ lib, ... }:
 {
-  pkgs,
-  config,
-  lib,
-  ...
-}:
-{
-  # FreshRSS on local machine
-  services.freshrss = {
-    enable = true;
-    baseUrl = "https://freshrss.p.localhost.thotep.net";
-    virtualHost = "freshrss.p.localhost.thotep.net";
-
-    defaultUser = "nyarla";
-    passwordFile = "/var/lib/freshrss/password";
-
-    language = "ja";
-    webserver = "caddy";
-  };
-
   # httpd
   security.acme = {
     acceptTerms = true;
@@ -29,54 +11,77 @@
       environmentFile = "/persist/var/lib/acme/cloudflare";
     };
 
-    certs."localhost.thotep.net" = {
+    certs."services.thotep.net" = {
       extraDomainNames = [
-        "*.localhost.thotep.net"
-        "*.p.localhost.thotep.net"
-        "*.f.localhost.thotep.net"
+        "*.services.thotep.net"
+        "*.fedi.thotep.net"
       ];
     };
   };
 
-  systemd.services.caddy.serviceConfig.ExecStartPre = toString (
-    pkgs.writeShellScript "wait.sh" ''
-      while [[ -z "$(${pkgs.tailscale}/bin/tailscale ip | head -n1)" ]]; do
-        sleep 1
-      done
-    ''
-  );
-  services.caddy = {
+  # FreshRSS for localhost
+  services.freshrss = {
     enable = true;
-    virtualHosts =
-      let
-        devhost = domain: {
-          "${domain}" = {
-            listenAddresses = [ "100.103.65.77" ];
-            useACMEHost = "localhost.thotep.net";
-            logFormat = ''
-              output stdout
-            '';
-            extraConfig = ''
-              reverse_proxy 127.0.0.1:21515
-            '';
-          };
-        };
+    baseUrl = "https://freshrss.services.thotep.net";
+    virtualHost = "freshrss.services.thotep.net";
 
-        devhosts = domains: lib.attrsets.mergeAttrsList (lib.lists.forEach domains devhost);
+    defaultUser = "nyarla";
+    passwordFile = "/var/lib/freshrss/password";
+
+    language = "ja";
+  };
+  services.nginx.virtualHosts."freshrss.services.thotep.net" = {
+    useACMEHost = "services.thotep.net";
+    forceSSL = true;
+    listen =
+      let
+        addr = "100.103.65.77";
       in
-      {
-        "freshrss.p.localhost.thotep.net" = {
-          listenAddresses = [ "100.103.65.77" ];
-          useACMEHost = "localhost.thotep.net";
-          logFormat = ''
-            output stdout
-          '';
-        };
-      }
-      // devhosts [
-        "gts.f.localhost.thotep.net"
-        "misskey.f.localhost.thotep.net"
-        "mstdn.f.localhost.thotep.net"
+      lib.mkForce [
+        {
+          inherit addr;
+          port = 80;
+          ssl = false;
+        }
+        {
+          inherit addr;
+          port = 443;
+          ssl = true;
+        }
       ];
+  };
+
+  # nginx frontend
+  users.users.nginx.extraGroups = [ "acme" ];
+  services.nginx.enable = true;
+  services.nginx.virtualHosts."*.fedi.thotep.net" = {
+    useACMEHost = "services.thotep.net";
+    forceSSL = true;
+    listen =
+      let
+        addr = "100.103.65.77";
+      in
+      [
+        {
+          inherit addr;
+          port = 80;
+          ssl = false;
+        }
+        {
+          inherit addr;
+          port = 443;
+          ssl = true;
+        }
+      ];
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:21515";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+      '';
+    };
   };
 }

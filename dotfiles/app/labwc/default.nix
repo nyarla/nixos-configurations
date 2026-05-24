@@ -7,7 +7,7 @@
 
   home.packages = with pkgs; [
     # wayland compositor
-    labwc-toplevel-capture
+    labwc-git
 
     swaybg
     swayidle
@@ -68,6 +68,8 @@
       export XDG_CURRENT_DESKTOP=labwc:wlroots
       export XDG_SESSION_CLASS=user
       export XDG_SESSION_TYPE=wayland
+
+      export WLR_RENDERER=vulkan
 
       if systemctl --user -q is-active desktop-session.target ; then
         echo "Desktop session already exists." >&2

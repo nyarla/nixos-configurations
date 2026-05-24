@@ -69,27 +69,16 @@ in
     };
   });
 
-  labwc-hdr = (prev.labwc.override { wlroots_0_19 = final.wlroots_20; }).overrideAttrs (finalAttrs: {
-    pname = "${finalAttrs.pname}-hdr";
-    version = "0.9.6";
-    src = prev.fetchFromGitHub {
-      owner = "kode54";
-      repo = "labwc";
-      tag = "hdr-support";
-      hash = "sha256-+CBYXzQAnB0+jhMqAmLk53krxl/Yqy4KStQyACgjFf8=";
-    };
-  });
-
-  labwc-toplevel-capture =
-    (prev.labwc.override { wlroots_0_19 = final.wlroots_20; }).overrideAttrs
+  labwc-git =
+    (prev.labwc.override { wlroots_0_19 = final.wlroots_0_20_1; }).overrideAttrs
       (finalAttrs: {
-        pname = "${finalAttrs.pname}-toplevel-capture";
+        inherit (finalAttrs) pname;
         version = "0.9.5";
         src = prev.fetchFromGitHub {
-          owner = "Consolatis";
+          owner = "labwc";
           repo = "labwc";
-          tag = "backup/feature_toplevel_capture";
-          hash = "sha256-9gdflM5HkQgod9/FwYF661fbsV1aleBQef5Sq7uJAaQ=";
+          rev = "bce14a5ad7981e9ab99dc5b75a922438930ff39b";
+          hash = "sha256-c7ZmnAV53CouHBGiz2HlOolr31zq/jG410EDcQCXlHU=";
         };
 
         mesonFlags = (finalAttrs.mesonFlags or [ ]) ++ [
@@ -112,15 +101,15 @@ in
     patches = [ ../patches/tmux-3.6-utf8.patch ];
   });
 
-  wlroots_20 = prev.wlroots.overrideAttrs (finalAttrs: rec {
+  wlroots_0_20_1 = prev.wlroots_0_20.overrideAttrs (finalAttrs: {
     inherit (finalAttrs) pname;
-    version = "0.20";
+    version = "0.20.1";
     src = prev.fetchFromGitLab {
       domain = "gitlab.freedesktop.org";
       owner = "wlroots";
       repo = "wlroots";
-      tag = version;
-      hash = "sha256-hVJlJiJK6+9RkgkmQzUzb8ypVMqsNhbQG6KfeCvxtb0=";
+      rev = "a7f20066270c042799ae70b71dfa4d561ba85121";
+      hash = "sha256-uuc1dn13FXvFSBvE3+QOi35rLJZmWIUst64oaXGdPFk=";
     };
   });
 

@@ -54,4 +54,9 @@ _: {
 
     ../config/services/nyzen9.nix
   ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "nodejs-20.20.2"
+    "nodejs-slim-20.20.2"
+  ];
 }

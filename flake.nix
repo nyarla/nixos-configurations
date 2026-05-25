@@ -80,9 +80,7 @@
             hostname = "nixos";
             profile = import ./system/profile/NyZen9.nix;
             system = "x86_64-linux";
-            patches = [
-              ./patches/hyprland-plugins-v0.54.0.patch
-            ];
+            patches = [ ];
             overlays = [
               wayland.overlay
               (import ./pkgs/temporary.nix { inherit nixpkgs stable; })

@@ -64,10 +64,15 @@
             bindkey '^P' __bind-clipboard
           fi
         '';
+
+        sandbox = lib.mkOrder 552 ''
+          alias nix="env PATH=${pkgs.gitFull}/bin:$PATH nix"
+        '';
       in
       lib.mkMerge [
         options
         functions
+        sandbox
       ];
 
     # aliases
@@ -81,6 +86,8 @@
         inherit ls;
         l = "${ls} -l";
         ll = "${ls} -la";
+
+        git = "${pkgs.sandboxed-commands.git}/bin/git";
 
         docker = podman;
         inherit podman;

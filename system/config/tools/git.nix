@@ -2,6 +2,6 @@
 {
   programs.git = {
     enable = true;
-    package = pkgs.fence-sandboxed;
+    package = pkgs.sandboxed-commands.git;
   };
 }

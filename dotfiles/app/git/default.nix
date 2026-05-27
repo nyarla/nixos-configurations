@@ -3,7 +3,7 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    package = pkgs.fence-sandboxed;
+    package = pkgs.gitFull;
     settings = {
       alias = {
         ci = "commit";

@@ -1,9 +1,6 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # sandboxed app
-    fence-sandboxed
-
     # credential manager
     proton-pass-cli
 

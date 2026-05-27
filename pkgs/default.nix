@@ -1,5 +1,4 @@
-{ nixpkgs, ... }:
-final: prev:
+_: final: prev:
 let
   require = path: prev.callPackage (import path);
 in
@@ -10,7 +9,6 @@ in
   calibre = require ./calibre { };
   cskk = require ./cskk { };
   deadbeef-fb = require ./deadbeef-fb { };
-  fence-sandboxed = require ./fence-sandboxed { };
   flare-app = require ./flare-app { };
   fluent-kde = require ./fluent-kde { };
   galendae = require ./galendae { };
@@ -25,6 +23,7 @@ in
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };
   rocm-shell = require ./rocm-shell { };
+  sandboxed-commands = require ./sandboxed-commands { };
   sec = require ./sec { };
   skk-dicts-xl = require ./skk-dicts-xl { };
   thorium-reader = require ./thorium-reader { };

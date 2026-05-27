@@ -1,9 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    fence
-    fence-sandboxed
-  ];
+  home.packages = (with pkgs; [ fence ]) ++ (with pkgs.sandboxed-commands; [ nvim ]);
 
   xdg.configFile = {
     "fence/fence.json".text = builtins.toJSON {
@@ -30,7 +27,7 @@
       };
     };
 
-    "fence/sgit.json".text =
+    "fence/git.json".text =
       let
         allowedHosts = [
           "github.com"

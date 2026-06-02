@@ -45,7 +45,7 @@
           sensors = [
             (sensor "cpu" "k10temp" 1)
             (sensor "nvme-pci-0100" "nvme-pci-0100" 1)
-            (sensor "nvme-pci-0800" "nvme-pci-0800" 1)
+            (sensor "nvme-pci-0500" "nvme-pci-0500" 1)
           ];
           curves = [
             (curve "cpu" "cpu" {
@@ -56,7 +56,7 @@
               "30" = 100;
               "65" = 255;
             })
-            (curve "nvme-pci-0800" "nvme-pci-0800" {
+            (curve "nvme-pci-0500" "nvme-pci-0500" {
               "30" = 100;
               "65" = 255;
             })
@@ -65,9 +65,8 @@
               function = {
                 type = "average";
                 curves = [
-                  "cpu"
                   "nvme-pci-0100"
-                  "nvme-pci-0800"
+                  "nvme-pci-0500"
                 ];
               };
             }

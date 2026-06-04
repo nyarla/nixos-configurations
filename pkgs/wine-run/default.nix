@@ -19,15 +19,15 @@ let
       exit 1
     fi
 
-    export WINEPREFIX=$(pwd)
-    export WINE_BIN=$(which .wine)
+    export WINEPREFIX="$(pwd)"
+    export WINE_BIN="$(which .wine)"
     exec "''${@:-}"
   '';
 
   wine-setup = writeShellScript "${pname}-setup" ''
-    ${wine-run} wineboot -u
-    ${wine-run} winetricks corefonts fakejapanese
-    ${wine-run} wineboot -s
+    ${wine-runtime} wineboot -u
+    ${wine-runtime} winetricks corefonts fakejapanese
+    ${wine-runtime} wineboot -s
   '';
 
   wine-run = writeShellScript "${pname}-wine" ''

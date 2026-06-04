@@ -6,6 +6,8 @@ _: {
   hardware.bluetooth.settings = {
     General = {
       Enable = "Source,Sink,Media,Socket";
+      ClassicBondedOnly = "false";
+      UserspaceHID = "false";
     };
   };
 }

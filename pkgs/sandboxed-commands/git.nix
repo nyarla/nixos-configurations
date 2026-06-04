@@ -21,6 +21,7 @@ callPackage ./wrapper.nix {
       ];
 
       allowWrite = [
+        "."
         ".git"
         "~/.ssh/known_hosts"
         "~/.ssh/known_hosts.old"
@@ -61,6 +62,6 @@ callPackage ./wrapper.nix {
   };
   extraInit = ''
     export PATH=${gitFull}/bin:${nodejs}/bin:$PATH
-    export GIT_SSH_COMMAND='ssh -F /dev/null -o "ProxyCommand=nc -X 5 x 127.0.0.1:1080 %h %p"'
+    export GIT_SSH_COMMAND='ssh -F /dev/null -o "ProxyCommand=nc -X 5 -x 127.0.0.1:1080 %h %p"'
   '';
 }

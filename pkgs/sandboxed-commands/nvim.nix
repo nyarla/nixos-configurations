@@ -45,7 +45,7 @@ let
                 "~/Applications/Programs/textlint"
               ];
               allowExecute = [
-                "~/Applications/Programs/textlint/bin"
+                "~/Applications/Programs/textlint/bin/*"
               ];
               allowWrite = [
                 "."
@@ -155,9 +155,11 @@ let
 
   nvim-textern = mkWrappedApp "nvim-textern" {
     settings = {
-      allowWrite = [
-        "/run/user/1000/textern/**"
-      ];
+      filesystem = {
+        allowWrite = [
+          "/run/user/1000/textern/**"
+        ];
+      };
     };
   };
 in

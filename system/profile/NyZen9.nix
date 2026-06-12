@@ -56,6 +56,7 @@ _: {
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
     "nodejs-20.20.2"
     "nodejs-slim-20.20.2"
   ];

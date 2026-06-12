@@ -7,7 +7,7 @@
 
   home.packages = with pkgs; [
     # wayland compositor
-    labwc-git
+    labwc
 
     swaybg
     swayidle

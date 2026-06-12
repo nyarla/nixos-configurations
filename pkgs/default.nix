@@ -68,23 +68,6 @@ in
     };
   });
 
-  labwc-git =
-    (prev.labwc.override { wlroots_0_19 = final.wlroots_0_20_1; }).overrideAttrs
-      (finalAttrs: {
-        inherit (finalAttrs) pname;
-        version = "0.9.5";
-        src = prev.fetchFromGitHub {
-          owner = "labwc";
-          repo = "labwc";
-          rev = "bce14a5ad7981e9ab99dc5b75a922438930ff39b";
-          hash = "sha256-c7ZmnAV53CouHBGiz2HlOolr31zq/jG410EDcQCXlHU=";
-        };
-
-        mesonFlags = (finalAttrs.mesonFlags or [ ]) ++ [
-          "-Dsystemd-session=disabled"
-        ];
-      });
-
   steam = prev.steam.override {
     extraProfile = ''
       unset TZ
@@ -98,18 +81,6 @@ in
       cp ${../patches/tmux-3.6-utf8.h} utf8_default_width_cache.h
     '';
     patches = [ ../patches/tmux-3.6-utf8.patch ];
-  });
-
-  wlroots_0_20_1 = prev.wlroots_0_20.overrideAttrs (finalAttrs: {
-    inherit (finalAttrs) pname;
-    version = "0.20.1";
-    src = prev.fetchFromGitLab {
-      domain = "gitlab.freedesktop.org";
-      owner = "wlroots";
-      repo = "wlroots";
-      rev = "a7f20066270c042799ae70b71dfa4d561ba85121";
-      hash = "sha256-uuc1dn13FXvFSBvE3+QOi35rLJZmWIUst64oaXGdPFk=";
-    };
   });
 
   # custom wine-related packages

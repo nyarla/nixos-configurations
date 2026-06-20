@@ -192,12 +192,6 @@
     "/persist/var/lib"
     "/persist/var/log"
     "/persist/var/tmp"
-
-    "/vm/main"
-    "/vm/main/DAW/images"
-
-    "/vm/special"
-    "/vm/special/images"
   ];
 
   # impermanence
@@ -329,9 +323,9 @@
 
           # application
           ".android"
-          ".flare"
           ".gemini"
           ".mozilla"
+          ".pi"
           ".pki"
           ".steam"
           ".thunderbird"

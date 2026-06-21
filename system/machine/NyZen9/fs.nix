@@ -134,7 +134,6 @@
         "home/nyarla/.cache/appimage-run"
         "home/nyarla/.cache/nvim"
         "home/nyarla/.config/protonfixes"
-        "home/nyarla/.gemini"
         "home/nyarla/.local/share/Steam"
         "home/nyarla/.local/share/containers"
         "home/nyarla/.local/share/flatpak"
@@ -323,7 +322,6 @@
 
           # application
           ".android"
-          ".gemini"
           ".mozilla"
           ".pi"
           ".pki"

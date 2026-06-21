@@ -40,6 +40,5 @@
     # misc
     openssl
     sec
-    gemini-cli-pinned
   ];
 }

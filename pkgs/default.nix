@@ -52,22 +52,6 @@ in
   # customized packages
   firefox-bin-unwrapped = prev.firefox-bin-unwrapped.override { systemLocale = "ja_JP"; };
 
-  gemini-cli-pinned = prev.gemini-cli.overrideAttrs (finalAttrs: rec {
-    pname = "gemini-cli-pinned";
-    version = "0.38.2";
-    src = prev.fetchFromGitHub {
-      inherit (finalAttrs.src) owner repo;
-      rev = "v${version}";
-      hash = "sha256-DPJMpm+hOQQxG87/NyrCrlomeR4AD1WNfNoIsdaakaE=";
-    };
-
-    npmDeps = prev.fetchNpmDeps {
-      inherit src;
-      inherit (finalAttrs) postPatch;
-      hash = "sha256-6UnLSmKdnXwEXgGcyRTibDkEqvlRr75e3fRld0v6T2s=";
-    };
-  });
-
   steam = prev.steam.override {
     extraProfile = ''
       unset TZ

@@ -5,14 +5,16 @@ set -euo pipefail
 adb kill-server
 adb devices
 
-systemctl --user stop wivrn
-
-export XRT_COMPOSITOR_LOG="debug";
-export XRT_PRINT_OPTIONS="on";
-export IPC_EXIT_ON_DISCONNECT="off";
-export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1
-
+export IPC_EXIT_ON_DISCONNECT="off"
 export U_PACING_APP_USE_MIN_FRAME_PERIOD=1
 export U_PACING_COMP_MIN_TIME_MS=5
+
+export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1
+export WINEDLLOVERRIDES="iyuv_32="
+export RADV_DEBUG=nodcc
+export PROTON_USE_NTSYNC=1
+export SDL_VIDEODRIVER=windows
+
+rm -rd ~/.cache/radv_builtin_shaders/*
 
 wivrn-dashboard

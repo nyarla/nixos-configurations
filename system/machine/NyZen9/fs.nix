@@ -287,6 +287,7 @@
           ".config/unity3d"
           ".config/unityhub"
           ".config/vlc"
+          ".config/wayvr"
           ".config/whipper"
           ".config/wivrn"
           ".config/xfce4"

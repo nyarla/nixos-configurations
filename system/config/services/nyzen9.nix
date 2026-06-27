@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   # httpd
   security.acme = {
@@ -18,6 +18,9 @@
       ];
     };
   };
+
+  # ollama
+  services.ollama.enable = true;
 
   # Open WebUI
   services.open-webui = {

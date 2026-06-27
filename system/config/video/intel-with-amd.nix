@@ -122,6 +122,8 @@
       rocm-smi
     ]);
 
+  nixpkgs.config.cudaSupport = false;
+  nixpkgs.config.rocmSupport = true;
   services.ollama = {
     package = pkgs.ollama-rocm;
     environmentVariables = {

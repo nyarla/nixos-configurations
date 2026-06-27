@@ -19,6 +19,38 @@
     };
   };
 
+  # comfyui
+  systemd.services.comfyui = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    description = "ComfyUI Server";
+    path = with pkgs; [ rocmPackages.rocminfo ];
+    serviceConfig = {
+      Type = "simple";
+      User = "nyarla";
+      Group = "users";
+      ExecStart =
+        let
+          args = lib.strings.concatStringsSep " " [
+            "--listen=0.0.0.0"
+            "--port=8188"
+
+            "--base-directory=/persist/home/nyarla/Applications/AI/ComfyUI.Data"
+            "--database-url=sqlite:///persist/home/nyarla/Applications/AI/ComfyUI.Data/sqlite3.db"
+
+            "--disable-cuda-malloc"
+            "--disable-xformer"
+
+            "--use-split-cross-attention"
+
+            "--preview-method=auto"
+            "--reserve-vram=1"
+          ];
+        in
+        "${pkgs.comfyui}/bin/main.py ${args}";
+    };
+  };
+
   # ollama
   services.ollama.enable = true;
 

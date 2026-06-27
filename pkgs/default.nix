@@ -7,6 +7,7 @@ in
   amd-run = require ./amd-run { gpuId = null; };
   aria-misskey = require ./aria-misskey { };
   calibre = require ./calibre { };
+  comfyui = require ./comfyui { };
   cskk = require ./cskk { };
   deadbeef-fb = require ./deadbeef-fb { };
   flare-app = require ./flare-app { };

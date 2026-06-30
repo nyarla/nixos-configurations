@@ -15,7 +15,7 @@
   useQt6 ? true,
   kdePackages,
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "fcitx5-cskk";
   version = "da7e2ce";
   src = fetchFromGitHub {

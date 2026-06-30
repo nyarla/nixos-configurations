@@ -29,8 +29,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "asb2m10";
     repo = "dexed";
-    rev = "e4b536dc1194a008a0dfb4087242b6f8641946c8";
-    hash = "sha256-1tWdCVtp3uMkbVa1aoEx63MbVuaIL4svBN0G4ELUJLo=";
+    rev = "2e182b3db85c09083ab13c8b9b00565ce7d9ff85";
+    hash = "sha256-8H9a7tSUNA3r2RA5EWxinP8Bb/CouEUolKJS8s5etFA=";
     fetchSubmodules = true;
   };
 
@@ -47,32 +47,31 @@ stdenv.mkDerivation rec {
     doxygen
     python3
   ];
-  buildInputs =
-    [
-      alsa-lib
-      curlFull.dev
-      freetype
-      glib.dev
-      graphviz
-      gtk3
-      ladspa-sdk
-      libGLU
-      libjack2
-      libjpeg_turbo
-      libpng
-      pcre
-      webkitgtk
-      zlib
-    ]
-    ++ (with xorg; [
-      libX11
-      libXcomposite
-      libXcursor
-      libXext
-      libXinerama
-      libXrandr
-      libXrender
-    ]);
+  buildInputs = [
+    alsa-lib
+    curlFull.dev
+    freetype
+    glib.dev
+    graphviz
+    gtk3
+    ladspa-sdk
+    libGLU
+    libjack2
+    libjpeg_turbo
+    libpng
+    pcre
+    webkitgtk
+    zlib
+  ]
+  ++ (with xorg; [
+    libX11
+    libXcomposite
+    libXcursor
+    libXext
+    libXinerama
+    libXrandr
+    libXrender
+  ]);
 
   libPath = lib.makeLibraryPath (
     buildInputs

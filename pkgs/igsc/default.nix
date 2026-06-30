@@ -8,7 +8,7 @@
 let
   metee = stdenv.mkDerivation rec {
     pname = "metee";
-    version = "6.1.2";
+    version = "6.2.4";
     src = fetchFromGitHub {
       owner = "intel";
       repo = "metee";
@@ -24,12 +24,12 @@ let
 in
 stdenv.mkDerivation {
   pname = "igsc";
-  version = "1.0.2";
+  version = "1.3.0";
   src = fetchFromGitHub {
     owner = "intel";
     repo = "igsc";
-    rev = "9122018f1b72d63c49bd750e29c1cd8b2b2ddd3f";
-    hash = "sha256-eBN05r2o6MUTJvIrkwY2uic7afj6YMHvt/apHyyGgug=";
+    rev = "7b83853dce5b8e0be4db11076807c9f402139506";
+    hash = "sha256-GdeGGrnkxJQlg+vVQan5rJW/rxlStD4TAmWxfloX0+k=";
   };
 
   buildInputs = [

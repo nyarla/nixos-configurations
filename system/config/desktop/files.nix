@@ -29,6 +29,7 @@ in
 
   security.polkit = {
     enable = true;
+    enablePkexecWrapper = true;
     extraConfig = ''
       polkit.addRule(function(action, subject) {
         if ( action.id === "org.freedesktop.udisks2.encrypted-unlock-system" && subject.isInGroup("storage") ) {

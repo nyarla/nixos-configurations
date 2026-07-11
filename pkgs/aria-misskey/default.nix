@@ -5,7 +5,6 @@
   fetchurl,
   runCommand,
   writeText,
-  makeWrapper,
 
   cargo,
   flutter,
@@ -188,33 +187,24 @@ flutter.buildFlutterApplication rec {
     rustPlatform.bindgenHook
     rustPlatform.cargoBuildHook
     rustPlatform.cargoSetupHook
-    makeWrapper
   ];
 
-  libPath =
-    lib.makeLibraryPath buildInputs
-    + (
-      ":"
-      + lib.makeSearchPathOutput "lib" "lib64" (
-        [
-          libva
-          libvdpau
-        ]
-        ++ (with gst_all_1; [
-          gst-plugins-bad
-          gst-plugins-base
-          gst-plugins-good
-          gst-plugins-ugly
-          gstreamer
-        ])
-      )
-    );
-
   postInstall = ''
-    mkdir -p $out/bin
-    ln -sf $out/app/aria/aria $out/bin/aria
+    rm $out/bin/aria
+    cat << ... >$out/bin/aria
 
-    wrapProgram $out/bin/aria \
-      --prefix LD_LIBRARY_PATH : "${libPath}:$out/app/aria/lib"
+    #!${stdenv.shell}
+
+    export LD_LIBRARY_PATH=$out/app/aria/lib:${
+      lib.makeLibraryPath [
+        libva
+        libvdpau
+      ]
+    }
+
+    exec -a aria $out/app/aria/aria "\''${@:-}"
+    ...
+
+    chmod +x $out/bin/aria
   '';
 }

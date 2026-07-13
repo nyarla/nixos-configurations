@@ -4,6 +4,8 @@ final: prev: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });
 
+  inherit (stable.legacyPackages.x86_64-linux) deadbeef;
+
   whipper =
     let
       python3 =
@@ -19,10 +21,16 @@ final: prev: {
         in
         prev.python3.override { inherit packageOverrides; };
     in
-    (prev.whipper.override { inherit python3; }).overrideAttrs (_: {
+    (prev.whipper.override { inherit python3; }).overrideAttrs (finalAttrs: {
       postPatch = ''
         sed -i 's|cd-paranoia|${prev.cdparanoia}/bin/cdparanoia|g' whipper/program/cdparanoia.py
       '';
+
+      propagatedBuildInputs =
+        (builtins.filter (x: x.pname != "setuptools") (finalAttrs.propagatedBuildInputs or [ ]))
+        ++ (with python3.pkgs; [
+          setuptools_80
+        ]);
     });
 
   wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn;

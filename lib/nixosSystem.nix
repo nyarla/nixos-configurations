@@ -39,7 +39,6 @@ let
 
             # nix
             nix = {
-              package = pkgs.nixVersions.nix_2_28;
               registry = {
                 nixpkgs = {
                   inherit flake;

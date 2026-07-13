@@ -54,6 +54,7 @@
   xdg.configFile."Kvantum/Fluent".source = with pkgs; "${fluent-kde}/share/Kvantum/Fluent";
 
   home.pointerCursor = {
+    enable = true;
     name = "capitaine-cursors-white";
     package = pkgs.capitaine-cursors;
     size = 24;

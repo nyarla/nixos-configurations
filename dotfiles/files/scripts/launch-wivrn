@@ -15,6 +15,18 @@ export RADV_DEBUG=nodcc
 export PROTON_USE_NTSYNC=1
 export SDL_VIDEODRIVER=windows
 
-rm -rd ~/.cache/radv_builtin_shaders/*
+if [[ -d ~/.cache/radv_builtin_shaders ]]; then
+  rm -rd ~/.cache/radv_builtin_shaders/
+fi
+
+env SHELL=/bin/sh pkexec sh -c '
+  sudo systemctl stop comfyui
+  sudo systemctl stop ollama
+'
 
 wivrn-dashboard
+
+env SHELL=/bin/sh pkexec sh -c '
+  sudo systemctl start comfyui
+  sudo systemctl start ollama
+'

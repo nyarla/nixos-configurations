@@ -18,8 +18,9 @@ _: {
     ../config/tools/archiver.nix
     ../config/tools/development.nix
 
+    ../app/ghostty
     ../app/git
-    # ../app/hyprland
+    ../app/herdr
     ../app/labwc
     ../app/mlterm
     ../app/xdg

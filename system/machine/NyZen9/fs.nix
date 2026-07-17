@@ -337,6 +337,7 @@
         ];
       files = [
         # development
+        ".config/herdr/session.json"
         ".npmrc"
 
         # creative

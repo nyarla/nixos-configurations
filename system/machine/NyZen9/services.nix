@@ -13,6 +13,7 @@
       "^/nix"
       "^/persist/home/nyarla/Reports"
       "^/proc"
+      "^/run"
       "^/sys"
       "^/vm"
       ".snapshots/[0-9]+"
@@ -112,25 +113,6 @@
       OnCalendar = "*-*-* 01:00:00";
       RandomizedDelaySec = "10m";
       Persistent = true;
-    };
-  };
-
-  # for GoToSocial moderation
-  systemd.user.services.nsfw-detector = {
-    enable = true;
-    wantedBy = [ "default.target" ];
-    after = [ "network.target" ];
-    path = [
-      pkgs.nodejs_20
-    ];
-    serviceConfig = {
-      Restart = "always";
-      ExecStart = toString (
-        pkgs.writeShellScript "nsfw-detector" ''
-          cd ~/Applications/Programs/GoToSocialModeration || exit 1
-          node main.js
-        ''
-      );
     };
   };
 }

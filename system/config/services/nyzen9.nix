@@ -29,6 +29,7 @@
       Type = "simple";
       User = "nyarla";
       Group = "users";
+      Restart = "on-failure";
       ExecStart =
         let
           args = lib.strings.concatStringsSep " " [
@@ -53,6 +54,7 @@
 
   # ollama
   services.ollama.enable = true;
+  systemd.services.ollama.serviceConfig.Restart = "on-failure";
 
   # Open WebUI
   services.open-webui = {

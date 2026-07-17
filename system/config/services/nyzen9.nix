@@ -52,9 +52,75 @@
     };
   };
 
-  # ollama
-  services.ollama.enable = true;
-  systemd.services.ollama.serviceConfig.Restart = "on-failure";
+  # llama-swap
+  services.llama-swap = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+    port = 11343;
+    settings =
+      let
+        rocm = lib.getExe' pkgs.llama-cpp-rocm "llama-server";
+        DIR = "/persist/home/nyarla/Applications/AI/Llama.Data";
+
+        gemma4 = {
+          cmd = "${rocm} --port \${PORT} --temp 1.0 --top-p 0.9 --top-k 64 --jinja";
+          env = [
+            "LLAMA_ARG_CTX_SIZE=${toString (1024 * 16)}"
+            "LLAMA_ARG_FLASH_ATTN=on"
+            "LLAMA_ARG_FIT=on"
+            "LLAMA_ARG_N_PARALLEL=1"
+
+            "LLAMA_ARG_DEVICE=ROCm0"
+          ];
+          capabilities = {
+            "in" = [
+              "text"
+              "image"
+              "audio"
+            ];
+            "out" = [ "text" ];
+            tools = true;
+            context = toString (1024 * 16);
+          };
+        };
+      in
+      {
+        models = {
+          "gemma4-e4b-q8_0" = {
+            name = "Gemma 4 E4B (Q8_0)";
+            inherit (gemma4) cmd capabilities;
+            env = gemma4.env ++ [
+              "LLAMA_ARG_MODEL=${DIR}/Gemma-4-E4B-it-Q8_0.gguf"
+              "LLAMA_ARG_MMPROJ=${DIR}/mmproj-Gemma-4-f16.gguf"
+            ];
+          };
+
+          "gemma4-e4b-uncensored-q4_k_m" = {
+            name = "Gemma 4 E4b Uncensored (Q4_K_M)";
+            inherit (gemma4) cmd capabilities;
+            env = gemma4.env ++ [
+              "LLAMA_ARG_MODEL=${DIR}/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf"
+              "LLAMA_ARG_MMPROJ=${DIR}/mmproj-Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-f16.gguf"
+            ];
+          };
+
+          "gemma4-e4b-uncensored-q8_k_p" = {
+            name = "Gemma 4 E4b Uncensored (Q8_K_P)";
+            inherit (gemma4) cmd capabilities;
+            env = gemma4.env ++ [
+              "LLAMA_ARG_MODEL=${DIR}/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q8_K_P.gguf"
+              "LLAMA_ARG_MMPROJ=${DIR}/mmproj-Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-f16.gguf"
+            ];
+          };
+        };
+      };
+  };
+  systemd.services.llama-swap.path = with pkgs; [ rocmPackages.rocm-smi ];
+  systemd.services.llama-swap.serviceConfig = {
+    DynamicUser = lib.mkForce false;
+    User = "nyarla";
+    Group = "users";
+  };
 
   # Open WebUI
   services.open-webui = {

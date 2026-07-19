@@ -6,6 +6,9 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+
     flake-compat.url = "github:nix-community/flake-compat";
 
     nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
@@ -38,6 +41,10 @@
     nixpkgs-xr.inputs.flake-compat.follows = "flake-compat";
     nixpkgs-xr.inputs.flake-utils.follows = "flake-utils";
     nixpkgs-xr.inputs.systems.follows = "systems";
+
+    hister.url = "github:asciimoo/hister";
+    hister.inputs.nixpkgs.follows = "nixpkgs";
+    hister.inputs.flake-parts.follows = "flake-parts";
   };
   outputs =
     {
@@ -47,6 +54,7 @@
       wayland,
       impermanence,
       nixpkgs-xr,
+      hister,
       ...
     }:
     rec {
@@ -89,6 +97,7 @@
 
             modules = [
               nixpkgs-xr.nixosModules.nixpkgs-xr
+              hister.nixosModules.hister
               impermanence.nixosModules.impermanence
               home-manager.nixosModules.home-manager
               (_: {

@@ -19,6 +19,54 @@
     };
   };
 
+  # hister
+  services.hister = {
+    enable = true;
+    dataDir = "/var/lib/hister";
+    settings = {
+      app = {
+        search_url = "https://duckduckgo.com/?q={query}";
+      };
+      server = {
+        address = "127.0.0.1:4433";
+        base_url = "https://hister.services.thotep.net";
+        database = "sqlite3.db";
+      };
+    };
+  };
+
+  services.nginx.virtualHosts."hister.services.thotep.net" = {
+    useACMEHost = "services.thotep.net";
+    forceSSL = true;
+    listen =
+      let
+        addr = "100.103.65.77";
+      in
+      [
+        {
+          inherit addr;
+          port = 80;
+          ssl = false;
+        }
+        {
+          inherit addr;
+          port = 443;
+          ssl = true;
+        }
+      ];
+
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:4433";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+      '';
+    };
+  };
+
   # comfyui
   systemd.services.comfyui = {
     enable = true;

@@ -46,8 +46,8 @@
   ];
 
   xdg.dataFile."backgrounds/default.png".source = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-simple-dark-gray.png";
-    sha256 = "1282cnqc5qynp0q9gdll7bgpw23yp5bhvaqpar59ibkh3iscg8i5";
+    url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/master/wallpapers/nix-wallpaper-gear.png";
+    sha256 = "1gs4fl1q2aljnfdlgxn8wlhir637cvx54bnlnd9jk23zixpzmi6s";
   };
 
   home.file.".local/bin/sw".source = toString (

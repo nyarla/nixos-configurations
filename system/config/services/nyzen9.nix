@@ -87,11 +87,6 @@
             "--base-directory=/persist/home/nyarla/Applications/AI/ComfyUI.Data"
             "--database-url=sqlite:///persist/home/nyarla/Applications/AI/ComfyUI.Data/sqlite3.db"
 
-            "--disable-cuda-malloc"
-            "--disable-xformer"
-
-            "--use-split-cross-attention"
-
             "--preview-method=auto"
             "--reserve-vram=1"
           ];

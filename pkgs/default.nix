@@ -1,4 +1,4 @@
-_: _: pkgs:
+_: self: pkgs:
 let
   require = path: pkgs.callPackage (import path);
 in
@@ -95,12 +95,14 @@ in
 
   wineasio = require ./wineasio { };
 
-  # comfyUI
-  comfyui = require ./comfyui {
-    additionalDependencies = with pkgs.python3.pkgs; [
-      gguf
-      sentencepiece
-      protobuf
-    ];
-  };
+  # comfyui
+  comfyui =
+    with pkgs.pkgsRocm;
+    callPackage (import ./comfyui) {
+      additionalDependencies = with python3.pkgs; [
+        gguf
+        sentencepiece
+        protobuf
+      ];
+    };
 }

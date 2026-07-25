@@ -161,6 +161,9 @@ let
         ];
       };
     };
+    extraInit = ''
+      cd /run/user/1000/textern
+    '';
   };
 in
 symlinkJoin {

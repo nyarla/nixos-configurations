@@ -33,7 +33,9 @@ final: prev: {
         ]);
     });
 
-  wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn;
+  wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn.overrideAttrs (finalAttrs: {
+    patches = (finalAttrs.patches or [ ]) ++ [ ../patches/wivrn-no-backup-openvr-compat-path.patch ];
+  });
 
   xdg-desktop-portal-luminous = prev.xdg-desktop-portal-luminous.overrideAttrs (finalAttrs: rec {
     version = "0.1.18";

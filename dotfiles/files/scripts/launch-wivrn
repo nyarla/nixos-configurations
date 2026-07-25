@@ -21,12 +21,12 @@ fi
 
 env SHELL=/bin/sh pkexec sh -c '
   sudo systemctl stop comfyui
-  sudo systemctl stop ollama
+  sudo systemctl stop llama-swap
 '
 
 wivrn-dashboard
 
 env SHELL=/bin/sh pkexec sh -c '
   sudo systemctl start comfyui
-  sudo systemctl start ollama
+  sudo systemctl start llama-swap
 '

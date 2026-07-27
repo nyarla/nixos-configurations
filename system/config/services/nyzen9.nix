@@ -123,7 +123,7 @@
             ];
             "out" = [ "text" ];
             tools = true;
-            context = toString (1024 * 16);
+            context = 1024 * 16;
           };
         };
       in

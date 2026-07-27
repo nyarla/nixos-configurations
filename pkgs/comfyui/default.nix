@@ -61,6 +61,8 @@ let
     };
     pyproject = true;
     build-system = with python3Packages; [ setuptools ];
+
+    env.COMFYUI_FRONTEND_VERSION = "${finalAttrs.version}";
   });
 
   comfyui-workflow-templates-core = python3Packages.buildPythonPackage (finalAttrs: {

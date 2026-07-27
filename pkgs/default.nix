@@ -100,7 +100,10 @@ in
     with pkgs.pkgsRocm;
     callPackage (import ./comfyui) {
       additionalDependencies = with python3.pkgs; [
-        gguf
+        (gguf.overrideAttrs {
+          version = "0.19.0";
+          __intentionallyOverridingVersion = true;
+        })
         sentencepiece
         protobuf
       ];

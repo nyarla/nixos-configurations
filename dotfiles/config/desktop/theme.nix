@@ -66,10 +66,10 @@
 
   home.packages = with pkgs; [
     adwaita-icon-theme
+    fluent-gtk-theme
+    fluent-gtk-theme.engine
     fluent-kde
     gnome-themes-extra
-    gtk-engine-murrine
-    gtk_engines
     hicolor-icon-theme
   ];
 }

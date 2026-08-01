@@ -27,6 +27,7 @@ in
   xdg-desktop-portal-hypr-remote = require ./xdg-desktop-portal-hypr-remote { };
 
   # themes and fonts
+  fluent-gtk-theme = require ./fluent-gtk-theme { };
   fluent-kde = require ./fluent-kde { };
   kaunas = require ./kaunas { };
   noto-fonts-jp = require ./noto-fonts-jp { };
@@ -100,12 +101,9 @@ in
     with pkgs.pkgsRocm;
     callPackage (import ./comfyui) {
       additionalDependencies = with python3.pkgs; [
-        (gguf.overrideAttrs {
-          version = "0.19.0";
-          __intentionallyOverridingVersion = true;
-        })
-        sentencepiece
+        gguf
         protobuf
+        sentencepiece
       ];
     };
 }

@@ -202,6 +202,7 @@
       "/etc/nixos"
       "/etc/ssh"
       "/etc/wpa_supplicant"
+      "/etc/lact"
 
       "/var/db"
       "/var/lib"

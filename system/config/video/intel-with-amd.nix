@@ -32,44 +32,7 @@
     };
   };
 
-  services.lact = {
-    enable = true;
-    settings = {
-      version = 5;
-
-      daemon = {
-        log_level = "info";
-        admin_group = "wheel";
-        disable_clocks_cleanup = false;
-      };
-
-      apply_settings_timer = 5;
-      current_profile = null;
-      auto_switch_profiles = true;
-
-      gpus = {
-        "1002:7550-148C:2436-0000:0d:00.0" = {
-          performance_level = "manual";
-          power_profile_mode_index = 2; # Power saving
-        };
-      };
-
-      profiles = {
-        VR = {
-          gpus = {
-            "1002:7550-148C:2436-0000:0d:00.0" = {
-              performance_level = "manual";
-              power_profile_mode_index = 4; # VR
-            };
-          };
-          rule = {
-            type = "process";
-            filter.name = "wivrn-server";
-          };
-        };
-      };
-    };
-  };
+  services.lact.enable = true;
 
   systemd.tmpfiles.rules =
     let

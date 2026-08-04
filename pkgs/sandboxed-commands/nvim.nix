@@ -75,6 +75,8 @@ let
             ++ (with pkgs; [
               gitFull
               nodejs
+              lua5_1
+              lua51Packages.luarocks
             ])
           )
         }:$PATH
@@ -133,16 +135,17 @@ let
 
   nvim-reconfigure = mkWrappedApp "nvim-reconfigure" {
     settings = {
-      allowWrite = [ "~/.config/nvim" ];
-      network = {
-        allowHosts = [
-          "github.com"
-          "api.github.com"
-          "codeload.github.com"
-          "lfs.github.com"
-          "objects.githubusercontent.com"
-        ];
-      };
+      filesystem.allowWrite = [
+        "~/.config/nvim"
+        "~/.local/share/nvim"
+      ];
+      network.allowedDomains = [
+        "github.com"
+        "api.github.com"
+        "codeload.github.com"
+        "lfs.github.com"
+        "objects.githubusercontent.com"
+      ];
     };
 
     paths = with pkgs; [

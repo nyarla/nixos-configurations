@@ -17,7 +17,10 @@
           "/run/current-system/sw/bin/"
         ];
 
-        allowWrite = [ "/tmp/" ];
+        allowWrite = [
+          "/tmp/"
+          "~/.gnupg"
+        ];
       };
       "command" = {
         acceptSharedBinaryCannotRuntimeDeny = [
@@ -32,7 +35,6 @@
         allowedHosts = [
           "github.com"
           "gitlab.com"
-          "codeberg.org"
         ];
 
         allowedDomains = allowedHosts ++ [
@@ -47,7 +49,7 @@
         filesystem = {
           allowGitConfig = true;
           allowRead = [
-            "~/.config/fence/sgit.json"
+            "."
             "~/.config/git/"
             "~/.ssh/id_ed25519.pub"
           ];

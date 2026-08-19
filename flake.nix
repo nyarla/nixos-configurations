@@ -97,7 +97,6 @@
 
             modules = [
               nixpkgs-xr.nixosModules.nixpkgs-xr
-              hister.nixosModules.hister
               impermanence.nixosModules.impermanence
               home-manager.nixosModules.home-manager
               (_: {

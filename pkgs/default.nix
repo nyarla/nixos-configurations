@@ -33,7 +33,7 @@ in
   noto-fonts-jp = require ./noto-fonts-jp { };
 
   # customized packages
-  calibre = require ./calibre { };
+  # calibre = require ./calibre { };
   glibc-locales-eaw = require ./glibc-locales-eaw { };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 

@@ -43,6 +43,7 @@
 
     wl-clipboard
     xclip
+    clipnotify
   ];
 
   xdg.dataFile."backgrounds/default.png".source = pkgs.fetchurl {

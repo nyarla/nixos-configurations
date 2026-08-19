@@ -231,7 +231,7 @@
 
   systemd.services.open-webui.serviceConfig = {
     DynamicUser = lib.mkForce false;
-    PrivateUSer = lib.mkForce false;
+    PrivateUser = lib.mkForce false;
     User = "nyarla";
     Group = "users";
   };

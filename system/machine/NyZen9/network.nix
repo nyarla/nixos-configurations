@@ -28,7 +28,7 @@ _: {
         path = "/persist/home/nyarla/Downloads/KVM";
         browsable = "yes";
         "create mask" = "0774";
-        "force create mask" = "0774";
+        "force create mode" = "0774";
         "directory mask" = "0755";
         "force group" = "users";
         "force user" = "nyarla";
@@ -39,7 +39,7 @@ _: {
       Data = {
         path = "/persist/home/nyarla/Documents/DAW";
         "create mask" = "0774";
-        "force create mask" = "0774";
+        "force create mode" = "0774";
         "directory mask" = "0755";
         "force group" = "users";
         "force user" = "nyarla";
@@ -51,7 +51,7 @@ _: {
         path = "/persist/home/nyarla/Sources/DAW";
         browsable = "yes";
         "create mask" = "0774";
-        "force create mask" = "0774";
+        "force create mode" = "0774";
         "directory mask" = "0755";
         "force group" = "users";
         "force user" = "nyarla";
@@ -63,7 +63,7 @@ _: {
         path = "/persist/home/nyarla/Sync";
         browsable = "yes";
         "create mask" = "0774";
-        "force create mask" = "0774";
+        "force create mode" = "0774";
         "directory mask" = "0755";
         "force group" = "users";
         "force user" = "nyarla";
@@ -75,7 +75,7 @@ _: {
         path = "/backup/eBooks";
         browsable = "yes";
         "create mask" = "0774";
-        "force create mask" = "0774";
+        "force create mode" = "0774";
         "directory mask" = "0755";
         "force group" = "users";
         "force user" = "nyarla";

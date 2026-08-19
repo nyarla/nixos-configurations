@@ -86,49 +86,68 @@ let
 
   nvim = mkWrappedApp "nvim" {
     paths = with pkgs; [
-      # runtime or compiler
-      bun
-      deno
-      go
-      nodejs
+      # for files
 
-      # git
-      gitFull
+      ## Bash
+      shellcheck
 
-      # linter
+      bash-language-server
+
+      ## Dockerfile
+      hadolint
+
+      ## GitHub Actions
       actionlint
       ghalint
       zizmor
 
+      ## Go
+      go
+
+      gofumpt
+      gotools
+
+      gopls
+
+      ## JavaScript or TypeScript
+      bun
+      deno
+      nodejs
+
+      oxfmt
+
+      oxlint
+
+      typescript-language-server
+
+      ## Lua
+      stylua
+
+      lua-language-server
+
+      ## Nix
+      nixfmt
+
       deadnix
       statix
 
-      hadolint
-      shellcheck
-
-      # formatter
-      biome
-      gofumpt
-      gotools
-      nixfmt
-      perlPackages.PerlTidy
-      prettier
-      sqlfluff
-      stylua
-
-      # language server
-      bash-language-server
-      gopls
-      lua-language-server
-      lua-language-server
       nixd
-      perlnavigator
-      sqls
-      taplo
-      typescript-language-server
-      vscode-langservers-extracted
 
-      # for testing
+      ## Perl
+      perlPackages.PerlTidy
+      perlnavigator
+
+      ## SQL
+      sqlfluff
+
+      sqls
+
+      ## TOML
+      taplo
+
+      # for operations
+      vscode-langservers-extracted
+      gitFull
       hello
     ];
   };

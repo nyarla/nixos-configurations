@@ -99,11 +99,27 @@ in
   # comfyui
   comfyui =
     with pkgs.pkgsRocm;
-    callPackage (import ./comfyui) {
+    (callPackage (import ./comfyui) {
       additionalDependencies = with python3.pkgs; [
         gguf
         protobuf
         sentencepiece
       ];
-    };
+    }).overrideAttrs
+      (
+        finalAttrs:
+        let
+          patch = fetchFromGitHub {
+            owner = "charlie12345";
+            repo = "R9700AIProComfyUIPatch";
+            rev = "9086836608f77c11f6bf2bfb4a2c34e75082ecbb";
+            hash = "sha256-ztZJNRWSeB1bz6U2m002j3nhSWYY3qkUHBI4rqLA3x4=";
+          };
+        in
+        {
+          postInstall = (finalAttrs.postInstall or "") + ''
+            python3 ${patch}/apply_h3_rdna4_patches.py --comfy-path $out/bin
+          '';
+        }
+      );
 }

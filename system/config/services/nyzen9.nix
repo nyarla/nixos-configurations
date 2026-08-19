@@ -73,6 +73,11 @@
     wantedBy = [ "multi-user.target" ];
     description = "ComfyUI Server";
     path = with pkgs; [ rocmPackages.rocminfo ];
+    environment = {
+      TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL = "1";
+      MIOPEN_FIND_MODE = "FAST";
+      TORCHINDUCTOR_CACHE_DIR = "/persist/home/nyarla/Applications/AI/ComfyUI.Data/cache/inductor_cache";
+    };
     serviceConfig = {
       Type = "simple";
       User = "nyarla";
@@ -89,6 +94,10 @@
 
             "--preview-method=auto"
             "--reserve-vram=1"
+
+            "--disable-smart-memory"
+            "--disable-dynamic-vram"
+            "--bf16-vae"
           ];
         in
         "${pkgs.comfyui}/bin/main.py ${args}";
@@ -153,6 +162,44 @@
             env = gemma4.env ++ [
               "LLAMA_ARG_MODEL=${DIR}/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q8_K_P.gguf"
               "LLAMA_ARG_MMPROJ=${DIR}/mmproj-Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-f16.gguf"
+            ];
+          };
+
+          "lfm2.5-1.2b-jp_q8_0" = {
+            name = "LFM2.5 1.2B JP (Q8_0)";
+            cmd = "${rocm} --port \${PORT} --temp 0.3 --min-p 0.15 --repeat-penalty 1.05 --jinja";
+            capabilities = {
+              "in" = [ "text" ];
+              "out" = [ "text" ];
+              tools = true;
+              context = 1024 * 32;
+            };
+            env = [
+              "LLAMA_ARG_MODEL=${DIR}/LFM2.5-1.2B-JP-202606-Q8_0.gguf"
+              "LLAMA_ARG_CTX_SIZE=${toString (1024 * 32)}"
+              "LLAMA_ARG_FLASH_ATTN=on"
+              "LLAMA_ARG_FIT=on"
+              "LLAMA_ARG_N_PARALLEL=1"
+              "LLAMA_ARG_DEVICE=ROCm0"
+            ];
+          };
+
+          "lfm2.5-8b-a1b_q8_0" = {
+            name = "LFM2.5 8B A1B (Q8_0)";
+            cmd = "${rocm} --port \${PORT} --temp 0.2 --top-k 80 --repeat-penalty 1.05 --jinja";
+            capabilities = {
+              "in" = [ "text" ];
+              "out" = [ "text" ];
+              tools = true;
+              context = 1024 * 32;
+            };
+            env = [
+              "LLAMA_ARG_MODEL=${DIR}/LFM2.5-8B-A1B-Q8_0.gguf"
+              "LLAMA_ARG_CTX_SIZE=${toString (1024 * 128)}"
+              "LLAMA_ARG_FLASH_ATTN=on"
+              "LLAMA_ARG_FIT=on"
+              "LLAMA_ARG_N_PARALLEL=1"
+              "LLAMA_ARG_DEVICE=ROCm0"
             ];
           };
         };

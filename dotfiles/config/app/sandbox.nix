@@ -1,6 +1,11 @@
 { pkgs, ... }:
 {
-  home.packages = (with pkgs; [ fence ]) ++ (with pkgs.sandboxed-commands; [ nvim ]);
+  home.packages =
+    (with pkgs; [ fence ])
+    ++ (with pkgs.sandboxed-commands; [
+      nvim
+      pi
+    ]);
 
   xdg.configFile = {
     "fence/fence.json".text = builtins.toJSON {

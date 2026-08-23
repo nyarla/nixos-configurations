@@ -14,7 +14,6 @@
   };
 
   home.packages = with pkgs; [
-    aria-misskey
     telegram-desktop
     thunderbird-bin
 

@@ -38,18 +38,18 @@ final: prev: {
   });
 
   xdg-desktop-portal-luminous = prev.xdg-desktop-portal-luminous.overrideAttrs (finalAttrs: rec {
-    version = "0.1.18";
+    version = "0.1.21";
     src = prev.fetchFromGitHub {
       owner = "waycrate";
       repo = "xdg-desktop-portal-luminous";
-      rev = "31ed88fdc06cfb8b6b12327d1c09261000c53fbc";
-      hash = "sha256-Or/w+XBRfXcMJW2Ua0CW7b/tRJPAvxopX7OwBZBDRuI=";
+      rev = "5674aa3b89cc3456085909ce0c9a4d701d8e5981";
+      hash = "sha256-m1/PmGj1ZZJdH9AiUxe+6hVs0cwGuegY56gFeWSswA4=";
     };
 
     cargoDeps = prev.rustPlatform.fetchCargoVendor {
       inherit (finalAttrs) pname;
       inherit src version;
-      hash = "sha256-D8gFJMx2QTVUizUr/mm6VALkeiBsHek30C40DUOqcXs=";
+      hash = "sha256-N6TteUB3AC+LNxglvgQQ4RxRSaZk6E0f42BbYd3d+Rk=";
     };
   });
 

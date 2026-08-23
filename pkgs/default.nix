@@ -17,7 +17,6 @@ in
   deadbeef-fb = require ./deadbeef-fb { };
   flare-app = require ./flare-app { };
   galendae = require ./galendae { };
-  ghalint = require ./ghalint { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
   immersed = require ./immersed { };

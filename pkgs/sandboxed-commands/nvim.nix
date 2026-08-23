@@ -183,6 +183,11 @@ let
         ];
       };
     };
+
+    paths = with pkgs; [
+      oxfmt
+    ];
+
     extraInit = ''
       cd /run/user/1000/textern
     '';

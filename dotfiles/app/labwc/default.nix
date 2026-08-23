@@ -22,7 +22,6 @@
     lxqt.lxqt-panel
     wofi
 
-    gyazo-diy
     libnotify
     libsecret
     mission-center

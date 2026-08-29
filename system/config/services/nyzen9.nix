@@ -117,7 +117,6 @@
         gemma4 = {
           cmd = "${rocm} --port \${PORT} --temp 1.0 --top-p 0.9 --top-k 64 --jinja";
           env = [
-            "LLAMA_ARG_CTX_SIZE=${toString (1024 * 16)}"
             "LLAMA_ARG_FLASH_ATTN=on"
             "LLAMA_ARG_FIT=on"
             "LLAMA_ARG_N_PARALLEL=1"
@@ -132,7 +131,7 @@
             ];
             "out" = [ "text" ];
             tools = true;
-            context = 1024 * 16;
+            context = 1024 * 32;
           };
         };
       in
@@ -148,7 +147,7 @@
           };
 
           "gemma4-e4b-uncensored-q4_k_m" = {
-            name = "Gemma 4 E4b Uncensored (Q4_K_M)";
+            name = "Gemma 4 E4B Uncensored (Q4_K_M)";
             inherit (gemma4) cmd capabilities;
             env = gemma4.env ++ [
               "LLAMA_ARG_MODEL=${DIR}/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf"
@@ -157,7 +156,7 @@
           };
 
           "gemma4-e4b-uncensored-q8_k_p" = {
-            name = "Gemma 4 E4b Uncensored (Q8_K_P)";
+            name = "Gemma 4 E4B Uncensored (Q8_K_P)";
             inherit (gemma4) cmd capabilities;
             env = gemma4.env ++ [
               "LLAMA_ARG_MODEL=${DIR}/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q8_K_P.gguf"
@@ -176,7 +175,6 @@
             };
             env = [
               "LLAMA_ARG_MODEL=${DIR}/LFM2.5-1.2B-JP-202606-Q8_0.gguf"
-              "LLAMA_ARG_CTX_SIZE=${toString (1024 * 32)}"
               "LLAMA_ARG_FLASH_ATTN=on"
               "LLAMA_ARG_FIT=on"
               "LLAMA_ARG_N_PARALLEL=1"
@@ -195,10 +193,25 @@
             };
             env = [
               "LLAMA_ARG_MODEL=${DIR}/LFM2.5-8B-A1B-Q8_0.gguf"
-              "LLAMA_ARG_CTX_SIZE=${toString (1024 * 128)}"
               "LLAMA_ARG_FLASH_ATTN=on"
               "LLAMA_ARG_FIT=on"
               "LLAMA_ARG_N_PARALLEL=1"
+              "LLAMA_ARG_DEVICE=ROCm0"
+            ];
+          };
+
+          "qwen3-coder-next_UD-q4_k_xl" = {
+            name = "Qwen3 Coder Next (UD Q4_K_XL)";
+            cmd = "${rocm} --port \${PORT} -fa on --temp 1.0 --top-p 0.95 --top-k 40 --min-p 0.01 --jinja --cpu-moe --repeat-penalty 1.10";
+            capabilities = {
+              "in" = [ "text" ];
+              "out" = [ "text" ];
+              tools = true;
+              context = 1024 * 256;
+            };
+            env = [
+              "LLAMA_ARG_MODEL=${DIR}/Qwen3-Coder-Next-UD-Q4_K_XL.gguf"
+              "LLAMA_ARG_FLASH_ATTN=on"
               "LLAMA_ARG_DEVICE=ROCm0"
             ];
           };

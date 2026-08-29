@@ -250,6 +250,7 @@
           ".config/GIMP"
           ".config/Helio"
           ".config/Kvantum"
+          ".config/MuseScore"
           ".config/MusicBrainz"
           ".config/Plogue"
           ".config/Proton Pass"
@@ -295,6 +296,7 @@
 
           # .local
           ".local/share/ALCOM"
+          ".local/share/MuseScore"
           ".local/share/Steam"
           ".local/share/TelegramDesktop"
           ".local/share/Trash"

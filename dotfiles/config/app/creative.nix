@@ -17,6 +17,7 @@
     # for music creation
     helio-workstation
     ildaeil
+    musescore
 
     chipsynth.sfc
 

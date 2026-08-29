@@ -20,7 +20,10 @@
   libsndfile,
   libvorbis,
   wine,
-  xorg,
+  libx11,
+  libxcursor,
+  libxext,
+  libxrandr,
   zstd,
 }:
 stdenv.mkDerivation {
@@ -56,10 +59,10 @@ stdenv.mkDerivation {
     libopus.dev
     libsndfile.dev
     libvorbis.dev
-    xorg.libX11.dev
-    xorg.libXcursor.dev
-    xorg.libXext.dev
-    xorg.libXrandr.dev
+    libx11.dev
+    libxcursor.dev
+    libxext.dev
+    libxrandr.dev
     zstd.dev
   ];
 

@@ -5,6 +5,7 @@ in
 {
   # application wrappers
   amd-run = require ./amd-run { gpuId = null; };
+  gimp-shell = require ./gimp-shell { };
   nvim-run = require ./nvim-run { };
   perl-shell = require ./perl-shell { };
   restic-run = require ./restic-run { };

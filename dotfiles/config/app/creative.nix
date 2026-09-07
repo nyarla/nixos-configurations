@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     # for edit graphics
+    gimp-shell
     gimp3
     inkscape
     krita

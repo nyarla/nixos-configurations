@@ -121,4 +121,37 @@ in
           '';
         }
       );
+
+  # custom llama-cpp
+  llama-cpp-llm-jp = pkgs.pkgsRocm.llama-cpp.overrideAttrs (finalAttrs: rec {
+    pname = "llama-cpp-llm-jp";
+    version = "git";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "llm-jp";
+      repo = "llama.cpp";
+      rev = "26b0e874a2893ba36bc2bea526c5a8ab6637ab2a";
+      hash = "sha256-3cU/gXRBX3fcLxLA9c16Ko7KYxx59pefxuzMJ9lYrXI=";
+    };
+
+    npmRoot = "tools/ui";
+    npmDepsHash = "sha256-Iyg8FpcTKf2UYHuK7mA3cTAqVaLcQPcS0YCa5Qf01Gc=";
+    npmDeps = pkgs.fetchNpmDeps {
+      pname = "${pname}-${version}-npm-deps";
+      inherit src;
+      inherit (finalAttrs) patches;
+      preBuild = ''
+        pushd ${npmRoot}
+      '';
+
+      hash = npmDepsHash;
+    };
+
+    preConfigure = ''
+      prependToVar cmakeFlags "-DLLAMA_BUILD_COMMIT:STRING=$(cat COMMIT)"
+      pushd ${npmRoot}
+      npm run build
+      popd
+    '';
+  });
 }

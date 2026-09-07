@@ -112,10 +112,11 @@
     settings =
       let
         rocm = lib.getExe' pkgs.llama-cpp-rocm "llama-server";
+        llm-jp = lib.getExe' pkgs.llama-cpp-llm-jp "llama-server";
         DIR = "/persist/home/nyarla/Applications/AI/Llama.Data";
 
         gemma4 = {
-          cmd = "${rocm} --port \${PORT} --temp 1.0 --top-p 0.9 --top-k 64 --jinja";
+          cmd = "${rocm} --port \${PORT} --temp 1.0 --top-p 0.9 --top-k 64 --jinja --cpu-moe";
           env = [
             "LLAMA_ARG_FLASH_ATTN=on"
             "LLAMA_ARG_FIT=on"
@@ -212,6 +213,51 @@
             env = [
               "LLAMA_ARG_MODEL=${DIR}/Qwen3-Coder-Next-UD-Q4_K_XL.gguf"
               "LLAMA_ARG_FLASH_ATTN=on"
+              "LLAMA_ARG_DEVICE=ROCm0"
+            ];
+          };
+
+          "ornith-1.5-35b_q4_k_m" = {
+            name = "Ornith 1.5 35B (Q4_K_M)";
+            cmd = "${rocm} --port \${PORT} -fa on --temp 1.0 --top-p 0.95 --top-k 20 --min-p 0.0 --presence-penalty 1.5 --repeat-penalty 1.0 --jinja --cpu-moe";
+            capabilities = {
+              "in" = [ "text" ];
+              "out" = [ "text" ];
+              tools = true;
+              context = 1024 * 256;
+            };
+            env = [
+              "LLAMA_ARG_MODEL=${DIR}/Ornith-1.5-35B-Q4_K_M.gguf"
+              "LLAMA_ARG_DEVICE=ROCm0"
+            ];
+          };
+
+          "ornith-1.5-35b-pro_q4_k_m" = {
+            name = "Ornith 1.5 35B (Pro) (Q4_K_M)";
+            cmd = "${rocm} --port \${PORT} -fa on --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0.0 --presence-penalty 0.0 --repeat-penalty 1.0 --jinja --cpu-moe";
+            capabilities = {
+              "in" = [ "text" ];
+              "out" = [ "text" ];
+              tools = true;
+              context = 1024 * 256;
+            };
+            env = [
+              "LLAMA_ARG_MODEL=${DIR}/Ornith-1.5-35B-Q4_K_M.gguf"
+              "LLAMA_ARG_DEVICE=ROCm0"
+            ];
+          };
+
+          "llm-jp-4-32b-a3b-thinking_q4_k_m" = {
+            name = "llm-jp 4 32B A3B Thinking (Q4_K_M)";
+            cmd = "${llm-jp} --port \${PORT} -fa on --jinja --cpu-moe";
+            capabilities = {
+              "in" = [ "text" ];
+              "out" = [ "text" ];
+              tools = true;
+              context = 1024 * 256;
+            };
+            env = [
+              "LLAMA_ARG_MODEL=${DIR}/llm-jp-4-32b-a3b-thinking-Q4_K_M.gguf"
               "LLAMA_ARG_DEVICE=ROCm0"
             ];
           };

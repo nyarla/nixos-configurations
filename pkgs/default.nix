@@ -55,6 +55,30 @@ in
     '';
   };
 
+  proton-rtsp-wayland-ge-bin = pkgs.proton-ge-bin.overrideAttrs (
+    finalAttrs: _: {
+      pname = "proton-rstp-wayland-ge";
+      version = "Proton-RTSP-Wayland-GE-Beta3";
+
+      inherit (finalAttrs.passthru.variants.${pkgs.stdenvNoCC.hostPlatform.system}) src toolName;
+
+      steamDisplayName = "Proton-RTSP-Wayland-GE";
+
+      preFixup = ''
+        substituteInPlace "$steamcompattool/compatibilitytool.vdf" \
+          --replace-fail "Proton RTSP Wayland GE Beta 3" "${finalAttrs.version}"
+      '';
+
+      passthru.variants."x86_64-linux" = {
+        toolName = finalAttrs.version;
+        src = pkgs.fetchzip {
+          url = "https://github.com/Go08er/Proton-RTSP-Wayland-GE/releases/download/${finalAttrs.version}/Proton-RTSP-Wayland-GE-Beta3.tar.gz";
+          hash = "sha256-1mHvunFQCZFn9TI58UrCBpPooul21H+zPPHjfz/WXF4=";
+        };
+      };
+    }
+  );
+
   # inupts methods
   cskk = require ./cskk { };
   skk-dicts-xl = require ./skk-dicts-xl { };

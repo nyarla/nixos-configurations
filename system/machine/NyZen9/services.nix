@@ -67,50 +67,89 @@
   };
 
   # backup by restic
-  systemd.services.backup = {
+  systemd.user.services.backup-local = {
     enable = true;
-    path =
-      (with pkgs; [
-        restic-run
-        rclone
-        sec
-      ])
-      ++ [
-        "/run/wrappers"
-      ];
-    description = "Automatic backup by restic and rclone";
-    requires = [ "network-online.target" ];
-    after = [ "network-online.target" ];
+    description = "Scheduled local backup by restic";
+    path = with pkgs; [
+      libsecret
+      rclone
+      restic
+    ];
+    environment = {
+      RESTIC_REPOSITORY = "/persist/data/DBF4-42B3/Backup";
+      RESTIC_PASSWORD_COMMAND = "secret-tool lookup restic-token local";
+    };
     serviceConfig = {
       Type = "oneshot";
+      WorkingDirectory = "/backup";
+      ExecStart = toString (
+        pkgs.writeShellScript "backup.sh" ''
+          set -eou pipefail
+
+          if [[ ! -e "''${RESTIC_REPOSITORY}" ]]; then
+            echo "Backup repository is not found" >&2
+            exit 1
+          fi
+
+          restic cache --cleanup
+          restic unlock --remove-all
+          restic repair index
+          restic prune
+          restic backup --exclude-file Sync/.resticignore . || true
+          restic forget --prune --keep-weekly 7 --keep-monthly 4
+        ''
+      );
+    };
+  };
+  systemd.user.services.backup-remote = {
+    enable = true;
+    description = "Scheduled remote backup by restic";
+    path = with pkgs; [
+      libsecret
+      rclone
+      restic
+    ];
+    environment = {
+      RESTIC_REPOSITORY = "rclone:infinicloud:NixOS/Backup";
+      RESTIC_PASSWORD_COMMAND = "secret-tool lookup restic-token remote";
+    };
+    serviceConfig = {
+      Type = "oneshot";
+      WorkingDirectory = "/backup";
       ExecStart = toString (
         pkgs.writeShellScript "backup.sh" ''
           set -euo pipefail
-          export HOME=/home/nyarla
 
-          if test -d /backup ; then
-            cd /backup
-            
-            export RESTIC_PASSWORD=$(sudo -u nyarla env \
-            DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
-            SEC_ENV=deployment \
-              sec /bin/sh -c 'echo $RESTIC_PASSWORD')
+          export RCLONE_WEBDAV_PASS="$(secret-tool lookup restic-token rclone)"
 
-            restic-backup .
-          fi
-
-          exit 0
+          restic cache --cleanup
+          restic unlock --remove-all
+          restic repair index
+          restic prune
+          restic backup --exclude-file Sync/.resticignore.remote . || true
+          restic forget --prune --keep-weekly 7 --keep-monthly 4
         ''
       );
     };
   };
 
-  systemd.timers.backup = {
+  systemd.user.timers.backup-local = {
     enable = true;
-    description = "Automatic backup by restic and rclone";
+    description = "Timer for local backup by restic";
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "*-*-* 01:00:00";
+      RandomizedDelaySec = "10m";
+      Persistent = true;
+    };
+  };
+
+  systemd.user.timers.backup-remote = {
+    enable = true;
+    description = "Timer for local backup by restic";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 01:30:00";
       RandomizedDelaySec = "10m";
       Persistent = true;
     };

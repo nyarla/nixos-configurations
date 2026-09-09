@@ -228,6 +228,7 @@
             };
             env = [
               "LLAMA_ARG_MODEL=${DIR}/Ornith-1.5-35B-Q4_K_M.gguf"
+              "LLAMA_ARG_MMPROJ=${DIR}/mmproj-Ornith-1.5-35B-BF16.gguf"
               "LLAMA_ARG_DEVICE=ROCm0"
             ];
           };
@@ -243,6 +244,7 @@
             };
             env = [
               "LLAMA_ARG_MODEL=${DIR}/Ornith-1.5-35B-Q4_K_M.gguf"
+              "LLAMA_ARG_MMPROJ=${DIR}/mmproj-Ornith-1.5-35B-BF16.gguf"
               "LLAMA_ARG_DEVICE=ROCm0"
             ];
           };

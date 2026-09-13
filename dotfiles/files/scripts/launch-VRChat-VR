@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+steam-run env \
+  WAYLAND_DISPLAY=wayland-0 \
+  SteamDeck=0 \
+  XMODIFIERS=@im=fcitx \
+  GTK_IM_MODULE=fcitx \
+  QT_IM_MODULE=fcitx \
+  \
+  STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam \
+  STEAM_COMPAT_DATA_PATH=~/.local/share/Steam/steamapps/compatdata/438100 \
+  PROTON_USE_WINED3D=0 \
+  PROTON_USE_WAYLAND=1 \
+  \
+  PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1 \
+  SDL_VIDEODRIVER=windows \
+  /etc/static/compatibilitytools.d/Proton-RTSP-Wayland-GE/proton run ~/.local/share/Steam/steamapps/common/VRChat/launch.exe \
+  --vrmode openvr \
+  -screen-width 800 -screen-height 400

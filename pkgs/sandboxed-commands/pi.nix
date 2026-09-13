@@ -39,6 +39,7 @@ callPackage ./wrapper.nix {
         "*.anthropic.com"
         "api.ai.sakura.ad.jp"
         "api.openai.com"
+        "opencode.ai"
 
         "127.0.0.1"
         "localhost"

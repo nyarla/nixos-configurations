@@ -30,7 +30,7 @@
     blueman
     networkmanagerapplet
     xembed-sni-proxy
-    gcr
+    gcr_3
 
     # utilities
     grim

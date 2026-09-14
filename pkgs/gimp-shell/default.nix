@@ -11,7 +11,7 @@ buildFHSEnv {
       cairo
       gdk-pixbuf
       gegl
-      gexiv2
+      gexiv2_0_10
       gimp3
       gobject-introspection
       harfbuzz

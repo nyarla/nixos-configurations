@@ -31,5 +31,9 @@
       credential.helper = "${pkgs.gitFull}/bin/git-credential-libsecret";
     };
     ignores = import ./gitignore.nix;
+    signing = {
+      format = "ssh";
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFLoxTbb3uWp5FSyD00LqX7EpHMxWZ702bd5QBgZH481";
+    };
   };
 }

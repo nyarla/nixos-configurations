@@ -4,7 +4,7 @@ let
     zenity
     dconf-editor
     gsound
-    gcr
+    gcr_3
   ];
 in
 {

@@ -34,7 +34,6 @@ _: {
 
   # git
   programs.git = {
-    signing.format = null;
     settings.user = {
       name = "nyarla";
       email = "nyarla@kalaclista.com";

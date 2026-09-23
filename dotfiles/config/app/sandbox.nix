@@ -5,6 +5,7 @@
     ++ (with pkgs.sandboxed-commands; [
       nvim
       pi
+      bun
     ]);
 
   xdg.configFile = {

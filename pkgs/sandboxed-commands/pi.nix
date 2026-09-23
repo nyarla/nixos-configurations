@@ -3,16 +3,21 @@
 
   lib,
 
+  bun,
+  gitFull,
   iconv,
   nodejs,
-  pi-coding-agent,
   python3,
+
+  pi-coding-agent,
 }:
 let
   PATH = lib.makeBinPath [
+    bun
+    gitFull
+    iconv
     nodejs
     python3
-    iconv
   ];
 in
 callPackage ./wrapper.nix {
@@ -40,6 +45,7 @@ callPackage ./wrapper.nix {
         "api.ai.sakura.ad.jp"
         "api.openai.com"
         "opencode.ai"
+        "pi.dev"
 
         "127.0.0.1"
         "localhost"

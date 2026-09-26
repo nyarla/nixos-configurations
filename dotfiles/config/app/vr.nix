@@ -1,7 +1,6 @@
 { pkgs, config, ... }:
 let
   wivrn = pkgs.wivrn-stable;
-  inherit (pkgs) xrizer;
 in
 {
   home.packages =

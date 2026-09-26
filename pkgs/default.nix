@@ -58,7 +58,7 @@ in
   proton-rtsp-wayland-ge-bin = pkgs.proton-ge-bin.overrideAttrs (
     finalAttrs: _: {
       pname = "proton-rstp-wayland-ge";
-      version = "Proton-RTSP-Wayland-GE-Beta3";
+      version = "Proton-RTSP-Wayland-GE-Beta4";
 
       inherit (finalAttrs.passthru.variants.${pkgs.stdenvNoCC.hostPlatform.system}) src toolName;
 
@@ -66,14 +66,14 @@ in
 
       preFixup = ''
         substituteInPlace "$steamcompattool/compatibilitytool.vdf" \
-          --replace-fail "Proton RTSP Wayland GE Beta 3" "${finalAttrs.version}"
+          --replace-fail "Proton RTSP Wayland GE Beta 4" "${finalAttrs.version}"
       '';
 
       passthru.variants."x86_64-linux" = {
         toolName = finalAttrs.version;
         src = pkgs.fetchzip {
-          url = "https://github.com/Go08er/Proton-RTSP-Wayland-GE/releases/download/${finalAttrs.version}/Proton-RTSP-Wayland-GE-Beta3.tar.gz";
-          hash = "sha256-1mHvunFQCZFn9TI58UrCBpPooul21H+zPPHjfz/WXF4=";
+          url = "https://github.com/Go08er/Proton-RTSP-Wayland-GE/releases/download/v11.1.0-beta.4/Proton-RTSP-Wayland-GE-Beta4.tar.gz";
+          hash = "sha256-62UoQEkfhK/EsoQvu2pV6hl1+w9jLkhZWYNm5pvQrSE=";
         };
       };
     }

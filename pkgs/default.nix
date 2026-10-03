@@ -120,6 +120,9 @@ in
 
   wineasio = require ./wineasio { };
 
+  # webapp
+  bookwall = require ./bookwall { };
+
   # comfyui
   comfyui =
     with pkgs.pkgsRocm;

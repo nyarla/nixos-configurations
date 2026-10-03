@@ -19,6 +19,112 @@
     };
   };
 
+  # bookwall
+  systemd.services.bookwall = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    description = "Bookwall eBooks server";
+    path = with pkgs; [
+      sqlite
+      ruby_4_0
+    ];
+
+    environment = rec {
+      BOOKWALL_DATA_DIR = "/persist/home/nyarla/Applications/Data/Bookwall";
+      DISABLE_DATABASE_ENVIRONMENT_CHECK = "1";
+      HTTP_PORT = "8237";
+      TARGET_PORT = "38080";
+      HTTP_WRITE_TIMEOUT = "0";
+      RAILS_ENV = "production";
+      SCHEMA_FORMAT = "ruby";
+      SECRET_KEY_FILE = "${BOOKWALL_DATA_DIR}/secret_key_file";
+      RAILS_SERVE_STATIC_FILES = "true";
+    };
+
+    serviceConfig = {
+      Type = "simple";
+      User = "nyarla";
+      Group = "users";
+      WorkingDirectory = "/persist/home/nyarla/Applications/Data/Bookwall";
+      ExecStartPre = toString (
+        pkgs.writeShellScript "bootstrap" ''
+          test -d rails || mkdir -p rails
+
+          cp -r ${pkgs.bookwall}/* rails/
+          chmod -R +w rails/
+          chmod +x rails/bin/*
+
+          if [[ ! -f "''${SECRET_KEY_FILE}" ]]; then
+            mkdir -p "$(dirname "''${SECRET_KEY_FILE}")"
+            ruby -rsecurerandom -e 'puts SecureRandom.hex(64)' > "''${SECRET_KEY_FILE}"
+            chmod 600 "''${SECRET_KEY_FILE}"
+          fi
+
+          export SECRET_KEY_BASE="$(cat "''${SECRET_KEY_FILE}")"
+
+          cd rails || exit 1
+
+          ./bin/rails db:prepare
+          ./bin/rails db:schema:load:queue
+          ./bin/rails db:schema:load:cache
+        ''
+      );
+      ExecStart = toString (
+        pkgs.writeShellScript "launch" ''
+          export SECRET_KEY_BASE="$(cat "''${SECRET_KEY_FILE}")"
+
+          cd rails || exit 1
+          ./bin/thrust ${pkgs.bookwall}/bin/bundle exec falcon serve --bind http://127.0.0.1:38080 --count 4 &
+          appPID=$!
+
+          ./bin/jobs &
+          jobsPID=$!
+
+          wait $appPID
+          kill $jobsPID
+        ''
+      );
+    };
+  };
+  services.nginx.virtualHosts."bookwall.services.thotep.net" = {
+    useACMEHost = "services.thotep.net";
+    forceSSL = true;
+    listen =
+      let
+        addr = "100.103.65.77";
+      in
+      [
+        {
+          inherit addr;
+          port = 80;
+          ssl = false;
+        }
+        {
+          inherit addr;
+          port = 443;
+          ssl = true;
+        }
+      ];
+
+    root = "/persist/home/nyarla/Applications/Data/Bookwall/rails/public";
+    locations = {
+      "/" = {
+        tryFiles = "$uri $uri/index.html $uri/ @rails";
+      };
+      "@rails" = {
+        priority = 500;
+        proxyWebsockets = true;
+        proxyPass = "http://127.0.0.1:8237";
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $remote_addr;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        '';
+      };
+    };
+  };
+
   # hister
   services.hister = {
     enable = true;

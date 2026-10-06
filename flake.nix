@@ -91,7 +91,7 @@
             patches = [
               (legacyPackages.x86_64-linux.fetchpatch {
                 url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/562330.patch";
-                sha256 = "0n16h66zx35109wawv3277fw9j2rrk7rrspax7m3kkagmax594hl";
+                sha256 = "1kj1zc9mmys4rdvz3bvvyj2fhhpzjmddm0hsgpdpdbfn4yh3v7kz";
               })
             ];
             overlays = [

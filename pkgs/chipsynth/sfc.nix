@@ -12,7 +12,7 @@
   fontconfig,
   gdk-pixbuf,
   glib-networking,
-  glibmm,
+  glibmm_2_4,
   gtk3,
   gtkmm3,
   libpng,
@@ -50,7 +50,7 @@ stdenvNoCC.mkDerivation {
     fontconfig
     gdk-pixbuf
     glib-networking
-    glibmm
+    glibmm_2_4
     gtk3
     gtkmm3
     libpng

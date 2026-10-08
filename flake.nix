@@ -1,50 +1,75 @@
 {
   description = "NixOS configurations for my PCs";
   inputs = {
+    # packages
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+
+    wayland = {
+      url = "github:nix-community/nixpkgs-wayland";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+        lib-aggregate.follows = "lib-aggregate";
+      };
+    };
+
+    xr = {
+      url = "github:nix-community/nixpkgs-xr";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+        flake-utils.follows = "flake-utils";
+        systems.follows = "systems";
+        nvfetcher.follows = "nvfetcher";
+        treefmt-nix.follows = "treefmt";
+      };
+    };
+
+    nvfetcher = {
+      url = "github:Red-M/nvfetcher";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
+      };
+    };
+
+    treefmt.url = "github:numtide/treefmt-nix";
+    treefmt.inputs.nixpkgs.follows = "nixpkgs";
+
+    # modules
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
+    # libraries
     systems.url = "github:nix-systems/default";
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
     flake-compat.url = "github:nix-community/flake-compat";
 
-    nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
+    lib-aggregate = {
+      url = "github:nix-community/lib-aggregate";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
 
-    lib-aggregate.url = "github:nix-community/lib-aggregate";
-    lib-aggregate.inputs.flake-utils.follows = "flake-utils";
-    lib-aggregate.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
-
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-    pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
-    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
-    stable.url = "github:NixOS/nixpkgs/nixos-25.11";
-
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    wayland.url = "github:nix-community/nixpkgs-wayland";
-    wayland.inputs.nixpkgs.follows = "nixpkgs";
-    wayland.inputs.flake-compat.follows = "flake-compat";
-    wayland.inputs.lib-aggregate.follows = "lib-aggregate";
-
-    impermanence.url = "github:nix-community/impermanence";
-    impermanence.inputs.nixpkgs.follows = "nixpkgs";
-    impermanence.inputs.home-manager.follows = "home-manager";
-
-    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
-    nixpkgs-xr.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs-xr.inputs.flake-compat.follows = "flake-compat";
-    nixpkgs-xr.inputs.flake-utils.follows = "flake-utils";
-    nixpkgs-xr.inputs.systems.follows = "systems";
-
-    hister.url = "github:asciimoo/hister";
-    hister.inputs.nixpkgs.follows = "nixpkgs";
-    hister.inputs.flake-parts.follows = "flake-parts";
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
@@ -53,10 +78,9 @@
       home-manager,
       wayland,
       impermanence,
-      nixpkgs-xr,
-      hister,
+      xr,
       ...
-    }:
+    }@inputs:
     rec {
       legacyPackages.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.extend (
         final: prev:
@@ -101,7 +125,7 @@
             ];
 
             modules = [
-              nixpkgs-xr.nixosModules.nixpkgs-xr
+              xr.nixosModules.nixpkgs-xr
               impermanence.nixosModules.impermanence
               home-manager.nixosModules.home-manager
               (_: {

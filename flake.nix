@@ -79,64 +79,127 @@
       wayland,
       impermanence,
       xr,
+      flake-utils,
       ...
     }@inputs:
-    rec {
-      legacyPackages.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.extend (
+    let
+      overlay =
         final: prev:
         prev
+        // (wayland.overlay final prev)
         // (import ./pkgs/default.nix { inherit nixpkgs; } final prev)
-        // (import ./pkgs/temporary.nix { inherit nixpkgs stable; } final prev)
-      );
+        // (import ./pkgs/temporary.nix {
+          inherit nixpkgs;
+          inherit stable;
+        } final prev);
 
-      ## test
-      nixosConfigurations =
-        let
-          nixosSystem =
-            opts:
-            (import ./lib/nixosSystem.nix {
-              inherit nixpkgs;
-              inherit (opts) system patches;
-            })
-              {
-                inherit (opts)
-                  hostname
-                  profile
-                  overlays
-                  modules
-                  ;
-              };
-        in
-        {
-          nixos = nixosSystem {
-            hostname = "nixos";
-            profile = import ./system/profile/NyZen9.nix;
-            system = "x86_64-linux";
-            patches = [
-              (legacyPackages.x86_64-linux.fetchpatch {
-                url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/562330.patch";
-                sha256 = "1kj1zc9mmys4rdvz3bvvyj2fhhpzjmddm0hsgpdpdbfn4yh3v7kz";
-              })
-            ];
-            overlays = [
-              wayland.overlay
-              (import ./pkgs/temporary.nix { inherit nixpkgs stable; })
-              (import ./pkgs/default.nix { inherit nixpkgs; })
-            ];
+      flakeFor =
+        system: patches:
+        (import nixpkgs { inherit system; }).applyPatches {
+          name = "nixpkgs-patched-${nixpkgs.shortRev}";
+          src = inputs.nixpkgs;
+          inherit patches;
+        };
+
+      pkgsFor = system: flake: (import flake { inherit system; }).extend overlay;
+
+      nixpkgsFor = system: patches: rec {
+        flake = flakeFor system patches;
+        legacyPackages = pkgsFor system flake;
+        lib.nixosSystem =
+          {
+            modules ? [ ],
+            ...
+          }@inputs:
+          import "${flake}/nixos/lib/eval-config.nix" {
+            inherit system;
+
+            baseModules = import "${flake}/nixos/modules/module-list.nix";
+            specialArgs = (inputs.specialArgs or { }) // {
+              modulePath = "${flake}/nixos/modules";
+            };
 
             modules = [
-              xr.nixosModules.nixpkgs-xr
-              impermanence.nixosModules.impermanence
-              home-manager.nixosModules.home-manager
-              (_: {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = false;
-                  users.nyarla = import ./dotfiles/user/nyarla.nix;
+              {
+                nix = {
+                  registry.nixpkgs = { inherit flake; };
+                  settings = {
+                    trusted-public-keys = [
+                      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+                    ];
+
+                    trusted-users = [
+                      "root"
+                      "@wheel"
+                    ];
+
+                    substituters = [
+                      "https://cache.nixos.org"
+                    ];
+
+                    experimental-features = [
+                      "nix-command"
+                      "flakes"
+                    ];
+
+                    nix-path = [
+                      "nixpkgs=${flake}"
+                    ];
+                  };
                 };
-              })
-            ];
+              }
+            ]
+            ++ modules;
           };
-        };
-    };
+      };
+
+      systemFor =
+        system:
+        {
+          x86_64-linux = nixpkgsFor system [
+            (builtins.fetchurl {
+              url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/562330.patch";
+              sha256 = "1kj1zc9mmys4rdvz3bvvyj2fhhpzjmddm0hsgpdpdbfn4yh3v7kz";
+            })
+          ];
+        }
+        .${system};
+    in
+    flake-utils.lib.eachDefaultSystem (system: {
+      inherit (systemFor system) legacyPackages;
+    })
+    // flake-utils.lib.eachDefaultSystemPassThrough (system: {
+      nixosConfigurations.nixos = (systemFor system).lib.nixosSystem {
+        modules = [
+          xr.nixosModules.nixpkgs-xr
+          impermanence.nixosModules.impermanence
+          home-manager.nixosModules.home-manager
+          {
+            networking.hostName = "nixos";
+            nix.settings = {
+              trusted-public-keys = [
+                "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+              ];
+
+              substituters = [
+                "https://nixpkgs-wayland.cachix.org"
+              ];
+            };
+
+            nixpkgs = {
+              overlays = [ overlay ];
+              config.allowUnfree = true;
+            };
+          }
+          (import ./system/profile/NyZen9.nix)
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = false;
+              users.nyarla = import ./dotfiles/user/nyarla.nix;
+            };
+          }
+        ];
+      };
+    });
 }

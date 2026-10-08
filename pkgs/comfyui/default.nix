@@ -34,7 +34,7 @@ let
 
   comfy-aimdo = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfy_aimdo";
-    version = "0.4.11";
+    version = "0.5.5";
     format = "wheel";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
@@ -42,21 +42,25 @@ let
       python = "cp39";
       abi = "abi3";
       format = "wheel";
-      platform = "manylinux2010_x86_64.manylinux2014_x86_64.manylinux_2_12_x86_64.manylinux_2_17_x86_64";
-      hash = "sha256-Zuj+eDOFsWsAEouGsA8fn+WHJprgGW3rhHw4L522nE8=";
+      platform = "manylinux2014_x86_64.manylinux_2_17_x86_64";
+      hash = "sha256-ek3HaDEnOi+Df2fPScnlB+d4sZr/F+bvijSm6WlP2Go=";
     };
 
     nativeBuildInputs = [ autoPatchelfHook ];
+    pythonImportsCheck = [
+      "comfy_aimdo"
+      "comfy_aimdo.storage"
+    ];
   });
 
   comfy-kitchen = python3Packages.buildPythonPackage {
     pname = "comfy_kitchen";
-    version = "0.2.26";
+    version = "0.2.37";
     src = fetchFromGitHub {
       owner = "Comfy-Org";
       repo = "comfy-kitchen";
-      tag = "v0.2.26";
-      hash = "sha256-T/govRMiwiANbVXRizY4W3jz4iN8NuLyM0nVA990Lwg=";
+      tag = "v0.2.37";
+      hash = "sha256-wvEmnW302yaGOjZ0UcwFyS8zOUi1XRi3so4r1wU7w/s=";
     };
 
     pyproject = true;
@@ -91,7 +95,7 @@ let
 
   comfy-angle = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfy_angle";
-    version = "0.1.0";
+    version = "0.1.1";
     format = "wheel";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
@@ -99,7 +103,7 @@ let
       python = "py3";
       format = "wheel";
       platform = "manylinux_2_28_x86_64";
-      hash = "sha256-L00X6YQ1PTfSR/r0c6+6vbmGP8OvPgIG+7fYK9wjrGc=";
+      hash = "sha256-PS/KuThuu7VlPWZpb6i8rTKcHRhS6kth8obqmUhahAo=";
     };
 
     nativeBuildInputs = [ autoPatchelfHook ];
@@ -113,10 +117,10 @@ let
 
   comfyui-embedded-docs = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfyui_embedded_docs";
-    version = "0.5.9";
+    version = "0.5.13";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
-      hash = "sha256-uz83lj91nLsqT4C/nHZdr1pfKI18FaFiU/dI2Dx9gZk=";
+      hash = "sha256-odDCe13S0fyOC/PHe1jgZkrvCtRggE5Z4WVKqo4bhJw=";
     };
     pyproject = true;
     build-system = with python3Packages; [ setuptools ];
@@ -124,10 +128,10 @@ let
 
   comfyui-frontend-package = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfyui_frontend_package";
-    version = "1.47.11";
+    version = "1.53.10";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
-      hash = "sha256-86o2cBFVnvMUBfp2blEAQxqZ7+P/C6oJbyq07XGH1GI=";
+      hash = "sha256-yx3MvEfYtQ0yLmeBP+q5eYZBZ7LrLmKHn71YxU8tKrI=";
     };
     pyproject = true;
     build-system = with python3Packages; [ setuptools ];
@@ -137,10 +141,10 @@ let
 
   comfyui-workflow-templates-core = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfyui_workflow_templates_core";
-    version = "0.3.292";
+    version = "0.3.367";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
-      hash = "sha256-sUOd5A3U8XdbEZ/lyFD55oDKQ9qKCqDNNnpytk9DUVc=";
+      hash = "sha256-dXfZQfDtA2bSAx+ujz2wy/pjwLs9chf65rNucA/dJgA=";
     };
     pyproject = true;
     build-system = with python3Packages; [ setuptools ];
@@ -148,10 +152,10 @@ let
 
   comfyui-workflow-templates-json = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfyui_workflow_templates_json";
-    version = "0.1.27";
+    version = "0.1.102";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
-      hash = "sha256-rA9gikXDIskrknaHAWak3JffQGp3I+vXIY7cvVSH4D0=";
+      hash = "sha256-6fciXxJ2fjuo0kkEy/wA7H0m0XStTYh8fDgDu/U2sgg=";
     };
     pyproject = true;
     build-system = with python3Packages; [ setuptools ];
@@ -170,10 +174,21 @@ let
 
   comfyui-workflow-templates-media-assets-01 = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfyui_workflow_templates_media_assets_01";
-    version = "0.1.17";
+    version = "0.1.48";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
-      hash = "sha256-wpa3o4tC6IztwBRNwSZTQP0itQpNzvAcGlViCz3zhKk=";
+      hash = "sha256-sSxDn1KoVFsKjjIej2LXqogaS9jcnIicO73pexDnEg8=";
+    };
+    pyproject = true;
+    build-system = with python3Packages; [ setuptools ];
+  });
+
+  comfyui-workflow-templates-media-assets-02 = python3Packages.buildPythonPackage (finalAttrs: {
+    pname = "comfyui_workflow_templates_media_assets_02";
+    version = "0.1.9";
+    src = fetchPypi {
+      inherit (finalAttrs) pname version;
+      hash = "sha256-nrH44RF16lFzn67WgPAb1JYcWheOEWnkOFnMr5j1aPA=";
     };
     pyproject = true;
     build-system = with python3Packages; [ setuptools ];
@@ -214,10 +229,10 @@ let
 
   comfyui-workflow-templates = python3Packages.buildPythonPackage (finalAttrs: {
     pname = "comfyui_workflow_templates";
-    version = "0.11.27";
+    version = "0.11.76";
     src = fetchPypi {
       inherit (finalAttrs) pname version;
-      hash = "sha256-ct20s0Z61lY/xZb1pIIVvpaxaq/O94/x7DPFz6PqdOg=";
+      hash = "sha256-iPfppPQ4uJVhphtwRMP9fkLY1HSCoW3EMSZNVX3gHSg=";
     };
     pyproject = true;
     build-system = with python3Packages; [ setuptools ];
@@ -227,6 +242,7 @@ let
       comfyui-workflow-templates-json
       comfyui-workflow-templates-media-api
       comfyui-workflow-templates-media-assets-01
+      comfyui-workflow-templates-media-assets-02
       comfyui-workflow-templates-media-image
       comfyui-workflow-templates-media-other
       comfyui-workflow-templates-media-video
@@ -255,13 +271,13 @@ let
 in
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "ComfyUI";
-  version = "v0.30.0";
+  version = "v0.39.0";
   format = "other";
   src = fetchFromGitHub {
     owner = "Comfy-Org";
     repo = "ComfyUI";
     tag = finalAttrs.version;
-    hash = "sha256-+ft9IAthonij5EymzWoAxy9WAlZhXN3AOhodm9Awq5Q=";
+    hash = "sha256-1QZQmMfLzko9HPBGFMEZuHjroxTIjxR2taZVHosIW3E=";
   };
 
   dependencies =
@@ -275,6 +291,7 @@ python3Packages.buildPythonApplication (finalAttrs: {
       glfw
       kornia
       numpy
+      numpy
       pillow
       psutil
       pydantic
@@ -287,6 +304,7 @@ python3Packages.buildPythonApplication (finalAttrs: {
       scipy
       sentencepiece
       simpleeval
+      spandrel
       sqlalchemy
       tokenizers
       torch

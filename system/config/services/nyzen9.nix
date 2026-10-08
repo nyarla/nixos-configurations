@@ -180,6 +180,7 @@
     description = "ComfyUI Server";
     path = with pkgs; [ rocmPackages.rocminfo ];
     environment = {
+      HOME = "/persist/home/nyarla/Applications/AI/ComfyUI.Home";
       TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL = "1";
       MIOPEN_FIND_MODE = "FAST";
       TORCHINDUCTOR_CACHE_DIR = "/persist/home/nyarla/Applications/AI/ComfyUI.Data/cache/inductor_cache";
@@ -200,6 +201,8 @@
 
             "--preview-method=auto"
             "--reserve-vram=1"
+
+            "--use-quad-cross-attention"
 
             "--disable-smart-memory"
             "--disable-dynamic-vram"

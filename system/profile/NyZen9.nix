@@ -3,7 +3,6 @@ _: {
     ../machine/NyZen9/default.nix
 
     ../config/audio/daw.nix
-    ../config/audio/pipewire.nix
     ../config/cpu/amd.nix
     ../config/desktop/app.nix
     ../config/datetime/jp.nix
@@ -54,6 +53,25 @@ _: {
 
     ../config/services/nyzen9.nix
   ];
+
+  my.services.pipewire = {
+    enable = true;
+    sampleRates = [
+      44100
+      48000
+      88200
+      96000
+      176400
+      192000
+    ];
+    formats = {
+      "focusrite-scalette-2gen" = {
+        device = "alsa_card.usb-Focusrite_Scarlett_Solo_USB-00";
+        alsa = "S32_LE";
+        audio = "S32LE";
+      };
+    };
+  };
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-39.8.10"

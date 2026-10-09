@@ -148,6 +148,7 @@
                   };
                 };
               }
+              (import ./modules)
             ]
             ++ modules;
           };

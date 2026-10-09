@@ -3,7 +3,6 @@ _: {
     ../machine/NyZen9/default.nix
 
     ../config/audio/daw.nix
-    ../config/cpu/amd.nix
     ../config/desktop/app.nix
     ../config/datetime/jp.nix
     ../config/desktop/files.nix
@@ -52,11 +51,18 @@ _: {
 
     ../config/services/nyzen9.nix
   ];
+
   nixpkgs.config.permittedInsecurePackages = [
     "electron-39.8.10"
     "nodejs-20.20.2"
     "nodejs-slim-20.20.2"
   ];
+
+  # hardware
+  my.hardware.cpu.amd = {
+    enable = true;
+    fix.zen2.enable = true;
+  };
 
   # audio
   my.services.pipewire = {

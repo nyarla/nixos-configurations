@@ -4,7 +4,6 @@ _: {
 
     ../config/audio/daw.nix
     ../config/desktop/app.nix
-    ../config/datetime/jp.nix
     ../config/desktop/files.nix
     ../config/desktop/wayland.nix
     ../config/desktop/xdg.nix
@@ -47,7 +46,6 @@ _: {
     ../config/vmm/kvm.nix
     ../config/wireless/AX200.nix
     ../config/wireless/bluetooth.nix
-    ../config/wireless/jp.nix
 
     ../config/services/nyzen9.nix
   ];
@@ -63,6 +61,9 @@ _: {
     enable = true;
     fix.zen2.enable = true;
   };
+
+  # location and languages
+  my.location.jp = true;
 
   # audio
   my.services.pipewire = {

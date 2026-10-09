@@ -44,7 +44,6 @@ _: {
     ../config/tools/editors.nix
     ../config/tools/git.nix
     ../config/user/nyarla.nix
-    ../config/video/droidcam.nix
     ../config/video/intel-with-amd.nix
     ../config/vmm/kvm.nix
     ../config/wireless/AX200.nix
@@ -53,7 +52,13 @@ _: {
 
     ../config/services/nyzen9.nix
   ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+    "nodejs-20.20.2"
+    "nodejs-slim-20.20.2"
+  ];
 
+  # audio
   my.services.pipewire = {
     enable = true;
     sampleRates = [
@@ -73,9 +78,6 @@ _: {
     };
   };
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-39.8.10"
-    "nodejs-20.20.2"
-    "nodejs-slim-20.20.2"
-  ];
+  # programs
+  my.programs.droidcam.enable = true;
 }

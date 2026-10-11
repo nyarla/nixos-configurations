@@ -110,7 +110,7 @@
       restic
     ];
     environment = {
-      RESTIC_REPOSITORY = "rclone:infinicloud:NixOS/Backup";
+      RESTIC_REPOSITORY = "rclone:infinicloud:Backup/NixOS";
       RESTIC_PASSWORD_COMMAND = "secret-tool lookup restic-token remote";
     };
     serviceConfig = {

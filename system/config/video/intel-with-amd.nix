@@ -41,7 +41,12 @@
         paths = with pkgs.rocmPackages; [
           clr
           hipblas
+          hipblas-common
+          hipcc
+          hsakmt
           rocblas
+          rocm-comgr
+          rocm-device-libs
         ];
       };
     in

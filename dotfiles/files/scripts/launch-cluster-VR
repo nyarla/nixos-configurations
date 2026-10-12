@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+export WINEPREFIX=$HOME/Applications/Programs/UMU/Games/cluster
+export PROTONPATH=/etc/static/compatibilitytools.d/Proton-RTSP-Wayland-GE
+
+export PROTON_USE_WAYLAND=1
+export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1
+
+umu-run 'C:\Program Files (x86)\cluster\cluster.exe'

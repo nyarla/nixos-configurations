@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+  environment.systemPackages = with pkgs; [ umu-launcher ];
+
   programs.steam = {
     enable = true;
     extraCompatPackages = with pkgs; [

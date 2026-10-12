@@ -2,6 +2,7 @@
   stdenvNoCC,
 
   fetchFromGitHub,
+  fetchNpmDeps,
   autoPatchelfHook,
 
   bundlerEnv,
@@ -10,12 +11,11 @@
   ruby_4_0,
   rubyPackages,
   nodejs_26,
-  cacert,
+  npmHooks,
   libxslt,
   libxml2,
   sqlite,
   pkg-config,
-
 }:
 let
   ruby = ruby_4_0;
@@ -27,51 +27,12 @@ let
     hash = "sha256-Q1r6pjF9XREawxXVX3XTOrSNAE9LkHpV5jEMMdIl26c=";
   };
 
-  client = stdenvNoCC.mkDerivation {
-    pname = "bookwall-client-dist";
-    version = "2026-09-30";
-    inherit src;
-
-    sourceRoot = "source/client";
-
-    nativeBuildInputs = [
-      nodejs_26
-      cacert
-    ];
-
-    buildPhase = ''
-      runHook preBuild
-
-      export HOME=$(mktemp -d)
-
-      substituteInPlace package.json \
-        --replace-fail '"postinstall": "patch-package",' ""
-
-      npm ci
-      node node_modules/.bin/patch-package
-
-      node node_modules/.bin/tsc -b
-      node node_modules/.bin/vite build
-
-      runHook postBuild
-    '';
-
-    installPhase = ''
-      runHook preInstall
-
-      mv dist $out
-
-      runHook postInstall
-    '';
-
-    outputHashMode = "recursive";
-    outputHashAlgo = "SHA256";
-    outputHash = "sha256-DPVTO7sFJGe0a35LglXx3m+oGFZSjfKrDsPcQqYyW14=";
-  };
+  pname = "bookwall";
+  version = "2026-09-03";
 
   gems = bundlerEnv {
     inherit ruby;
-    name = "bookwall-server-gems";
+    name = "${pname}-ruby-gems";
     gemdir = "${src}/server";
     gemset = ./gemset.nix;
     gemConfig = defaultGemConfig // {
@@ -105,24 +66,42 @@ let
       };
     };
   };
-
 in
-stdenvNoCC.mkDerivation {
-  pname = "bookwall";
-  version = "2026-09-30";
-  inherit src;
-
-  sourceRoot = "source/server";
+stdenvNoCC.mkDerivation (finalAttrs: {
+  inherit pname version src;
 
   nativeBuildInputs = [
     gems
     gems.wrappedRuby
+    nodejs_26
+    npmHooks.npmConfigHook
   ];
 
+  npmRoot = "client";
+  npmDepsHash = "sha256-x2XSg9HYLHsEUYSeO5rKONSgB7g6ybiegRk3J1jZIK0=";
+  npmDeps = fetchNpmDeps {
+    pname = "${pname}-npm-deps";
+    inherit src;
+
+    preBuild = ''
+      pushd ${finalAttrs.npmRoot}
+    '';
+
+    hash = finalAttrs.npmDepsHash;
+  };
+
   buildInputs = [
-    client
     gems
   ];
+
+  preConfigure = ''
+    pushd ${finalAttrs.npmRoot}
+    npm install
+    npm run build
+    popd
+
+    cd server
+  '';
 
   buildPhase = ''
     runHook preBuild
@@ -142,9 +121,8 @@ stdenvNoCC.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/
-
     mv * $out/
-    cp -r ${client}/dist $out/public/ui
+    cp -r ../client/dist $out/public/ui
 
     for bin in $(ls ${gems.wrappedRuby}/bin); do
       cp ${gems.wrappedRuby}/bin/$bin $out/bin/
@@ -152,4 +130,4 @@ stdenvNoCC.mkDerivation {
 
     runHook postInstall
   '';
-}
+})

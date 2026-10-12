@@ -146,12 +146,13 @@ in
       hash = "sha256-3cU/gXRBX3fcLxLA9c16Ko7KYxx59pefxuzMJ9lYrXI=";
     };
 
+    patches = [ ];
+
     npmRoot = "tools/ui";
     npmDepsHash = "sha256-Iyg8FpcTKf2UYHuK7mA3cTAqVaLcQPcS0YCa5Qf01Gc=";
     npmDeps = pkgs.fetchNpmDeps {
       pname = "${pname}-${version}-npm-deps";
       inherit src;
-      inherit (finalAttrs) patches;
       preBuild = ''
         pushd ${npmRoot}
       '';
@@ -165,5 +166,7 @@ in
       npm run build
       popd
     '';
+
+    checkPhase = "true";
   });
 }

@@ -157,12 +157,7 @@
       systemFor =
         system:
         {
-          x86_64-linux = nixpkgsFor system [
-            (builtins.fetchurl {
-              url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/562330.patch";
-              sha256 = "1kj1zc9mmys4rdvz3bvvyj2fhhpzjmddm0hsgpdpdbfn4yh3v7kz";
-            })
-          ];
+          x86_64-linux = nixpkgsFor system [ ];
         }
         .${system};
     in

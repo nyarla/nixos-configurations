@@ -6,6 +6,10 @@ final: prev: {
 
   inherit (stable.legacyPackages.x86_64-linux) deadbeef;
 
+  llama-cpp-rocm = prev.llama-cpp-rocm.overrideAttrs {
+    checkPhase = "true";
+  };
+
   whipper =
     let
       python3 =

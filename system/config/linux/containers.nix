@@ -8,4 +8,6 @@
       docker-compose
     ];
   };
+
+  environment.systemPackages = with pkgs; [ arion ];
 }

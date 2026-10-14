@@ -1,5 +1,12 @@
 { nixpkgs, stable, ... }:
 final: prev: {
+  arion = prev.arion.overrideAttrs {
+    postPatch = ''
+      substituteInPlace src/nix/modules/nixos/container-systemd.nix \
+        --replace-fail "services.journald.console" "services.journald.settings.Journal.TTYPath"
+    '';
+  };
+
   bristol = prev.bristol.overrideAttrs (_: {
     CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
   });

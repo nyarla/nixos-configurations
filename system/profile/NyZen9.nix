@@ -1,4 +1,4 @@
-_: {
+{ pkgs, ... }: {
   imports = [
     ../machine/NyZen9/default.nix
 
@@ -87,4 +87,34 @@ _: {
 
   # programs
   my.programs.droidcam.enable = true;
+  my.security.box = {
+    enable = true;
+    locale = {
+      LANG = "ja_JP.UTF-8";
+      LC_ALL = "ja_JP.UTF-8";
+    };
+    inputMethod = {
+      enable = true;
+      type = "fcitx";
+    };
+  };
+
+  my.box =
+    let
+      user = {
+        user = "nyarla";
+        group = "users";
+        uid = 1000;
+        gid = 100;
+      };
+    in
+    {
+      deadbeef = {
+        enable = true;
+        package = with pkgs; deadbeef-with-plugins.override { plugins = [ deadbeef-fb ]; };
+        inherit user;
+        library = "/backup/Music";
+      };
+    };
+
 }

@@ -4,5 +4,8 @@ _: {
     ./hardware/cpu/amd.nix
     ./location/jp.nix
     ./programs/droidcam.nix
+    ./security/box.nix
+
+    ./box/deadbeef.nix
   ];
 }

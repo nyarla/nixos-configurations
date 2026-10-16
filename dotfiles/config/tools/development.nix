@@ -24,6 +24,7 @@
     perl-shell
 
     # nix
+    npins
     nurl
 
     # editor

@@ -1,0 +1,77 @@
+{
+  "pins": {
+    "SKK-JISYO.L": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L",
+      "unpack": false,
+      "hash": "sha256-x5H1eNG0BA/OKC2ym8IrLMfqRvg+Jp+rLg+neeKWfkA="
+    },
+    "SKK-JISYO.M": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.M",
+      "unpack": false,
+      "hash": "sha256-t3WMHY+J7j3ZigWVQqxcTbB2qBjGTMC+wTrZKnG6kl8="
+    },
+    "SKK-JISYO.ML": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.ML",
+      "unpack": false,
+      "hash": "sha256-wXEindScHEijvk4kXXZ7HGWAwW2EBqNlJINCnpvqrZg="
+    },
+    "SKK-JISYO.S": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.S",
+      "unpack": false,
+      "hash": "sha256-mJnVogS/1ehNS/PVLVK86nJNrep/W0FvJxKmVBHLkoU="
+    },
+    "SKK-JISYO.fullname": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.fullname",
+      "unpack": false,
+      "hash": "sha256-sDRQL+abka7o5o2T2CVYE2hW7GpNjy6S0VOmKENjqLM="
+    },
+    "SKK-JISYO.geo": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.geo",
+      "unpack": false,
+      "hash": "sha256-AkmSkKIhcDZ44L0HgDmAtrz4SBFJ3B+YL3q1ErMn0Hg="
+    },
+    "SKK-JISYO.jinmei": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.jinmei",
+      "unpack": false,
+      "hash": "sha256-TamuYncXD5o6STz6G1KUQql1hbZI3dsObE5AkPMsgiQ="
+    },
+    "SKK-JISYO.law": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.law",
+      "unpack": false,
+      "hash": "sha256-EcZ038ixBtErohbgf7h2Ln2J3xWoH6ecyOSJhKavA74="
+    },
+    "SKK-JISYO.neologd": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/tokuhirom/skk-jisyo-neologd/master/SKK-JISYO.neologd",
+      "unpack": false,
+      "hash": "sha256-01hE0kKPlZrz5KDDNQmwb+Jrs7SBWyeME9yxn//67SI="
+    },
+    "SKK-JISYO.okinawa": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.okinawa",
+      "unpack": false,
+      "hash": "sha256-iPqiO2C7KtVq/2potYJ/eD8nr3j4hRq5CzOspfwjnf0="
+    },
+    "SKK-JISYO.propernoun": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.propernoun",
+      "unpack": false,
+      "hash": "sha256-FSJpPCx6AJ4Vmu0GxNHV7QfHYWkDpTqUf1BelsydtCg="
+    },
+    "SKK-JISYO.station": {
+      "type": "Url",
+      "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.station",
+      "unpack": false,
+      "hash": "sha256-AAcIvxtnjEtTZev6BBW/5y0pwNfNzKkIiA0iB/5MNL4="
+    }
+  },
+  "version": 8
+}

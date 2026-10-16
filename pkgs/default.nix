@@ -3,6 +3,9 @@ let
   require = path: pkgs.callPackage (import path);
 in
 {
+  # npins
+  sources = import ../npins;
+
   # application wrappers
   amd-run = require ./amd-run { gpuId = null; };
   gimp-shell = require ./gimp-shell { };

@@ -1,18 +1,32 @@
 {
+  sources,
+
   stdenvNoCC,
   lib,
-  fetchurl,
   skktools,
   iconv,
 }:
 let
   dicts = lib.strings.concatStringsSep " + " (
-    lib.lists.forEach (import ./skk.nix) (x: fetchurl { inherit (x) name url sha256; })
+    lib.lists.forEach [
+      "SKK-JISYO.L"
+      "SKK-JISYO.M"
+      "SKK-JISYO.ML"
+      "SKK-JISYO.S"
+      "SKK-JISYO.fullname"
+      "SKK-JISYO.geo"
+      "SKK-JISYO.jinmei"
+      "SKK-JISYO.law"
+      "SKK-JISYO.neologd"
+      "SKK-JISYO.okinawa"
+      "SKK-JISYO.propernoun"
+      "SKK-JISYO.station"
+    ] (x: sources."${x}")
   );
 in
 stdenvNoCC.mkDerivation rec {
   pname = "skk-dicts-xl";
-  version = "2022-07-07";
+  version = "2026-10-16";
   dontUnpack = true;
 
   nativeBuildInputs = [

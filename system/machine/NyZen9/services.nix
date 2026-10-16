@@ -4,53 +4,6 @@
     XDG_DATA_HOME = "/persist/home/nyarla/.local/share";
   };
 
-  # clamav
-  services.clamav.daemon.settings = {
-    ExcludePath = [
-      "^/backup"
-      "^/dev"
-      "^/home/nyarla/Reports"
-      "^/nix"
-      "^/persist/home/nyarla/Reports"
-      "^/proc"
-      "^/run"
-      "^/sys"
-      "^/vm"
-      ".snapshots/[0-9]+"
-    ];
-    MaxThreads = 30;
-  };
-
-  systemd.user.services.clamav-scan = {
-    enable = true;
-    description = "Full Virus Scan by ClamAV";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = toString (
-        pkgs.writeShellScript "clamav-scan.sh" ''
-          set -euo pipefail
-
-          export PATH=${lib.makeBinPath (with pkgs; [ clamav ])}:$PATH
-
-          clamdscan -l /home/nyarla/Reports/clamav.log -i -m --fdpass / || true
-
-          exit 0
-        ''
-      );
-    };
-  };
-
-  systemd.user.timers.clamav-scan = {
-    enable = true;
-    description = "Full Virus Scan by ClamAV";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*-*-* 03:00:00";
-      RandomizedDelaySec = "5m";
-      Persistent = true;
-    };
-  };
-
   # auto-purge memory cache
   systemd.services.cleanup-memory-cache = {
     enable = true;

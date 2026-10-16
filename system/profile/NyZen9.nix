@@ -87,6 +87,33 @@
 
   # programs
   my.programs.droidcam.enable = true;
+
+  # security
+  my.security.clamav = {
+    enable = true;
+    schedule = "*-*-* 03:00:00";
+    logFile = "/persist/home/nyarla/Reports/clamav.log";
+    maxThreads = 30;
+    excludes = [
+      # system directories
+      "^/dev"
+      "^/nix"
+      "^/proc"
+      "^/sys"
+      ".snapshots/[0-9]"
+
+      # vm storage pool
+      "^/vm"
+
+      # these directories have the same files in `/persist`
+      "^/home/nyarla"
+      "^/backup"
+
+      "^/persist/home/nyarla/Reports"
+    ];
+  };
+
+  # applications box
   my.security.box = {
     enable = true;
     locale = {

@@ -1,5 +1,31 @@
 {
   "pins": {
+    "Carla": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "falkTX",
+        "repo": "Carla"
+      },
+      "branch": "main",
+      "submodules": true,
+      "revision": "97a9e0740baf6df2df942495c02532a624c44682",
+      "url": null,
+      "hash": "sha256-NEVKqmDBSoH0i3YYdNIJObMwfhNYGjSM5o9U3ZRhjkw="
+    },
+    "Ildaeil": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "DISTRHO",
+        "repo": "Ildaeil"
+      },
+      "branch": "main",
+      "submodules": true,
+      "revision": "af9fc9f73b1a1832da8d6dfa12f7d03c431293d6",
+      "url": null,
+      "hash": "sha256-7oayKRqAHXEkf3PMsma3HfuHYXrNNR+xkrHyYrZ7s5I="
+    },
     "SKK-JISYO.L": {
       "type": "Url",
       "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L",

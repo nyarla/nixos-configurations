@@ -1,15 +1,14 @@
 {
+  sources,
+
   stdenv,
-  fetchFromGitHub,
   autoPatchelfHook,
-  pkg-config,
-  patchelf,
-  qt5,
-  findutils,
+
   bzip2,
   carla,
   dbus,
   file,
+  findutils,
   flac,
   libGL,
   libcap,
@@ -19,23 +18,20 @@
   libopus,
   libsndfile,
   libvorbis,
-  wine,
   libx11,
   libxcursor,
   libxext,
   libxrandr,
+  patchelf,
+  pkg-config,
+  qt5,
+  wine,
   zstd,
 }:
 stdenv.mkDerivation {
   pname = "ildaeil";
   version = "2026-02-22";
-  src = fetchFromGitHub {
-    owner = "DISTRHO";
-    repo = "Ildaeil";
-    rev = "af9fc9f73b1a1832da8d6dfa12f7d03c431293d6";
-    hash = "sha256-7oayKRqAHXEkf3PMsma3HfuHYXrNNR+xkrHyYrZ7s5I=";
-    fetchSubmodules = true;
-  };
+  src = sources.Ildaeil;
 
   nativeBuildInputs = [
     findutils
@@ -46,31 +42,25 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    bzip2.dev
+    bzip2
     carla
-    dbus.dev
-    file.dev
-    flac.dev
-    libGL.dev
-    libcap.dev
-    libglvnd.dev
+    dbus
+    file
+    flac
+    libGL
+    libcap
+    libglvnd
     libjack2
-    libogg.dev
-    libopus.dev
-    libsndfile.dev
-    libvorbis.dev
-    libx11.dev
-    libxcursor.dev
-    libxext.dev
-    libxrandr.dev
-    zstd.dev
+    libogg
+    libopus
+    libsndfile
+    libvorbis
+    libx11
+    libxcursor
+    libxext
+    libxrandr
+    zstd
   ];
-
-  postUnpack = ''
-    rm carla -rf
-    cp -R ${carla.src} carla
-    chmod -R +w carla
-  '';
 
   patches = [ ./nixos.patch ];
 

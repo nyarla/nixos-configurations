@@ -1,16 +1,17 @@
 {
-  carla,
-  glibc,
-  pkgsCross,
-  wine,
+  sources,
+
   multiStdenv,
-  fetchFromGitHub,
+  pkgsCross,
+
+  carla,
+  wine,
 }:
 let
-  pkgsMinGW = bit: if bit == 32 then pkgsCross.mingw32 else pkgsCross.mingwW64;
+  mingwFor = bit: if bit == 32 then pkgsCross.mingw32 else pkgsCross.mingwW64;
 
-  mingw32 = pkgsMinGW 32;
-  mingwW64 = pkgsMinGW 64;
+  mingw32 = mingwFor 32;
+  mingwW64 = mingwFor 64;
 
   mcfgthreadsw32 = mingw32.windows.mcfgthreads.overrideAttrs (_: {
     dontDisableStatic = true;
@@ -23,13 +24,8 @@ in
   stdenv = multiStdenv;
 }).overrideAttrs
   (old: {
-    version = "2026-02-22"; # keep same version of ildaeil
-    src = fetchFromGitHub {
-      inherit (old.src) owner repo;
-      rev = "294a80145e39c0755ab9073d90fd8b9524fbfc84";
-      hash = "sha256-rOjFxk0KbnnPpRJUWcN5W1A2pDGIdztwK4LL5hPb+sQ=";
-      fetchSubmodules = true;
-    };
+    version = "2026-03-20";
+    src = sources.Carla;
 
     nativeBuildInputs = old.nativeBuildInputs ++ [
       wine
@@ -58,8 +54,8 @@ in
 
     postBuild = ''
       make wine64 \
-        CFLAGS="-I${glibc.dev}/include" \
-        CXXFLAGS="-I${glibc.dev}/include" \
+        CFLAGS="-I${multiStdenv.cc.libc}/include" \
+        CXXFLAGS="-I${multiStdenv.cc.libc}/include" \
         LDFLAGS="-L${wine}/lib/wine/x86_64-windows"
     '';
 

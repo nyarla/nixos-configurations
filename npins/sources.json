@@ -71,6 +71,32 @@
       "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.station",
       "unpack": false,
       "hash": "sha256-AAcIvxtnjEtTZev6BBW/5y0pwNfNzKkIiA0iB/5MNL4="
+    },
+    "audiogridder-deps": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "apohl79",
+        "repo": "audiogridder-deps"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "6a7a41c06b9ca9d4a260febe79ee1f6e96618e0a",
+      "url": "https://github.com/apohl79/audiogridder-deps/archive/6a7a41c06b9ca9d4a260febe79ee1f6e96618e0a.tar.gz",
+      "hash": "sha256-ESgeLkX/CQPY4/x3yl+H0OdpM9uc2z6dh4vMzcvXTR8="
+    },
+    "audiogridder-modded": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nyarla",
+        "repo": "audiogridder-modded"
+      },
+      "branch": "nixos",
+      "submodules": true,
+      "revision": "dc01e87a00b2de7f30a8d65628ceac7e4292661f",
+      "url": null,
+      "hash": "sha256-DdCpULUVTclcRBbTinE6cOx1jDg1Hst21DRkb3CCru8="
     }
   },
   "version": 8

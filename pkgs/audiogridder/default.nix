@@ -1,18 +1,22 @@
 {
-  stdenv,
-  fetchFromGitHub,
+  sources,
+
   lib,
   runCommand,
-  binutils,
+
+  stdenv,
+  stdenvNoCC,
+
   cmake,
-  findutils,
   pkg-config,
-  python3,
+
   alsa-lib,
   atk,
+  binutils,
   boost178,
   cairo,
   curlFull,
+  findutils,
   freetype,
   gdk-pixbuf,
   glib,
@@ -33,46 +37,32 @@
   libsepol,
   libsysprof-capture,
   libthai,
+  libx11,
+  libxcb,
+  libxcomposite,
+  libxcursor,
+  libxdmcp,
+  libxext,
+  libxinerama,
   libxkbcommon,
+  libxrandr,
+  libxrender,
+  libxtst,
   pango,
   pcre,
   pcre2,
+  python3,
   sqlite,
   util-linux,
-  webkitgtk_4_1,
-  xorg,
-  zlib,
   vst2-sdk,
+  webkitgtk_4_1,
+  zlib,
 }:
-let
-  deps = fetchFromGitHub {
-    owner = "apohl79";
-    repo = "audiogridder-deps";
-    rev = "6a7a41c06b9ca9d4a260febe79ee1f6e96618e0a";
-    sha256 = "sha256-ESgeLkX/CQPY4/x3yl+H0OdpM9uc2z6dh4vMzcvXTR8=";
-  };
-
-  sdks = runCommand "ag-sdks" { } ''
-    mkdir -p $out/vstsdk2.4
-    cp -r ${vst2-sdk}/* $out/vstsdk2.4/
-  '';
-
-  boost178Static = boost178.override {
-    enableShared = false;
-    enableStatic = true;
-  };
-in
 stdenv.mkDerivation rec {
   pname = "audiogridder-modded";
   version = "1.2.0-mod";
 
-  src = fetchFromGitHub {
-    owner = "nyarla";
-    repo = "audiogridder-modded";
-    rev = "dc01e87a00b2de7f30a8d65628ceac7e4292661f";
-    hash = "sha256-DdCpULUVTclcRBbTinE6cOx1jDg1Hst21DRkb3CCru8=";
-    fetchSubmodules = true;
-  };
+  src = sources.audiogridder-modded;
 
   nativeBuildInputs = [
     cmake
@@ -82,6 +72,12 @@ stdenv.mkDerivation rec {
     binutils
   ];
   buildInputs =
+    let
+      boost178Static = boost178.override {
+        enableShared = false;
+        enableStatic = true;
+      };
+    in
     [
       alsa-lib
       atk
@@ -102,49 +98,37 @@ stdenv.mkDerivation rec {
       ladspa-sdk
       libGLU
       libappindicator-gtk3
-      libappindicator-gtk3.dev
-      libdatrie.dev
-      libdatrie.out
+      libdatrie
       libdbusmenu
-      libepoxy.dev
-      libepoxy.out
+      libepoxy
       libjack2
       libjpeg_turbo
       libpng
-      libselinux.dev
-      libselinux.out
+      libselinux
       libsepol.dev
       libsepol.out
       libsysprof-capture
-      libthai.dev
-      libthai.out
-      libxkbcommon.dev
-      libxkbcommon.out
+      libthai
+      libx11
+      libxcb
+      libxcomposite
+      libxcursor
+      libxdmcp.dev
+      libxdmcp.out
+      libxext
+      libxinerama
+      libxkbcommon
+      libxrandr
+      libxrender
+      libxtst
       pango
-      pcre.dev
-      pcre.out
-      pcre2.dev
-      pcre2.out
-      sqlite.dev
-      sqlite.out
-      util-linux.dev
-      util-linux.out
+      pcre
+      pcre2
+      sqlite
+      util-linux
       webkitgtk_4_1
       zlib
-    ]
-    ++ (with xorg; [
-      libX11
-      libXcomposite
-      libXcursor
-      libXdmcp.dev
-      libXdmcp.out
-      libXext
-      libXinerama
-      libXrandr
-      libXrender
-      libXtst
-      libxcb
-    ]);
+    ];
 
   libPath = lib.makeLibraryPath (
     buildInputs
@@ -164,18 +148,43 @@ stdenv.mkDerivation rec {
     substituteAllInPlace Server/Source/Server.cpp
   '';
 
-  cmakeFlags = [
-    "-DAG_DEPS_ROOT=${deps}/linux-x86_64"
-    "-DAG_SDKS_ROOT=${sdks}"
-    "-DAG_VST2_PLUGIN_ENABLED=ON"
-    "-DAG_WITH_PLUGIN=ON"
-    "-DAG_WITH_SERVER=ON"
-    "-DCMAKE_AR=${stdenv.cc.cc}/bin/gcc-ar"
-    "-DCMAKE_BUILD_TYPE=Release"
-    "-DCMAKE_RANLIB=${stdenv.cc.cc}/bin/gcc-ranlib"
-    "-DFFMPEG_ROOT=${deps}/linux-x86_64"
-    "-DWEBP_ROOT=${deps}/linux-x86_64"
-  ];
+  cmakeFlags =
+    let
+      sdks = runCommand "ag-sdks" { } ''
+        mkdir -p $out/vstsdk2.4
+        cp -r ${vst2-sdk}/* $out/vstsdk2.4/
+      '';
+
+      deps = stdenvNoCC.mkDerivation {
+        pname = "audiogridder-deps";
+        version = "main";
+
+        src = sources.audiogridder-deps;
+        installPhase = ''
+          runHook preInstall
+
+          cp -r . $out
+
+          runHook postInstall 
+        '';
+      };
+    in
+    [
+      "-DCMAKE_BUILD_TYPE=Release"
+
+      "-DAG_DEPS_ROOT=${deps}/linux-x86_64"
+      "-DFFMPEG_ROOT=${deps}/linux-x86_64"
+      "-DWEBP_ROOT=${deps}/linux-x86_64"
+      "-DAG_SDKS_ROOT=${sdks}"
+
+      "-DAG_VST2_PLUGIN_ENABLED=ON"
+      "-DAG_WITH_PLUGIN=ON"
+      "-DAG_WITH_SERVER=ON"
+
+      "-DCMAKE_AR=${stdenv.cc.cc}/bin/gcc-ar"
+      "-DCMAKE_RANLIB=${stdenv.cc.cc}/bin/gcc-ranlib"
+
+    ];
 
   installPhase = ''
     mkdir -p $out/bin

@@ -18,6 +18,7 @@ in
 
   # custom defined packages
   aria-misskey = require ./aria-misskey { };
+  audiogridder-modded = require ./audiogridder { };
   deadbeef-fb = require ./deadbeef-fb { };
   flare-app = require ./flare-app { };
   galendae = require ./galendae { };

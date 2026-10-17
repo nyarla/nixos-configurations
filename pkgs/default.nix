@@ -17,18 +17,14 @@ in
   unityhub-amd = require ./unityhub-amd { };
 
   # custom defined packages
-  aria-misskey = require ./aria-misskey { };
   audiogridder-modded = require ./audiogridder { };
   deadbeef-fb = require ./deadbeef-fb { };
-  flare-app = require ./flare-app { };
   galendae = require ./galendae { };
   gyazo-diy = require ./gyazo-diy { };
   igsc = require ./igsc { };
   immersed = require ./immersed { };
-  sec = require ./sec { };
   thorium-reader = require ./thorium-reader { };
   wcwidth-cjk = require ./wcwidh-cjk { };
-  xdg-desktop-portal-hypr-remote = require ./xdg-desktop-portal-hypr-remote { };
 
   # themes and fonts
   fluent-gtk-theme = require ./fluent-gtk-theme { };
@@ -37,7 +33,6 @@ in
   noto-fonts-jp = require ./noto-fonts-jp { };
 
   # customized packages
-  # calibre = require ./calibre { };
   glibc-locales-eaw = require ./glibc-locales-eaw { };
   xembed-sni-proxy = require ./xembed-sni-proxy { };
 

@@ -136,6 +136,12 @@
       "revision": "0cf340609f99722f1a4a7c263065250edc6c8c4f",
       "url": "https://github.com/joker1007/bookwall/archive/0cf340609f99722f1a4a7c263065250edc6c8c4f.tar.gz",
       "hash": "sha256-7IYgt1BY25oTSvMcttEp8Mab/6TZMG13IFezaWgRYYU="
+    },
+    "chipsynth-sfc": {
+      "type": "Url",
+      "url": "https://s3.amazonaws.com/chipsynth/LINUX_plogue-chipsynth-sfc_1.132_x86_64.zip",
+      "unpack": false,
+      "hash": "sha256-6Fq9/25/fRV8zona8PSRbJ7v3AivxHh+qkIiWVKZtAE="
     }
   },
   "version": 8

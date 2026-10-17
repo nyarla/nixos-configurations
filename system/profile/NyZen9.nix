@@ -96,11 +96,13 @@
     maxThreads = 30;
     excludes = [
       # system directories
+      ".snapshots/[0-9]"
+
       "^/dev"
       "^/nix"
       "^/proc"
+      "^/run"
       "^/sys"
-      ".snapshots/[0-9]"
 
       # vm storage pool
       "^/vm"

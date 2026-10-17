@@ -91,7 +91,7 @@ in
         XDG_RUNTIME_DIR = "/run/user/${toString opts.user.uid}";
       in
       {
-        autoStart = true;
+        autoStart = false;
 
         bindMounts =
           (optionalAttrs opts.wayland.enable {

@@ -1,4 +1,5 @@
 {
+  sources,
   stdenvNoCC,
 
   fetchFromGitHub,
@@ -20,15 +21,9 @@
 let
   ruby = ruby_4_0;
 
-  src = fetchFromGitHub {
-    owner = "joker1007";
-    repo = "bookwall";
-    rev = "8cfa0e3b0e1a366594e695ad42fcaa2aed1d7b2a";
-    hash = "sha256-Q1r6pjF9XREawxXVX3XTOrSNAE9LkHpV5jEMMdIl26c=";
-  };
-
+  src = sources.bookwall;
   pname = "bookwall";
-  version = "2026-09-03";
+  version = "2026-10-17";
 
   gems = bundlerEnv {
     inherit ruby;
@@ -78,7 +73,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   ];
 
   npmRoot = "client";
-  npmDepsHash = "sha256-x2XSg9HYLHsEUYSeO5rKONSgB7g6ybiegRk3J1jZIK0=";
+  npmDepsHash = "sha256-ldAM3A5AvZ8UqF5w/KKI3BODguX+c6LLvk+/Zda7aPA=";
   npmDeps = fetchNpmDeps {
     pname = "${pname}-npm-deps";
     inherit src;

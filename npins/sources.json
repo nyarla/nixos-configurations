@@ -97,6 +97,19 @@
       "revision": "dc01e87a00b2de7f30a8d65628ceac7e4292661f",
       "url": null,
       "hash": "sha256-DdCpULUVTclcRBbTinE6cOx1jDg1Hst21DRkb3CCru8="
+    },
+    "bookwall": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "joker1007",
+        "repo": "bookwall"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "0cf340609f99722f1a4a7c263065250edc6c8c4f",
+      "url": "https://github.com/joker1007/bookwall/archive/0cf340609f99722f1a4a7c263065250edc6c8c4f.tar.gz",
+      "hash": "sha256-7IYgt1BY25oTSvMcttEp8Mab/6TZMG13IFezaWgRYYU="
     }
   },
   "version": 8

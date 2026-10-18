@@ -17,6 +17,7 @@ in
   unityhub-amd = require ./unityhub-amd { };
 
   # custom defined packages
+  artcraft = require ./artcraft { };
   audiogridder-modded = require ./audiogridder { };
   deadbeef-fb = require ./deadbeef-fb { };
   galendae = require ./galendae { };

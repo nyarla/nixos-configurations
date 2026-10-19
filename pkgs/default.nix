@@ -22,6 +22,7 @@ in
   deadbeef-fb = require ./deadbeef-fb { };
   galendae = require ./galendae { };
   gyazo-diy = require ./gyazo-diy { };
+  ibis-office = require ./ibis-office { };
   igsc = require ./igsc { };
   immersed = require ./immersed { };
   thorium-reader = require ./thorium-reader { };

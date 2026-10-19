@@ -387,6 +387,22 @@
       "url": "https://api.github.com/repos/storytold/gridcraft/tarball/refs/tags/v0.8.0",
       "hash": "sha256-G0xsNWRoNMtA5lTKSZgLCHP6gcq+zOaOPdcColuFr0A="
     },
+    "ibis-office": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "ibisjp",
+        "repo": "ibis-office"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": true,
+      "version": "v0.8.3",
+      "revision": "d72875ce0d7d65d6672d61d05e46aa62480079cb",
+      "url": null,
+      "hash": "sha256-f8x2PoEIbjAAyDovz2ZtrbOWt0Bv6NFCPY7lj4tr+Hg="
+    },
     "lightcraft": {
       "type": "GitRelease",
       "repository": {

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   imports = [
     ../machine/NyZen9/default.nix
 
@@ -86,7 +86,7 @@
   };
 
   # programs
-  my.programs.droidcam.enable = true;
+  my.programs.droidcam.enable = false;
 
   # security
   my.security.clamav = {
@@ -146,4 +146,55 @@
       };
     };
 
+  # shell box
+  my.security.shellbox = {
+    enable = true;
+
+    user = {
+      user = "nyarla";
+      group = "users";
+      uid = 1000;
+      gid = 100;
+    };
+
+    bind.rw = [ "/home/nyarla/Programming" ];
+
+    extraPackages = with pkgs; [
+      fzy
+      starship
+      zsh
+    ];
+
+    programs = {
+      gnupg.enable = true;
+      neovim.enable = true;
+      pi-coding-agent.enable = true;
+      proton-pass-cli.enable = true;
+    };
+
+    dotfiles =
+      let
+        file = path: { "/etc/nixos/shellbox/${path}" = "/home/nyarla/${path}"; };
+      in
+      {
+        enable = true;
+        files = lib.attrsets.mergeAttrsList (
+          lib.lists.forEach [
+            ".config/git/config"
+            ".config/git/ignore"
+            ".config/herdr/config.toml"
+            ".config/starship.toml"
+            ".zshrc"
+          ] file
+        );
+      };
+  };
+
+  my.shellbox = {
+    typescript = {
+      enable = true;
+      tag = "2026.10.3";
+      ports = [ 1313 ];
+    };
+  };
 }

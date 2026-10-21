@@ -1,0 +1,27 @@
+onboarding = false
+
+[terminal]
+default_shell = "zsh"
+
+[experimental]
+cjk_ime_agents = ["pi"]
+reveal_hidden_cursor_for_cjk_ime = true
+
+[keys]
+focus_pane_down = "ctrl+down"
+focus_pane_left = "ctrl+left"
+focus_pane_right = "ctrl+right"
+focus_pane_up = "ctrl+up"
+prefix = "ctrl+t"
+split_horizontal = "prefix+minus"
+split_vertical = "prefix+|"
+swap_pane_down = "shift+down"
+swap_pane_left = "shift+left"
+swap_pane_right = "shift+right"
+swap_pane_up = "shift+up"
+
+[theme]
+name = "terminal"
+
+[ui]
+prompt_new_tab_name = false

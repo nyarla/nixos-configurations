@@ -1,4 +1,15 @@
 _: {
+  # iPv4 forwarding
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
+  # NAT
+  networking.nat = {
+    enable = true;
+    externalInterface = "wlan0";
+    internalInterfaces = [ "ve-+" ];
+  };
+
+  # firewall
   networking.firewall = {
     enable = true;
     allowPing = true;

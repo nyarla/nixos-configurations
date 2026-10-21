@@ -1,0 +1,29 @@
+[alias]
+	ci = "commit"
+	cleanup = "!git branch --merged | grep -v main | grep -v master | xargs -I{} git branch -d {}"
+	co = "checkout"
+	force-push = "push -f --force-with-lease --force-if-includes"
+	rr = "restore"
+	rs = "restore --staged"
+	st = "status"
+
+[color]
+	ui = true
+
+[core]
+	autoCRLF = false
+	fileMode = false
+	fscache = true
+	preloadindex = true
+	quotepath = false
+
+[gpg]
+	format = "ssh"
+
+[init]
+	defaultBranch = "main"
+
+[user]
+	email = "nyarla@kalaclista.com"
+	name = "nyarla"
+	signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFLoxTbb3uWp5FSyD00LqX7EpHMxWZ702bd5QBgZH481"

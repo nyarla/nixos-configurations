@@ -1,0 +1,36 @@
+add_newline = false
+format = "$directory$git_branch$git_status$env_var $cmd_duration\n$character"
+
+[character]
+error_symbol = "[\\$](red)"
+format = "$symbol "
+success_symbol = "[\\$](purple)"
+vicmd_symbol = "[!](green)"
+
+[cmd_duration]
+format = "[$duration]($style)"
+style = "yellow"
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style)"
+read_only = ""
+read_only_style = "yellow"
+style = "blue"
+truncate_to_repo = false
+truncation_symbol = ".../"
+
+[env_var.IN_NIX_SHELL]
+format = "[󱒫 ](bold gray)[](cyan)"
+variable = "IN_NIX_SHELL"
+
+[env_var.IN_PERL_SHELL]
+format = "[󱒫 ](bold gray)[](purple)"
+variable = "IN_PERL_SHELL"
+
+[git_branch]
+format = " [$symbol$branch]($style)"
+style = "white"
+symbol = ""
+
+[git_status]
+format = " [$ahead_behind](cyan)"

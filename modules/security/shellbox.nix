@@ -307,7 +307,7 @@ in
                   with pkgs;
                   [
                     pi-coding-agent
-                    python
+                    python3
                   ]
                 ))
                 ++ (optionals cfg.programs.proton-pass-cli.enable [ pkgs.proton-pass-cli ]);

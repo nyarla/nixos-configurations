@@ -15,6 +15,29 @@
         "type": "github"
       }
     },
+    "flake-input-patcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778738067,
+        "narHash": "sha256-I7typVsE23IR+a9brBK7qC1aqtIjLiPle5kd0A7XLuw=",
+        "owner": "jfly",
+        "repo": "flake-input-patcher",
+        "rev": "f10fa74781ed0d0dfac6b055c6f016dc5b4223bf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jfly",
+        "repo": "flake-input-patcher",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -137,6 +160,83 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1782847189,
+        "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b6018f87da91d19d0ab4cf979885689b469cdd41",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-wayland": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "lib-aggregate": [
+          "lib-aggregate"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792604188,
+        "narHash": "sha256-6XaHmhVBEwKwyKxFKY6R9CuF+mcw6zdVOXfrBYzNYc0=",
+        "owner": "nix-community",
+        "repo": "nixpkgs-wayland",
+        "rev": "c888b0b05d7517f2b5f71d66385ebc58b32660b1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs-wayland",
+        "type": "github"
+      }
+    },
+    "nixpkgs-xr": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nvfetcher": [
+          "nvfetcher"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "treefmt-nix": [
+          "treefmt"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792380357,
+        "narHash": "sha256-deMmYXMlf7BnA2qSDk3gFqVjBQeBnW8689/qG3aUPAc=",
+        "owner": "nix-community",
+        "repo": "nixpkgs-xr",
+        "rev": "8d169c67d1e73b8721711b3750ef75ba205e7fe1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs-xr",
+        "type": "github"
+      }
+    },
     "nvfetcher": {
       "inputs": {
         "flake-compat": [
@@ -189,35 +289,20 @@
     "root": {
       "inputs": {
         "flake-compat": "flake-compat",
+        "flake-input-patcher": "flake-input-patcher",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "lib-aggregate": "lib-aggregate",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs-wayland": "nixpkgs-wayland",
+        "nixpkgs-xr": "nixpkgs-xr",
         "nvfetcher": "nvfetcher",
         "pre-commit-hooks": "pre-commit-hooks",
-        "stable": "stable",
         "systems": "systems",
-        "treefmt": "treefmt",
-        "wayland": "wayland",
-        "xr": "xr"
-      }
-    },
-    "stable": {
-      "locked": {
-        "lastModified": 1782847189,
-        "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b6018f87da91d19d0ab4cf979885689b469cdd41",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
+        "treefmt": "treefmt"
       }
     },
     "systems": {
@@ -252,67 +337,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "wayland": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "lib-aggregate": [
-          "lib-aggregate"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1791740789,
-        "narHash": "sha256-zGUbT2lLI9rPHQGUr/F77bKOUwkMQLkh88Zfg74aYfs=",
-        "owner": "nix-community",
-        "repo": "nixpkgs-wayland",
-        "rev": "cff8621da7f690446039b0e7bfbee2737c45ec0a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs-wayland",
-        "type": "github"
-      }
-    },
-    "xr": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nvfetcher": [
-          "nvfetcher"
-        ],
-        "systems": [
-          "systems"
-        ],
-        "treefmt-nix": [
-          "treefmt"
-        ]
-      },
-      "locked": {
-        "lastModified": 1791692003,
-        "narHash": "sha256-womUYXbv/eHo66QyXPlQke/LmgQIOvlEdCxZ6/9CMvQ=",
-        "owner": "nix-community",
-        "repo": "nixpkgs-xr",
-        "rev": "e2c92b1ac8986390774638344f8b6e4e897eb988",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs-xr",
         "type": "github"
       }
     }

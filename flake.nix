@@ -1,201 +1,285 @@
 {
   description = "NixOS configurations for my PCs";
   inputs = {
-    # packages
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
-    stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    flake-compat.url = "github:nix-community/flake-compat";
 
-    wayland = {
-      url = "github:nix-community/nixpkgs-wayland";
+    flake-input-patcher = {
+      url = "github:jfly/flake-input-patcher";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-        lib-aggregate.follows = "lib-aggregate";
+        systems.follows = "systems";
       };
     };
 
-    xr = {
-      url = "github:nix-community/nixpkgs-xr";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs = {
+        nixpkgs-lib.follows = "nixpkgs";
+      };
+    };
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs = {
+        systems.follows = "systems";
+      };
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    lib-aggregate = {
+      url = "github:nix-community/lib-aggregate";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs-lib.follows = "nixpkgs";
+      };
+    };
+
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/master";
+    };
+
+    nixpkgs-stable = {
+      url = "github:NixOS/nixpkgs/nixos-25.11";
+    };
+
+    nixpkgs-xr = {
+      url = "github:nix-community/nixpkgs-xr";
+      inputs = {
         flake-compat.follows = "flake-compat";
         flake-utils.follows = "flake-utils";
-        systems.follows = "systems";
+        nixpkgs.follows = "nixpkgs";
         nvfetcher.follows = "nvfetcher";
+        systems.follows = "systems";
         treefmt-nix.follows = "treefmt";
+      };
+    };
+
+    nixpkgs-wayland = {
+      url = "github:nix-community/nixpkgs-wayland";
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        lib-aggregate.follows = "lib-aggregate";
+        nixpkgs.follows = "nixpkgs";
       };
     };
 
     nvfetcher = {
       url = "github:Red-M/nvfetcher";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
         flake-compat.follows = "flake-compat";
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
       };
-    };
-
-    treefmt.url = "github:numtide/treefmt-nix";
-    treefmt.inputs.nixpkgs.follows = "nixpkgs";
-
-    # modules
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    impermanence = {
-      url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
-    # libraries
-    systems.url = "github:nix-systems/default";
-
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.systems.follows = "systems";
-
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-
-    flake-compat.url = "github:nix-community/flake-compat";
-
-    lib-aggregate = {
-      url = "github:nix-community/lib-aggregate";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    systems = {
+      url = "github:nix-systems/default";
+    };
+
+    treefmt = {
+      url = "github:numtide/treefmt-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
   };
   outputs =
-    {
-      nixpkgs,
-      stable,
-      home-manager,
-      wayland,
-      impermanence,
-      xr,
-      flake-utils,
-      ...
-    }@inputs:
+    unpatchedInputs:
     let
-      overlay =
-        final: prev:
-        prev
-        // (wayland.overlay final prev)
-        // (import ./pkgs/default.nix { inherit nixpkgs; } final prev)
-        // (import ./pkgs/temporary.nix {
-          inherit nixpkgs;
-          inherit stable;
-        } final prev);
-
-      flakeFor =
-        system: patches:
-        (import nixpkgs { inherit system; }).applyPatches {
-          name = "nixpkgs-patched-${nixpkgs.shortRev}";
-          src = inputs.nixpkgs;
-          inherit patches;
-        };
-
-      pkgsFor = system: flake: (import flake { inherit system; }).extend overlay;
-
-      nixpkgsFor = system: patches: rec {
-        flake = flakeFor system patches;
-        legacyPackages = pkgsFor system flake;
-        lib.nixosSystem =
-          {
-            modules ? [ ],
-            ...
-          }@inputs:
-          import "${flake}/nixos/lib/eval-config.nix" {
-            inherit system;
-
-            baseModules = import "${flake}/nixos/modules/module-list.nix";
-            specialArgs = (inputs.specialArgs or { }) // {
-              modulePath = "${flake}/nixos/modules";
-            };
-
-            modules = [
-              {
-                nix = {
-                  registry.nixpkgs = { inherit flake; };
-                  settings = {
-                    trusted-public-keys = [
-                      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-                    ];
-
-                    trusted-users = [
-                      "root"
-                      "@wheel"
-                    ];
-
-                    substituters = [
-                      "https://cache.nixos.org"
-                    ];
-
-                    experimental-features = [
-                      "nix-command"
-                      "flakes"
-                    ];
-
-                    nix-path = [
-                      "nixpkgs=${flake}"
-                    ];
-                  };
-                };
-              }
-              (import ./modules)
-            ]
-            ++ modules;
-          };
+      patcher = unpatchedInputs.flake-input-patcher.lib.x86_64-linux;
+      #fetchpatch = patcher.fetchpatch;
+      inputs = patcher.patch {
+        inherit unpatchedInputs;
+        flakePath = ./.;
+        patchSpec = { };
       };
-
-      systemFor =
-        system:
-        {
-          x86_64-linux = nixpkgsFor system [ ];
-        }
-        .${system};
     in
-    flake-utils.lib.eachDefaultSystem (system: {
-      inherit (systemFor system) legacyPackages;
-    })
-    // flake-utils.lib.eachDefaultSystemPassThrough (system: {
-      nixosConfigurations.nixos = (systemFor system).lib.nixosSystem {
-        modules = [
-          xr.nixosModules.nixpkgs-xr
-          impermanence.nixosModules.impermanence
-          home-manager.nixosModules.home-manager
-          {
-            networking.hostName = "nixos";
-            nix.settings = {
-              trusted-public-keys = [
-                "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
-              ];
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { inputs, withSystem, ... }:
+      let
+        overlays =
+          (with inputs; [
+            nixpkgs-wayland.overlay
+          ])
+          ++ (
+            let
+              inherit (inputs) nixpkgs;
+              stable = inputs.nixpkgs-stable;
+            in
+            [
+              (import ./pkgs/default.nix { inherit nixpkgs stable; })
+              (import ./pkgs/temporary.nix { inherit nixpkgs stable; })
+            ]
+          );
+      in
+      {
+        systems = [ "x86_64-linux" ];
 
-              substituters = [
-                "https://nixpkgs-wayland.cachix.org"
-              ];
+        perSystem =
+          { system, ... }:
+          let
+            pkgs = import inputs.nixpkgs {
+              inherit overlays system;
             };
-
-            nixpkgs = {
-              overlays = [ overlay ];
-              config.allowUnfree = true;
-            };
-          }
-          (import ./system/profile/NyZen9.nix)
+          in
           {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = false;
-              users.nyarla = import ./dotfiles/user/nyarla.nix;
+            packages = {
+              inherit (pkgs)
+                sources
+
+                amd-run
+                gimp-shell
+                nvim-run
+                perl-shel
+                restic-run
+                rocm-shell
+                sandboxed-comands
+                shellbox
+                unityhub-amd
+
+                artcraft
+                audiogridder-modded
+                deadbeef-fb
+                galendae
+                gyazo-diy
+                ibis-office
+                igsc
+                immersed
+                thorium-reader
+                wcwidth-cjk
+
+                fluent-gtk-theme
+                fluent-kde
+                kaunas
+                noto-fonts-jp
+
+                glibc-locales-eaw
+                xembed-sni-proxy
+
+                tmux
+
+                firefox-bin-unwapped
+                thunderbird-bin-unwrapped
+
+                steam
+
+                proton-rtsp-wayland-ge-bin
+
+                cskk
+                skk-dicts-xl
+
+                fcitx5-fbterm
+                fcitx5-cskk
+                fcitx5-cskk-qt5
+                fcitx5-cskk-qt6
+
+                chipsynth
+                sononym-bin
+
+                carla-with-wine
+                ildaeil
+
+                wine-vst-run
+                wine-stating-run
+                wineasio
+
+                bookwall
+                comfyui
+                llama-cpp-llm-jp
+                ;
             };
-          }
-        ];
-      };
-    });
+          };
+
+        flake = {
+          nixosConfigurations.nixos = withSystem "x86_64-linux" (
+            { ... }:
+            inputs.nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              modules = [
+                {
+                  nix = {
+                    registry.nixpkgs.flake = inputs.nixpkgs;
+
+                    settings = {
+                      trusted-public-keys = [
+                        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+                        "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+                      ];
+
+                      trusted-users = [
+                        "root"
+                        "@wheel"
+                      ];
+
+                      substituters = [
+                        "https://cache.nixos.org"
+                        "https://nixpkgs-wayland.cachix.org"
+                      ];
+
+                      experimental-features = [
+                        "nix-command"
+                        "flakes"
+                      ];
+
+                      nix-path = [
+                        "nixpkgs=${inputs.nixpkgs}"
+                      ];
+                    };
+                  };
+
+                  nixpkgs = {
+                    inherit overlays;
+                    config.allowUnfree = true;
+                  };
+
+                  systemd.tmpfiles.rules = [
+                    "L? ${inputs.nixpkgs} - - - - /etc/nixpkgs"
+                  ];
+                }
+
+                (import ./modules)
+              ]
+              ++ (with inputs; [
+                nixpkgs-xr.nixosModules.nixpkgs-xr
+                impermanence.nixosModules.impermanence
+                home-manager.nixosModules.home-manager
+              ])
+              ++ [
+                {
+                  networking.hostName = "nixos";
+                  home-manager = {
+                    useGlobalPkgs = true;
+                    useUserPackages = false;
+                    users.nyarla = import ./dotfiles/user/nyarla.nix;
+                  };
+                }
+                (import ./system/profile/NyZen9.nix)
+              ];
+            }
+          );
+        };
+      }
+    );
 }

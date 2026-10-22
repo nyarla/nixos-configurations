@@ -78,6 +78,10 @@ in
       users = [ opts.user.user ];
       commands = [
         {
+          command = "/run/current-system/sw/bin/nixos-container start ${name}";
+          options = [ "NOPASSWD" ];
+        }
+        {
           command = "/run/current-system/sw/bin/nixos-container run ${name} -- systemctl start ${name}.service";
           options = [ "NOPASSWD" ];
         }

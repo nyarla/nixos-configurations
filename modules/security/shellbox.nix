@@ -81,6 +81,18 @@ in
   };
 
   config = mkIf cfg.enable {
+    security.sudo.extraRules = [
+      {
+        users = [ cfg.user.user ];
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/nixos-container start shellbox";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+      }
+    ];
+
     containers."shellbox" = {
       autoStart = false;
       restartIfChanged = false;
@@ -284,8 +296,20 @@ in
                 ++ cfg.extraPackages
                 ++ opts.packages
                 ++ (optionals cfg.programs.neovim.enable [ pkgs.neovim ])
-                ++ (optionals cfg.programs.gnupg.enable [ pkgs.gnupg ])
-                ++ (optionals cfg.programs.pi-coding-agent.enable [ pkgs.pi-coding-agent ])
+                ++ (optionals cfg.programs.gnupg.enable (
+                  with pkgs;
+                  [
+                    gnupg
+                    openssh
+                  ]
+                ))
+                ++ (optionals cfg.programs.pi-coding-agent.enable (
+                  with pkgs;
+                  [
+                    pi-coding-agent
+                    python
+                  ]
+                ))
                 ++ (optionals cfg.programs.proton-pass-cli.enable [ pkgs.proton-pass-cli ]);
 
               pathsToLink = [
@@ -384,7 +408,10 @@ in
                 "LC_ALL=en_US.UTF-8"
                 "LOCALE_ARCHIVE=/lib/locale/locale-archive"
                 "SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt"
-              ];
+              ]
+              ++ (optionals cfg.programs.gnupg.enable [
+                "SSH_AUTH_SOCK=/run/user/${toString cfg.user.uid}/gnupg/S.gpg-agent.ssh"
+              ]);
 
               User =
                 let

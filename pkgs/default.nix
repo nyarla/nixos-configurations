@@ -14,6 +14,7 @@ in
   restic-run = require ./restic-run { };
   rocm-shell = require ./rocm-shell { };
   sandboxed-commands = require ./sandboxed-commands { };
+  shellbox = require ./shellbox { };
   unityhub-amd = require ./unityhub-amd { };
 
   # custom defined packages

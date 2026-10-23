@@ -1,12 +1,12 @@
 { lib, config, ... }:
 with lib;
 let
-  enabled = config.my.location.jp;
+  inJapan = config.mod.regions.jp;
 in
 {
-  options.my.location.jp = mkEnableOption "Enable settings for Japan";
+  options.mod.regions.jp = mkEnableOption "Set region to Japan";
 
-  config = mkIf enabled {
+  config = mkIf inJapan {
     # timezone
     time.timeZone = "Asia/Tokyo";
 

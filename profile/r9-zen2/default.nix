@@ -5,9 +5,11 @@ _: {
 
     # using modules.
     ../../modules/nixos/audio/pipewire.nix
+    ../../modules/nixos/regions/jp.nix
 
     # per-profile configurations
     ./hardware/audio.nix
     ./hardware/cpu.nix
+    ./i18n/region.nix
   ];
 }

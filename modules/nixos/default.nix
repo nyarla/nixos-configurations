@@ -1,6 +1,5 @@
 _: {
   imports = [
-    ./locations/jp.nix
     ./programs/droidcam.nix
     ./security/box.nix
     ./security/clamav.nix

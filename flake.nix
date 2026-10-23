@@ -275,7 +275,7 @@
                     users.nyarla = import ./dotfiles/user/nyarla.nix;
                   };
                 }
-                (import ./system/profile/NyZen9.nix)
+                (import ./profile/r9-zen2)
               ];
             }
           );

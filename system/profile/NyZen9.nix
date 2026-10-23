@@ -56,9 +56,6 @@
     "nodejs-slim-20.20.2"
   ];
 
-  # location and languages
-  my.location.jp = true;
-
   # programs
   my.programs.droidcam.enable = false;
 

@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.my.security.clamav;
+  cfg = config.mod.security.clamav;
 in
 {
-  options.my.security.clamav = {
+  options.mod.security.clamav = {
     enable = mkEnableOption "clamav full-scan service";
 
     schedule = mkOption {

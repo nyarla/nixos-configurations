@@ -9,6 +9,7 @@ _: {
     ../../modules/nixos/programs/droidcam.nix
     ../../modules/nixos/programs/sandbox.nix
     ../../modules/nixos/regions/jp.nix
+    ../../modules/nixos/security/clamav.nix
     ../../modules/nixos/services/desktop.nix
 
     # per-profile configurations
@@ -19,5 +20,6 @@ _: {
     ./hardware/power-managements.nix
     ./i18n/region.nix
     ./programs/desktop.nix
+    ./security/clamav.nix
   ];
 }

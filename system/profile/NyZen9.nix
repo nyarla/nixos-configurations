@@ -32,7 +32,6 @@
     ../config/networking/tailscale.nix
     ../config/nixos/gsettings.nix
     ../config/nixos/nix-ld.nix
-    ../config/security/clamav.nix
     ../config/security/firewall-home.nix
     ../config/security/gnupg.nix
     ../config/security/ulimit.nix
@@ -53,33 +52,6 @@
     "nodejs-20.20.2"
     "nodejs-slim-20.20.2"
   ];
-
-  # security
-  my.security.clamav = {
-    enable = true;
-    schedule = "*-*-* 03:00:00";
-    logFile = "/persist/home/nyarla/Reports/clamav.log";
-    maxThreads = 30;
-    excludes = [
-      # system directories
-      ".snapshots/[0-9]"
-
-      "^/dev"
-      "^/nix"
-      "^/proc"
-      "^/run"
-      "^/sys"
-
-      # vm storage pool
-      "^/vm"
-
-      # these directories have the same files in `/persist`
-      "^/home/nyarla"
-      "^/backup"
-
-      "^/persist/home/nyarla/Reports"
-    ];
-  };
 
   # applications box
   my.security.box = {

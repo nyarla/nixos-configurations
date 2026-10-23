@@ -7,7 +7,7 @@ _: {
     ../../modules/nixos/audio/pipewire.nix
 
     # per-profile configurations
-    ./audio.nix
-    ./cpu.nix
+    ./hardware/audio.nix
+    ./hardware/cpu.nix
   ];
 }

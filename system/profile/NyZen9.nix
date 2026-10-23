@@ -56,34 +56,8 @@
     "nodejs-slim-20.20.2"
   ];
 
-  # hardware
-  my.hardware.cpu.amd = {
-    enable = true;
-    fix.zen2.enable = true;
-  };
-
   # location and languages
   my.location.jp = true;
-
-  # audio
-  my.services.pipewire = {
-    enable = true;
-    sampleRates = [
-      44100
-      48000
-      88200
-      96000
-      176400
-      192000
-    ];
-    formats = {
-      "focusrite-scalette-2gen" = {
-        device = "alsa_card.usb-Focusrite_Scarlett_Solo_USB-00";
-        alsa = "S32_LE";
-        audio = "S32LE";
-      };
-    };
-  };
 
   # programs
   my.programs.droidcam.enable = false;

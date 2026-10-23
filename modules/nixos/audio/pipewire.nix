@@ -6,40 +6,40 @@
 }:
 with lib;
 let
-  cfg = config.my.services.pipewire;
+  cfg = config.mod.audio.pipewire;
 in
 {
-  options.my.services.pipewire = {
-    enable = mkEnableOption "pipewire servcie";
+  options.mod.audio.pipewire = {
+    enable = mkEnableOption "Enable the PipeWire service.";
 
-    sampleRates = mkOption {
-      type = lib.types.listOf lib.types.int;
+    extraPackages = mkOption {
+      type = types.listOf types.package;
       default = [ ];
     };
 
-    formats = mkOption {
-      type = lib.types.attrsOf (
-        lib.types.submodule (
+    supportedSampleRates = mkOption {
+      default = [ ];
+      type = types.listOf types.int;
+    };
+
+    deviceConfig = mkOption {
+      default = { };
+      type = types.attrsOf (
+        types.submodule (
           { name, ... }: {
             options = {
               name = mkOption {
-                type = lib.types.str;
+                type = types.str;
                 default = name;
               };
-              device = mkOption {
-                type = lib.types.str;
-              };
-              alsa = mkOption {
-                type = lib.types.str;
-              };
-              audio = mkOption {
-                type = lib.types.str;
-              };
+
+              device = mkOption { type = types.str; };
+              alsa = mkOption { type = types.str; };
+              audio = mkOption { type = types.str; };
             };
           }
         )
       );
-      default = { };
     };
   };
 
@@ -68,7 +68,7 @@ in
 
       extraConfig =
         let
-          clock."10-clock-rate"."context.properties"."default.clock.allowed-rates" = cfg.sampleRates;
+          clock."10-clock-rate"."context.properties"."default.clock.allowed-rates" = cfg.supportedSampleRates;
         in
         {
           pipewire =
@@ -86,7 +86,7 @@ in
                   };
                 }
               ];
-            }) cfg.formats;
+            }) cfg.deviceConfig;
           client = clock;
           jack = clock;
           pipewire-pulse = clock;

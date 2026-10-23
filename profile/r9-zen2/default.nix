@@ -6,12 +6,14 @@ _: {
     # using modules.
     ../../modules/nixos/audio/pipewire.nix
     ../../modules/nixos/programs/desktop.nix
+    ../../modules/nixos/programs/droidcam.nix
     ../../modules/nixos/programs/sandbox.nix
     ../../modules/nixos/regions/jp.nix
     ../../modules/nixos/services/desktop.nix
 
     # per-profile configurations
     ./hardware/audio.nix
+    ./hardware/camera.nix
     ./hardware/cpu.nix
     ./hardware/inputs.nix
     ./hardware/power-managements.nix

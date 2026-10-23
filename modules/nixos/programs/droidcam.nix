@@ -1,11 +1,11 @@
 { lib, config, ... }:
 with lib;
 let
-  cfg = config.my.programs.droidcam;
+  cfg = config.mod.programs.droidcam;
 in
 {
   options = {
-    my.programs.droidcam.enable = mkEnableOption "DroidCam support";
+    mod.programs.droidcam.enable = mkEnableOption "Enable to DroidCam";
   };
 
   config = mkIf cfg.enable {

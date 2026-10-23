@@ -54,9 +54,6 @@
     "nodejs-slim-20.20.2"
   ];
 
-  # programs
-  my.programs.droidcam.enable = false;
-
   # security
   my.security.clamav = {
     enable = true;

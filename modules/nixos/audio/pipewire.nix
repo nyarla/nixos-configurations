@@ -12,11 +12,6 @@ in
   options.mod.audio.pipewire = {
     enable = mkEnableOption "Enable the PipeWire service.";
 
-    extraPackages = mkOption {
-      type = types.listOf types.package;
-      default = [ ];
-    };
-
     supportedSampleRates = mkOption {
       default = [ ];
       type = types.listOf types.int;

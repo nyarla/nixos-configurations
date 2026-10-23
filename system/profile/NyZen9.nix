@@ -174,7 +174,7 @@
 
     dotfiles =
       let
-        file = path: { "/etc/nixos/shellbox/${path}" = "/home/nyarla/${path}"; };
+        file = path: { "/etc/nixos/files/shellbox/${path}" = "/home/nyarla/${path}"; };
       in
       {
         enable = true;
@@ -197,4 +197,8 @@
       ports = [ 1313 ];
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    (shellbox.override { baseDir = "/home/nyarla/Programming"; })
+  ];
 }

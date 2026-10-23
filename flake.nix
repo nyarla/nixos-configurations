@@ -255,11 +255,11 @@
                   };
 
                   systemd.tmpfiles.rules = [
-                    "L? ${inputs.nixpkgs} - - - - /etc/nixpkgs"
+                    "L+ /etc/nixpkgs - - - - ${inputs.nixpkgs}"
                   ];
                 }
 
-                (import ./modules)
+                (import ./modules/nixos)
               ]
               ++ (with inputs; [
                 nixpkgs-xr.nixosModules.nixpkgs-xr

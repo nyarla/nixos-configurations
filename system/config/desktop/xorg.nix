@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  imports = [ ./gnome-compatible.nix ];
   environment.systemPackages = with pkgs; [ xclip ];
 
   console.useXkbConfig = true;

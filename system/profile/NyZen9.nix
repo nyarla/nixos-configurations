@@ -3,8 +3,6 @@
     ../machine/NyZen9/default.nix
 
     ../config/audio/daw.nix
-    ../config/desktop/app.nix
-    ../config/desktop/files.nix
     ../config/desktop/wayland.nix
     ../config/desktop/xdg.nix
     ../config/desktop/xorg.nix

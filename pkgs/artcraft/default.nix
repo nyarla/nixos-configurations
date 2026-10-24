@@ -33,6 +33,7 @@ in
       "craft-pdf-0.1.0" = "sha256-6r1iIlwK6HlUkascw0e4R9L2H5WMgKO2y6PEa51Flws=";
       "craft-print-0.1.0" = "sha256-J/EJJeDDWXc+QQtpUqnAKKA4piOdPRbH3uG1ms2BRgY=";
       "craft-ui-0.1.0" = "sha256-VhLeT7VLdZAIz6gR9PdFI34IJxHsGF8NE0uzFCN2vIU=";
+      "craft-window-0.1.0" = "sha256-JoZPAF3aNabwNtk6a6g3Llzaguk6y5st5K02Hq0TorE=";
     };
   };
 

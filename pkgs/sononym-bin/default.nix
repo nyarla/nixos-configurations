@@ -1,4 +1,5 @@
 {
+  sources,
   stdenv,
   lib,
 
@@ -61,11 +62,10 @@
 }:
 stdenv.mkDerivation rec {
   pname = "sononym";
-  version = "1.6.12";
+  version = "1.6.15";
 
   src = fetchurl {
-    url = "https://www.sononym.net/download/sononym-${version}.tar.bz2";
-    hash = "sha256-Ot1DSqcFtNv+Tf58XfoCI2kY2fHOoj2eKmt953NqRCw=";
+    inherit (sources.sononym-bin) url hash;
   };
 
   nativeBuildInputs = [

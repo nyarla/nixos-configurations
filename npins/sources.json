@@ -451,6 +451,12 @@
       "url": "https://api.github.com/repos/storytold/photocraft/tarball/refs/tags/v0.11.1",
       "hash": "sha256-//qOGI0/ZLXYPkJ+PL7U650ja/eWXqjjJ6fkcd6Ccdg="
     },
+    "sononym-bin": {
+      "type": "Url",
+      "url": "https://www.sononym.net/download/sononym-1.6.15.tar.bz2",
+      "unpack": false,
+      "hash": "sha256-/HYq8UUDsOeA30XYaqKWkNO754t3hlV+KNB9TaudgPE="
+    },
     "soundcraft": {
       "type": "GitRelease",
       "repository": {

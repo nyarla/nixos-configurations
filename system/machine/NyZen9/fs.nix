@@ -250,25 +250,29 @@
           ".config/Bitwarden"
           ".config/EDRLab.ThoriumReader"
           ".config/GIMP"
-          ".config/Helio"
+          ".config/Ildaeil"
           ".config/Kvantum"
           ".config/MuseScore"
           ".config/MusicBrainz"
           ".config/Plogue"
           ".config/Proton Pass"
+          ".config/Sononym"
           ".config/Thunar"
           ".config/Valve"
           ".config/Yubico"
           ".config/act"
           ".config/aseprite"
           ".config/blender"
+          ".config/cadcraft"
           ".config/calibre"
           ".config/containers"
           ".config/dconf"
           ".config/deadbeef"
+          ".config/designcraft"
           ".config/easytag"
           ".config/falkTX"
           ".config/fcitx5"
+          ".config/figcraft"
           ".config/flatpak"
           ".config/gh"
           ".config/google-chrome"
@@ -281,6 +285,7 @@
           ".config/lxqt"
           ".config/me.proton.authenticator"
           ".config/nvim"
+          ".config/photocraft"
           ".config/protonfixes"
           ".config/pulse"
           ".config/rclone"
@@ -290,6 +295,7 @@
           ".config/tmux"
           ".config/unity3d"
           ".config/unityhub"
+          ".config/vectorcraft"
           ".config/vlc"
           ".config/wayvr"
           ".config/whipper"
@@ -298,6 +304,7 @@
 
           # .local
           ".local/share/ALCOM"
+          ".local/share/DigitalSuburban"
           ".local/share/MuseScore"
           ".local/share/Steam"
           ".local/share/TelegramDesktop"
@@ -314,7 +321,6 @@
           ".local/share/me.proton.authenticator"
           ".local/share/mime"
           ".local/share/nvim"
-          ".local/share/pixelorama"
           ".local/share/proton-authenticator"
           ".local/share/proton-pass-cli"
           ".local/share/remmina"
@@ -335,6 +341,11 @@
           ".steam"
           ".thunderbird"
 
+          ".BitwigStudio"
+          ".helm"
+          ".sononym audioserver"
+          ".vital"
+
           # credentials
           (secure ".gnupg")
           (secure ".local/share/keyrings")
@@ -347,8 +358,12 @@
         ".npmrc"
 
         # creative
+        ".config/Dexed.settings"
+        ".config/Odin2.settings"
+        ".config/QtProject.conf"
         ".config/kritadisplayrc"
         ".config/kritarc"
+        ".config/snn.conf"
       ];
     };
   };

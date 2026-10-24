@@ -12,6 +12,10 @@ _: {
     ../../modules/nixos/security/clamav.nix
     ../../modules/nixos/services/desktop.nix
 
+    ../../modules/nixos/studio/3DCG.nix
+    ../../modules/nixos/studio/artwork.nix
+    ../../modules/nixos/studio/music.nix
+
     # per-profile configurations
     ./hardware/audio.nix
     ./hardware/camera.nix

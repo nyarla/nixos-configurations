@@ -7,10 +7,6 @@ final: prev: {
     '';
   };
 
-  bristol = prev.bristol.overrideAttrs (_: {
-    CFLAGS = "-Wno-implicit-int -Wno-implicit-int8 -Wno-implicit-function-declaration";
-  });
-
   inherit (stable.legacyPackages.x86_64-linux) deadbeef;
 
   llama-cpp-rocm = prev.llama-cpp-rocm.overrideAttrs {
@@ -55,6 +51,18 @@ final: prev: {
           setuptools_80
         ]);
     });
+
+  vital = prev.vital.overrideAttrs rec {
+    pname = "vital";
+    version = "1.6.4";
+    src = prev.fetchzip {
+      url = "https://builds.vital.audio/VitalAudio/vital/${
+        builtins.replaceStrings [ "." ] [ "_" ] version
+      }/VitalInstaller.zip";
+
+      hash = "sha256-w4lHlcqkzPcUm+HmERs8+nLCgP1BWNnMSXqdV9Fyc/Q=";
+    };
+  };
 
   wivrn-stable = nixpkgs.legacyPackages.x86_64-linux.pkgs.wivrn.overrideAttrs (finalAttrs: {
     patches = (finalAttrs.patches or [ ]) ++ [ ../patches/wivrn-no-backup-openvr-compat-path.patch ];

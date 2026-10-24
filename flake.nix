@@ -159,7 +159,6 @@
                 shellbox
                 unityhub-amd
 
-                artcraft
                 audiogridder-modded
                 deadbeef-fb
                 galendae
@@ -208,7 +207,25 @@
                 bookwall
                 comfyui
                 llama-cpp-llm-jp
+
+                vital
                 ;
+
+              inherit (pkgs.artcraft)
+                cadcraft
+                deckcraft
+                designcraft
+                effectcraft
+                figcraft
+                filmcraft
+                gridcraft
+                lightcraft
+                photocraft
+                soundcraft
+                vectorcraft
+                wordcraft
+                ;
+
             };
           };
 

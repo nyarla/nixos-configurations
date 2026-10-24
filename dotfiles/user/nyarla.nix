@@ -1,7 +1,6 @@
 _: {
   imports = [
     ../config/app/browser.nix
-    ../config/app/creative.nix
     ../config/app/generative.nix
     ../config/app/multimedia.nix
     ../config/app/office.nix

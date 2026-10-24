@@ -14,7 +14,6 @@
   boot.initrd.luks.devices = {
     nixos = {
       device = "/dev/disk/by-uuid/2b254558-0847-48f0-93c6-31a26d588d01";
-      preLVM = true;
       allowDiscards = true;
       bypassWorkqueues = true;
     };

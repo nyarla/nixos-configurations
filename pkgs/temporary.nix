@@ -17,6 +17,18 @@ final: prev: {
     checkPhase = "true";
   };
 
+  open-webui =
+    let
+      python3 =
+        let
+          packageOverrides = _: before: {
+            posthog = before.posthog.override { mcp = before.mcp_1; };
+          };
+        in
+        prev.python3.override { inherit packageOverrides; };
+    in
+    prev.open-webui.override { python3Packages = python3.pkgs; };
+
   whipper =
     let
       python3 =

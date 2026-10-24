@@ -446,10 +446,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.11.1",
-      "revision": "46e538b3a2bacb533e89c7a30a99bbf2d91c3381",
-      "url": "https://api.github.com/repos/storytold/photocraft/tarball/refs/tags/v0.11.1",
-      "hash": "sha256-//qOGI0/ZLXYPkJ+PL7U650ja/eWXqjjJ6fkcd6Ccdg="
+      "version": "v0.15.1",
+      "revision": "60c87b9884fdae0e464614d482a3bc435cbbc578",
+      "url": "https://api.github.com/repos/storytold/photocraft/tarball/refs/tags/v0.15.1",
+      "hash": "sha256-VEUY4Woazx5WZgCODYMWI+8CyF4w1rHp1vI9CY+bgdw="
     },
     "sononym-bin": {
       "type": "Url",

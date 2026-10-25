@@ -11,6 +11,7 @@ _: {
     ../../modules/nixos/regions/jp.nix
     ../../modules/nixos/security/clamav.nix
     ../../modules/nixos/services/desktop.nix
+    ../../modules/nixos/wireless/bluetooth.nix
 
     ../../modules/nixos/studio/3DCG.nix
     ../../modules/nixos/studio/artwork.nix
@@ -22,6 +23,7 @@ _: {
     ./hardware/cpu.nix
     ./hardware/inputs.nix
     ./hardware/power-managements.nix
+    ./hardware/wireless.nix
     ./i18n/region.nix
     ./programs/desktop.nix
     ./security/clamav.nix

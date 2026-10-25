@@ -40,8 +40,6 @@
     ../config/user/nyarla.nix
     ../config/video/intel-with-amd.nix
     ../config/vmm/kvm.nix
-    ../config/wireless/AX200.nix
-    ../config/wireless/bluetooth.nix
 
     ../config/services/nyzen9.nix
   ];

@@ -28,6 +28,7 @@ in
   immersed = require ./immersed { };
   thorium-reader = require ./thorium-reader { };
   wcwidth-cjk = require ./wcwidh-cjk { };
+  yolupainter = require ./yolupainter { };
 
   # themes and fonts
   fluent-gtk-theme = require ./fluent-gtk-theme { };

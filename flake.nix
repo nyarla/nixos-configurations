@@ -168,6 +168,7 @@
                 immersed
                 thorium-reader
                 wcwidth-cjk
+                yolupainter
 
                 fluent-gtk-theme
                 fluent-kde

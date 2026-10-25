@@ -114,6 +114,22 @@
       "unpack": false,
       "hash": "sha256-AAcIvxtnjEtTZev6BBW/5y0pwNfNzKkIiA0iB/5MNL4="
     },
+    "YoluPainter": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "YozoraKurage",
+        "repo": "YoluPainter"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.7.0",
+      "revision": "ccb5e8f2569f4ba98da70fe6ec8cb0cec38a691e",
+      "url": "https://api.github.com/repos/YozoraKurage/YoluPainter/tarball/refs/tags/v0.7.0",
+      "hash": "sha256-JgTaRz5cI0W08Fdm9UAAuLchULjJi6Ddj7Xplb2RiVc="
+    },
     "audiogridder-deps": {
       "type": "Git",
       "repository": {

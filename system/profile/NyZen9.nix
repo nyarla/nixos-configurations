@@ -2,7 +2,6 @@
   imports = [
     ../machine/NyZen9/default.nix
 
-    ../config/audio/daw.nix
     ../config/desktop/wayland.nix
     ../config/desktop/xdg.nix
     ../config/desktop/xorg.nix

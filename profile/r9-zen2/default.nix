@@ -3,15 +3,18 @@ _: {
     # currently migrating...
     ../../system/profile/NyZen9.nix
 
-    # using modules.
+    # using modules
     ../../modules/nixos/audio/pipewire.nix
     ../../modules/nixos/programs/desktop.nix
     ../../modules/nixos/programs/droidcam.nix
     ../../modules/nixos/programs/sandbox.nix
     ../../modules/nixos/regions/jp.nix
     ../../modules/nixos/security/clamav.nix
+    ../../modules/nixos/security/sandbox.nix
     ../../modules/nixos/services/desktop.nix
     ../../modules/nixos/wireless/bluetooth.nix
+
+    ../../modules/nixos/sandbox/desktop/deadbeef.nix
 
     ../../modules/nixos/studio/3DCG.nix
     ../../modules/nixos/studio/artwork.nix

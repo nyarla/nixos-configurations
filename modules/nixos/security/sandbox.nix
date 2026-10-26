@@ -6,103 +6,106 @@
 with lib;
 let
   cfg = config.mod.security.sandbox;
+  desktopCfg = cfg.desktop;
 in
 {
   options.mod.security.sandbox = {
-    settings.user = {
-      name = mkOption {
-        type = types.str;
+    settings = {
+      user = {
+        name = mkOption {
+          type = types.str;
+        };
+
+        group = mkOption {
+          type = types.str;
+          default = "users";
+        };
+
+        extraGroups = mkOption {
+          type = types.listOf types.str;
+          default = [ ];
+        };
+
+        home = mkOption {
+          type = types.str;
+          default = "/home/${cfg.settings.user.name}";
+        };
+
+        uid = mkOption {
+          type = types.int;
+          default = 1000;
+        };
+
+        gid = mkOption {
+          type = types.int;
+          default = 100;
+        };
       };
-
-      group = mkOption {
-        type = types.str;
-        default = "users";
+      locale = mkOption {
+        type = types.attrsOf types.str;
+        default = {
+          LANG = "en_US.UTF-8";
+          LC_ALL = "en_US.UTF-8";
+        };
       };
-
-      extraGroups = mkOption {
-        type = types.listOf types.str;
-        default = [ ];
-      };
-
-      home = mkOption {
-        type = types.str;
-        default = "/home/${cfg.settings.user.name}";
-      };
-
-      uid = mkOption {
-        type = types.int;
-        default = 1000;
-      };
-
-      gid = mkOption {
-        type = types.int;
-        default = 100;
-      };
-    };
-
-    settings.locale = mkOption {
-      type = types.attrsOf types.str;
-      default = {
-        LANG = "en_US.UTF-8";
-        LC_ALL = "en_US.UTF-8";
-      };
-    };
-
-    settings.theme = {
-      gtk = mkOption { type = types.str; };
-    };
-
-    desktop.inputMethod = {
-      enable = mkOption {
-        type = types.bool;
-        default = config.i18n.inputMethod.enable;
-      };
-
-      type = mkOption {
-        type = types.str;
-        default = config.i18n.inputMethod.type;
+      theme = {
+        gtk = mkOption { type = types.str; };
       };
     };
 
-    desktop.apps = mkOption {
-      type = types.attrsOf (
-        types.submodule (
-          { name, ... }: {
-            options = {
-              name = mkOption {
-                type = types.str;
-                default = name;
-              };
+    desktop = {
+      inputMethod = {
+        enable = mkOption {
+          type = types.bool;
+          default = config.i18n.inputMethod.enable;
+        };
 
-              features = {
-                wayland.enable = mkOption {
-                  type = types.bool;
-                  default = true;
+        type = mkOption {
+          type = types.str;
+          default = config.i18n.inputMethod.type;
+        };
+      };
+
+      apps = mkOption {
+        type = types.attrsOf (
+          types.submodule (
+            { name, ... }: {
+              options = {
+                name = mkOption {
+                  type = types.str;
+                  default = name;
                 };
-                audio.enable = mkOption {
-                  type = types.bool;
-                  default = true;
+
+                features = {
+                  wayland.enable = mkOption {
+                    type = types.bool;
+                    default = true;
+                  };
+                  audio.enable = mkOption {
+                    type = types.bool;
+                    default = true;
+                  };
+                };
+
+                mounts = {
+                  ro = mkOption { type = types.listOf types.str; };
+                  rw = mkOption { type = types.listOf types.str; };
+                };
+
+                package = mkOption { type = types.package; };
+                extraPackages = mkOption { type = types.listOf types.package; };
+                environment = mkOption { type = types.attrsOf types.str; };
+
+                executable = mkOption { type = types.str; };
+                extraInit = mkOption {
+                  type = types.str;
+                  default = "";
                 };
               };
-
-              mounts = {
-                ro = mkOption { type = types.listOf types.str; };
-                rw = mkOption { type = types.listOf types.str; };
-              };
-
-              package = mkOption { type = types.package; };
-              extraPackages = mkOption { type = types.listOf types.package; };
-              environment = mkOption { type = types.attrsOf types.str; };
-
-              executable = mkOption { type = types.str; };
-              extraInit = mkOption {
-                type = types.str;
-                default = "";
-              };
-            };
-          }
-        )
-      );
+            }
+          )
+        );
+      };
     };
   };
 
@@ -119,7 +122,7 @@ in
           options = [ "NOPASSWD" ];
         }
       ];
-    }) cfg.desktop.apps;
+    }) desktopCfg.apps;
 
     containers = attrsets.mapAttrs (
       name: opts:
@@ -186,6 +189,8 @@ in
               defaultLocale = "en_US.UTF-8";
               extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
             };
+
+            mod.regions.jp = true;
 
             users.users.${cfg.settings.user.name} = {
               enable = true;
@@ -255,10 +260,10 @@ in
                   in
                   "${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
               })
-              // (optionalAttrs cfg.desktop.inputMethod.enable {
-                GTK_IM_MODULE = cfg.desktop.inputMethod.type;
-                QT_IM_MODULE = cfg.desktop.inputMethod.type;
-                XMODIFIER = "@im=${cfg.desktop.inputMethod.type}";
+              // (optionalAttrs desktopCfg.inputMethod.enable {
+                GTK_IM_MODULE = desktopCfg.inputMethod.type;
+                QT_IM_MODULE = desktopCfg.inputMethod.type;
+                XMODIFIER = "@im=${desktopCfg.inputMethod.type}";
               })
               // opts.environment;
 
@@ -282,6 +287,6 @@ in
             };
           };
       }
-    ) cfg.desktop.apps;
+    ) desktopCfg.apps;
   };
 }

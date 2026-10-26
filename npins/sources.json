@@ -382,10 +382,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.12.0",
-      "revision": "274c4cf85ba638d4b6f867d97ca3f6478a993c8d",
-      "url": "https://api.github.com/repos/storytold/filmcraft/tarball/refs/tags/v0.12.0",
-      "hash": "sha256-NY6PABV6Jsg6Rahl3uSM8+qW61yAcAEhWzCDH+wDUMo="
+      "version": "v0.13.0",
+      "revision": "30536bc5d0ddf690f2181b7b97182db8658a6038",
+      "url": "https://api.github.com/repos/storytold/filmcraft/tarball/refs/tags/v0.13.0",
+      "hash": "sha256-mEMNK+uizVpO0szEonWxkK3M6MpGV5s0Blzt9Y5VdAg="
     },
     "gridcraft": {
       "type": "GitRelease",
@@ -462,10 +462,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.15.1",
-      "revision": "60c87b9884fdae0e464614d482a3bc435cbbc578",
-      "url": "https://api.github.com/repos/storytold/photocraft/tarball/refs/tags/v0.15.1",
-      "hash": "sha256-VEUY4Woazx5WZgCODYMWI+8CyF4w1rHp1vI9CY+bgdw="
+      "version": "v0.16.0",
+      "revision": "b1794c6e0608ccfc887213dcf58398977c5cb75e",
+      "url": "https://api.github.com/repos/storytold/photocraft/tarball/refs/tags/v0.16.0",
+      "hash": "sha256-uaZmzQb4B1zZ2XrZHjHzI/uEVGdoYRFeh10GHIxzjDA="
     },
     "sononym-bin": {
       "type": "Url",
@@ -500,10 +500,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.16.0",
-      "revision": "10190753ef356ce8de7592626bcb99fd69db467c",
-      "url": "https://api.github.com/repos/storytold/vectorcraft/tarball/refs/tags/v0.16.0",
-      "hash": "sha256-0NE4T55rwc1d6siV1RoeffAeh6uKoFY0YON23KYCQt4="
+      "version": "v0.17.0",
+      "revision": "43313f9451de7ab5b909801006b8881458f2bf04",
+      "url": "https://api.github.com/repos/storytold/vectorcraft/tarball/refs/tags/v0.17.0",
+      "hash": "sha256-5kfG3C6aKii2ov0j9N8K44LFiEY261saNSmJzvbyLhU="
     },
     "wordcraft": {
       "type": "GitRelease",

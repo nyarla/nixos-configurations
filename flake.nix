@@ -276,8 +276,6 @@
                     "L+ /etc/nixpkgs - - - - ${inputs.nixpkgs}"
                   ];
                 }
-
-                (import ./modules/nixos)
               ]
               ++ (with inputs; [
                 nixpkgs-xr.nixosModules.nixpkgs-xr

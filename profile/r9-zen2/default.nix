@@ -16,6 +16,8 @@ _: {
 
     ../../modules/nixos/sandbox/desktop/deadbeef.nix
 
+    ../../modules/nixos/sandbox/shell/typescript.nix
+
     ../../modules/nixos/studio/3DCG.nix
     ../../modules/nixos/studio/artwork.nix
     ../../modules/nixos/studio/music.nix
@@ -29,6 +31,8 @@ _: {
     ./hardware/wireless.nix
     ./i18n/region.nix
     ./programs/desktop.nix
+    ./programs/sandbox.nix
+    ./programs/shell.nix
     ./security/clamav.nix
   ];
 }

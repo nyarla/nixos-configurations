@@ -1,0 +1,17 @@
+_: {
+  mod.security.sandbox.settings = {
+    user = {
+      name = "nyarla";
+      group = "users";
+      uid = 1000;
+      gid = 100;
+    };
+
+    locale = {
+      LANG = "ja_JP.UTF-8";
+      LC_ALL = "ja_JP.UTF-8";
+    };
+
+    theme.gtk = "Fluent-Light-compact";
+  };
+}

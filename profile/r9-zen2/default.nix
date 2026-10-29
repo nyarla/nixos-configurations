@@ -16,6 +16,7 @@ _: {
 
     ../../modules/nixos/sandbox/desktop/deadbeef.nix
 
+    ../../modules/nixos/sandbox/shell/rust-desktop.nix
     ../../modules/nixos/sandbox/shell/typescript.nix
 
     ../../modules/nixos/studio/3DCG.nix

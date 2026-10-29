@@ -139,6 +139,11 @@ in
           type = types.bool;
           default = false;
         };
+
+        desktop.enable = mkOption {
+          type = types.bool;
+          default = false;
+        };
       };
 
       extraPackages = mkOption {
@@ -423,6 +428,22 @@ in
               // (optionalAttrs shellCfg.features.proton-pass-cli.enable {
                 "${HOME}/.local/share/proton-pass-cli".isReadOnly = true;
               })
+              // (optionalAttrs shellCfg.features.desktop.enable {
+                "${HOME}/.config/gtk-2.0".isReadOnly = true;
+                "${HOME}/.config/gtk-3.0".isReadOnly = true;
+                "${HOME}/.config/gtk-4.0".isReadOnly = true;
+
+                "${HOME}/.local/share/fonts".isReadOnly = true;
+                "${HOME}/.local/share/icons".isReadOnly = true;
+                #  "${HOME}/.local/share/themes".isReadOnly = true;
+
+                # "${HOME}/.nix-profile/share/fonts".isReadOnly = true;
+                "${HOME}/.nix-profile/share/icons".isReadOnly = true;
+                "${HOME}/.nix-profile/share/themes".isReadOnly = true;
+
+                "${XDG_RUNTIME_DIR}/wayland-0".isReadOnly = false;
+                "${XDG_RUNTIME_DIR}/pulse/native".isReadOnly = false;
+              })
               // mergeAttrsList (
                 lists.forEach shellCfg.settings.mounts.ro (path: {
                   "${path}".isReadOnly = true;
@@ -523,11 +544,19 @@ in
                               "${HOME}/.config/nvim"
                               "${HOME}/.local/share/nvim"
                             ])
-                            ++ opts.bind.rw
+                            ++ opts.bind.ro
                           )
                         } ${
                           concatStrings (
                             mapAttrsToList (from: to: "--mount type=bind,ro,src=${from},dst=${to} ") shellCfg.settings.dotfiles
+                          )
+                        } ${
+                          concatStrings (
+                            mapAttrsToList (from: to: "--mount type=bind,src=${from},dst=${to} ") (
+                              (optionalAttrs shellCfg.features.pi-coding-agent.enable {
+                                "${HOME}/.pi/env/${name}" = "${HOME}/.pi/agent";
+                              })
+                            )
                           )
                         } ${name}:latest -c "${concatStringsSep "; " (optional shellCfg.features.gnupg.enable "ln -sf /run/user/1000/gnupg/* ~/.gnupg/")}; herdr"
                       '';

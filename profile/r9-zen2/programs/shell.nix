@@ -39,6 +39,11 @@
     };
   };
 
+  mod.sandbox.shell.rust-desktop = {
+    enable = true;
+    dotDir = "/home/nyarla/Applications/Development/Rust";
+  };
+
   mod.sandbox.shell.typescript = {
     enable = true;
     ports = [ 1313 ];

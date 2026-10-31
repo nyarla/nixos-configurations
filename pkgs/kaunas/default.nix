@@ -1,13 +1,8 @@
-{ stdenvNoCC, fetchFromGitHub }:
+{ sources, stdenvNoCC }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "Kaunas";
-  version = "1.0.1";
-  src = fetchFromGitHub {
-    owner = "Dovias";
-    repo = finalAttrs.pname;
-    tag = finalAttrs.version;
-    hash = "sha256-tWSU0XnjrAbGPcbxu+BK8Djv62yLLwqhK+sVrE52xpk=";
-  };
+  inherit (sources.Kaunas) version;
+  src = sources.Kaunas;
 
   installPhase = ''
     runHook preInstall

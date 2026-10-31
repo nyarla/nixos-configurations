@@ -68,6 +68,22 @@
       "url": null,
       "hash": "sha256-7oayKRqAHXEkf3PMsma3HfuHYXrNNR+xkrHyYrZ7s5I="
     },
+    "Kaunas": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Dovias",
+        "repo": "Kaunas"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "1.0.1",
+      "revision": "77863dae4e31c6aa05244f42cc6c5d3938e1159f",
+      "url": "https://api.github.com/repos/Dovias/Kaunas/tarball/refs/tags/1.0.1",
+      "hash": "sha256-tWSU0XnjrAbGPcbxu+BK8Djv62yLLwqhK+sVrE52xpk="
+    },
     "SKK-JISYO.L": {
       "type": "Url",
       "url": "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L",

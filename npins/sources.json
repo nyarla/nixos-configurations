@@ -323,6 +323,19 @@
       "url": "https://api.github.com/repos/naokiri/cskk/tarball/refs/tags/v4.0.0",
       "hash": "sha256-XBoxWdpYa4n8lGkTv2VLBz0k7rrszcK4i6wYwIJTOl8="
     },
+    "deadbeef-fb": {
+      "type": "Git",
+      "repository": {
+        "type": "GitLab",
+        "repo_path": "zykure/deadbeef-fb",
+        "server": "https://gitlab.com/"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "17accd5345adeb3b81315d284dd81ac881517cc6",
+      "url": "https://gitlab.com/api/v4/projects/zykure%2Fdeadbeef-fb/repository/archive.tar.gz?sha=17accd5345adeb3b81315d284dd81ac881517cc6",
+      "hash": "sha256-xmC0m47OnEQS4nXRG+bq5vMiAui0+ehhCrcWF8n1t/s="
+    },
     "deckcraft": {
       "type": "GitRelease",
       "repository": {

@@ -42,6 +42,19 @@
       "url": "https://github.com/vinceliuice/Fluent-gtk-theme/archive/7a49a464b0188c340101c52965c18190b1c694cf.tar.gz",
       "hash": "sha256-O1tmDjie1ow+pWFSdj9roBk7dssNJLVa5/DugffcTVQ="
     },
+    "Fluent-kde": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "vinceliuice",
+        "repo": "Fluent-kde"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "44794f29c89de994b0179aebabd2f5776c90d236",
+      "url": "https://github.com/vinceliuice/Fluent-kde/archive/44794f29c89de994b0179aebabd2f5776c90d236.tar.gz",
+      "hash": "sha256-Ejr2wDs3tr36YN2mWSd9ZKp5e6gH/whcuhauN/2Y15I="
+    },
     "Ildaeil": {
       "type": "Git",
       "repository": {

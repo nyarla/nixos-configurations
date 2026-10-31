@@ -1,16 +1,11 @@
 {
-  fetchFromGitHub,
+  sources,
   stdenvNoCC,
 }:
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "Fluent-kde";
   version = "git";
-  src = fetchFromGitHub {
-    owner = "vinceliuice";
-    repo = "Fluent-kde";
-    rev = "44794f29c89de994b0179aebabd2f5776c90d236";
-    hash = "sha256-Ejr2wDs3tr36YN2mWSd9ZKp5e6gH/whcuhauN/2Y15I=";
-  };
+  src = sources.Fluent-kde;
 
   installPhase = ''
     mkdir -p $out/share/Kvantum

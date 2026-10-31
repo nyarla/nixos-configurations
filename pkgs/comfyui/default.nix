@@ -1,8 +1,6 @@
 {
   sources,
 
-  fetchFromGitHub,
-  fetchPypi,
   fetchurl,
 
   autoPatchelfHook,
@@ -37,7 +35,7 @@ let
 
   comfy-aimdo = python3Packages.buildPythonPackage {
     pname = "comfy_aimdo";
-    version = "0.5.6";
+    version = "0.6.0";
     format = "wheel";
     src = fetchurl {
       inherit (sources.comfy-aimdo) url hash;
@@ -227,7 +225,7 @@ let
 in
 python3Packages.buildPythonApplication {
   pname = "ComfyUI";
-  version = "v0.39.0";
+  inherit (sources.ComfyUI) version;
   format = "other";
   src = sources.ComfyUI;
 

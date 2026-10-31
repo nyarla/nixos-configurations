@@ -135,11 +135,6 @@ in
           type = types.bool;
           default = false;
         };
-        proton-pass-cli.enable = mkOption {
-          type = types.bool;
-          default = false;
-        };
-
         desktop.enable = mkOption {
           type = types.bool;
           default = false;
@@ -425,9 +420,6 @@ in
               // (optionalAttrs shellCfg.features.pi-coding-agent.enable {
                 "${HOME}/.pi".isReadOnly = false;
               })
-              // (optionalAttrs shellCfg.features.proton-pass-cli.enable {
-                "${HOME}/.local/share/proton-pass-cli".isReadOnly = true;
-              })
               // (optionalAttrs shellCfg.features.desktop.enable {
                 "${HOME}/.config/gtk-2.0".isReadOnly = true;
                 "${HOME}/.config/gtk-3.0".isReadOnly = true;
@@ -530,9 +522,6 @@ in
                               "${HOME}/.gnupg"
                               "${XDG_RUNTIME_DIR}/gnupg"
                             ])
-                            ++ (optionals shellCfg.features.proton-pass-cli.enable [
-                              "${HOME}/.local/share/proton-pass-cli"
-                            ])
                             ++ opts.bind.rw
                           )
                         } ${
@@ -599,6 +588,11 @@ in
                         fence
                         gitFull
                         herdr
+
+                        gh
+                        jq
+                        ripgrep
+                        yq
                       ]
                       ++ shellCfg.extraPackages
                       ++ opts.packages
@@ -607,8 +601,11 @@ in
                         gnupg
                         openssh
                       ])
-                      ++ (optionals shellCfg.features.pi-coding-agent.enable [ pi-coding-agent ])
-                      ++ (optionals shellCfg.features.proton-pass-cli.enable [ proton-pass-cli ]);
+                      ++ (optionals shellCfg.features.pi-coding-agent.enable [
+                        nodejs
+                        pi-coding-agent
+                        python3
+                      ]);
 
                     pathsToLink = [
                       "/bin"
@@ -646,7 +643,6 @@ in
                           (HOME + "/.local/state/nvim")
                         ])
                         ++ (optionals shellCfg.features.pi-coding-agent.enable [ (HOME + "/.pi") ])
-                        ++ (optionals shellCfg.features.proton-pass-cli.enable [ (HOME + "/.local/share/proton-pass-cli") ])
                       )
                     }
 

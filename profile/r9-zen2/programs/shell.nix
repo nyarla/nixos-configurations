@@ -18,7 +18,6 @@
       gnupg.enable = true;
       neovim.enable = true;
       pi-coding-agent.enable = true;
-      proton-pass-cli.enable = true;
     };
 
     settings = {

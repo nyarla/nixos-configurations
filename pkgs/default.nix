@@ -31,7 +31,11 @@ in
   yolupainter = require ./yolupainter { };
 
   # themes and fonts
-  fluent-gtk-theme = require ./fluent-gtk-theme { };
+  fluent-gtk-theme = pkgs.fluent-gtk-theme.overrideAttrs {
+    verrsion = "git";
+    src = self.sources.Fluent-gtk-theme;
+  };
+
   fluent-kde = require ./fluent-kde { };
   kaunas = require ./kaunas { };
   noto-fonts-jp = require ./noto-fonts-jp { };

@@ -29,6 +29,19 @@
       "url": "https://api.github.com/repos/Comfy-Org/ComfyUI/tarball/refs/tags/v0.43.0",
       "hash": "sha256-3lv80HpyKFJHQTOaws1knIC7YdGkKm2S1WkVidUwMNI="
     },
+    "Fluent-gtk-theme": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "vinceliuice",
+        "repo": "Fluent-gtk-theme"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "7a49a464b0188c340101c52965c18190b1c694cf",
+      "url": "https://github.com/vinceliuice/Fluent-gtk-theme/archive/7a49a464b0188c340101c52965c18190b1c694cf.tar.gz",
+      "hash": "sha256-O1tmDjie1ow+pWFSdj9roBk7dssNJLVa5/DugffcTVQ="
+    },
     "Ildaeil": {
       "type": "Git",
       "repository": {

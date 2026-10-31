@@ -414,10 +414,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": true,
-      "version": "v0.8.4",
-      "revision": "50287728b005ceb0ed8a4a8f7d825ac4824224ef",
+      "version": "v0.8.5",
+      "revision": "48f132d06f6e370f6f4fe59c0007c8f4d9c1f855",
       "url": null,
-      "hash": "sha256-esCu+LtAEsX5H1Yo4LDib2nDMmOZu6gq+48oZMOOWBY="
+      "hash": "sha256-3XEdXAtSzgFZIwWZu9HYZFQv2aRrpjZvXcMBVasemN8="
     },
     "lightcraft": {
       "type": "GitRelease",

@@ -382,10 +382,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.13.0",
-      "revision": "30536bc5d0ddf690f2181b7b97182db8658a6038",
-      "url": "https://api.github.com/repos/storytold/filmcraft/tarball/refs/tags/v0.13.0",
-      "hash": "sha256-mEMNK+uizVpO0szEonWxkK3M6MpGV5s0Blzt9Y5VdAg="
+      "version": "v0.15.0",
+      "revision": "94ceaa91a58e3e18ebe5676c10befa56759c9ceb",
+      "url": "https://api.github.com/repos/storytold/filmcraft/tarball/refs/tags/v0.15.0",
+      "hash": "sha256-g+D4opUe2DjTQ0yHkZvP6XKVbSKnbFe4dMNz7bpO34w="
     },
     "gridcraft": {
       "type": "GitRelease",

@@ -165,9 +165,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "0cf340609f99722f1a4a7c263065250edc6c8c4f",
-      "url": "https://github.com/joker1007/bookwall/archive/0cf340609f99722f1a4a7c263065250edc6c8c4f.tar.gz",
-      "hash": "sha256-7IYgt1BY25oTSvMcttEp8Mab/6TZMG13IFezaWgRYYU="
+      "revision": "79e0c3e9aacfde702ff8064614027645f01a3cf2",
+      "url": "https://github.com/joker1007/bookwall/archive/79e0c3e9aacfde702ff8064614027645f01a3cf2.tar.gz",
+      "hash": "sha256-LwoCZOJW5nTezMImhjIuLvUM3ok3LFkBzXp4VQ0p31Q="
     },
     "cadcraft": {
       "type": "GitRelease",

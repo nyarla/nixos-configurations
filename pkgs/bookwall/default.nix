@@ -2,7 +2,6 @@
   sources,
   stdenvNoCC,
 
-  fetchFromGitHub,
   fetchNpmDeps,
   autoPatchelfHook,
 
@@ -23,7 +22,7 @@ let
 
   src = sources.bookwall;
   pname = "bookwall";
-  version = "2026-10-17";
+  version = "2026-10-24";
 
   gems = bundlerEnv {
     inherit ruby;
@@ -73,7 +72,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   ];
 
   npmRoot = "client";
-  npmDepsHash = "sha256-ldAM3A5AvZ8UqF5w/KKI3BODguX+c6LLvk+/Zda7aPA=";
+  # npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  npmDepsHash = "sha256-PatgpVST+lbs1Kvk7qe9j5ElQne3vc5fDxK/sYLVVck=";
   npmDeps = fetchNpmDeps {
     pname = "${pname}-npm-deps";
     inherit src;

@@ -7,7 +7,7 @@
   appId ? "ai.storyteller.${pname}",
   features ? [ ],
   extraBuildInputs ? [ ],
-  patches,
+  patches ? [ ],
 
   cargoHashes ? { },
 

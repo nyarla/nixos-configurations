@@ -7,6 +7,7 @@
   appId ? "ai.storyteller.${pname}",
   features ? [ ],
   extraBuildInputs ? [ ],
+  patches,
 
   cargoHashes ? { },
 
@@ -75,6 +76,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     wayland-protocols
     wayland-scanner
   ];
+
+  inherit patches;
 
   checkPhase = "true";
 

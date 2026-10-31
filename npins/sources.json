@@ -307,6 +307,22 @@
       "url": "https://files.pythonhosted.org/packages/71/19/8b6c8e88a3bc895bd6d29972c717ac782be175e6bfc40ec75ec95629593e/comfyui_workflow_templates_media_video-0.3.101.tar.gz",
       "hash": "sha256-dlLtmfubsAs52JBZGdyBUJIB4zXd4jqXNroTiRmQhHY="
     },
+    "cskk": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "naokiri",
+        "repo": "cskk"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v4.0.0",
+      "revision": "951f45c24cc2bd7e1dff8da6eb2f690ba447b7b6",
+      "url": "https://api.github.com/repos/naokiri/cskk/tarball/refs/tags/v4.0.0",
+      "hash": "sha256-XBoxWdpYa4n8lGkTv2VLBz0k7rrszcK4i6wYwIJTOl8="
+    },
     "deckcraft": {
       "type": "GitRelease",
       "repository": {

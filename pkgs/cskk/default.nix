@@ -1,22 +1,19 @@
 {
-  fetchFromGitHub,
+  sources,
+
   rustPlatform,
   cargo-c,
   rust-bindgen,
   libxkbcommon,
 }:
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "cskk";
-  version = "v3.3.0";
-  src = fetchFromGitHub {
-    owner = "naokiri";
-    repo = "cskk";
-    rev = version;
-    hash = "sha256-F4sqyqD8Qdc/mhPpINCFjzuWiBOKSat5YIT1WnoEHck=";
-  };
+  inherit (sources.cskk) version;
+  src = sources.cskk;
 
-  useFetchVendor = true;
-  cargoHash = "sha256-YvjDvLwnLKxCf2vqj1JhYVnwKZt6vxihT25FYa4qFzc=";
+  cargoLock = {
+    lockFile = "${finalAttrs.src}/Cargo.lock";
+  };
 
   buildInputs = [ libxkbcommon.dev ];
   nativeBuildInputs = [
@@ -37,4 +34,4 @@ rustPlatform.buildRustPackage rec {
       ln -sf $out/lib/cskk/$f $f
     done
   '';
-}
+})

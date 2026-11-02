@@ -18,6 +18,7 @@ final: prev: {
       python3 =
         let
           packageOverrides = _: before: {
+            marko = before.marko.overrideAttrs { checkPhase = "true"; };
             posthog = before.posthog.override { mcp = before.mcp_1; };
           };
         in

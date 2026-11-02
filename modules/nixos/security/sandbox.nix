@@ -352,6 +352,8 @@ in
                       '';
                     in
                     "${nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
+
+                  WAYLAND_DISPLAY = "wayland-0";
                 })
                 // (optionalAttrs desktopCfg.inputMethod.enable {
                   GTK_IM_MODULE = desktopCfg.inputMethod.type;

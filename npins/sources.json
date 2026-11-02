@@ -577,10 +577,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.18.0",
-      "revision": "68b68a30acad9b3d8a72802b35f43b82e2bd7d3a",
-      "url": "https://api.github.com/repos/storytold/vectorcraft/tarball/refs/tags/v0.18.0",
-      "hash": "sha256-vohd9enSBgOwXtOMVOAE3SJ/GRrRsp52l1X7O0n7bd0="
+      "version": "v0.19.0",
+      "revision": "bcebabe3f8c23a376ac68e9e6726590af278f7bb",
+      "url": "https://api.github.com/repos/storytold/vectorcraft/tarball/refs/tags/v0.19.0",
+      "hash": "sha256-CdRGXGfNubIkG4CfO2Uv2kXIanHggOy7yyk0xK13MxA="
     },
     "wordcraft": {
       "type": "GitRelease",

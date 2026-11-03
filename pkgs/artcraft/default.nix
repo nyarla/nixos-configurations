@@ -68,7 +68,7 @@ in
     ];
 
     cargoHashes = {
-      "craft-docpath-0.1.0" = "sha256-/8I9DcqtsznoYPo4ECc/rPQIal6P9gyPksrvVHDW6Mg=";
+      "craft-docpath-0.1.0" = "sha256-BRkWxb796qLWtF1U1EqCZFa8h1YCuoAZcXrVWMN8MEY=";
       "craft-media-0.1.0" = "sha256-JfBkl7/RX3Fn1nCn0bpKsvtFhb8CVfOtkHp/ISuXc00=";
       "craft-ui-0.1.0" = "sha256-VhLeT7VLdZAIz6gR9PdFI34IJxHsGF8NE0uzFCN2vIU=";
       "craft-update-0.1.0" = "sha256-pVw3q17lCuOc0eX0S3pWjEtLLo1SaIno98YRlgTk6vg=";

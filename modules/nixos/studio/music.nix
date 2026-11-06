@@ -3,7 +3,7 @@
     with pkgs;
     [
       # plugin host
-      carla
+      carla-with-wine
       ildaeil
 
       # sample manager
@@ -24,8 +24,9 @@
       vital
 
       # for Windows plugins
-      # yabridge
-      # yabridgectl
+      wine-d2d1-run
+      yabridge
+      yabridgectl
     ]
     ++ (with chipsynth; [ sfc ]);
 

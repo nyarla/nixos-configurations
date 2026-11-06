@@ -544,6 +544,22 @@
       "url": "https://api.github.com/repos/storytold/photocraft/tarball/refs/tags/v0.20.1",
       "hash": "sha256-wThSwug4qWWz7RkhZ8s1ZF9pKFZVKPhnhUw0w5Xurwk="
     },
+    "pipeasio": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "M0n7y5",
+        "repo": "pipeasio"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.10.0",
+      "revision": "3d217fb2b7fdadbd76981d8fa794e6e21ef7e927",
+      "url": "https://api.github.com/repos/M0n7y5/pipeasio/tarball/refs/tags/v1.10.0",
+      "hash": "sha256-eshgze/3awp0iJBSonUlZ/URXvbJ2cYMC72Ewiuf70I="
+    },
     "sononym-bin": {
       "type": "Url",
       "url": "https://www.sononym.net/download/sononym-1.6.15.tar.bz2",
@@ -582,6 +598,19 @@
       "url": "https://api.github.com/repos/storytold/vectorcraft/tarball/refs/tags/v0.21.0",
       "hash": "sha256-jHdKEfQK+O4WnEkyRnXuQ22248H4YVbrpWfnYz1xSgs="
     },
+    "wine-d2d1-dcomp": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "giang17",
+        "repo": "wine"
+      },
+      "branch": "d2d1-dcomp-11.21",
+      "submodules": false,
+      "revision": "2f932280e034f018d118dc0303ff98df5f148701",
+      "url": "https://github.com/giang17/wine/archive/2f932280e034f018d118dc0303ff98df5f148701.tar.gz",
+      "hash": "sha256-3IxFr+3IrskzoZQbySFL8rPIGtz65zLuuOUHuD7xzC8="
+    },
     "wordcraft": {
       "type": "GitRelease",
       "repository": {
@@ -597,6 +626,19 @@
       "revision": "f2e15cf8f899a79899a2d9595ca4ce7df1e5ea22",
       "url": "https://api.github.com/repos/storytold/wordcraft/tarball/refs/tags/v0.8.0",
       "hash": "sha256-5zT+XjveKuuqaSsJnKZjerai0TaBO6s7LhrWKrvNcSU="
+    },
+    "yabridge": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "robbert-vdh",
+        "repo": "yabridge"
+      },
+      "branch": "new-wine10-embedding",
+      "submodules": false,
+      "revision": "ba7022df0aee1e91cde62d7f0e940d3bc43a82b0",
+      "url": "https://github.com/robbert-vdh/yabridge/archive/ba7022df0aee1e91cde62d7f0e940d3bc43a82b0.tar.gz",
+      "hash": "sha256-0ju/mfmhutuuPezq1GhiAEiQV/gnfEbrhjX4ydxLX+A="
     }
   },
   "version": 8

@@ -107,7 +107,7 @@ in
   sononym-bin = require ./sononym-bin { };
 
   carla-with-wine = require ./carla {
-    wine = pkgs.wineWow64Packages.yabridge;
+    wine = self.wine-d2d1-dcomp;
   };
 
   ildaeil = require ./ildaeil {
@@ -124,7 +124,88 @@ in
     paths = pkgs.lib.makeBinPath [ pkgs.wineWow64Packages.stagingFull ];
   };
 
-  wineasio = require ./wineasio { };
+  wine-d2d1-dcomp = pkgs.wineWow64Packages.unstableFull.overrideDerivation (_: {
+    pname = "wine";
+    version = "d2d1-dcomp-11.21";
+    src = self.sources.wine-d2d1-dcomp;
+  });
+
+  wine-d2d1-run = require ./wine-run {
+    pname = "wine-d2d1";
+    paths = pkgs.lib.makeBinPath [
+      self.wine-d2d1-dcomp
+      self.wineasio-register
+      self.wineasio-exec
+      self.pipeasio
+      self.pipeasio-exec
+    ];
+  };
+
+  pipeasio = require ./pipeasio {
+    wine = self.wine-d2d1-dcomp;
+  };
+
+  pipeasio-exec = pkgs.writeShellApplication {
+    name = "pipeasio-exec";
+    text = ''
+      set -euo pipefail
+      export WINEDLLPATH=${self.pipeasio}/lib/wine
+      exec "''${@:-}"
+    '';
+  };
+
+  wineasio-register = pkgs.writeShellApplication {
+    name = "wineasio-register";
+    text = ''
+      set -euo pipefail
+
+      if [[ ! -e drive_c ]]; then
+        echo "This script should run in the wine prefix." >&2;
+        exit 1
+      fi
+
+      [[ ! -e drive_c/windows/system32/wineasio64.dll ]] \
+        || chmod +w drive_c/windows/system32/wineasio64.dll
+
+      cp ${pkgs.wineasio}/lib/wine/x86_64-unix/wineasio64.dll.so \
+        drive_c/windows/system32/wineasio64.dll
+
+      wine regsvr32 /s wineasio64.dll
+    '';
+  };
+
+  wineasio-exec = pkgs.writeShellApplication {
+    name = "wineasio-exec";
+    text = ''
+      set -euo pipefail
+      export WINEDLLPATH=${pkgs.wineasio}/lib/wine
+
+      "''${@:-}"
+    '';
+  };
+
+  yabridge =
+    (pkgs.yabridge.override {
+      wineWow64Packages = {
+        yabridge = self.wine-d2d1-dcomp;
+      };
+    }).overrideAttrs
+      (oldAttrs: {
+        src = pkgs.fetchFromGitHub {
+          inherit (self.sources.yabridge.repository) owner repo;
+          inherit (self.sources.yabridge) hash;
+          fetchSubmodules = self.sources.yabridge.submodules;
+          rev = self.sources.yabridge.revision;
+        };
+
+        patches = pkgs.lib.lists.remove (builtins.elemAt oldAttrs.patches 0) oldAttrs.patches;
+      });
+  yabridgectl = pkgs.yabridgectl.override {
+    inherit (self) yabridge;
+    wineWow64Packages = {
+      yabridge = self.wine-d2d1-dcomp;
+    };
+  };
 
   # webapp
   bookwall = require ./bookwall { };

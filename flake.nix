@@ -203,7 +203,9 @@
 
                 wine-vst-run
                 wine-stating-run
+                wine-d2d1-dcomp
                 wineasio
+                pipeasio
 
                 bookwall
                 comfyui
